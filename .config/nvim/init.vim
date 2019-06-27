@@ -586,7 +586,8 @@ nnoremap gdl :diffget //3
 " Golang                             {{{
 "au FileType go nmap <Leader>gdt <Plug>(go-def-tab)
 au FileType go nmap <Leader>gdv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>gi <Plug>(go-imports)
+au FileType go nmap <Leader>gi <Plug>(go-install)
+au FileType go nmap <Leader>gI <Plug>(go-imports)
 au FileType go nmap <Leader>fd <Plug>(go-def-split)
 au FileType go nmap <Leader>gw <Plug>(go-doc-browser)
 au FileType go nmap <leader>1 <Plug>(go-build)

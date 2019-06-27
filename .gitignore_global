@@ -1,0 +1,5 @@
+.editorconfig
+vimrc.local
+tags
+cscope.*
+.dot

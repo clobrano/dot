@@ -1,0 +1,7 @@
+set selection-clipboard clipboard
+set page-padding 1
+map L scroll half-down
+map K scroll half-up
+map r reload
+map i recolor
+map p print

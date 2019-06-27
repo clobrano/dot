@@ -139,18 +139,6 @@ function! PapercolorSet()
 endfunction
 command! Papercolor :call PapercolorSet()
 
-function! DraculaSet()
-    exe "colorscheme dracula"
-    exe "Parens"
-    exe "HighlightDark"
-    exe "nnoremap * *``"
-    exe "set textwidth=0"
-endfunction
-command! Dracula    :call DraculaSet()
-
-command! SpellEn    setlocal spell! spelllang=en
-command! SpellIt    setlocal spell! spelllang=it
-
 if has('nvim')
 else
   set guifont=Source\ Code\ Pro\ for\ Powerline\ medium\ 10
@@ -164,47 +152,14 @@ catch
   call PapercolorSet()
 endtry
 
-
-
 " }}}
 " System settings                    {{{
-set mouse=a
-set clipboard+=unnamedplus
-set showcmd                    " show last command in the very bottom right of VI
-set wildmenu                   " graphical menu of autocomplete matches
-set wildmode=list:longest,full
+source ~/.config/nvim/plugins/settings.vim
 nnoremap ; :
 vnoremap ; :
-" ------------------------------------------ UI config
-"set guioptions-=T " Remove toolbar
-set guioptions-=m " Remove menubar
-set scrolloff=10   " Keeping the cursor away from the last line make it easy to scroll down/up.
-set relativenumber
-set cursorline
-" ------------------------------------------ Autosave setup
-set nobackup
-set noswapfile
-set autowrite
-" ------------------------------------------ Autocomplete setaway fromset completeopt=longest,menu,preview
-" Block select not limited to shortest line
-set completeopt=longest,menu,preview
 inoremap <C-c> <c-x><c-o>
-set virtualedit=
-set laststatus=2 lazyredraw
-set tabstop=4 shiftwidth=4 softtabstop=4
-set expandtab
-set lcs=trail:·,tab:»· " Highlight spaces, tabs, end of line chars, wrap and brake lines
-set wrap linebreak nolist
-set list
-set showbreak=└
-set showmatch
 " Reload open buffers
 nnoremap <F5> :checktime<cr>
-" ------------------------------------------ Insert the current date long and short (insert mode, normal/command mode)
-nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
-nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
-inoremap <A-d> <C-R>=strftime("%y%W%u")<CR>
-nnoremap <A-d> a<C-R>=strftime("%y%W%u")<CR><Esc>
 cabbr cs colorscheme
 "}}}
 " System mappings                    {{{
@@ -266,20 +221,9 @@ nnoremap < <<
 " ------------------------------------------ Search & Replace
 " Highlight current word
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-set ignorecase                 " ignorecase in search by default
-set incsearch                  " search as characters are entered
-set hlsearch                   " highlight matches
-set backspace=indent,eol,start " fix backspace misbehavior
+
 nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>
 
-" Configure vimgrep
-set grepprg=ack
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ackprg = 'ag'
-endif
-let g:ack_default_options = " -s -H --nogroup --column --smart-case --follow"
-let g:ackhighlight = 1
 noremap rep <Esc>:%s//gc<Left><Left><Left>
 
 " Search for selected text, forwards or backwards.
@@ -399,11 +343,8 @@ nnoremap <leader>htv <C-w>t<C-w>H
 nnoremap <leader>vth <C-w>t<C-w>K
 " ------------------------------------------ Tabs
 
-set splitright " Style open split on the right
-set splitbelow
 " }}}
 " File exploring                     {{{
-set path+=**
 cabbr fn find *
 let g:netrw_winsize = -28             " absolute width of netrw window
 let g:netrw_liststyle = 3             " treetest-view
@@ -415,46 +356,8 @@ command! Sethere lcd %:p:h
 nnoremap <leader>h <Esc>:Sethere<CR>
 " }}}
 " Folding                            {{{
-set foldenable
-set foldmethod=syntax
-set foldlevel=99
 nnoremap za zA
 nnoremap zM zm
-" Set a nicer foldtext function
-set foldtext=MyFoldText()
-function! MyFoldText()
-    let line = getline(v:foldstart)
-    if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
-        let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-        let linenum = v:foldstart + 1
-        while linenum < v:foldend
-            let line = getline( linenum )
-            let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-            if comment_content != ''
-                break
-            endif
-            let linenum = linenum + 1
-        endwhile
-        let sub = initial . ' ' . comment_content
-    else
-        let sub = line
-        let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
-        if startbrace == '{'
-            let line = getline(v:foldend)
-            let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
-            if endbrace == '}'
-                let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
-            endif
-        endif
-    endif
-    let n = v:foldend - v:foldstart
-    let info = " " . n . " lines"
-    let sub = sub . "                                                                                                                  "
-    let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
-    let fold_w = getwinvar( 0, '&foldcolumn' )
-    let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
-    return sub . info
-endfunction
 " folding method for css, scss
 autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
 " }}}
@@ -465,13 +368,9 @@ nnoremap <silent> <leader>V  :source ~/.vimrc<CR>:PlugInstall<CR>:exe ":echo 'vi
 " }}}
 
 " SW Develop                         {{{
-set number            " Show line numbers
-set colorcolumn=0
-"set nocursorline      " Disable highlight current line
 inoremap {<CR>  {<CR>}<Esc>O
 inoremap {<Tab>  {}<Left>
 " Align function arguments
-set cino+=(0
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 " Show alternate file (ex. .c/.cpp <-> .h)
@@ -573,18 +472,6 @@ function! LinterStatus()
     return _
 endfunction
 
-set showtabline=2
-set statusline=
-set statusline+=%<\                       " cut at start
-set statusline+=%{StatusLineGit()}\       " git branch
-set statusline+=%f\                       " path
-set statusline+=%h%m%R%W\                 " flags and buf no
-set statusline+=%=                        " right side
-set statusline+=%y\                       " file type
-if has('nvim')
-set statusline+=%{LinterStatus()}\      " Linter status
-endif
-set statusline+=%20(𝓁:%l/%L\ 𝒸:%v\ [%P]%) " line and file percentage
 let g:buftabline_numbers=1
 let g:buftabline_indicators=1
 " }}}
@@ -612,12 +499,9 @@ if has("cscope")
         cs add $CSCOPE_DB
     endif
     set csverb
+    set cscopetag nocscopeverbose
 endif
-set cscopetag nocscopeverbose
-" Quickfix window for cscope in place of interactive window
-if has('quickfix')
-    "set cscopequickfix=c-,d-,e-,f-,g-,i-,t-,s-
-endif
+
 nnoremap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>fd :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -625,8 +509,7 @@ command! CallTree :CCTreeTraceReverse
 "}}}
 " Ctags                              {{{
 command! CtagsMake !ctags -R --extra=+f --exclude=.git .
-"Makes ctags visible from subdirectories
-set tags=tags;/
+
 noremap T <Esc>:tag<space>
 " Move to next tag
 noremap <C-[> <C-o>
@@ -636,7 +519,7 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " TagList                            {{{
 nnoremap <leader>to :TlistOpen<cr>
 nnoremap <leader>tc :TlistClose<cr>
-:autocmd FileType taglist set norelativenumber
+autocmd FileType taglist set norelativenumber
 let Tlist_Auto_Highlight_Tag=1
 let Tlist_Auto_Update=1
 let Tlist_Display_Prototype=0
@@ -784,6 +667,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 let g:UltiSnipsEditSplit="vertical"
 " }}}
 " Notes                              {{{
+command! SpellEn    setlocal spell! spelllang=en
+command! SpellIt    setlocal spell! spelllang=it
+nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
+nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+inoremap <A-d> <C-R>=strftime("%y%W%u")<CR>
+nnoremap <A-d> a<C-R>=strftime("%y%W%u")<CR><Esc>
 let g:goyo_width=100
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
@@ -829,3 +718,4 @@ elseif exists('+colorcolumn')
     autocmd FocusLost,WinLeave * let &l:colorcolumn=join(range(1, 255), ',')
 endif
 "}}}
+

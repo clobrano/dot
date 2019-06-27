@@ -1,0 +1,62 @@
+alias s='sudo'
+
+alias bi='source ~/.bashrc'
+alias s='sudo'
+alias dw='dmesg -wH'
+
+# Systemctl and journalctl shortcuts
+alias sb='sudo systemctl start'
+alias sa='sudo systemctl stop'
+alias st='systemctl status'
+
+# APT
+alias al='apt list'
+alias ap='apt policy'
+alias as='apt search'
+
+alias ai='sudo apt install'
+alias au='sudo apt upgrade'
+
+alias j='journalctl'
+alias x='exit'
+
+alias installedbyme="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
+alias memusage='du -h -t 10M -d 1'
+alias dirusage='du -d1 -t10M -h 2>/dev/null | sort -hr'
+alias psg='ps aux | grep'
+
+alias soundindicatorback='gsettings set com.canonical.indicator.sound visible true'
+
+alias xcopy='xclip'
+alias xpaste='xclip -o'
+
+alias usif0='sudo minicom -D /dev/ttyS0'
+alias usif1='sudo minicom -D /dev/ttyS1'
+alias pusif0='sudo pynicom --port=/dev/ttyS0'
+alias pusif1='sudo pynicom --port /dev/ttyS1'
+
+# VIM/NEOVIM
+alias vd='gvim -c "dracula"'
+alias nl='gvim -c "Papercolor"'
+alias n='nvim'
+alias nvd='export TERM=screen-256color; nvim -c "Dracula"'
+alias nvm='nvim -c "Monokai"'
+alias nvl='nvim -c "Papercolor"'
+alias draft='draft.sh --folder ~/Dropbox/Work/Telit -t'
+
+# Files and directories
+alias pw='pwd'
+alias mkd='mkdir -p'
+alias ff='find . -name'
+
+# Ranger
+alias r='xterm -geometry 140x35 -e ranger'
+alias rn='ranger'
+
+# Fuzzy finder
+alias f='fuz'
+alias fv='fuz -e gvim'
+alias fn='fuz -e nvim -d ~/Dropbox/Work/Notes/'
+
+# Byobu
+alias bb='byobu'

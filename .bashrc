@@ -75,7 +75,7 @@ export EDITOR="gvim -f"
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dot --work-tree=$HOME"
 
-export DOTFILES=$HOME/.dothelp
+export DOTFILES=$HOME/.config/.chakra
 export CDPATH=$HOME:$HOME/workspace:$HOME/workspace/devel
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang
@@ -128,7 +128,8 @@ alias hikeymenuconf='make ARCH=arm64 menuconfig'
 alias hikeymake='make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j2'
 
 # some more aliases
-[[ -f $DOTFILES/aliases/aliases.sh ]]                && source $DOTFILES/aliases/aliases.sh
-[[ -f $DOTFILES/aliases/common-aliases.sh ]]         && source $DOTFILES/aliases/common-aliases.sh
-[[ -f $DOTFILES/aliases/modemmanager_aliases.sh ]]   && source $DOTFILES/aliases/modemmanager_aliases.sh
-[[ -f $DOTFILES/aliases/networkmanager_aliases.sh ]] && source $DOTFILES/aliases/networkmanager_aliases.sh
+if [ -d  "$DOTFILES/aliases" ]; then
+    for i in $(ls "$DOTFILES/aliases"); do
+        source "$DOTFILES/aliases/$i"
+    done
+fi

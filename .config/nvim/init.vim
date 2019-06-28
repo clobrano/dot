@@ -163,113 +163,13 @@ nnoremap <F5> :checktime<cr>
 cabbr cs colorscheme
 "}}}
 " System mappings                    {{{
-
-" Fix weird chars in terminal using arrow keys (INSERT mode)
-inoremap [1;5A <esc>ki
-inoremap [1;5C <esc>li
-inoremap [1;5B <esc>ji
-inoremap [1;5D <esc>hi
-
-" ------------------------------------------ Esc button is too far and No Ex mode
-inoremap jj <Esc>
-nnoremap Q <nop>
-
-" ------------------------------------------ Navigation
-noremap <silent> <Up> gk
-noremap <silent> <Down> gj
-noremap <silent> k gk
-noremap <silent> j gj
-
-" Remap fast moves
-nnoremap <C-l> w
-nnoremap <C-h> b
-nnoremap <C-k> 10k
-nnoremap <C-j> 10j
-nnoremap E g_
-vnoremap E g_
-nnoremap B ^
-vnoremap B ^
-
-" Open previous buffer
-nnoremap <leader>p <C-^>
-
-" Move between tabs
-nnoremap tn gt
-nnoremap tb gT
-
-" Moves between splits
-nnoremap wh <C-w>h
-nnoremap wj <C-w>j
-nnoremap wk <C-w>k
-nnoremap wl <C-w>l
-
-" ------------------------------------------ Copy & Paste as normal people (in progress)
-vnoremap Y "+y<CR>
-nnoremap P "+p
-xnoremap <silent> p p:let @+=@0<CR>
-vnoremap <m-c> "+y<CR>
-inoremap <m-v> <esc>"+p
-noremap  <m-v> "+p
-nnoremap <leader>va ggvGE
-" select all
-let @a='ggvGE'
-" ------------------------------------------ Align blocks of text
-vmap < <gv
-vmap > >gv
-nnoremap > >>
-nnoremap < <<
-" ------------------------------------------ Search & Replace
-" Highlight current word
-nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-
-nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>
-
-noremap rep <Esc>:%s//gc<Left><Left><Left>
-
-" Search for selected text, forwards or backwards.
-vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-  \``
-vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-nnoremap <leader><space> :nohlsearch<CR>
-
-" Look for text in current buffer
-nnoremap fb <Esc>:g//#<left><left>
-vnoremap fb y:g/<C-r>"/#<CR>
-
-" Vertically resize window splits
-nnoremap <silent> + :exe "resize +2"<CR>
-nnoremap <silent> - :exe "resize -2"<CR>
-" ------------------------------------------ Find or go to Next/Prev match
-nnoremap fn <esc>/\v
-vnoremap fn y/<C-r>"<cr>
-nnoremap fp <esc>?
-vnoremap fp y?<C-r>"<cr>
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap } }zz
 " ------------------------------------------ Fzf fuzzy searcher (ff = find file)
-if has('nvim')
-    nnoremap <leader>ff <esc>:FZF<cr>
-    cabbr ! term
-else
+cabbr ! term
+if executable('fzf')
     nnoremap <leader>ff <esc>:FZF<cr>
 endif
-nnoremap fa <Esc>:Ack! --ignore-dir=TAGS --ignore-dir=tags --ignore-dir=cscope.* ""<left>
-nnoremap fc <Esc>:Ack! --ignore-dir=TAGS --ignore-dir=tags --ignore-dir=cscope.* ""<left><C-r><C-w>
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-" ------------------------------------------ Make
-nnoremap <F5> <esc>:make<cr>
-" }}}
+source ~/.config/nvim/plugins/mappings.vim
+"}}}
 " Buffers                            {{{
 " -- Save, Close and Force close current buffer
 inoremap <C-s> <Esc>:w<CR>
@@ -278,7 +178,6 @@ nnoremap x <Esc>:bd
 nnoremap xx <Esc>:bd<CR>
 nnoremap <leader>fx <Esc>:bd!<CR>
 
-" testing delete buffers by positional index
 nnoremap x1 m1:bd<cr>
 nnoremap x2 m2<cr>:bn<cr>:bd<cr>
 nnoremap x3 m3<cr>:2bn<cr>:bd<cr>
@@ -303,40 +202,21 @@ nnoremap <C-w>m <C-w>\|<C-w>_
 " Keep only current window
 nnoremap <leader>o <C-w>o
 
-function! CleanClose(tosave)
-if (a:tosave == 1)
-    w!
-endif
-let todelbufNr = bufnr("%")
-let newbufNr = bufnr("#")
-if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
-    exe "b".newbufNr
-else
-    bnext
-endif
-
-if (bufnr("%") == todelbufNr)
-    new
-endif
-exe "bd".todelbufNr
-endfunction
-
 " ------------------------------------------ Move among buffers
-nnoremap <A-w> <C-w>
-noremap <A-Left> <Esc>:bp<CR>
-noremap H <Esc>:bp<CR>
+noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>
-noremap L <Esc>:bnext<CR>
-nnoremap <c-b> <esc>:b<space>
-nnoremap m1 :bfirst<cr>
-nnoremap m2 :bfirst<cr>:bn<cr>
-nnoremap m3 :bfirst<cr>:2bn<cr>
-nnoremap m4 :bfirst<cr>:3bn<cr>
-nnoremap m5 :bfirst<cr>:4bn<cr>
-nnoremap m6 :bfirst<cr>:5bn<cr>
-nnoremap m7 :bfirst<cr>:6bn<cr>
-nnoremap m8 :bfirst<cr>:7bn<cr>
-nnoremap m9 :bfirst<cr>:8bn<cr>
+noremap H         <Esc>:bprevious<CR>
+noremap L         <Esc>:bnext<CR>
+nnoremap <c-b>    <esc>:b<space>
+nnoremap m1       :bfirst<cr>
+nnoremap m2       :bfirst<cr>:bn<cr>
+nnoremap m3       :bfirst<cr>:2bn<cr>
+nnoremap m4       :bfirst<cr>:3bn<cr>
+nnoremap m5       :bfirst<cr>:4bn<cr>
+nnoremap m6       :bfirst<cr>:5bn<cr>
+nnoremap m7       :bfirst<cr>:6bn<cr>
+nnoremap m8       :bfirst<cr>:7bn<cr>
+nnoremap m9       :bfirst<cr>:8bn<cr>
 
 " Convert horizontal splits to vertical and vice versa
 nnoremap <leader>htv <C-w>t<C-w>H
@@ -345,7 +225,6 @@ nnoremap <leader>vth <C-w>t<C-w>K
 
 " }}}
 " File exploring                     {{{
-cabbr fn find *
 let g:netrw_winsize = -28             " absolute width of netrw window
 let g:netrw_liststyle = 3             " treetest-view
 let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
@@ -543,7 +422,6 @@ nnoremap <leader>fb :Buffers<cr>
 nnoremap <leader>fx :Commits<cr>
 nnoremap <leader>ft :Tags<cr>
 nnoremap <leader>fl :BLines<cr>
-"nnoremap fa :Ag<cr>
 " }}}
 " Getting Things Done GTD            {{{
 " Task Done, Up, Idle, Next, change Prio (do not use them directly, see iabbr)
@@ -608,14 +486,6 @@ let g:jedi#completions_command = "<C-c>"
 let g:jedi#goto_command = "<space>fd"
 let g:jedi#usages_command = "<space>fc"
 
-" }}}
-" Letsdo                             {{{
-
-nnoremap <leader>ld :!lets do<space>
-nnoremap <leader>ls :!lets stop<space>
-nnoremap <leader>lv :!lets see<space>
-nnoremap <leader>lc :!lets cancel<space>
-nnoremap <leader>le :!lets edit<space>
 " }}}
 " Mark                               {{{
 "vnoremap {Leader}/  n

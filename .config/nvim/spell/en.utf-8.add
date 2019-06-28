@@ -120,3 +120,11 @@ LE910C1
 PPT
 fwup
 Gprof
+env
+GOPROXY
+univocally
+VCS
+webserver
+GOPATH
+structs
+crosscompile

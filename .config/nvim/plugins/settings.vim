@@ -1,8 +1,3 @@
-if has('nvim')
-else
-  set lines=35 columns=150
-endif
-
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')
@@ -73,10 +68,15 @@ set hidden
 "set highlight+=@:ColorColumn             " ~/@ at end of window, 'showbreak'
 "set highlight+=N:DiffText                " make current line number stand out a little
 "set highlight+=c:LineNr                  " blend vertical separators with line numbers
-set lcs=trail:·,tab:»·                    " Highlight spaces, tabs, end of line chars, wrap and brake lines
 set lazyredraw                            " don't update screen during macro replay
 set laststatus=2                          " always show status
+set lcs=trail:·,tab:»·                    " Highlight spaces, tabs, end of line chars, wrap and brake lines
 set linebreak                             " wrap long lines at characters in 'breakat'
+if has('nvim')
+else
+  set lines=35 columns=150
+  set linespace=1
+endif
 set list                                  " show whitespace
 set listchars=nbsp:⦸                      " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
 set listchars+=tab:▷┅                     " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)

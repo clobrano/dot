@@ -107,10 +107,6 @@ set nocompatible
 " Editor                             {{{
 syntax enable
 filetype on
-set updatetime=750
-set linespace=1
-set hidden
-set thesaurus+=~/.vim/thesaurus/thesaurus.txt
 
 autocmd VimResized * execute "normal! \<c-w>="
 
@@ -139,13 +135,6 @@ function! PapercolorSet()
 endfunction
 command! Papercolor :call PapercolorSet()
 
-if has('nvim')
-else
-  set guifont=Source\ Code\ Pro\ for\ Powerline\ medium\ 10
-  set lines=35 columns=150
-  nnoremap <leader>ef <esc>:set guifont=Source\ Code\ Pro\ for\ Powerline\ medium\<space>
-endif
-
 try
     echo g:colors_name
 catch
@@ -155,11 +144,6 @@ endtry
 " }}}
 " System settings                    {{{
 source ~/.config/nvim/plugins/settings.vim
-nnoremap ; :
-vnoremap ; :
-inoremap <C-c> <c-x><c-o>
-" Reload open buffers
-nnoremap <F5> :checktime<cr>
 cabbr cs colorscheme
 "}}}
 " System mappings                    {{{
@@ -170,104 +154,25 @@ if executable('fzf')
 endif
 source ~/.config/nvim/plugins/mappings.vim
 "}}}
-" Buffers                            {{{
-" -- Save, Close and Force close current buffer
-inoremap <C-s> <Esc>:w<CR>
-noremap <C-s> <Esc>:w<CR>
-nnoremap x <Esc>:bd
-nnoremap xx <Esc>:bd<CR>
-nnoremap <leader>fx <Esc>:bd!<CR>
-
-nnoremap x1 m1:bd<cr>
-nnoremap x2 m2<cr>:bn<cr>:bd<cr>
-nnoremap x3 m3<cr>:2bn<cr>:bd<cr>
-nnoremap x4 m4<cr>:3bn<cr>:bd<cr>
-nnoremap x5 m5<cr>:4bn<cr>:bd<cr>
-nnoremap x6 m6<cr>:5bn<cr>:bd<cr>
-nnoremap x7 m7<cr>:6bn<cr>:bd<cr>
-nnoremap x8 m8<cr>:7bn<cr>:bd<cr>
-nnoremap x9 m9<cr>:8bn<cr>:bd<cr>
-" close preview window
-nnoremap xp <C-w>z<CR>
-nnoremap xl <C-w>l:bd<CR>
-nnoremap xh <C-w>h:bd<CR>
-nnoremap xj <C-w>j:bd<CR>
-nnoremap xk <C-w>k:bd<CR>
-" Close quickfix window only
-nnoremap <leader>x :cclose<cr>
-nnoremap qa <esc>:qa
-nnoremap qx <esc>:qa!
-" Maximize current window
-nnoremap <C-w>m <C-w>\|<C-w>_
-" Keep only current window
-nnoremap <leader>o <C-w>o
-
-" ------------------------------------------ Move among buffers
-noremap <A-Left>  <Esc>:bprevious<CR>
-noremap <A-Right> <Esc>:bnext<CR>
-noremap H         <Esc>:bprevious<CR>
-noremap L         <Esc>:bnext<CR>
-nnoremap <c-b>    <esc>:b<space>
-nnoremap m1       :bfirst<cr>
-nnoremap m2       :bfirst<cr>:bn<cr>
-nnoremap m3       :bfirst<cr>:2bn<cr>
-nnoremap m4       :bfirst<cr>:3bn<cr>
-nnoremap m5       :bfirst<cr>:4bn<cr>
-nnoremap m6       :bfirst<cr>:5bn<cr>
-nnoremap m7       :bfirst<cr>:6bn<cr>
-nnoremap m8       :bfirst<cr>:7bn<cr>
-nnoremap m9       :bfirst<cr>:8bn<cr>
-
-" Convert horizontal splits to vertical and vice versa
-nnoremap <leader>htv <C-w>t<C-w>H
-nnoremap <leader>vth <C-w>t<C-w>K
-" ------------------------------------------ Tabs
-
-" }}}
 " File exploring                     {{{
 let g:netrw_winsize = -28             " absolute width of netrw window
 let g:netrw_liststyle = 3             " treetest-view
 let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
 let g:netrw_preview = 0
 let g:netrw_banner=0
-nnoremap <leader>e <esc>:Lexplore<cr>
-command! Sethere lcd %:p:h
-nnoremap <leader>h <Esc>:Sethere<CR>
 " }}}
 " Folding                            {{{
-nnoremap za zA
-nnoremap zM zm
 " folding method for css, scss
 autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
 " }}}
 " Init.vim edit and reload           {{{
 cabbr einit :edit $MYVIMRC
-nnoremap <silent> <leader>vr :source ~/.vimrc<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
-nnoremap <silent> <leader>V  :source ~/.vimrc<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
 " }}}
 
 " SW Develop                         {{{
-inoremap {<CR>  {<CR>}<Esc>O
-inoremap {<Tab>  {}<Left>
 " Align function arguments
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-" Show alternate file (ex. .c/.cpp <-> .h)
-nnoremap <space>a :FSHere<cr>
-nnoremap <space>la :FSSplitRight<cr>
-" Jump to next/prev error
-nnoremap [e :lprev<cr>
-nnoremap ]e :lnext<cr>
-" Jump to next/prev build error
-nnoremap [b :cprev<cr>
-nnoremap ]b :cnext<cr>
-" Show variale definition
-nnoremap I [i
-" Open preview window on current name
-nnoremap D <C-w>}
-if filereadable(expand('vimrc.local'))
-    exe 'source vimrc.local'
-endif
 " -------------------------------------------------------- Align text
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap <leader>ea  <Plug>(EasyAlign)
@@ -308,30 +213,11 @@ iabbr i16t int16_t
 iabbr i32t int32_t
 iabbr i64t int64_t
 
-" Local vimrc
-command! Svimrc :!cat vimrc.local
-command! Evimrc :e vimrc.local
-command! Lvimrc :exe 'source vimrc.local'
-iabbr evimrc Evimrc
-iabbr svimrc Svimrc
-iabbr lvimrc Lvimrc
-
 " Strip whitespaces
 nnoremap <leader>zz :StripWhitespace<cr>
 
 "}}}
 " Statusline                         {{{
-function! ShortFilename()
-  let _ = ''
-  let name = expand('%')
-  if empty(name)
-    let _ .= '[No Name]'
-  else
-    let _ .= fnamemodify(name, ':p:h:t') . '/' . fnamemodify(name, ':t')
-  endif
-  return _
-endfunction
-
 function! StatusLineGit()
     let l:branchname = FugitiveHead()
     return strlen(branchname) > 0 ? '['.l:branchname.']' : ''

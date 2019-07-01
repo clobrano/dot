@@ -36,7 +36,7 @@ vnoremap Y "+y<CR>
 nnoremap P "+p
 
 " directory explore
-nnoremap <leader>exp <esc>:Lexplore<cr>
+nnoremap <leader>ex <esc>:Lexplore<cr>
 " directory change here
 nnoremap <leader>here :lcd %:p:h<CR>
 
@@ -192,9 +192,9 @@ nnoremap D <C-w>}
 
 
 " reload vimrc
-nnoremap <silent> <leader>vr :source ~/.vimrc<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
+nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
-nnoremap <silent> <leader>V  :source ~/.vimrc<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
+nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " load vimrclocal {{{
 if filereadable(expand('vimrc.local'))

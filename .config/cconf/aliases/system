@@ -1,0 +1,14 @@
+alias dw='dmesg -wH'
+alias jc='journalctl'
+alias jcs='sudo journalctl'
+alias psg='ps aux | grep'
+alias sc='systemctl'
+alias scs='sudo systemctl'
+alias x='exit'
+alias xcopy='xclip'
+alias xpaste='xclip -o'
+
+# Files and directories
+alias pw='pwd'
+alias mkd='mkdir -p'
+alias ff='find . -name'

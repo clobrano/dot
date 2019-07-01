@@ -1,0 +1,4 @@
+alias installedbyme="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
+alias memusage='du -h -t 10M -d 1'
+alias dirusage='du -d1 -t10M -h 2>/dev/null | sort -hr'
+

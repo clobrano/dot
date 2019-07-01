@@ -1,0 +1,4 @@
+alias f='fuz'
+alias fv='fuz -e gvim'
+alias fn='fuz -e nvim -d ~/Dropbox/Work/Notes/'
+

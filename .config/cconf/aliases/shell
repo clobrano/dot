@@ -1,0 +1,2 @@
+alias bi='source ~/.bashrc'
+alias zi='source ~/.zshrc'

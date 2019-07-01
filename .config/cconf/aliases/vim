@@ -1,0 +1,7 @@
+alias n='nvim'
+alias nvm='nvim -c "Monokai"'
+alias nvl='nvim -c "Papercolor"'
+
+alias v='vim'
+alias vg='gvim'
+

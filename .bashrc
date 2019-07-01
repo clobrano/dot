@@ -73,9 +73,8 @@ fi
 
 export EDITOR="gvim -f"
 
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.dot --work-tree=$HOME"
+source $HOME/.config/cconf/dotfiles/DOTFILES
 
-export DOTFILES=$HOME/.config/cconf
 export CDPATH=$HOME:$HOME/workspace:$HOME/workspace/devel
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang
@@ -89,7 +88,6 @@ PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
-#PATH=$PATH:$DOTFILES
 PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
 
@@ -126,10 +124,3 @@ alias sendat='sudo $GOBIN/sendat'
 alias hikeydefconf='make ARCH=arm64 hikey_defconfig'
 alias hikeymenuconf='make ARCH=arm64 menuconfig'
 alias hikeymake='make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j2'
-
-# some more aliases
-if [ -d  "$DOTFILES/aliases" ]; then
-    for i in $(ls "$DOTFILES/aliases"); do
-        source "$DOTFILES/aliases/$i"
-    done
-fi

@@ -23,6 +23,7 @@ Plug 'dracula/vim'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'rakr/vim-one'
+Plug 'tomasr/molokai'
 "}}}
 " Search & Replace                   {{{
 Plug 'MattesGroeger/vim-bookmarks'
@@ -109,35 +110,18 @@ syntax enable
 filetype on
 
 " Look&Feel
-command! HighlightDark highlight Search gui=bold guibg=NONE guifg=orange <bar> highlight Search cterm=bold ctermbg=NONE ctermfg=214
-command! Parens highlight MatchParen gui=bold guibg=NONE guifg=magenta
-
-function! MonokaiSet()
-    exe "colorscheme monokai"
-    exe "set background=dark"
-    exe "hi Normal ctermbg=235 ctermfg=15"
-    exe "Parens"
-    exe "HighlightDark"
-    exe "nnoremap * *``"
-    exe "set textwidth=0"
-    exe "hi StatusLine cterm=italic ctermbg=252"
-endfunction
-command! Monokai    :call MonokaiSet()
-
-function! PapercolorSet()
-    exe "colorscheme PaperColor"
-    exe "set background=light"
-    exe "HighlightDark"
-    exe "nnoremap * *``"
-    exe "set textwidth=0"
-endfunction
-command! Papercolor :call PapercolorSet()
-
 try
     echo g:colors_name
 catch
-  call PapercolorSet()
+    exe "colorscheme PaperColor"
+    exe "set background=light"
 endtry
+
+if &background ==# "dark"
+    exe "highlight Search gui=bold guibg=NONE guifg=orange"
+    exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
+    exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
+endif
 
 " }}}
 " System settings                    {{{
@@ -150,21 +134,19 @@ if executable('fzf')
 endif
 source ~/.config/nvim/plugins/mappings.vim
 "}}}
-" Autocommands {{{
+" Autocommands                       {{{
 source ~/.config/nvim/plugins/autocommands.vim
 " }}}
-" Abbreviations {{{
+" Abbreviations                      {{{
 source ~/.config/nvim/plugins/abbreviations.vim
 " }}}
-"
-" " File exploring                     {{{
+
+" File exploring                     {{{
 let g:netrw_winsize = -28             " absolute width of netrw window
 let g:netrw_liststyle = 3             " treetest-view
 let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
 let g:netrw_preview = 0
 let g:netrw_banner=0
-" }}}
-" Init.vim edit and reload           {{{
 " }}}
 
 " SW Develop                         {{{

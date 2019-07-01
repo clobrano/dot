@@ -73,9 +73,10 @@ inoremap <C-c> <c-x><c-o>
 nnoremap Q <nop>
 
 
-" highlight current word
-nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-
+" highlight selected word
+vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+" highlight current word and do not move to next match
+nnoremap * *``zz
 
 " move: fix weird chars in terminal using arrow keys in insert mode {{{
 inoremap [1;5A <esc>ki
@@ -118,6 +119,8 @@ nnoremap <leader>p <C-^>
 " move between tabs
 nnoremap tn gt
 nnoremap tb gT
+nnoremap <M-l> gt
+nnoremap <M-h> gT
 
 
 " normal mode enter

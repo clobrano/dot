@@ -16,44 +16,45 @@ set expandtab
 set foldenable
 set foldmethod=indent
 set foldlevelstart=99
-set foldtext=MyFoldText()                 " Set a nicer foldtext function
-function! MyFoldText()
-    let line = getline(v:foldstart)
-    if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
-        let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-        let linenum = v:foldstart + 1
-        while linenum < v:foldend
-            let line = getline( linenum )
-            let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-            if comment_content != ''
-                break
-            endif
-            let linenum = linenum + 1
-        endwhile
-        let sub = initial . ' ' . comment_content
-    else
-        let sub = line
-        let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
-        if startbrace == '{'
-            let line = getline(v:foldend)
-            let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
-            if endbrace == '}'
-                let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
-            endif
-        endif
-    endif
-    let n = v:foldend - v:foldstart
-    let info = " " . n . " lines"
-    let sub = sub . "                                                                                                                  "
-    let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
-    let fold_w = getwinvar( 0, '&foldcolumn' )
-    let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
-    return sub . info
-endfunction
+"set foldtext=MyFoldText()                 " Set a nicer foldtext function
+"function! MyFoldText()
+    "let line = getline(v:foldstart)
+    "if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
+        "let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
+        "let linenum = v:foldstart + 1
+        "while linenum < v:foldend
+            "let line = getline( linenum )
+            "let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
+            "if comment_content != ''
+                "break
+            "endif
+            "let linenum = linenum + 1
+        "endwhile
+        "let sub = initial . ' ' . comment_content
+    "else
+        "let sub = line
+        "let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
+        "if startbrace == '{'
+            "let line = getline(v:foldend)
+            "let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
+            "if endbrace == '}'
+                "let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
+            "endif
+        "endif
+    "endif
+    "let n = v:foldend - v:foldstart
+    "let info = " " . n . " lines"
+    "let sub = sub . "                                                                                                                  "
+    "let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
+    "let fold_w = getwinvar( 0, '&foldcolumn' )
+    "let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
+    "return sub . info
+"endfunction
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
 set guifont=Source\ Code\ Pro\ for\ Powerline\ medium\ 10
-set guioptions-=T                         " Remove toolbar
+set guioptions-=m                         " Remove the menubar
+set guioptions-=T                         " Remove the toolbar
 set grepprg=ack                           " Configure vimgrep
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
@@ -74,7 +75,7 @@ set lcs=trail:·,tab:»·                    " Highlight spaces, tabs, end of li
 set linebreak                             " wrap long lines at characters in 'breakat'
 if has('nvim')
 else
-  set lines=35 columns=150
+  set lines=40 columns=200
   set linespace=1
 endif
 set list                                  " show whitespace

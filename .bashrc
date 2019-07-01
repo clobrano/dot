@@ -75,7 +75,7 @@ export EDITOR="gvim -f"
 
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dot --work-tree=$HOME"
 
-export DOTFILES=$HOME/.config/.chakra
+export DOTFILES=$HOME/.config/cconf
 export CDPATH=$HOME:$HOME/workspace:$HOME/workspace/devel
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang

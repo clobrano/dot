@@ -5,50 +5,7 @@ nnoremap > >>
 nnoremap < <<
 " }}}
 
-" buffer open alternate file (ex. .c/.cpp <-> .h)
-nnoremap <space>a :FSHere<cr>
-nnoremap <space>la :FSSplitRight<cr>
-
-
-" buffer: save, close {{{
-inoremap <C-s>      <Esc>:w<CR>
-noremap <C-s>       <Esc>:w<CR>
-nnoremap x          <Esc>:bd
-nnoremap xx         <Esc>:bd<CR>
-nnoremap <leader>fx <Esc>:bd!<CR>
-nnoremap x1         m1:bd<cr>
-nnoremap x2         m2<cr>:bn<cr>:bd<cr>
-nnoremap x3         m3<cr>:2bn<cr>:bd<cr>
-nnoremap x4         m4<cr>:3bn<cr>:bd<cr>
-nnoremap x5         m5<cr>:4bn<cr>:bd<cr>
-nnoremap x6         m6<cr>:5bn<cr>:bd<cr>
-nnoremap x7         m7<cr>:6bn<cr>:bd<cr>
-nnoremap x8         m8<cr>:7bn<cr>:bd<cr>
-nnoremap x9         m9<cr>:8bn<cr>:bd<cr>
-"}}}
-
-
-" variale definition in command line
-nnoremap I [i
-" clipboard yank
-vnoremap Y "+y<CR>
-" clipboard paste
-nnoremap P "+p
-
-" directory explore
-nnoremap <leader>ex <esc>:Lexplore<cr>
-" directory change here
-nnoremap <leader>here :lcd %:p:h<CR>
-
-" enter command mode
-nnoremap ; :
-vnoremap ; :
-inoremap <C-c> <c-x><c-o>
-
-" no ex-mode
-nnoremap Q <nop>
-
-" move between buffers {{{
+" buffer: motion {{{
 noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>
 noremap H         <Esc>:bprevious<CR>
@@ -65,8 +22,60 @@ nnoremap m8       :bfirst<cr>:7bn<cr>
 nnoremap m9       :bfirst<cr>:8bn<cr>
 " }}}
 
+" buffer: open alternate file (ex. .c/.cpp <-> .h)
+nnoremap <space>a :FSHere<cr>
+nnoremap <space>la :FSSplitRight<cr>
+
+
+" buffer: close {{{
+nnoremap x          <Esc>:bd
+nnoremap xx         <Esc>:bd<CR>
+nnoremap <leader>fx <Esc>:bd!<CR>
+nnoremap x1         m1:bd<cr>
+nnoremap x2         m2<cr>:bn<cr>:bd<cr>
+nnoremap x3         m3<cr>:2bn<cr>:bd<cr>
+nnoremap x4         m4<cr>:3bn<cr>:bd<cr>
+nnoremap x5         m5<cr>:4bn<cr>:bd<cr>
+nnoremap x6         m6<cr>:5bn<cr>:bd<cr>
+nnoremap x7         m7<cr>:6bn<cr>:bd<cr>
+nnoremap x8         m8<cr>:7bn<cr>:bd<cr>
+nnoremap x9         m9<cr>:8bn<cr>:bd<cr>
+"}}}
+
+" buffer: save {{{
+inoremap <C-s>      <Esc>:w<CR>
+noremap <C-s>       <Esc>:w<CR>
+"}}}
+
+
+" variale definition in command line
+nnoremap I [i
+
+
+" clipboard yank
+vnoremap Y "+y<CR>
+" clipboard paste
+nnoremap P "+p
+
+" directory explore
+nnoremap <leader>ex <esc>:Lexplore<cr>
+" directory change here
+nnoremap <leader>here :lcd %:p:h<CR>
+
+
+" enter command mode
+nnoremap ; :
+vnoremap ; :
+inoremap <C-c> <c-x><c-o>
+
+
+" no ex-mode
+nnoremap Q <nop>
+
+
 " highlight current word
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
 
 " move: fix weird chars in terminal using arrow keys in insert mode {{{
 inoremap [1;5A <esc>ki
@@ -75,20 +84,23 @@ inoremap [1;5B <esc>ji
 inoremap [1;5D <esc>hi
 "}}}
 
+
 " move to next/prev error
 nnoremap [e :lprev<cr>
 nnoremap ]e :lnext<cr>
+
 
 " move to next/prev build error
 nnoremap [b :cprev<cr>
 nnoremap ]b :cnext<cr>
 
-" move: always move line by line, regardless wrap {{{
+
+" move: always move line by line, regardless wrap
 noremap <silent> k gk
 noremap <silent> j gj
-"}}}
 
-" move fast {{{
+
+" move fast
 nnoremap <C-l> w
 nnoremap <C-h> b
 nnoremap <C-k> 10k
@@ -97,20 +109,26 @@ nnoremap E $
 vnoremap E $
 nnoremap B ^
 vnoremap B ^
-"}}}
+
 
 " move to previous buffer
 nnoremap <leader>p <C-^>
 
 
-
-" move between tabs {{{
+" move between tabs
 nnoremap tn gt
 nnoremap tb gT
-"}}}
+
 
 " normal mode enter
 inoremap jj <Esc>
+
+
+" Notes
+nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
+nnoremap <leader>tu dd?^#<cr>p<leader><space>``
+nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
+
 
 " replace current word with confirmation and magic \v
 nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>

@@ -1,0 +1,33 @@
+
+autocmd * set textwidth=0
+" Make current window more obvious by turning off/adjusting some features in non-current
+" windows.
+if exists('+winhighlight')
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * set winhighlight=
+    autocmd FocusLost,WinLeave * set winhighlight=LineNr:ColorColumn,CursorLineNr:ColorColumn,EndOfBuffer:ColorColumn,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn
+    if exists('+colorcolumn')
+        autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
+    endif
+elseif exists('+colorcolumn')
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
+    autocmd FocusLost,WinLeave * let &l:colorcolumn=join(range(1, 255), ',')
+endif
+
+" Respace splits on resize
+autocmd VimResized * execute "normal! \<c-w>="
+" folding method for css, scss
+autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
+
+" Align function arguments
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Auto-header scripts
+augroup Shebang
+  autocmd BufNewFile *.sh 0put =\"#!/usr/bin/env bash\<nl># -*- coding: UTF-8 -*-\<nl>\"|$
+  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl># vi: set ft=python :\<nl>\"|$
+  autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: None -*-\<nl>\"|$
+  autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
+  autocmd BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
+augroup END
+

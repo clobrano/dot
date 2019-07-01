@@ -108,8 +108,6 @@ set nocompatible
 syntax enable
 filetype on
 
-autocmd VimResized * execute "normal! \<c-w>="
-
 " Look&Feel
 command! HighlightDark highlight Search gui=bold guibg=NONE guifg=orange <bar> highlight Search cterm=bold ctermbg=NONE ctermfg=214
 command! Parens highlight MatchParen gui=bold guibg=NONE guifg=magenta
@@ -144,35 +142,32 @@ endtry
 " }}}
 " System settings                    {{{
 source ~/.config/nvim/plugins/settings.vim
-cabbr cs colorscheme
 "}}}
 " System mappings                    {{{
 " ------------------------------------------ Fzf fuzzy searcher (ff = find file)
-cabbr ! term
 if executable('fzf')
     nnoremap <leader>ff <esc>:FZF<cr>
 endif
 source ~/.config/nvim/plugins/mappings.vim
 "}}}
-" File exploring                     {{{
+" Autocommands {{{
+source ~/.config/nvim/plugins/autocommands.vim
+" }}}
+" Abbreviations {{{
+source ~/.config/nvim/plugins/abbreviations.vim
+" }}}
+"
+" " File exploring                     {{{
 let g:netrw_winsize = -28             " absolute width of netrw window
 let g:netrw_liststyle = 3             " treetest-view
 let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
 let g:netrw_preview = 0
 let g:netrw_banner=0
 " }}}
-" Folding                            {{{
-" folding method for css, scss
-autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
-" }}}
 " Init.vim edit and reload           {{{
-cabbr einit :edit $MYVIMRC
 " }}}
 
 " SW Develop                         {{{
-" Align function arguments
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
 " -------------------------------------------------------- Align text
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap <leader>ea  <Plug>(EasyAlign)
@@ -203,15 +198,6 @@ let g:easy_align_delimiters = {
 \   }
 \ }
 
-" Shorcuts for stdints
-iabbr u8t  uint8_t
-iabbr u16t uint16_t
-iabbr u32t uint32_t
-iabbr u64t uint64_t
-iabbr i8t  int8_t
-iabbr i16t int16_t
-iabbr i32t int32_t
-iabbr i64t int64_t
 
 " Strip whitespaces
 nnoremap <leader>zz :StripWhitespace<cr>
@@ -311,22 +297,22 @@ nnoremap <leader>fl :BLines<cr>
 " }}}
 " Getting Things Done GTD            {{{
 " Task Done, Up, Idle, Next, change Prio (do not use them directly, see iabbr)
-nnoremap <leader>at a-<space><C-R>=strftime("%y%W%u")<CR><space>(A)
-nnoremap <leader>bt a-<space><C-R>=strftime("%y%W%u")<CR><space>(B)
-nnoremap <leader>ct a-<space><C-R>=strftime("%y%W%u")<CR><space>(C)
-nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
-nnoremap <leader>tu dd?^#<cr>p<leader><space>``
-nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
+"nnoremap <leader>at a-<space><C-R>=strftime("%y%W%u")<CR><space>(A)
+"nnoremap <leader>bt a-<space><C-R>=strftime("%y%W%u")<CR><space>(B)
+"nnoremap <leader>ct a-<space><C-R>=strftime("%y%W%u")<CR><space>(C)
+"nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
+"nnoremap <leader>tu dd?^#<cr>p<leader><space>``
+"nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
 nnoremap <leader>npa v$:s/([A-C])/(A)/g<CR><space><space>:nohlsearch<cr>
 nnoremap <leader>npb v$:s/([A-C])/(B)/g<CR><space><space>:nohlsearch<cr>
 nnoremap <leader>npc v$:s/([A-C])/(C)/g<CR><space><space>:nohlsearch<cr>
-iabbr taska <esc><leader>at
-iabbr taskb <esc><leader>bt
-iabbr taskc <esc><leader>ct
-cabbr sprj sort '+[a-zA-z]*' r
-cabbr spri sort '([A-Z])' r
-nnoremap <leader>nsj vip:sort '+[a-zA-z]*' r<cr>
-nnoremap <leader>nsp vip:sort '([A-Z])' r<cr>
+"iabbr taska <esc><leader>at
+"iabbr taskb <esc><leader>bt
+"iabbr taskc <esc><leader>ct
+"cabbr sprj sort '+[a-zA-z]*' r
+"cabbr spri sort '([A-Z])' r
+"nnoremap <leader>nsj vip:sort '+[a-zA-z]*' r<cr>
+"nnoremap <leader>nsp vip:sort '([A-Z])' r<cr>
 "}}}
 " Git                                {{{
 nnoremap <leader>gs   <esc>:Gstatus<cr>
@@ -395,14 +381,6 @@ let g:syntastic_cpp_checkers=['clang_check', 'cppcheck']
 let g:syntastic_python_checkers=['flake8']
 " }}}
 " Snippets                           {{{
-augroup Shebang
-  autocmd BufNewFile *.sh 0put =\"#!/usr/bin/env bash\<nl># -*- coding: UTF-8 -*-\<nl>\"|$
-  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># -*- coding: utf-8 -*-\<nl># vi: set ft=python :\<nl>\"|$
-  autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: None -*-\<nl>\"|$
-  autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
-  autocmd BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
-augroup END
-
 source ~/.config/nvim/snippets/browser.config.vim
 source ~/.config/nvim/snippets/c_cpp.config.vim
 source ~/.config/nvim/snippets/canonical.config.vim
@@ -435,12 +413,12 @@ nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
 autocmd BufRead backlog set filetype=todo
-iabbr isnt isn't
-iabbr dont don't
-iabbr doesnt doesn't
-iabbr wasnt wasn't
-iabbr didnt didn't
-iabbr wont won't
+"iabbr isnt isn't
+"iabbr dont don't
+"iabbr doesnt doesn't
+"iabbr wasnt wasn't
+"iabbr didnt didn't
+"iabbr wont won't
 " For Writers
 augroup litecorrect
   autocmd!
@@ -461,7 +439,6 @@ hi SpellBad gui=undercurl   guisp=red
 hi SpellCap gui=undercurl   guisp=blue
 " }}}
 " Focus                              {{{
-autocmd * set textwidth=0
 " Make current window more obvious by turning off/adjusting some features in non-current
 " windows.
 if exists('+winhighlight')

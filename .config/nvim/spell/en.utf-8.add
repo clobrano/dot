@@ -128,3 +128,6 @@ webserver
 GOPATH
 structs
 crosscompile
+sdk
+tqcm
+endiannes

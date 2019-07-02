@@ -217,17 +217,6 @@ nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<C
 " reload vim and install plugins
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
-" load vimrclocal {{{
-if filereadable(expand('vimrc.local'))
-    exe 'source vimrc.local'
-endif
-command! Svimrc :!cat vimrc.local
-command! Evimrc :e vimrc.local
-command! Lvimrc :exe 'source vimrc.local'
-iabbr evimrc Evimrc
-iabbr svimrc Svimrc
-iabbr lvimrc Lvimrc
-"}}}
 
 " exit vim
 nnoremap qa <esc>:qa

@@ -52,7 +52,7 @@ set foldlevelstart=99
 "endfunction
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Source\ Code\ Pro\ for\ Powerline\ medium\ 10
+set guifont=Source\ Code\ Pro\ medium\ 10
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 set grepprg=ack                           " Configure vimgrep

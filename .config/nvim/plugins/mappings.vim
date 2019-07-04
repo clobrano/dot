@@ -72,6 +72,9 @@ inoremap <C-c> <c-x><c-o>
 " no ex-mode
 nnoremap Q <nop>
 
+" edit font (effects on GUI only)
+nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ medium\ 10
+
 
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>

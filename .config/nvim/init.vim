@@ -30,7 +30,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'mileszs/ack.vim'
+"Plug 'mileszs/ack.vim'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}

@@ -1,8 +1,5 @@
-[submodule "/home/TMT/carlolo/oh-my-zsh"]
-	path = /home/TMT/carlolo/oh-my-zsh
-	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "/home/TMT/carlolo/.oh-my-zsh"]
-	path = /home/TMT/carlolo/.oh-my-zsh
+[submodule "/home/carlo/.oh-my-zsh"]
+	path = /home/carlo/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 [submodule ".config/cconf/zsh/plugins/zsh-autosuggestions"]
 	path = .config/cconf/zsh/plugins/zsh-autosuggestions

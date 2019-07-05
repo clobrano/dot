@@ -18,7 +18,7 @@ set foldmethod=indent
 set foldlevelstart=99
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Source\ Code\ Pro\ medium\ 10
+set guifont=Source\ Code\ Pro\ for\ powerline\ medium\ 11
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 

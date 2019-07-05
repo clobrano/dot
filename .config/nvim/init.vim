@@ -372,7 +372,7 @@ nnoremap <leader>1 :Make<cr>
 "}}}
 " editorconfig                       {{{
 iabbr editorconfig <esc>:-1 r~/.config/nvim/snippets/editorconfig/template.vim
-}}}
+"}}}
 " Notes                              {{{
 let g:goyo_width=100
 

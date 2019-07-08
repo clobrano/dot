@@ -29,7 +29,7 @@ nnoremap <space>la :FSSplitRight<cr>
 
 " buffer: close {{{
 nnoremap x          <Esc>:bd
-nnoremap xx         <Esc>:bd<CR>
+nnoremap xb         <Esc>:bd<CR>
 nnoremap <leader>fx <Esc>:bd!<CR>
 nnoremap x1         m1:bd<cr>
 nnoremap x2         m2<cr>:bn<cr>:bd<cr>
@@ -151,10 +151,10 @@ nnoremap <silent> - :exe "resize -2"<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " search word in all visible filesystem
-nnoremap fa <Esc>:grep ""<left>
+nnoremap fa <Esc>:Ack! ""<left>
 
 " search word under cursor in all visible filesystem
-nnoremap fc <Esc>:grep ""<left><C-r><C-w>
+nnoremap fc <Esc>:Ack! ""<left><C-r><C-w>
 
 " search for selected text, forwards or backwards. {{{
 vnoremap <silent> * :<C-U>
@@ -224,7 +224,7 @@ nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vi
 " exit vim
 nnoremap qa <esc>:qa
 " force exit vim
-nnoremap xxx <esc>:qa!
+nnoremap xx <esc>:qa!
 " Don't know what this is...
 xnoremap <silent> p p:let @+=@0<CR>
 

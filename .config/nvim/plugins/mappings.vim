@@ -224,7 +224,7 @@ nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vi
 " exit vim
 nnoremap qa <esc>:qa
 " force exit vim
-nnoremap qx <esc>:qa!
+nnoremap xxx <esc>:qa!
 " Don't know what this is...
 xnoremap <silent> p p:let @+=@0<CR>
 

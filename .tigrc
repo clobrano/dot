@@ -1,13 +1,15 @@
 set mouse = yes
 
-# Custom Bindings
-bind generic + !git commit --amend
-bind generic 9 !@sh -c "echo -n %(commit) | xclip -selection c"
+set main-view = line-number:no,interval=5 id:yes date:relative-compact author:abbreviated commit-title:yes,graph,refs,overflow=no
 
+# Custom Bindings
+# Amend current commit
+bind generic + !git commit --amend
+# Copy current commit hash
+bind generic 9 !@sh -c "echo -n %(commit) | xclip -selection c"
 
 # colorscheme, thanks to https://carlobertoldi.wordpress.com/2013/07/08/a-colour-scheme-for-tig-ncurses-git/
 # *color* 'area' 'fgcolor' 'bgcolor' '[attributes]'
-
 # general
 color   default                 15      235
 color   cursor                  15      241

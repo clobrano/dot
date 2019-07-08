@@ -112,68 +112,35 @@ source ~/.config/nvim/plugins/autocommands.vim
 source ~/.config/nvim/plugins/abbreviations.vim
 source ~/.config/nvim/plugins/functions.vim
 
-" Look&Feel                          {{{
-try
-    echo g:colors_name
-catch
-    exe "colorscheme PaperColor"
-    exe "set background=light"
-endtry
 
-if &background ==# "dark"
-    exe "highlight Search gui=bold guibg=NONE guifg=orange"
-    exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
-    exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
+" Focus                              {{{
+" Make current window more obvious by turning off/adjusting some features in non-current
+" windows.
+if exists('+winhighlight')
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * set winhighlight=
+    autocmd FocusLost,WinLeave * set winhighlight=LineNr:ColorColumn,CursorLineNr:ColorColumn,EndOfBuffer:ColorColumn,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn
+    if exists('+colorcolumn')
+        autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
+    endif
+elseif exists('+colorcolumn')
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
+    autocmd FocusLost,WinLeave * let &l:colorcolumn=join(range(1, 255), ',')
 endif
+"}}}
 
-" }}}
 " FZF                                {{{
 
 "}}}
-" netrw                              {{{
-let g:netrw_winsize = -28             " absolute width of netrw window
-let g:netrw_liststyle = 3             " treetest-view
-let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
-let g:netrw_preview = 0
-let g:netrw_banner=0
-" }}}
-" Easy Align                         {{{
-xmap <leader>ea  <Plug>(EasyAlign)
-nmap <leader>ea  <Plug>(EasyAlign)
-let g:easy_align_delimiters = {
-            \ '>': { 'pattern': '>>\|=>\|>' },
-            \ '/': {
-            \     'pattern':         '//\+\|/\*\|\*/',
-            \     'delimiter_align': 'l',
-            \     'ignore_groups':   ['!Comment'] },
-            \ ']': {
-            \     'pattern':       '[[\]]',
-            \     'left_margin':   0,
-            \     'right_margin':  0,
-            \     'stick_to_left': 0
-            \   },
-            \ ')': {
-            \     'pattern':       '[()]',
-            \     'left_margin':   1,
-            \     'right_margin':  0,
-            \     'stick_to_left': 0
-            \   },
-            \ 'd': {
-            \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
-            \     'left_margin':  0,
-            \     'right_margin': 0
-            \   }
-            \ }
+
+" editorconfig                       {{{
+iabbr editorconfig <esc>:-1 r~/.config/nvim/snippets/editorconfig/template.vim
 "}}}
-" ntpeters/vim-better-whitespace     {{{
-nnoremap <leader>zz :StripWhitespace<cr>
-"}}}
+
 " buftabline                         {{{
-if has("buftabline")
-    let g:buftabline_numbers=1
-    let g:buftabline_indicators=1
-endif
+let g:buftabline_numbers=1
+let g:buftabline_indicators=1
 " }}}
+
 " Cscope                             {{{
 command! CscopeMake !find . -name '*.c' -o -name '*.cpp' -o -name '*.h' > cscope.files && cscope -b -i cscope.files
 command! CscopeLoad cs add cscope.out
@@ -208,6 +175,7 @@ nnoremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>fd :cs find g <C-R>=expand("<cword>")<CR><CR>
 command! CallTree :CCTreeTraceReverse
 "}}}
+
 " Ctags                              {{{
 if executable("ctags")
     noremap T <Esc>:tag<space>
@@ -219,23 +187,47 @@ if executable("ctags")
     command! CtagsMake !ctags -R --extra=+f --exclude=.git .
     endif
 " }}}
-" TagList                            {{{
-let Tlist_Auto_Highlight_Tag=1
-let Tlist_Auto_Update=1
-let Tlist_Display_Prototype=0
-let Tlist_Enable_Fold_Column=0
-let Tlist_Inc_Winwidth=1
-let Tlist_Show_One_File=1
-let Tlist_WinWidth=40
-let Tlist_Compact_Format=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Use_Right_Window=1
 
-nnoremap <leader>to :TlistOpen<cr>
-nnoremap <leader>tc :TlistClose<cr>
+" Custom Snippets                    {{{
+source ~/.config/nvim/snippets/browser.config.vim
+source ~/.config/nvim/snippets/c_cpp.config.vim
+source ~/.config/nvim/snippets/canonical.config.vim
+source ~/.config/nvim/snippets/golang.vim
+source ~/.config/nvim/snippets/licenses.config.vim
+source ~/.config/nvim/snippets/python.config.vim
+source ~/.config/nvim/snippets/shell.config.vim
+source ~/.config/nvim/snippets/other.vim
+"}}}
 
-autocmd FileType taglist set norelativenumber
-" }}}
+" Easy Align                         {{{
+xmap <leader>ea  <Plug>(EasyAlign)
+nmap <leader>ea  <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
+            \ '>': { 'pattern': '>>\|=>\|>' },
+            \ '/': {
+            \     'pattern':         '//\+\|/\*\|\*/',
+            \     'delimiter_align': 'l',
+            \     'ignore_groups':   ['!Comment'] },
+            \ ']': {
+            \     'pattern':       '[[\]]',
+            \     'left_margin':   0,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ ')': {
+            \     'pattern':       '[()]',
+            \     'left_margin':   1,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ 'd': {
+            \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
+            \     'left_margin':  0,
+            \     'right_margin': 0
+            \   }
+            \ }
+"}}}
+
 " FZF                                {{{
 if executable('fzf')
     if has('nvim')
@@ -250,6 +242,7 @@ if executable('fzf')
     nnoremap <leader>fx :Commits<cr>
 endif
 " }}}
+
 " Getting Things Done GTD            {{{
 
 " Sort items by project
@@ -273,6 +266,7 @@ nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
 " MOve task to Idle list
 nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
 "}}}
+
 " Git                                {{{
 nnoremap <leader>ga   <esc>:Gwrite
 nnoremap <leader>gc   <esc>:Gcommit<cr>
@@ -293,6 +287,7 @@ nnoremap gdl :diffget //3
 " Push to gerrit review
 cabbr gerrit  !git push origin HEAD:refs/for/master
 " }}}
+
 " Golang                             {{{
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -313,6 +308,7 @@ au FileType go nmap <leader>gc <Plug>(go-coverage)
 au FileType go nmap <leader>gr <Plug>(go-run)
 au FileType go nmap <leader>gt <Plug>(go-test)
 " }}}
+
 " Jedi-vim                           {{{
 let g:jedi#force_py_version=3
 let g:jedi#completions_enabled = 1
@@ -320,10 +316,28 @@ let g:jedi#completions_command = "<C-c>"
 let g:jedi#goto_command = "<space>fd"
 let g:jedi#usages_command = "<space>fc"
 " }}}
+
+" Look&Feel                          {{{
+try
+    echo g:colors_name
+catch
+    exe "colorscheme PaperColor"
+    exe "set background=light"
+endtry
+
+if &background ==# "dark"
+    exe "highlight Search gui=bold guibg=NONE guifg=orange"
+    exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
+    exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
+endif
+
+" }}}
+
 " Mark                               {{{
 "vnoremap {Leader}/  n
 "nnoremap <leader>n <Plug>Mark
 " }}}
+
 " Markdown                           {{{
 let g:vim_markdown_no_extensions_in_markdown = 1
 let g:vim_markdown_follow_anchor = 1
@@ -333,37 +347,17 @@ autocmd FileType markdown set conceallevel=2
 cabbr toc Toc
 cabbr toch Toch
 " }}}
-" Syntastic                          {{{
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_c_checkers=['clang_check', 'cppcheck']
-let g:syntastic_cpp_checkers=['clang_check', 'cppcheck']
-let g:syntastic_python_checkers=['flake8']
+
+" netrw                              {{{
+let g:netrw_banner=0
+let g:netrw_liststyle = 3             " treetest-view
+let g:netrw_list_hide= netrw_gitignore#Hide().'.*\.swp$'
+let g:netrw_hide = 1
+let g:netrw_preview = 0
+let g:netrw_sort_sequence = '[\/]$,*' " sort is affecting only: directories on the top, files below
+let g:netrw_winsize = -28             " absolute width of netrw window
 " }}}
-" Custom Snippets                    {{{
-source ~/.config/nvim/snippets/browser.config.vim
-source ~/.config/nvim/snippets/c_cpp.config.vim
-source ~/.config/nvim/snippets/canonical.config.vim
-source ~/.config/nvim/snippets/golang.vim
-source ~/.config/nvim/snippets/licenses.config.vim
-source ~/.config/nvim/snippets/python.config.vim
-source ~/.config/nvim/snippets/shell.config.vim
-source ~/.config/nvim/snippets/other.vim
-"}}}
-" ultisnips                          {{{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-p>"
-let g:UltiSnipsEditSplit="vertical"  " If you want :UltiSnipsEdit to split your window.
-" }}}
-" vim-dispatch                       {{{
-nnoremap <leader>1 :Make<cr>
-"}}}
-" editorconfig                       {{{
-iabbr editorconfig <esc>:-1 r~/.config/nvim/snippets/editorconfig/template.vim
-"}}}
+
 " Notes                              {{{
 let g:goyo_width=100
 
@@ -380,7 +374,62 @@ autocmd BufRead backlog set filetype=todo
 command! SpellEn    setlocal spell! spelllang=en
 command! SpellIt    setlocal spell! spelllang=it
 "}}}
-" For Writers                        {{{
+
+" ntpeters/vim-better-whitespace     {{{
+nnoremap <leader>zz :StripWhitespace<cr>
+"}}}
+
+" Syntastic                          {{{
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_c_checkers=['clang_check', 'cppcheck']
+let g:syntastic_cpp_checkers=['clang_check', 'cppcheck']
+let g:syntastic_python_checkers=['flake8']
+" }}}
+
+" TagList                            {{{
+let Tlist_Auto_Highlight_Tag=1
+let Tlist_Auto_Update=1
+let Tlist_Display_Prototype=0
+let Tlist_Enable_Fold_Column=0
+let Tlist_Inc_Winwidth=1
+let Tlist_Show_One_File=1
+let Tlist_WinWidth=40
+let Tlist_Compact_Format=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window=1
+
+nnoremap <leader>to :TlistOpen<cr>
+nnoremap <leader>tc :TlistClose<cr>
+
+autocmd FileType taglist set norelativenumber
+" }}}
+
+" ultisnips                          {{{
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:UltiSnipsEditSplit="vertical"  " If you want :UltiSnipsEdit to split your window.
+" }}}
+
+" vim-dispatch                       {{{
+nnoremap <leader>1 :Make<cr>
+"}}}
+
+" vimrclocal                    {{{
+if filereadable(expand('vimrc.local'))
+    exe 'source vimrc.local'
+endif
+command! Svimrc :!cat vimrc.local
+command! Evimrc :e vimrc.local
+command! Lvimrc :exe 'source vimrc.local'
+iabbr evimrc Evimrc
+iabbr svimrc Svimrc
+iabbr lvimrc Lvimrc
+"}}}
+" Writers                        {{{
 augroup litecorrect
   autocmd!
   autocmd FileType markdown,mkd call litecorrect#init()
@@ -399,28 +448,3 @@ hi SpellCap ctermfg=blue
 hi SpellBad gui=undercurl   guisp=red
 hi SpellCap gui=undercurl   guisp=blue
 " }}}
-" Focus                              {{{
-" Make current window more obvious by turning off/adjusting some features in non-current
-" windows.
-if exists('+winhighlight')
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * set winhighlight=
-    autocmd FocusLost,WinLeave * set winhighlight=LineNr:ColorColumn,CursorLineNr:ColorColumn,EndOfBuffer:ColorColumn,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn
-    if exists('+colorcolumn')
-        autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
-    endif
-elseif exists('+colorcolumn')
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * let &l:colorcolumn='+' . join(range(0, 254), ',+')
-    autocmd FocusLost,WinLeave * let &l:colorcolumn=join(range(1, 255), ',')
-endif
-"}}}
-" load vimrclocal                    {{{
-if filereadable(expand('vimrc.local'))
-    exe 'source vimrc.local'
-endif
-command! Svimrc :!cat vimrc.local
-command! Evimrc :e vimrc.local
-command! Lvimrc :exe 'source vimrc.local'
-iabbr evimrc Evimrc
-iabbr svimrc Svimrc
-iabbr lvimrc Lvimrc
-"}}}

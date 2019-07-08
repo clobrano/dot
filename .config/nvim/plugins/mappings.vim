@@ -30,16 +30,15 @@ nnoremap <space>la :FSSplitRight<cr>
 " buffer: close {{{
 nnoremap x          <Esc>:bd
 nnoremap xb         <Esc>:bd<CR>
-nnoremap <leader>fx <Esc>:bd!<CR>
-nnoremap x1         m1:bd<cr>
-nnoremap x2         m2<cr>:bn<cr>:bd<cr>
-nnoremap x3         m3<cr>:2bn<cr>:bd<cr>
-nnoremap x4         m4<cr>:3bn<cr>:bd<cr>
-nnoremap x5         m5<cr>:4bn<cr>:bd<cr>
-nnoremap x6         m6<cr>:5bn<cr>:bd<cr>
-nnoremap x7         m7<cr>:6bn<cr>:bd<cr>
-nnoremap x8         m8<cr>:7bn<cr>:bd<cr>
-nnoremap x9         m9<cr>:8bn<cr>:bd<cr>
+nnoremap x1         m1:bd
+nnoremap x2         m2<cr>:bn<cr>:bd
+nnoremap x3         m3<cr>:2bn<cr>:bd
+nnoremap x4         m4<cr>:3bn<cr>:bd
+nnoremap x5         m5<cr>:4bn<cr>:bd
+nnoremap x6         m6<cr>:5bn<cr>:bd
+nnoremap x7         m7<cr>:6bn<cr>:bd
+nnoremap x8         m8<cr>:7bn<cr>:bd
+nnoremap x9         m9<cr>:8bn<cr>:bd
 "}}}
 
 " buffer: save {{{
@@ -79,7 +78,7 @@ nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ medium\ 10
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " highlight current word and do not move to next match
-nnoremap * *``zz
+nnoremap * *``
 
 " move: fix weird chars in terminal using arrow keys in insert mode {{{
 inoremap [1;5A <esc>ki

@@ -19,18 +19,15 @@ endif
 " Look & Feel                        {{{
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
-Plug 'dracula/vim'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
-Plug 'rakr/vim-one'
-Plug 'tomasr/molokai'
 "}}}
 " Search & Replace                   {{{
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"Plug 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
@@ -141,10 +138,9 @@ let g:netrw_preview = 0
 let g:netrw_banner=0
 " }}}
 " Easy Align                         {{{
-if has("easyalign")
-    xmap <leader>ea  <Plug>(EasyAlign)
-    nmap <leader>ea  <Plug>(EasyAlign)
-    let g:easy_align_delimiters = {
+xmap <leader>ea  <Plug>(EasyAlign)
+nmap <leader>ea  <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
             \ '>': { 'pattern': '>>\|=>\|>' },
             \ '/': {
             \     'pattern':         '//\+\|/\*\|\*/',
@@ -168,7 +164,6 @@ if has("easyalign")
             \     'right_margin': 0
             \   }
             \ }
-endif
 "}}}
 " ntpeters/vim-better-whitespace     {{{
 nnoremap <leader>zz :StripWhitespace<cr>
@@ -180,35 +175,33 @@ if has("buftabline")
 endif
 " }}}
 " Cscope                             {{{
-if has("cscope")
-    command! CscopeMake !find . -name '*.c' -o -name '*.cpp' -o -name '*.h' > cscope.files && cscope -b -i cscope.files
-    command! CscopeLoad cs add cscope.out
+command! CscopeMake !find . -name '*.c' -o -name '*.cpp' -o -name '*.h' > cscope.files && cscope -b -i cscope.files
+command! CscopeLoad cs add cscope.out
 
-    function! _TagsReload()
-        exec "!rm cscope.files cscope.out"
-        exec "CscopeMake"
-        exec "cscope reset"
-        exec "CtagsMake"
-    endfunction
+function! _TagsReload()
+    exec "!rm cscope.files cscope.out"
+    exec "CscopeMake"
+    exec "cscope reset"
+    exec "CtagsMake"
+endfunction
 
-    command! TagsReload :call _TagsReload()
+command! TagsReload :call _TagsReload()
 
-    nnoremap <leader>tr :silent TagsReload<cr>
+nnoremap <leader>tr :silent TagsReload<cr>
 
-    set csprg=/usr/bin/cscope
-    set csto=0
-    set cst
-    set nocsverb
-    " add any database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-        " else add database pointed to by environment
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-    set csverb
-    set cscopetag nocscopeverbose
+set csprg=/usr/bin/cscope
+set csto=0
+set cst
+set nocsverb
+" add any database in current directory
+if filereadable("cscope.out")
+    cs add cscope.out
+    " else add database pointed to by environment
+elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
 endif
+set csverb
+set cscopetag nocscopeverbose
 
 nnoremap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -227,23 +220,21 @@ if executable("ctags")
     endif
 " }}}
 " TagList                            {{{
-if has("taglist")
-    let Tlist_Auto_Highlight_Tag=1
-    let Tlist_Auto_Update=1
-    let Tlist_Display_Prototype=0
-    let Tlist_Enable_Fold_Column=0
-    let Tlist_Inc_Winwidth=1
-    let Tlist_Show_One_File=1
-    let Tlist_WinWidth=40
-    let Tlist_Compact_Format=1
-    let Tlist_Exit_OnlyWindow=1
-    let Tlist_Use_Right_Window=1
+let Tlist_Auto_Highlight_Tag=1
+let Tlist_Auto_Update=1
+let Tlist_Display_Prototype=0
+let Tlist_Enable_Fold_Column=0
+let Tlist_Inc_Winwidth=1
+let Tlist_Show_One_File=1
+let Tlist_WinWidth=40
+let Tlist_Compact_Format=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window=1
 
-    nnoremap <leader>to :TlistOpen<cr>
-    nnoremap <leader>tc :TlistClose<cr>
+nnoremap <leader>to :TlistOpen<cr>
+nnoremap <leader>tc :TlistClose<cr>
 
-    autocmd FileType taglist set norelativenumber
-endif
+autocmd FileType taglist set norelativenumber
 " }}}
 " FZF                                {{{
 if executable('fzf')

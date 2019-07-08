@@ -1,1 +1,4 @@
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dot --work-tree=$HOME"
+alias dot="/usr/bin/git --git-dir=$HOME/.dot --work-tree=$HOME"
+alias ds="dotfiles status"
+alias da="dotfiles add"

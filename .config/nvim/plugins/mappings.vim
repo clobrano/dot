@@ -74,6 +74,11 @@ nnoremap Q <nop>
 " edit font (effects on GUI only)
 nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ medium\ 10
 
+" execute current file. This is used mostly for C source code, the mapping
+" expects that a binary file with the same root name of the current buffer
+" file exists and execute it. To avoid running code by mistake, the enter
+" input <cr> is not present.
+nnoremap <leader>x :term %:r
 
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
@@ -104,8 +109,8 @@ noremap <silent> j gj
 
 
 " move fast
-nnoremap <C-l> w
-nnoremap <C-h> b
+nnoremap <C-l> 10l
+nnoremap <C-h> 10h
 nnoremap <C-k> 10k
 nnoremap <C-j> 10j
 nnoremap E $

@@ -26,7 +26,7 @@ if executable('ag')
     set grepprg=ag\ -s\ -H\ --nogroup\ --column\ --smart-case\ --follow
 endif
 
-set ignorecase                            " ignorecase in search by default
+set smartcase                             " case management in search
 set incsearch                             " search as characters are entered
 set hlsearch                              " highlight matches
 set hidden

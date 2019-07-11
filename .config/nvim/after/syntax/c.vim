@@ -15,5 +15,6 @@ hi def link defined Macro
 
 " Highlight typedefs if they end with _t (e.g. custom_type_t OK)
 syn match Type "\w*_t"
+syn match Type "t[A-Z]\+\w*"
 
 " vim: set ft=vim :

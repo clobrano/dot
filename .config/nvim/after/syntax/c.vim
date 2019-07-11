@@ -13,4 +13,7 @@ runtime!  /home/carlolo/.vim/plugged/gtk-vim-syntax/syntax/gtk3.vim
 syn match defined "\v\w@<!(\u|_+[A-Z0-9])[A-Z0-9_]*\w@!"
 hi def link defined Macro
 
+" Highlight typedefs if they end with _t (e.g. custom_type_t OK)
+syn match Type "\w*_t"
+
 " vim: set ft=vim :

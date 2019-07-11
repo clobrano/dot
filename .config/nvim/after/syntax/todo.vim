@@ -24,7 +24,7 @@ syntax  match  Conditional    '\(^\|\W\)#[^[:blank:]]\+'
 
 syntax match Comment     'http://[0-9a-zA-Z./\-_+=$%&()#?\[\]]*'
 syntax match Comment     'https://[0-9a-zA-Z./\-_+=$%&()#?\[\]]*'
-syntax match Comment     '[0-9a-zA-Z\.]*\/[ 0-9a-zA-Z\-\.]*\.md'
+syntax match Comment     '[0-9a-zA-Z\-\.]*\/[ 0-9a-zA-Z\-\.]*\.md'
 syntax match String      '".*"'
 syntax match Bug         '\v[Bb]ug \d+'
 syntax match Type        '(A)'

@@ -21,6 +21,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 "}}}
 " Search & Replace                   {{{
 Plug 'MattesGroeger/vim-bookmarks'
@@ -98,6 +99,7 @@ Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'francoiscabrol/ranger.vim'
 "}}}
 let g:deoplete#enable_at_startup = 1
 call plug#end()
@@ -321,8 +323,8 @@ let g:jedi#usages_command = "<space>fc"
 try
     echo g:colors_name
 catch
-    exe "colorscheme PaperColor"
-    exe "set background=light"
+    exe "colorscheme monokai"
+    exe "set background=dark"
 endtry
 
 if &background ==# "dark"
@@ -330,6 +332,8 @@ if &background ==# "dark"
     exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
     exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
 endif
+
+command! PaperColor :colorscheme PaperColor | set background:light
 
 " }}}
 
@@ -429,6 +433,7 @@ iabbr evimrc Evimrc
 iabbr svimrc Svimrc
 iabbr lvimrc Lvimrc
 "}}}
+
 " Writers                        {{{
 augroup litecorrect
   autocmd!

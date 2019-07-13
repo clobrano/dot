@@ -93,4 +93,6 @@ fi
 
 setopt AUTO_CD
 source $HOME/.config/cconf/dotfiles/dotfiles
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

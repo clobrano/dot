@@ -47,7 +47,7 @@ set lcs=trail:·,tab:»·                    " Highlight spaces, tabs, end of li
 set linebreak                             " wrap long lines at characters in 'breakat'
 if has('nvim')
 else
-  set lines=40 columns=200
+  set lines=40 columns=180
   set linespace=1
 endif
 set list                                  " show whitespace

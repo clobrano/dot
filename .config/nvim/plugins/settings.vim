@@ -13,12 +13,20 @@ set colorcolumn=0
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
 set cursorline                            " Disable highlight current line
 set expandtab
-set foldenable
-set foldmethod=indent
-set foldlevelstart=99
+
+if has('folding')
+    set foldenable
+    if has('windows')
+        set fillchars=vert:┃             " vertical split, U:2503 Box Drawings Heavy Vertical
+        set fillchars+=fold:·            " folding filler, U:00B7 mid dot
+    endif
+    set foldmethod=indent
+    set foldlevelstart=99
+    set foldtext=WincentFoldtext()
+endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Source\ Code\ Pro\ for\ powerline\ medium\ 11
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 
@@ -75,6 +83,7 @@ set showcmd                               " show last command in the very bottom
 set showmatch
 
 set smarttab                              " <tab>/<BS> indent/dedent in leading whitespace
+set spelllang=en,it                       " accept both english and italian words
 if has('syntax')
   set spellcapcheck=                      " don't check for capital letters at start of sentence
 endif
@@ -84,7 +93,7 @@ set splitright                            " Style open split on the right
 set showtabline=2
 set statusline=
 set statusline+=%<\                       " cut at start
-set statusline+=%{StatusLineGit()}\       " git branch
+set statusline+=%{GitStatus()}\           " git branch
 set statusline+=%f\                       " path
 set statusline+=%h%m%R%W\                 " flags and buf no
 set statusline+=%=                        " right side
@@ -92,7 +101,7 @@ set statusline+=%y\                       " file type
 if has('nvim')
     set statusline+=%{LinterStatus()}\    " Linter status
 endif
-set statusline+=%20(𝓁:%l/%L\ 𝒸:%v\ [%P]%) " line and file percentage
+set statusline+=%20(ℓ:%l/%L\ 𝒸:%v\ [%P]%) " line and file percentage
 
 set tabstop=4 shiftwidth=4 softtabstop=4
 set tags=tags;/                           " Makes ctags visible from subdirectories

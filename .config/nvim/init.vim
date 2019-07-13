@@ -22,6 +22,7 @@ Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'altercation/vim-colors-solarized'
 "}}}
 " Search & Replace                   {{{
 Plug 'MattesGroeger/vim-bookmarks'
@@ -335,6 +336,15 @@ endif
 
 command! PaperColor :colorscheme PaperColor | set background:light
 
+
+if &background ==# "dark"
+    let g:solarized_contrast = "high"
+    let g:solarized_visibility = "high"
+else
+    let g:solarized_contrast = "normal"
+    let g:solarized_visibility = "normal"
+endif
+
 " }}}
 
 " Mark                               {{{
@@ -444,7 +454,7 @@ augroup lexical
   autocmd!
   autocmd FileType markdown,mkd call lexical#init()
   autocmd FileType textile call lexical#init()
-  autocmd FileType text call lexical#init({ 'spell': 0 })
+  "autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 hi clear SpellBad
 hi clear SpellCap

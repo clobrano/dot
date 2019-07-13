@@ -72,7 +72,7 @@ inoremap <C-c> <c-x><c-o>
 nnoremap Q <nop>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
+nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 
 " execute current file. This is used mostly for C source code, the mapping
 " expects that a binary file with the same root name of the current buffer

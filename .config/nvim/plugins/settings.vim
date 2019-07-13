@@ -26,7 +26,7 @@ if has('folding')
 endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 
@@ -34,7 +34,7 @@ if executable('ag')
     set grepprg=ag\ -s\ -H\ --nogroup\ --column\ --smart-case\ --follow
 endif
 
-set smartcase                             " case management in search
+set ignorecase                            " case management in search
 set incsearch                             " search as characters are entered
 set hlsearch                              " highlight matches
 set hidden

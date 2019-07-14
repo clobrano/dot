@@ -1,3 +1,6 @@
+" variable definition in command line
+nnoremap I [i
+
 " align block of text {{{
 vnoremap < <gv
 vnoremap > >gv
@@ -29,7 +32,7 @@ nnoremap <space>la :FSSplitRight<cr>
 
 " buffer: close {{{
 nnoremap x          <Esc>:bd
-nnoremap xb         <Esc>:bd<CR>
+nnoremap xx         <Esc>:bd<CR>
 nnoremap x1         m1:bd
 nnoremap x2         m2<cr>:bn<cr>:bd
 nnoremap x3         m3<cr>:2bn<cr>:bd
@@ -47,10 +50,6 @@ noremap <C-s>       <Esc>:w<CR>
 "}}}
 
 
-" variale definition in command line
-nnoremap I [i
-
-
 " clipboard yank
 vnoremap Y "+y<CR>
 " clipboard paste
@@ -61,18 +60,19 @@ nnoremap <leader>ex <esc>:Lexplore<cr>
 " directory change here
 nnoremap <leader>here :lcd %:p:h<CR>
 
+" edit font (effects on GUI only)
+nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 
 " enter command mode
 nnoremap ; :
 vnoremap ; :
 inoremap <C-c> <c-x><c-o>
 
-
 " no ex-mode
 nnoremap Q <nop>
 
-" edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+" exit vim
+nnoremap qa <esc>:qa
 
 " execute current file. This is used mostly for C source code, the mapping
 " expects that a binary file with the same root name of the current buffer
@@ -81,10 +81,21 @@ nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 nnoremap <leader>x :term %:r
 nnoremap <leader>X :term sudo %:r
 
+" fold: toggle fold at current position
+nnoremap <tab> zA
+
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " highlight current word and do not move to next match
 nnoremap * *``
+
+" jumplist: store relative line number jumps if they exceed a thresholt (thanks Wincent)
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+
+" macro repeat last in normal buffer.
+nnoremap <expr> <cr> empty(&buftype) ? '@@' : '<cr>'
+
 
 " move: fix weird chars in terminal using arrow keys in insert mode {{{
 inoremap [1;5A <esc>ki
@@ -219,17 +230,15 @@ nnoremap wl <C-w>l
 " open split on current tag
 nnoremap D <C-w>}
 
-
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
+" yank till the end of the line
+nnoremap Y y$
 
-" exit vim
-nnoremap qa <esc>:qa
-" force exit vim
-nnoremap xx <esc>:qa!
+
 " Don't know what this is...
 xnoremap <silent> p p:let @+=@0<CR>
 

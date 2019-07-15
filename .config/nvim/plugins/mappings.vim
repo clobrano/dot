@@ -63,6 +63,9 @@ nnoremap <leader>here :lcd %:p:h<CR>
 " edit font (effects on GUI only)
 nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
 
+" edit: remove trailing space
+nnoremap <leader>ss :StripWhitespace<cr>
+
 " enter command mode
 nnoremap ; :
 vnoremap ; :

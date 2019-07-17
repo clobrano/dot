@@ -1,7 +1,10 @@
 set selection-clipboard clipboard
 set page-padding 1
-map L scroll half-down
-map K scroll half-up
-map r reload
+
 map i recolor
 map p print
+
+# Map , (same button of <) to full page up
+map , scroll full-up
+# Map . (same button of >) to full page down
+map . scroll full-down

@@ -109,11 +109,11 @@ syntax enable
 filetype on
 "}}}
 
-source ~/.config/nvim/plugins/settings.vim
-source ~/.config/nvim/plugins/mappings.vim
-source ~/.config/nvim/plugins/autocommands.vim
-source ~/.config/nvim/plugins/abbreviations.vim
-source ~/.config/nvim/plugins/functions.vim
+source ~/.config/nvim/clobrano/settings.vim
+source ~/.config/nvim/clobrano/mappings.vim
+source ~/.config/nvim/clobrano/autocommands.vim
+source ~/.config/nvim/clobrano/abbreviations.vim
+source ~/.config/nvim/clobrano/functions.vim
 
 
 " Focus                              {{{
@@ -199,7 +199,7 @@ source ~/.config/nvim/snippets/golang.vim
 source ~/.config/nvim/snippets/licenses.config.vim
 source ~/.config/nvim/snippets/python.config.vim
 source ~/.config/nvim/snippets/shell.config.vim
-source ~/.config/nvim/snippets/other.vim
+source ~/.config/nvim/snippets/cisco.vim
 "}}}
 
 " Easy Align                         {{{

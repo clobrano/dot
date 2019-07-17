@@ -81,8 +81,8 @@ nnoremap qa <esc>:qa
 " expects that a binary file with the same root name of the current buffer
 " file exists and execute it. To avoid running code by mistake, the enter
 " input <cr> is not present.
-nnoremap <leader>x :term %:r
-nnoremap <leader>X :term sudo %:r
+nnoremap <leader>x :term %:p:r
+nnoremap <leader>X :term sudo %:p:r
 
 " fold: toggle fold at current position
 nnoremap <tab> zA

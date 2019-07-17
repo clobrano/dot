@@ -1,1 +1,4 @@
 alias tt="tmux"
+alias t="tmux new -t notes"
+alias tta="tmux attach"
+alias tts="tmux list-sessions"

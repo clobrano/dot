@@ -90,7 +90,7 @@ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
+source ~/.config/cconf/zsh/functions.zsh
 setopt AUTO_CD
 source $HOME/.config/cconf/dotfiles/dotfiles
 

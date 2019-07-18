@@ -244,6 +244,3 @@ nnoremap Y y$
 
 " Don't know what this is...
 xnoremap <silent> p p:let @+=@0<CR>
-
-
-

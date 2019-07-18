@@ -33,10 +33,13 @@ augroup END
 " Filetypes with specific settings (e.g. formatting)
 " thanks to Wincent https://github.com/wincent/wincent
 let g:clobrano_format_filetypes=[
+    \   'c',
+    \   'cpp',
+    \   'hpp',
     \   'markdown',
-    \   'todo',
     \   'scss',
-    \   'c'
+    \   'text',
+    \   'todo',
     \ ]
 let s:pattern=join(g:clobrano_format_filetypes, ',')
 execute 'autocmd FileType ' . s:pattern . " call clobrano#format#customize(expand('<afile>'), expand('<amatch>'))"

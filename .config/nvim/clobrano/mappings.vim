@@ -25,6 +25,9 @@ nnoremap m8       :bfirst<cr>:7bn<cr>
 nnoremap m9       :bfirst<cr>:8bn<cr>
 " }}}
 
+" buffer: reload
+nnoremap <leader>e :e<cr>
+
 " buffer: open alternate file (ex. .c/.cpp <-> .h)
 nnoremap <space>a :FSHere<cr>
 nnoremap <space>la :FSSplitRight<cr>
@@ -154,7 +157,6 @@ inoremap jj <Esc>
 nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
 nnoremap <leader>tu dd?^#<cr>p<leader><space>``
 nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%W%u")<CR><esc>``
-
 
 " replace current word with confirmation and magic \v
 nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>

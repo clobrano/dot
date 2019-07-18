@@ -1,4 +1,3 @@
-
 autocmd * set textwidth=0
 " Make current window more obvious by turning off/adjusting some features in non-current
 " windows.
@@ -31,3 +30,13 @@ augroup Shebang
   autocmd BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
 augroup END
 
+" Filetypes with specific settings (e.g. formatting)
+" thanks to Wincent https://github.com/wincent/wincent
+let g:clobrano_format_filetypes=[
+    \   'markdown',
+    \   'todo',
+    \   'scss',
+    \   'c'
+    \ ]
+let s:pattern=join(g:clobrano_format_filetypes, ',')
+execute 'autocmd FileType ' . s:pattern . " call clobrano#format#customize(expand('<afile>'), expand('<amatch>'))"

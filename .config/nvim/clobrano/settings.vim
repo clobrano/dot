@@ -92,14 +92,14 @@ set splitright                            " Style open split on the right
 
 set showtabline=2
 set statusline=
-set statusline+=%<\                       " cut at start
-set statusline+=%{GitStatus()}\           " git branch
-set statusline+=%f\                       " path
-set statusline+=%h%m%R%W\                 " flags and buf no
-set statusline+=%=                        " right side
-set statusline+=%y\                       " file type
+set statusline+=%<\                        " cut at start
+set statusline+=%{clobrano#status#git()}\  " git branch
+set statusline+=%f\                        " path
+set statusline+=%h%m%R%W\                  " flags and buf no
+set statusline+=%=                         " right side
+set statusline+=%y\                        " file type
 if has('nvim')
-    set statusline+=%{LinterStatus()}\    " Linter status
+    set statusline+=%{clobrano#status#linter()}\    " Linter status
 endif
 set statusline+=%20(ℓ:%l/%L\ 𝒸:%v\ [%P]%) " line and file percentage
 

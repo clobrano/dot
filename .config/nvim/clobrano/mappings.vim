@@ -85,7 +85,8 @@ nnoremap <leader>x :term %:p:r
 nnoremap <leader>X :term sudo %:p:r
 
 " fold: toggle fold at current position
-nnoremap <tab> zA
+nnoremap <leader>m zA
+nnoremap <leader>M zM
 
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>

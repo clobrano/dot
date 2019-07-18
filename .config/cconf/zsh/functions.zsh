@@ -1,6 +1,12 @@
 function preexec() {
     # Save the name of the command and the time when it starts
     CMD_NAME=$1
+
+    BLACKLIST="nvim ndm nd n vim vng vg v gvim"
+    if [[ $BLACKLIST =~ (^|[[:space:]])$CMD_NAME($|[[:space:]]) ]]; then
+        return
+    fi
+
     CMD_START_TIME=$(date +%s)
 }
 
@@ -15,4 +21,7 @@ function precmd() {
     if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
         notify-send -i time 'job finished' "$CMD_NAME"
     fi
+    unset CMD_START_TIME
+    unset CMD_STOP_TIME
+    unset CMD_ELAPSED_TIME
 }

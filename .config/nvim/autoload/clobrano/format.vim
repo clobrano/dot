@@ -6,6 +6,8 @@ function! clobrano#format#customize(file, type)
         if match(a:type, '\<\(markdown\|todo\|text\)\>') != -1
             exe "colorscheme solarized"
             exe "set background=light"
+            setlocal spell
+            setlocal spelllang=en,it
         elseif match(a:type, '\<\(scss\)\>') != -1
             exe "colorscheme onehalfdark"
             exe "set background=dark"

@@ -91,6 +91,12 @@ set splitbelow                            " Style open split below
 set splitright                            " Style open split on the right
 
 set showtabline=2
+
+if &background == 'dark'
+    hi statusline  ctermbg=251 ctermfg=59
+    hi tablinefill ctermbg=254 ctermfg=59
+    hi tabline     ctermbg=254 ctermfg=59
+endif
 set statusline=
 set statusline+=%<\                        " cut at start
 set statusline+=%{clobrano#status#git()}\  " git branch

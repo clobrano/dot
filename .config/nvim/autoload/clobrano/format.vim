@@ -12,8 +12,8 @@ function! clobrano#format#customize(file, type)
             exe "colorscheme onehalfdark"
             exe "set background=dark"
         elseif match(a:type, '\<\(c\|cpp\|hpp\)\>') != -1
-            exe "colorscheme monokai"
-            exe "set background=dark"
+            "exe "colorscheme monokai"
+            "exe "set background=dark"
         endif
     endif
 endfunction

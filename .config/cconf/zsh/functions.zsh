@@ -2,8 +2,8 @@ function preexec() {
     # Save the name of the command and the time when it starts
     CMD_NAME=$1
 
-    BLACKLIST="tig fzf fn f nvim ndm nd n vim vng vg v gvim"
-    if [[ $BLACKLIST =~ (^|[[:space:]])$CMD_NAME($|[[:space:]]) ]]; then
+    WHITELIST="tig fzf fn f nvim ndm nd n vim vng vg v gvim"
+    if [[ $WHITELIST =~ (^|[[:space:]])$CMD_NAME($|[[:space:]]) ]]; then
         return
     fi
 

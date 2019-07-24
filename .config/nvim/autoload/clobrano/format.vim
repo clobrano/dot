@@ -6,11 +6,15 @@ function! clobrano#format#customize(file, type)
         if match(a:type, '\<\(markdown\|todo\|text\)\>') != -1
             exe "colorscheme PaperColor"
             exe "set background=light"
+        endif
+        if match(a:type, '\<\(markdown\|text\)\>') != -1
+            " No spell check in todo filetype
             setlocal spell
             setlocal spelllang=en,it
             hi SpellBad cterm=none ctermbg=none ctermfg=red
             hi SpellCap cterm=bold ctermbg=none ctermfg=grey
-        elseif match(a:type, '\<\(scss\)\>') != -1
+        endif
+        if match(a:type, '\<\(scss\)\>') != -1
             exe "colorscheme onehalfdark"
             exe "set background=dark"
         endif

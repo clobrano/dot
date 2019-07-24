@@ -34,6 +34,7 @@ Plug 'szw/vim-g' " Quick Google lookup
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
 Plug 'vim-scripts/taglist.vim'
+Plug 'tpope/vim-abolish'
 "}}}
 " Text and Code Checking/Linting     {{{
 Plug 'chrisbra/Colorizer'

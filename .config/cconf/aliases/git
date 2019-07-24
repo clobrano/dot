@@ -1,12 +1,20 @@
 alias g='git'
 
 alias ga='git add'
+alias gap='git add -p'
+
 alias gc='git commit'
+
 alias gco='git checkout'
+
 alias gd='git diff'
+
 alias gh='git log --decorate --oneline --graph --date=short --pretty=format:"%C(auto)%d%Creset %C(auto)%h%Creset - %C(cyan)%an%Creset %Cgreen(%ad)%Creset : %s" '
+
 alias gl='git log --decorate=short'
+
 alias gr='git reset --hard HEAD'
+
 alias gs='git status'
 
 alias gb='git branch'

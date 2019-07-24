@@ -1,4 +1,4 @@
-iabbr spackreq <esc>:-1r! sed -n 3,16p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr spackreq <esc>:-1r! sed -n 3,16p ~/config/nvim/snippets/other.vim
 " ---
 "    /* pack mandatory TLV $tlv_id */
 "    tlv_sz = sizeof(QMI_$SRV_$FUNC_request_$tlv_id_t);
@@ -15,7 +15,7 @@ iabbr spackreq <esc>:-1r! sed -n 3,16p ~/dotfiles/vim/vim/snippets/other.vim
 
 "    buf_position += tlv_sz;
 " ---
-iabbr spackopt <esc>:-1r! sed -n 20,36p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr spackopt <esc>:-1r! sed -n 20,36p ~/config/nvim/snippets/other.vim
 " ---
 "    /* pack optional TLV $tlv_id */
 "    if (input->$value_available) {
@@ -35,7 +35,7 @@ iabbr spackopt <esc>:-1r! sed -n 20,36p ~/dotfiles/vim/vim/snippets/other.vim
 "        buf_position += tlv_sz;
 "    }
 " ---
-iabbr sunpackreq <esc>:-1r! sed -n 40,47p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr sunpackreq <esc>:-1r! sed -n 40,47p ~/config/nvim/snippets/other.vim
 " ---
 "    // Unpack mandatory TLV $tlv_id
 "    FIND_MANDATORY_TLV(msg, $tlv_id, payload_len, hdr);
@@ -46,7 +46,7 @@ iabbr sunpackreq <esc>:-1r! sed -n 40,47p ~/dotfiles/vim/vim/snippets/other.vim
 "
 "    COPY_MTOH(out->$value, tlv_$tlv_id->$value);
 " ---
-iabbr sunpackopt <esc>:-1r! sed -n 51,62p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr sunpackopt <esc>:-1r! sed -n 51,62p ~/config/nvim/snippets/other.vim
 " ---
 "    // Unpack optional TLV $tlv_id
 "    hdr = search_TLV(msg, $tlv_id, payload_len);
@@ -61,7 +61,7 @@ iabbr sunpackopt <esc>:-1r! sed -n 51,62p ~/dotfiles/vim/vim/snippets/other.vim
 "        out->$value_available = true;
 "    }
 " ---
-iabbr sunpackstub <esc>:-1r! sed -n 66,85p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr sunpackstub <esc>:-1r! sed -n 66,85p ~/config/nvim/snippets/other.vim
 " ---
 "tGobiError telit_$srv_$func_unpack(uint8_t *rsp, uint16_t len, $srv_$func_resp_t *out)
 "{
@@ -84,7 +84,7 @@ iabbr sunpackstub <esc>:-1r! sed -n 66,85p ~/dotfiles/vim/vim/snippets/other.vim
 "    return ret;
 "}
 "" ---
-iabbr spackstub <esc>:-1r! sed -n 89,117p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr spackstub <esc>:-1r! sed -n 89,117p ~/config/nvim/snippets/other.vim
 " ---
 "tGobiError telit_$srv_$func_pack(pack_qmi_t *req_ctx, void *req, uint16_t *len, $srv_$func_t *input)
 "{
@@ -116,7 +116,7 @@ iabbr spackstub <esc>:-1r! sed -n 89,117p ~/dotfiles/vim/vim/snippets/other.vim
 "    return ret;
 "}
 " ---
-iabbr sgetstring <esc>:-1r! sed -n 121,126p ~/dotfiles/vim/vim/snippets/other.vim
+iabbr sgetstring <esc>:-1r! sed -n 121,126p ~/config/nvim/snippets/other.vim
 " ---
 "    ret = get_string(rsp, payload_len, $tlv_id, $MAX_VALUE, out->$value);
 "    if (ret != tGOBI_ERR_NONE) {

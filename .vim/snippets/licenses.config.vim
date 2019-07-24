@@ -1,5 +1,5 @@
 function! License(type)
-    let license = '~/dotfiles/vim/vim/snippets/licenses/' . a:type
+    let license = '~/config/nvim/snippets/licenses/' . a:type
     let filename = expand('%:t')
     let owner = "Carlo Lobrano"
     let email = "c.lobrano@gmail.com"

@@ -1,27 +1,13 @@
-iabbr maketemplate <esc>:-1r! sed -n 3,6p ~/.dotfiles/vim/vim/snippets/c_cpp.config.vim
+iabbr maketemplate <esc>:-1r! sed -n 3,6p ~/.config/nvim/snippets/c_cpp.config.vim
 " ---
 "CFLAGS  := -g -Wall
 "LDFLAGS :=
 "all:
 "    $(CC) $(CFLAGS) main.c -o main $(LDFLAGS)
 " ---
-iabbr cmockastub <esc>:-1r! sed -n 9,22p ~/.dotfiles/vim/vim/snippets/c_cpp.config.vim
-"#include <stdarg.h>
-"#include <stddef.h>
-"#include <setjmp.h>
-"#include <cmocka.h>
-"/* A test case that does nothing and succeeds. */
-"static void null_test_success(void **state) {
-"    (void) state; /* unused */
-"}
-"int main(void) {
-"    const struct CMUnitTest tests[] = {
-"        cmocka_unit_test(null_test_success),
-"    };
-"    return cmocka_run_group_tests(tests, NULL, NULL);
-"}
 iabbr #i #include
 iabbr #d #define
+" Insert comment
 iabbr /* /**/<esc>F*i
 
 " Go to the beginning of a function section {}

@@ -22,5 +22,6 @@ function! clobrano#format#customize(file, type)
 
     if g:colors_name == 'monokai'
         exe "hi statusline ctermbg=251"
+        exe "hi comment ctermfg=244"
     endif
 endfunction

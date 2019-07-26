@@ -101,7 +101,7 @@ set statusline+=%y\                        " file type
 if has('nvim')
     set statusline+=%{clobrano#status#linter()}\    " Linter status
 endif
-set statusline+=%20(ℓ:%l/%L\ 𝒸:%v\ [%P]%) " line and file percentage
+set statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
 
 set tabstop=4 shiftwidth=4 softtabstop=4
 set tags=tags;/                           " Makes ctags visible from subdirectories

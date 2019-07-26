@@ -1,3 +1,15 @@
+function date_in_seconds() {
+    DEADLINE=$1 # e.g. 17:00 for today's 5pm
+
+    deadline_full=$(date -d $DEADLINE +%s)
+    now=$(date +%s)
+    time_left=$(($deadline_full - $now))
+    if [[ $time_left -gt 0 ]]; then
+        echo $time_left
+    fi
+
+}
+
 function humanizetime() {
     ELAPSED_TIME=$1
     MINUTE=60

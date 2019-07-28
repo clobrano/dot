@@ -7,7 +7,6 @@ function date_in_seconds() {
     if [[ $time_left -gt 0 ]]; then
         echo $time_left
     fi
-
 }
 
 function humanizetime() {
@@ -33,6 +32,24 @@ function humanizetime() {
     echo "${hours}H ${minutes}M ${seconds}S"
 }
 
+function precmd() {
+    if [[ -z $CMD_START_TIME ]]; then
+        return
+    fi
+
+    CMD_STOP_TIME=$(date +%s)
+    CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
+    THRESHOLD=60
+    if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
+        notify-send -i time "job finished after $(humanizetime $CMD_ELAPSED_TIME)" "$CMD_NAME"
+    fi
+    unset CMD_START_TIME
+    unset CMD_STOP_TIME
+    unset CMD_ELAPSED_TIME
+    vcs_info
+}
+
+
 function preexec() {
     # Save the name of the command and the time when it starts
     CMD_NAME=$1
@@ -46,20 +63,4 @@ function preexec() {
     fi
 
     CMD_START_TIME=$(date +%s)
-}
-
-function precmd() {
-    if [[ -z $CMD_START_TIME ]]; then
-        return
-    fi
-
-    CMD_STOP_TIME=$(date +%s)
-    CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
-    THRESHOLD=60
-    if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
-        notify-send -i time 'job finished after $(humanized $CMD_ELAPSED_TIME)' "$CMD_NAME"
-    fi
-    unset CMD_START_TIME
-    unset CMD_STOP_TIME
-    unset CMD_ELAPSED_TIME
 }

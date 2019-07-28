@@ -16,14 +16,14 @@ for plugin in $(ls $ZSH_CUSTOM/plugins); do
     source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
 done
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+
 #
 # Functions and aliases
 #
 source ~/.config/cconf/zsh/functions.zsh
 source $HOME/.config/cconf/dotfiles/dotfiles
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
 #
 # PROMPT

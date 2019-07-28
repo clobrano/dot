@@ -1,6 +1,4 @@
-# By default neovim uses Papercolor light
 alias n='nvim'
-# Neovim papercolor with dark background
 alias nd='nvim -c "set background=dark"'
 # Neovim dark monokai
 alias ndm='nvim -c "colorscheme monokai"'

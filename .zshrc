@@ -22,6 +22,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 # Functions and aliases
 #
 source ~/.config/cconf/zsh/functions.zsh
+source ~/.config/cconf/zsh/bindings.zsh
 source $HOME/.config/cconf/dotfiles/dotfiles
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

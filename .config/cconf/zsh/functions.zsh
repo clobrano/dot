@@ -57,7 +57,7 @@ function precmd() {
     CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
     THRESHOLD=60
     if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
-        notify-send -i time 'job finished' "$CMD_NAME"
+        notify-send -i time 'job finished after $(humanized $CMD_ELAPSED_TIME)' "$CMD_NAME"
     fi
     unset CMD_START_TIME
     unset CMD_STOP_TIME

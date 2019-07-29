@@ -19,7 +19,7 @@ if has('folding')
         set fillchars=vert:┃             " vertical split, U:2503 Box Drawings Heavy Vertical
         set fillchars+=fold:·            " folding filler, U:00B7 mid dot
     endif
-    set nofoldenable
+    set foldenable
     set foldmethod=indent
     set foldlevelstart=99
     set foldtext=WincentFoldtext()

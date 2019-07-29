@@ -29,8 +29,8 @@ nnoremap m9       :bfirst<cr>:8bn<cr>
 nnoremap <leader>e :e<cr>
 
 " buffer: open alternate file (ex. .c/.cpp <-> .h)
-nnoremap <space>a :FSHere<cr>
-nnoremap <space>la :FSSplitRight<cr>
+nnoremap <leader>a :FSHere<cr>
+nnoremap <leader>av :FSSplitRight<cr>
 
 
 " buffer: close {{{

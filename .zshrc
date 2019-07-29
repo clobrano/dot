@@ -32,15 +32,19 @@ source $HOME/.config/cconf/dotfiles/dotfiles
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
 autoload -Uz vcs_info
+
+# some level of smart case sensitivness in autocompletion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# vcs info (for git)
 zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
 zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
-
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked
 zstyle ':vcs_info:git*:*' formats '[%b%m%c%u]' # default ' (%s)-[%b]%c%u-'
-zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u]' # default ' (%s)-[%b|%a]%c%u-'
+zstyle ':vcs_info:git*:*' actionformats '[(%a)%b|%m%c%u]' # default ' (%s)-[%b|%a]%c%u-'
 
 function +vi-git-untracked() {
   emulate -L zsh

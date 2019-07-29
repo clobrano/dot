@@ -33,13 +33,6 @@ fi
 
 
 function _branchname() {
-    #if [ `git describe 2> /dev/null` ]; then
-        #msg=$(git describe 2> /dev/null)
-        #msg="("$msg")"
-    #else
-        #msg=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /') 2>/dev/null
-    #fi
-    #printf $msg
     printf $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /' -e 's/((HEAD detached at\(.*\)))/\1/') 2>/dev/null
 }
 
@@ -53,7 +46,7 @@ function _virtualenv() {
 
 function _update_ps1() {
     dir=`basename $(dirname $PWD)`/`basename $PWD`
-    PS1="${debian_chroot:+\[\e[0;31m\]($debian_chroot)\[\e[m\]·}$(_virtualenv)\[\e[1;32m\]\u\[\e[m\]@\[\e[1;33m\]\h\[\e[m\]· ${dir} $([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
+    PS1="${debian_chroot:+\[\e[0;31m\]($debian_chroot)\[\e[m\]·}$(_virtualenv)\[\e[31m\] \u\[\e[m\]\[\e[33m\] ● \[\e[m\]\[\e[31m\]${dir}\[\e[m\]$([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
 }
 
 if [ "$TERM" != "linux" ]; then

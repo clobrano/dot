@@ -204,7 +204,9 @@ nnoremap } }zz
 "}}}
 
 " search file
-nnoremap <leader>ff :find **/*
+if ! executable('fzf')
+    nnoremap <leader>ff :find **/*
+endif
 
 " select all
 nnoremap <leader>va ggvGE

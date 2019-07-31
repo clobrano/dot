@@ -1,4 +1,5 @@
-setopt AUTO_CD
+setopt inc_append_history
+setopt share_history
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -6,7 +7,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='gvim'
 fi
-
 #
 # Plugins
 #
@@ -21,20 +21,38 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 #
 # Functions and aliases
 #
-source ~/.config/cconf/zsh/functions.zsh
+source ~/.config/cconf/dotfiles/dotfiles
 source ~/.config/cconf/zsh/bindings.zsh
-source $HOME/.config/cconf/dotfiles/dotfiles
+source ~/.config/cconf/zsh/functions.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #
-# PROMPT
+# Completion
+#
+# extend change directory
+#typeset -U path cdpath fpath
+setopt auto_cd
+cdpath=($HOME/workspace $HOME/workspace/devel)
+
+autoload -U compinit
+compinit -u
+
+# some level of smart case sensitivness in autocompletion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Allow completion of "go upper directory" (e.g. ..<TAB>)
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)'
+
+# Show first local directories, then directories in cdpath
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-directories'
+
+#
+# Prompt
 #
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
 autoload -Uz vcs_info
-
-# some level of smart case sensitivness in autocompletion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # vcs info (for git)
 zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'

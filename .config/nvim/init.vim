@@ -135,6 +135,9 @@ source ~/.config/nvim/clobrano/autocommands.vim
 source ~/.config/nvim/clobrano/abbreviations.vim
 source ~/.config/nvim/clobrano/functions.vim
 
+" Custom plugin configuration
+" ~/.config/nvim/after/plugin
+
 " Custom Snippets {{{
 source ~/.config/nvim/snippets/browser.config.vim
 source ~/.config/nvim/snippets/c_cpp.config.vim

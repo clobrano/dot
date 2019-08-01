@@ -1,5 +1,20 @@
-setopt inc_append_history
-setopt share_history
+#
+# History
+#
+HISTSIZE=5000               # How many lines of history to keep in memory
+HISTFILE=~/.zsh_history     # Where to save history to disk
+SAVEHIST=5000               # Number of history entries to save to disk
+setopt BANG_HIST            # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY     # Write the history file in the ":start:elapsed;command" format.
+setopt HIST_FIND_NO_DUPS    # Do not display a line previously found.
+setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_IGNORE_DUPS     # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space.
+setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks before recording entry.
+setopt HIST_SAVE_NO_DUPS    # Don't write duplicate entries in the history file.
+setopt HIST_VERIFY          # Don't execute immediately upon history expansion.
+setopt INC_APPEND_HISTORY   # save history immediatly (not just as term closes)
+setopt SHARE_HISTORY        # share history across terminals
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

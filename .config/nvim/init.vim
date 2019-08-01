@@ -226,3 +226,9 @@ hi SpellCap ctermfg=blue
 hi SpellBad gui=undercurl   guisp=red
 hi SpellCap gui=undercurl   guisp=blue
 " }}}
+
+
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+  call webdevicons#refresh()
+endif

@@ -55,12 +55,12 @@ function preexec() {
     CMD_NAME=$1
     unset CMD_START_TIME
 
-    # it seems that short name like "n" do not work in zsh, while this
-    # function works fine tested in bash, try to avoid them, e.g. use nvim
-    WHITELIST="tig fzf fn f nvim ndm nd n vim vng vg v gvim"
-    if [[ $WHITELIST =~ (^|[[:space:]])$CMD_NAME($|[[:space:]]) ]]; then
-        return
-    fi
+    WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim"
+    for i in $(echo $WHITELIST); do
+        if [[ "$CMD_NAME" =~ "$i" ]]; then
+            return
+        fi
+    done
 
     CMD_START_TIME=$(date +%s)
 }

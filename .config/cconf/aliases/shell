@@ -1,6 +1,6 @@
 alias bi='source ~/.bashrc'
 alias zi='source ~/.zshrc'
 
-alias ll='ls -l'
+alias l='ls -l'
 
 alias itsmine='sudo chown $USER'

@@ -23,3 +23,6 @@ unrar
 vim-gtk
 xclip
 zathura
+zsh
+neovim
+curl

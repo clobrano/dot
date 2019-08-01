@@ -18,3 +18,10 @@ function! clobrano#status#linter()
     endif
     return _
 endfunction
+
+" Show current function name
+function! clobrano#status#funcname()
+    let _ = ''
+    let l:funcname = getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bWn'))
+    return strlen(l:funcname) > 0 ? l:funcname : _
+endfunction

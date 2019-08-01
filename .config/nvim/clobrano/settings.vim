@@ -96,6 +96,7 @@ set statusline+=%<\                        " cut at start
 set statusline+=%{clobrano#status#git()}\  " git branch
 set statusline+=%f\                        " path
 set statusline+=%h%m%R%W\                  " flags and buf no
+set statusline+=%{clobrano#status#funcname()}\  " function name
 set statusline+=%=                         " right side
 set statusline+=%y\                        " file type
 if has('nvim')

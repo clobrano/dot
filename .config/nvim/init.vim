@@ -129,14 +129,15 @@ filetype on
 "
 " global
 "
+
+" Shortcut to full configuration
+" ~/.config/nvim/
 source ~/.config/nvim/clobrano/settings.vim
 source ~/.config/nvim/clobrano/mappings.vim
 source ~/.config/nvim/clobrano/autocommands.vim
 source ~/.config/nvim/clobrano/abbreviations.vim
 source ~/.config/nvim/clobrano/functions.vim
 
-" Custom plugin configuration
-" ~/.config/nvim/after/plugin
 
 " Custom Snippets {{{
 source ~/.config/nvim/snippets/browser.config.vim
@@ -231,4 +232,10 @@ hi SpellCap gui=undercurl   guisp=blue
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
+endif
+
+" this shall have a better place than this
+if g:colors_name == 'monokai'
+    exe "hi statusline ctermbg=251"
+    exe "hi comment ctermfg=244"
 endif

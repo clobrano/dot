@@ -19,9 +19,4 @@ function! clobrano#format#customize(file, type)
             exe "set background=dark"
         endif
     endif
-
-    if g:colors_name == 'monokai'
-        exe "hi statusline ctermbg=251"
-        exe "hi comment ctermfg=244"
-    endif
 endfunction

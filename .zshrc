@@ -54,6 +54,9 @@ cdpath=($HOME/workspace $HOME/workspace/devel)
 autoload -U compinit
 compinit -u
 
+# highlight current selected completion item on tab
+zstyle ':completion:*' menu select
+
 # some level of smart case sensitivness in autocompletion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 

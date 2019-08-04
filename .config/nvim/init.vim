@@ -196,7 +196,6 @@ nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 
 autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
-autocmd BufRead backlog set filetype=todo
 
 command! SpellEn    setlocal spell! spelllang=en
 command! SpellIt    setlocal spell! spelllang=it

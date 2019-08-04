@@ -152,26 +152,17 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 try
     echo g:colors_name
 catch
-    exe "colorscheme monokai"
-    exe "set background=dark"
+    "exe "colorscheme monokai"
+    "exe "set background=dark"
 endtry
 
-if &background ==# "dark"
+if &background == 'dark'
     exe "highlight Search gui=bold guibg=NONE guifg=orange"
     exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
     exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
 endif
 
-command! PaperColor :colorscheme PaperColor | set background:light
-
-
-if &background ==# "dark"
-    let g:solarized_contrast = "high"
-    let g:solarized_visibility = "high"
-else
-    let g:solarized_contrast = "normal"
-    let g:solarized_visibility = "normal"
-endif
+command! PaperColor :colorscheme PaperColor | set background=light
 
 " }}}
 
@@ -228,7 +219,7 @@ if exists('g:loaded_webdevicons')
 endif
 
 " this shall have a better place than this
-if g:colors_name == 'monokai'
-    exe "hi statusline ctermbg=251"
-    exe "hi comment ctermfg=244"
-endif
+"if g:colors_name == 'monokai'
+    "exe "hi statusline ctermbg=251"
+    "exe "hi comment ctermfg=244"
+"endif

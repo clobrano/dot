@@ -71,7 +71,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " C/C++                              {{{
-Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
+Plug 'chazy/cscope_maps'
 Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}

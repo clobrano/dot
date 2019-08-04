@@ -132,12 +132,6 @@ filetype on
 
 " Shortcut to full configuration
 " ~/.config/nvim/
-source ~/.config/nvim/clobrano/settings.vim
-source ~/.config/nvim/clobrano/mappings.vim
-source ~/.config/nvim/clobrano/autocommands.vim
-source ~/.config/nvim/clobrano/abbreviations.vim
-source ~/.config/nvim/clobrano/functions.vim
-
 
 " Custom Snippets {{{
 source ~/.config/nvim/snippets/browser.config.vim

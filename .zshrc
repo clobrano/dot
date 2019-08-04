@@ -1,4 +1,13 @@
 #
+# Bindings
+#
+
+# emacs based bindings because I am used to
+bindkey -e
+# custom bindings
+source ~/.config/cconf/zsh/bindings.zsh
+
+#
 # History
 #
 HISTSIZE=5000               # How many lines of history to keep in memory
@@ -38,7 +47,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 # Functions and aliases
 #
 source ~/.config/cconf/dotfiles/dotfiles
-source ~/.config/cconf/zsh/bindings.zsh
 source ~/.config/cconf/zsh/functions.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'

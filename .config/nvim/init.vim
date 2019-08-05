@@ -208,6 +208,14 @@ iabbr xmark ✘
 " }}}
 
 
+" Testing terminal improvement
+" run a shell command in a vertial split, to avoid stealing an existing split
+" that will be closed when the command ends
+cabbr sterm split term://
+cabbr ! split term://
+cabbr vterm vsplit term://
+
+
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()

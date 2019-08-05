@@ -148,6 +148,7 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 
 " Look&Feel {{{
 command! Papercolor :colorscheme PaperColor | set background=light
+command! Monokai :colorscheme monokai | set termguicolors
 
 try
     let g:theme_name

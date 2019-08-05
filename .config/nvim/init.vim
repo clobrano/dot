@@ -147,20 +147,15 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 " }}}
 
 " Look&Feel {{{
+command! Papercolor :colorscheme PaperColor | set background=light
+
 try
-    echo g:colors_name
+    let g:theme_name
 catch
-    "exe "colorscheme monokai"
-    "exe "set background=dark"
+    exe "Papercolor"
+    syntax on
+    let g:theme_name='papercolor'
 endtry
-
-if &background == 'dark'
-    exe "highlight Search gui=bold guibg=NONE guifg=orange"
-    exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
-    exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
-endif
-
-command! PaperColor :colorscheme PaperColor | set background=light
 
 " }}}
 

@@ -9,4 +9,4 @@ source $HOME/.config/cconf/zsh/functions.zsh
 
 
 time=$(cat $HOME/.productive-time-deadline)
-echo " {-$(humanizetime $(date_in_seconds $time))} "
+echo " ❪-$(humanizetime $(date_in_seconds $time))❫ "

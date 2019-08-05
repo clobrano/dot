@@ -226,6 +226,8 @@ hi SpellBad cterm=underline ctermfg=red
 hi SpellCap ctermfg=blue
 hi SpellBad gui=undercurl   guisp=red
 hi SpellCap gui=undercurl   guisp=blue
+iabbr vmark ✔
+iabbr xmark ✘
 " }}}
 
 

@@ -211,6 +211,8 @@ endif
 " select all
 nnoremap <leader>va ggvGE
 
+"close current split without closing the buffer
+nnoremap cl :close<cr>
 " close right split
 nnoremap xl <C-w>l:bd<CR>
 " close left split

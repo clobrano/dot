@@ -1,4 +1,55 @@
 #
+# Aliases
+#
+source ~/.config/cconf/dotfiles/dotfiles.sh
+
+#
+# Bindings
+#
+
+# emacs based bindings because I am used to
+bindkey -e
+# custom bindings
+source ~/.config/cconf/zsh/bindings.zsh
+
+#
+# Editor for local and remote sessions
+#
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='gvim'
+fi
+
+#
+# Completion
+#
+
+# extend change directory
+setopt auto_cd
+cdpath=($HOME/workspace $HOME/workspace/devel)
+
+autoload -U compinit
+compinit -u
+
+# highlight current selected completion item on tab
+zstyle ':completion:*' menu select
+# some level of smart case sensitivness in autocompletion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# Allow completion of "go upper directory" (e.g. ..<TAB>)
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)'
+# Show first local directories, then directories in cdpath
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format %d
+zstyle ':completion:*:descriptions' format %B%d%b
+zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-directories'
+
+#
+# Functions and aliases
+#
+source ~/.config/cconf/zsh/functions.zsh
+
+#
 # History
 #
 HISTSIZE=5000               # How many lines of history to keep in memory
@@ -16,13 +67,6 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion.
 setopt INC_APPEND_HISTORY   # save history immediatly (not just as term closes)
 setopt SHARE_HISTORY        # share history across terminals
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='gvim'
-fi
-
 #
 # Plugins
 #
@@ -34,40 +78,8 @@ done
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
-#
-# Functions and aliases
-#
-source ~/.config/cconf/dotfiles/dotfiles
-source ~/.config/cconf/zsh/bindings.zsh
-source ~/.config/cconf/zsh/functions.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-
-#
-# Completion
-#
-# extend change directory
-#typeset -U path cdpath fpath
-setopt auto_cd
-cdpath=($HOME/workspace $HOME/workspace/devel)
-
-autoload -U compinit
-compinit -u
-
-# highlight current selected completion item on tab
-zstyle ':completion:*' menu select
-
-# some level of smart case sensitivness in autocompletion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-# Allow completion of "go upper directory" (e.g. ..<TAB>)
-zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(..) ]] && reply=(..)'
-
-# Show first local directories, then directories in cdpath
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format %d
-zstyle ':completion:*:descriptions' format %B%d%b
-zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-directories'
 
 #
 # Prompt

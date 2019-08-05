@@ -66,7 +66,7 @@ fi
 
 export EDITOR="gvim -f"
 
-source $HOME/.config/cconf/dotfiles/dotfiles
+source $HOME/.config/cconf/dotfiles/dotfiles.sh
 
 export CDPATH=$HOME/workspace/devel
 export GOROOT=/usr/local/go

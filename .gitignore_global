@@ -1,5 +1,6 @@
 .editorconfig
 vimrc.local
 tags
-cscope.*
+cscope.out
+cscope.files
 .dot

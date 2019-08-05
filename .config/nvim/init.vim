@@ -71,7 +71,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " C/C++                              {{{
-Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
+Plug 'chazy/cscope_maps'
 Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
@@ -132,12 +132,6 @@ filetype on
 
 " Shortcut to full configuration
 " ~/.config/nvim/
-source ~/.config/nvim/clobrano/settings.vim
-source ~/.config/nvim/clobrano/mappings.vim
-source ~/.config/nvim/clobrano/autocommands.vim
-source ~/.config/nvim/clobrano/abbreviations.vim
-source ~/.config/nvim/clobrano/functions.vim
-
 
 " Custom Snippets {{{
 source ~/.config/nvim/snippets/browser.config.vim
@@ -158,26 +152,17 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 try
     echo g:colors_name
 catch
-    exe "colorscheme monokai"
-    exe "set background=dark"
+    "exe "colorscheme monokai"
+    "exe "set background=dark"
 endtry
 
-if &background ==# "dark"
+if &background == 'dark'
     exe "highlight Search gui=bold guibg=NONE guifg=orange"
     exe "highlight Search cterm=bold ctermbg=NONE ctermfg=214"
     exe "highlight MatchParen gui=bold guibg=NONE guifg=magenta"
 endif
 
-command! PaperColor :colorscheme PaperColor | set background:light
-
-
-if &background ==# "dark"
-    let g:solarized_contrast = "high"
-    let g:solarized_visibility = "high"
-else
-    let g:solarized_contrast = "normal"
-    let g:solarized_visibility = "normal"
-endif
+command! PaperColor :colorscheme PaperColor | set background=light
 
 " }}}
 
@@ -202,7 +187,6 @@ nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 
 autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
-autocmd BufRead backlog set filetype=todo
 
 command! SpellEn    setlocal spell! spelllang=en
 command! SpellIt    setlocal spell! spelllang=it
@@ -237,7 +221,7 @@ if exists('g:loaded_webdevicons')
 endif
 
 " this shall have a better place than this
-if g:colors_name == 'monokai'
-    exe "hi statusline ctermbg=251"
-    exe "hi comment ctermfg=244"
-endif
+"if g:colors_name == 'monokai'
+    "exe "hi statusline ctermbg=251"
+    "exe "hi comment ctermfg=244"
+"endif

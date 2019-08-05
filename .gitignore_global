@@ -1,6 +1,7 @@
-.editorconfig
-vimrc.local
-tags
-cscope.out
-cscope.files
 .dot
+.editorconfig
+cscope.files
+cscope.out
+tags
+tags/tags.temp
+vimrc.local

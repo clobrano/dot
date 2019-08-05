@@ -64,7 +64,8 @@ nnoremap <leader>ex <esc>:Lexplore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+nnoremap <leader>ef :set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 10
+
 
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>

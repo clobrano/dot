@@ -26,7 +26,7 @@ if has('folding')
 endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 9.5
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 

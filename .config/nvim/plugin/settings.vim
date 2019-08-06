@@ -76,7 +76,7 @@ set shortmess+=o                          " overwrite file-written messages
 set shortmess+=t                          " truncate file messages at start
 
 if has('linebreak')
-  let &showbreak='⤷ '                     " ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS (U+2937, UTF-8: E2 A4 B7)
+  let &showbreak='↳ '                     " ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS (U+2937, UTF-8: E2 A4 B7)
 endif
 
 set showcmd                               " show last command in the very bottom right of VI

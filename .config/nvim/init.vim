@@ -185,12 +185,15 @@ augroup lexical
   autocmd FileType textile call lexical#init()
   "autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
-hi clear SpellBad
+
+autocmd FileType markdown,mkd,text hi clear SpellBad
+autocmd FileType markdown,mkd,text hi SpellBad cterm=underline ctermfg=red
+autocmd FileType markdown,mkd,text hi SpellBad gui=undercurl   guisp=red
+
 hi clear SpellCap
-hi SpellBad cterm=underline ctermfg=red
 hi SpellCap ctermfg=blue
-hi SpellBad gui=undercurl   guisp=red
 hi SpellCap gui=undercurl   guisp=blue
+
 iabbr vmark ✔
 iabbr xmark ✘
 " }}}
@@ -199,8 +202,8 @@ iabbr xmark ✘
 " Testing terminal improvement
 " run a shell command in a vertial split, to avoid stealing an existing split
 " that will be closed when the command ends
-cabbr sterm split term://
 cabbr ! split term://
+cabbr sterm split term://
 cabbr vterm vsplit term://
 
 

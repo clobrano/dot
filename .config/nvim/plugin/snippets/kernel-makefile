@@ -1,0 +1,24 @@
+NAME         := undefined
+
+obj-m        := $(NAME).o
+$(NAME)-objs := # list of objects [optional]
+PWD          := $(shell pwd)
+OUTPUTDIR    := . # e.g. /lib/modules/`uname -r`/kernel/drivers/net/usb/
+
+ifeq ($(KDIR),)
+  # Defaulting to Ubuntu kernel include directory
+  # For CentOS 7.6-1810 on x86_64 use
+  # KDIR := /usr/src/kernels/3.10.0-957.12.2.el7.x86_64
+  KDIR := /lib/modules/$(shell uname -r)/build
+endif
+
+all: clean
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+install: all
+	mkdir -p $(OUTPUTDIR)
+	cp -f $(NAME).ko $(OUTPUTDIR)
+	depmod
+
+clean:
+	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions Module.* modules.order

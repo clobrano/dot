@@ -8,6 +8,9 @@ nnoremap > >>
 nnoremap < <<
 " }}}
 
+" open link in browser
+nnoremap <leader>w :silent !xdg-open <C-R>=escape("<C-R><C-F>", "#?&;\|%")<CR><CR>
+
 " buffer: motion {{{
 noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>

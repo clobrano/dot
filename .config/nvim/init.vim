@@ -132,13 +132,7 @@ filetype on
 " ~/.config/nvim/
 
 " Custom Snippets {{{
-source ~/.config/nvim/snippets/browser.config.vim
-source ~/.config/nvim/snippets/c_cpp.config.vim
 source ~/.config/nvim/snippets/canonical.config.vim
-source ~/.config/nvim/snippets/golang.vim
-source ~/.config/nvim/snippets/licenses.config.vim
-source ~/.config/nvim/snippets/python.config.vim
-source ~/.config/nvim/snippets/shell.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 "}}}
 

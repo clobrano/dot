@@ -62,7 +62,7 @@ vnoremap Y "+y<CR>
 nnoremap P "+p
 
 " directory explore
-nnoremap <leader>ex <esc>:Lexplore<cr>
+nnoremap <leader>ex <esc>:Explore<cr>
 " directory change here
 nnoremap <leader>here :lcd %:p:h<CR>
 

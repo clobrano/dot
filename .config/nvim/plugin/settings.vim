@@ -31,7 +31,7 @@ set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 
 if executable('ag')
-    set grepprg=ag\ -s\ -H\ --nogroup\ --column\ --smart-case\ --follow
+    set grepprg=ag\ --nogroup\ --smart-case
 endif
 
 set ignorecase                            " case management in search

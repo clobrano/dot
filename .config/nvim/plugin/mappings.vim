@@ -177,10 +177,10 @@ nnoremap <silent> - :exe "resize -2"<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " search word in all visible filesystem
-nnoremap fa <Esc>:Ack! ""<left>
+nnoremap fa <Esc>:grep! ""<left>
 
 " search word under cursor in all visible filesystem
-nnoremap fc <Esc>:Ack! ""<left><C-r><C-w>
+nnoremap fc <Esc>:grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " search for selected text, forwards or backwards. {{{
 vnoremap <silent> * :<C-U>

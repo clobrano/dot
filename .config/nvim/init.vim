@@ -144,14 +144,7 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 command! Papercolor :colorscheme PaperColor | set background=light
 command! Monokai :colorscheme monokai | set termguicolors
 
-try
-    let g:theme_name
-catch
-    exe "Papercolor"
-    syntax on
-    let g:theme_name='papercolor'
-endtry
-
+exe "Monokai"
 " }}}
 
 " Markdown {{{
@@ -216,8 +209,3 @@ if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
 
-" this shall have a better place than this
-"if g:colors_name == 'monokai'
-    "exe "hi statusline ctermbg=251"
-    "exe "hi comment ctermfg=244"
-"endif

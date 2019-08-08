@@ -33,6 +33,9 @@ function humanizetime() {
 }
 
 function precmd() {
+    # update vcs_info at each prompt update
+    vcs_info
+
     if [[ -z $CMD_START_TIME ]]; then
         return
     fi
@@ -46,7 +49,6 @@ function precmd() {
     unset CMD_START_TIME
     unset CMD_STOP_TIME
     unset CMD_ELAPSED_TIME
-    vcs_info
 }
 
 

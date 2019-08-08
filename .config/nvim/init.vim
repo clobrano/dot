@@ -144,7 +144,6 @@ cabbr gerrit  !git push origin HEAD:refs/for/master
 command! Papercolor :colorscheme PaperColor | set background=light
 command! Monokai :colorscheme monokai | set termguicolors
 
-exe "Monokai"
 " }}}
 
 " Markdown {{{
@@ -158,7 +157,6 @@ cabbr toch Toch
 " }}}
 
 " Notes {{{
-let g:goyo_width=100
 
 nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
 nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
@@ -167,10 +165,8 @@ nnoremap <A-d> a<C-R>=strftime("%y%W%u")<CR><Esc>
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 
-autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
+"autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
 
-command! SpellEn    setlocal spell! spelllang=en
-command! SpellIt    setlocal spell! spelllang=it
 "}}}
 
 " Writers {{{
@@ -183,12 +179,11 @@ augroup lexical
   autocmd!
   autocmd FileType markdown,mkd call lexical#init()
   autocmd FileType textile call lexical#init()
-  "autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 
-autocmd FileType markdown,mkd,text hi clear SpellBad
-autocmd FileType markdown,mkd,text hi SpellBad cterm=underline ctermfg=red
-autocmd FileType markdown,mkd,text hi SpellBad gui=undercurl   guisp=red
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=red
+hi SpellBad gui=undercurl   guisp=red
 
 hi clear SpellCap
 hi SpellCap ctermfg=blue
@@ -211,4 +206,3 @@ cabbr vterm vsplit term://
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
-

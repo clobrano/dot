@@ -4,8 +4,7 @@ function! clobrano#format#customize(file, type)
     let l:pattern=join(g:clobrano_format_filetypes, '\|')
     if match(a:type, '\<\(' . l:pattern . '\)\>') != -1
         if match(a:type, '\<\(markdown\|todo\|text\)\>') != -1
-            exe "colorscheme PaperColor"
-            exe "set background=light"
+            exe "Papercolor"
             setlocal nospell
         endif
         if match(a:type, '\<\(markdown\|text\)\>') != -1

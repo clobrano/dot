@@ -1,7 +1,7 @@
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')
-    set breakindentopt=shift:2 " emphasize broken lines by indenting them
+    set breakindentopt=shift:1 " emphasize broken lines by indenting them
   endif
 endif
 

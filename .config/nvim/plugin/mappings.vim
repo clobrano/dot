@@ -72,7 +72,6 @@ nnoremap <leader>here :lcd %:p:h<CR>
 " edit font (effects on GUI only)
 nnoremap <leader>ef :set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 10
 
-
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>
 
@@ -251,6 +250,8 @@ nnoremap D <C-w>}
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
+" reload syntax
+nnoremap <silent> <leader>r  :syntax sync fromstart
 
 " yank till the end of the line
 nnoremap Y y$

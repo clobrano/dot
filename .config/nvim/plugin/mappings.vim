@@ -35,6 +35,9 @@ nnoremap <leader>e :e<cr>
 nnoremap <leader>a :FSHere<cr>
 nnoremap <leader>av :FSSplitRight<cr>
 
+" buffer: show full path
+nnoremap <leader>g :echo expand('%')<cr>
+
 
 " buffer: close {{{
 nnoremap x          <Esc>:bd

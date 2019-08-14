@@ -1,6 +1,6 @@
 function! clobrano#status#git()
-    if &runtimepath =~ "fugitive"
-        return '[fugitive KO]'
+    if ! &runtimepath =~ "fugitive"
+	return '[fugitive KO]'
     else
     	let l:branchname = FugitiveHead()
     	return strlen(branchname) > 0 ? '['.l:branchname.']' : ''
@@ -11,7 +11,7 @@ endfunction
 " Show the number of errors and warning
 function! clobrano#status#linter()
     let _ = ''
-    if &runtimepath =~ "ale"
+    if ! &runtimepath =~ "ale"
         return "[linter KO]"
     endif
 

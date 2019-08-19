@@ -104,6 +104,13 @@ if has('nvim')
 endif
 set statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
 
+set t_Co=256
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 set tabstop=4 shiftwidth=4 softtabstop=4
 set tags=tags;/                           " Makes ctags visible from subdirectories
 

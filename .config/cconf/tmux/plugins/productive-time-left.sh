@@ -9,4 +9,8 @@ source $HOME/.config/cconf/zsh/functions.zsh
 
 
 time=$(cat $HOME/.productive-time-deadline)
-echo " ❪-$(humanizetime $(date_in_seconds $time))❫ "
+left=$(date_in_seconds $time)
+echo $left
+if [[ $left -gt 0 ]]; then
+    echo " ❪-$(humanizetime $left)❫ "
+fi

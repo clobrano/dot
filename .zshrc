@@ -27,7 +27,7 @@ fi
 
 # extend change directory
 setopt auto_cd
-cdpath=($HOME/workspace $HOME/workspace/devel)
+cdpath=($HOME $HOME/workspace $HOME/workspace/devel)
 
 autoload -U compinit
 compinit -u

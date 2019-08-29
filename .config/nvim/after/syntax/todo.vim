@@ -12,7 +12,7 @@ syntax  match  TodoDate       '\d\{4\}/\d\{3\}'
 " Data YY/Day-of-year
 syntax  match  TodoDate       '\d\{2\}/\d\{3\}'
 " Data YYWWD
-syntax  match  TodoDate       '\d\{5\}'
+syntax  match  TodoDate       '\d\{6\}'
 
 syntax  match  TodoDueDate    'due:\d\{2,4\}-\d\{2\}-\d\{2\}'
 syntax  match  TodoDueDate    'due:\d\{2\}-\d\{2\}'

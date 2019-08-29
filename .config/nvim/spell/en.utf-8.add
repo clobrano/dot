@@ -7,6 +7,8 @@ Adwaita
 Apps
 BACKEND
 Bitbucket
+Bitbucket
+Bitbucket
 Bugfix
 CHANGELOG
 DBus
@@ -54,6 +56,7 @@ ResponseWriter
 SDK
 SDX20
 SELinux
+SElinux
 Screencast
 Systemd
 TFI
@@ -112,6 +115,8 @@ goroutines
 graphviz
 gsettings
 gtk
+guadec
+guadec
 guadec
 hikey
 init
@@ -191,3 +196,11 @@ wiki
 workflow
 yaru
 zlp
+hyperloop
+CEST
+hardcoded
+TTYs
+releasecraft
+json
+Tosal
+TelitSDK

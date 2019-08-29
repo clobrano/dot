@@ -27,7 +27,7 @@ fi
 
 # extend change directory
 setopt auto_cd
-cdpath=($HOME/workspace $HOME/workspace/devel)
+cdpath=($HOME $HOME/workspace $HOME/workspace/devel)
 
 autoload -U compinit
 compinit -u
@@ -110,4 +110,4 @@ RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
 export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f $ "
-export RPROMPT="$RPROMPT_BASE %F{blue}%~%f"
+export RPROMPT="$RPROMPT_BASE %F{yellow}%~%f"

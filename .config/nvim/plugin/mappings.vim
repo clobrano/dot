@@ -158,11 +158,7 @@ nnoremap <M-h> gT
 " normal mode enter
 inoremap jj <Esc>
 
-
-" Notes
-nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%02m%02d")<CR><esc>``
-nnoremap <leader>tu dd?^#<cr>p<leader><space>``
-nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%02m%02d")<CR><esc>``
+" Notes (see plugin/tasks)
 
 " replace current word with confirmation and magic \v
 nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>

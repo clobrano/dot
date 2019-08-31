@@ -4,6 +4,7 @@ Dotfiles repo
 ## Install and configure
 
 Clone the bare repository. `.dot` directory will be the equivalent of the usual `.git` one, while the repository will be the whole `$HOME`.
+
     $ git clone --bare git@github.com:clobrano/dot.git $HOME/.dot
     
 Do not show untracked files

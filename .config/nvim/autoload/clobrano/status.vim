@@ -1,8 +1,8 @@
 function! clobrano#status#git()
-    if ! &runtimepath =~ "fugitive"
-	return '[fugitive KO]'
+    if !isdirectory($HOME . "/.config/nvim/plugged/vim-fugitive")
+        return '[fugitive KO]'
     else
-    	let l:branchname = FugitiveHead()
+        let l:branchname = FugitiveHead()
     	return strlen(branchname) > 0 ? '['.l:branchname.']' : ''
     endif
 endfunction
@@ -11,8 +11,8 @@ endfunction
 " Show the number of errors and warning
 function! clobrano#status#linter()
     let _ = ''
-    if ! &runtimepath =~ "ale"
-        return "[linter KO]"
+    if !isdirectory($HOME . "/.config/nvim/plugged/ale")
+        return "[ale-linter KO]"
     endif
 
     let l:counts = ale#statusline#Count(bufnr(''))

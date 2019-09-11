@@ -2,6 +2,11 @@ cabbr !     term
 cabbr cs    colorscheme
 cabbr einit :edit $MYVIMRC
 
+cabbr pc    :Papercolor
+cabbr mn    :Monokai
+cabbr od    :colorscheme onehalfdark
+cabbr ol    :colorscheme onehalflight
+
 " Shorcuts for stdints
 iabbr u8t   uint8_t
 iabbr u16t  uint16_t

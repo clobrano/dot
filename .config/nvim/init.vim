@@ -140,7 +140,7 @@ source ~/.config/nvim/snippets/cisco.vim
 "}}}
 
 " Gerrit review {{{
-cabbr gerrit  !git push origin HEAD:refs/for/master
+cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
 
 " Look&Feel {{{
@@ -163,8 +163,9 @@ cabbr toch Toch
 
 nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
 nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
-inoremap <A-d> <C-R>=strftime("%y%W%u")<CR>
-nnoremap <A-d> a<C-R>=strftime("%y%W%u")<CR><Esc>
+inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
+nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
+
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 

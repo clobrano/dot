@@ -139,7 +139,7 @@ source ~/.config/nvim/snippets/cisco.vim
 "}}}
 
 " Gerrit review {{{
-cabbr gerrit  !git push origin HEAD:refs/for/master
+cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
 
 " Look&Feel {{{

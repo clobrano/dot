@@ -118,6 +118,7 @@ Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'matze/vim-meson'
 "}}}
 let g:deoplete#enable_at_startup = 1
 call plug#end()

@@ -105,7 +105,7 @@ function +vi-git-untracked() {
   fi
 }
 
-LPROMPT_BASE=" %F{red}%n%F{yellow} ● %F{red}%c%f"
+LPROMPT_BASE=" %F{gray}%n%F{yellow} ● %F{gray}%c%f"
 RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 

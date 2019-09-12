@@ -1,4 +1,4 @@
-if has('cscope')
+"if has('cscope')
     "
     " settings
     "
@@ -30,4 +30,4 @@ if has('cscope')
     nnoremap <leader>fi :cscope find i <C-R>=expand("<cword>")<cr><cr>
     " find wher this symbol is assigned to a value
     nnoremap <leader>f= :cscope find a <C-R>=expand("<cword>")<cr><cr>
-endif
+"endif

@@ -107,6 +107,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
+Plug 'masukomi/vim-markdown-folding'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}
@@ -118,6 +119,7 @@ Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'matze/vim-meson'
 "}}}
 let g:deoplete#enable_at_startup = 1
 call plug#end()
@@ -139,7 +141,7 @@ source ~/.config/nvim/snippets/cisco.vim
 "}}}
 
 " Gerrit review {{{
-cabbr gerrit  !git push origin HEAD:refs/for/master
+cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
 
 " Look&Feel {{{
@@ -162,8 +164,9 @@ cabbr toch Toch
 
 nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
 nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
-inoremap <A-d> <C-R>=strftime("%y%W%u")<CR>
-nnoremap <A-d> a<C-R>=strftime("%y%W%u")<CR><Esc>
+inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
+nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
+
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 

@@ -37,10 +37,10 @@ hi def link TodoDate       Directory
 hi def link TodoProject    Statement
 hi def link TodoTag        Question
 
-hi Hashtag     gui=bold      guibg=none guifg=green     cterm=bold      ctermbg=none
-hi Link        gui=underline guibg=none guifg=lightblue cterm=underline ctermbg=none ctermfg=blue
-hi Note        gui=none      guibg=none guifg=lightgreen   cterm=none      ctermbg=none ctermfg=grey
-hi Project     gui=none      guibg=none guifg=orange    cterm=bold      ctermbg=none
+hi Hashtag     gui=none      guibg=none guifg=#FFC005 cterm=bold      ctermbg=none
+hi Link        gui=underline guibg=none guifg=#2AA7E7 cterm=underline ctermbg=none ctermfg=blue
+hi Note        gui=none      guibg=none guifg=#B2B2B2 cterm=none      ctermbg=none ctermfg=grey
+hi Project     gui=none      guibg=none guifg=#FF5F5F cterm=bold      ctermbg=none
 hi TodoDueDate gui=none      guibg=none guifg=red
 hi PrioA       gui=none      guibg=none guifg=red
 hi PrioB       gui=none      guibg=none guifg=orange

@@ -10,7 +10,7 @@ nnoremap <leader>tpc v$:s/([A-D])/(D)/g<CR><space><space>:nohlsearch<cr>
 " Move task UP in the same list
 nnoremap <leader>tu dd?^#<cr>p<leader><space>``
 " Move task to Done list
-nnoremap <leader>td dd/^#.*Done<esc>p^a <C-R>=strftime("%y%02m%02d")<CR><esc>``
+nnoremap <leader>td :s/-/✔/<cr>dd/^#.*Done<esc>p^a <C-R>=strftime("%y%02m%02d")<CR><esc>``
 " Move task to Idle list
 nnoremap <leader>tl dd/^#.*Idle<esc>p^a <C-R>=strftime("%y%02m%02d")<CR><esc>``
 

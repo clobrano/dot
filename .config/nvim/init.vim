@@ -176,8 +176,8 @@ augroup lexical
 augroup END
 
 hi clear SpellBad
-hi SpellBad cterm=underline ctermfg=red
-hi SpellBad gui=undercurl   guisp=red
+hi SpellBad cterm=none ctermfg=red
+hi SpellBad gui=none   guisp=red
 
 hi clear SpellCap
 hi SpellCap ctermfg=blue

@@ -52,53 +52,36 @@ Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 "}}}
-" Text and Code Checking/Linting     {{{
-Plug 'chrisbra/Colorizer'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-surround'
-Plug 'vim-syntastic/syntastic'
-"}}}
-" GIT helpers                        {{{
+"  GIT helpers                        {{{
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
-" C/C++                              {{{
+" Development                        {{{
+Plug 'vim-syntastic/syntastic'
+Plug 'chrisbra/Colorizer'
+Plug 'tpope/vim-dispatch'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'scrooloose/nerdcommenter'
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
 Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
-"}}}
-" Go                                 {{{
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoUpdateBinaries'}
-"}}}
-" Markdown/Notes                     {{{
-Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
-Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
-Plug 'vim-jp/vital.vim'
-"}}}
-" NodeJS                             {{{
-"Plug 'moll/vim-node',                    {'for': 'javascript'}
-"Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
-"}}}
-" Javascript                         {{{
 Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
-"Plug 'digitaltoad/vim-pug',              {'for': 'pug'}
-"}}}
-" Python                             {{{
+"plug 'moll/vim-node',                    {'for': 'javascript'}
+"Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 Plug 'davidhalter/jedi',                 {'for': 'python'}
 Plug 'davidhalter/jedi-vim',             {'for': 'python'}
 Plug 'ambv/black',                       {'for': 'python'}
 "}}}
 " For Writers                        {{{
-"Plug 'reedes/vim-pencil'           " Super-powered writing things
+Plug 'tpope/vim-surround'
+Plug 'junegunn/vim-easy-align'
 Plug 'reedes/vim-lexical'          " Better spellcheck mappings
 Plug 'reedes/vim-litecorrect'      " Better autocorrections
 Plug 'reedes/vim-textobj-sentence' " Treat sentences as text objects
@@ -108,6 +91,10 @@ Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'masukomi/vim-markdown-folding'
+Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
+Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
+Plug 'vim-jp/vital.vim'
+
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}
@@ -120,6 +107,8 @@ Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
+Plug 'aklt/plantuml-syntax'
+Plug 'scrooloose/vim-slumlord' 
 "}}}
 let g:deoplete#enable_at_startup = 1
 call plug#end()

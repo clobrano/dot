@@ -107,6 +107,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
+Plug 'masukomi/vim-markdown-folding' 
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}

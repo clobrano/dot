@@ -204,3 +204,14 @@ releasecraft
 json
 Tosal
 TelitSDK
+symlinks
+config
+DMA
+IRQ
+IRQs
+scsi
+netdev
+irq
+pci
+MWI
+IOP

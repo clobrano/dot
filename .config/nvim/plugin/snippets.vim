@@ -1,5 +1,5 @@
 " C/C++ snippets
-iabbr cmakefile <esc>:-1r! cat ~/.config/nvim/snippets/cmakefile
+iabbr cmakefile <esc>:-1r! cat ~/.config/nvim/plugin/snippets/cmakefile
 iabbr #i #include
 iabbr #d #define
 

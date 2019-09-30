@@ -1,4 +1,4 @@
-cabbr !     term
+cabbr !     split term://
 cabbr cs    colorscheme
 cabbr einit :edit $MYVIMRC
 

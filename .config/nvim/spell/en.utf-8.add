@@ -215,3 +215,5 @@ irq
 pci
 MWI
 IOP
+hotplug
+alloc

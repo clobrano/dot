@@ -7,6 +7,9 @@ cabbr mn    :Monokai
 cabbr od    :colorscheme onehalfdark
 cabbr ol    :colorscheme onehalflight
 
+" Change directory to current buffer location
+cabbr cdhere :lcd %:h
+
 " Shorcuts for stdints
 iabbr u8t   uint8_t
 iabbr u16t  uint16_t
@@ -21,4 +24,3 @@ iabbr taska <esc>a-<space><C-R>=strftime("%y%02m%02d")<CR><space>(A)
 iabbr taskb <esc>a-<space><C-R>=strftime("%y%02m%02d")<CR><space>(B)
 iabbr taskc <esc>a-<space><C-R>=strftime("%y%02m%02d")<CR><space>(C)
 iabbr taskd <esc>a-<space><C-R>=strftime("%y%02m%02d")<CR><space>(D)
-

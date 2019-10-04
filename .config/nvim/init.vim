@@ -95,6 +95,7 @@ Plug 'masukomi/vim-markdown-folding'
 Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
 Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
+Plug 'gyim/vim-boxdraw'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}
@@ -190,15 +191,6 @@ hi SpellCap gui=undercurl   guisp=blue
 iabbr vmark ✔
 iabbr xmark ✘
 " }}}
-
-
-" Testing terminal improvement
-" run a shell command in a vertial split, to avoid stealing an existing split
-" that will be closed when the command ends
-cabbr !s split term://
-cabbr sterm split term://
-cabbr vterm vsplit term://
-
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

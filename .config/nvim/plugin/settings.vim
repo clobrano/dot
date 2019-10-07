@@ -124,5 +124,3 @@ set wildmode=longest:full,full            " shell-like autocomplete to unambiguo
 set wildmenu                              " graphical menu of autocomplete matches
 "set wildmode=list:longest,full
 set wrap linebreak nolist
-
-

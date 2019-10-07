@@ -168,7 +168,7 @@ nnoremap <leader>sw :set wrap<cr>
 
 " Writers {{{
 " Bold text with "B"
-autocmd FileType markdown,todo let b:surround_66 = "**\r**"
+autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
 augroup litecorrect

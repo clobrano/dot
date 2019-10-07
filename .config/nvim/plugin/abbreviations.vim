@@ -2,10 +2,10 @@ cabbr !     split term://
 cabbr cs    colorscheme
 cabbr einit :edit $MYVIMRC
 
-cabbr pc    :Papercolor
-cabbr mn    :Monokai
-cabbr od    :colorscheme onehalfdark
-cabbr ol    :colorscheme onehalflight
+cabbr pc    Papercolor
+cabbr mn    Monokai
+cabbr od    colorscheme onehalfdark
+cabbr ol    colorscheme onehalflight
 
 " Change directory to current buffer location
 cabbr cdhere :lcd %:h

@@ -217,3 +217,10 @@ MWI
 IOP
 hotplug
 alloc
+endian
+WD
+Hacktoberfest
+fallback
+SDX55
+vid
+pid

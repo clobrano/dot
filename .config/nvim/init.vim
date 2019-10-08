@@ -98,6 +98,7 @@ Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
 Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
 Plug 'gyim/vim-boxdraw'
+Plug 'vimwiki/vimwiki'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}
@@ -182,22 +183,23 @@ augroup lexical
   autocmd FileType textile call lexical#init()
 augroup END
 
-"hi clear SpellBad
-"hi SpellBad cterm=none ctermfg=red
-"hi SpellBad gui=none   guisp=red
-
-"hi clear SpellCap
-"hi SpellCap ctermfg=blue
-"hi SpellCap gui=undercurl   guisp=blue
-
 iabbr vmk ✔
 iabbr xmk ✘
 iabbr amk ⮕
 iabbr dmk ⚫
 iabbr omk ⚪
+
+let g:vimwiki_list = [{'path': '~/MyBox/Work/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
+nnoremap <leader>+ :VimwikiIncrementListItem<cr>
+vnoremap <leader>+ :VimwikiIncrementListItem<cr>
+nnoremap <leader>- :VimwikiDecrementListItem<cr>
+vnoremap <leader>- :VimwikiDecrementListItem<cr>
 " }}}
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+
+

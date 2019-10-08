@@ -35,8 +35,9 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}
 Plug 'altercation/vim-colors-solarized'
+Plug 'ryanoasis/vim-devicons'
 "}}}
 " Search & Replace                   {{{
 Plug 'MattesGroeger/vim-bookmarks'
@@ -50,7 +51,6 @@ Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
 Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdtree'
-Plug 'ryanoasis/vim-devicons'
 "}}}
 "  GIT helpers                        {{{
 Plug 'tpope/vim-fugitive'
@@ -59,6 +59,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
+Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-syntastic/syntastic'
 Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-dispatch'
@@ -67,12 +68,14 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'scrooloose/nerdcommenter'
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
+Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoUpdateBinaries'}
 Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
+Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 Plug 'davidhalter/jedi',                 {'for': 'python'}
@@ -96,11 +99,11 @@ Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
 Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
 Plug 'gyim/vim-boxdraw'
+Plug 'vimwiki/vimwiki'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}
 " Generics                           {{{
-Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
@@ -109,7 +112,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
-Plug 'scrooloose/vim-slumlord'
+Plug 'clobrano-forks/vim-slumlord'
 "}}}
 let g:deoplete#enable_at_startup = 1
 call plug#end()
@@ -128,6 +131,7 @@ filetype on
 " Custom Snippets {{{
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
+source ~/.config/nvim/snippets/programming.vim
 "}}}
 
 " Gerrit review {{{
@@ -166,7 +170,7 @@ nnoremap <leader>sw :set wrap<cr>
 
 " Writers {{{
 " Bold text with "B"
-autocmd FileType markdown,todo let b:surround_66 = "**\r**"
+autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
 augroup litecorrect
@@ -180,19 +184,23 @@ augroup lexical
   autocmd FileType textile call lexical#init()
 augroup END
 
-hi clear SpellBad
-hi SpellBad cterm=none ctermfg=red
-hi SpellBad gui=none   guisp=red
+iabbr vmk ✔
+iabbr xmk ✘
+iabbr amk ⮕
+iabbr dmk ⚫
+iabbr omk ⚪
 
-hi clear SpellCap
-hi SpellCap ctermfg=blue
-hi SpellCap gui=undercurl   guisp=blue
-
-iabbr vmark ✔
-iabbr xmark ✘
+let g:vimwiki_list = [{'path': '~/MyBox/Work/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
+nnoremap <leader>+ :VimwikiIncrementListItem<cr>
+vnoremap <leader>+ :VimwikiIncrementListItem<cr>
+nnoremap <leader>- :VimwikiDecrementListItem<cr>
+vnoremap <leader>- :VimwikiDecrementListItem<cr>
 " }}}
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+
+

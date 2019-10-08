@@ -41,6 +41,7 @@ let g:clobrano_format_filetypes=[
     \   'text',
     \   'todo',
     \   'vim',
+    \   'vimwiki',
     \ ]
 let s:pattern=join(g:clobrano_format_filetypes, ',')
 execute 'autocmd FileType ' . s:pattern . " call clobrano#format#customize(expand('<afile>'), expand('<amatch>'))"

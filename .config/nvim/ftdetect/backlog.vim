@@ -1,1 +1,1 @@
-autocmd BufRead backlog.md set filetype=todo
+autocmd BufEnter,BufRead backlog.md set filetype=todo

@@ -99,7 +99,7 @@ Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
 Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
 Plug 'gyim/vim-boxdraw'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 "}}}

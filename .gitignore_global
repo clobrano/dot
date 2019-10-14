@@ -5,3 +5,5 @@ cscope.out
 tags
 tags/tags.temp
 vimrc.local
+cscope.in.out
+cscope.po.out

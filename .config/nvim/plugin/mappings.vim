@@ -236,9 +236,6 @@ nnoremap <C-w>m <C-w>\|<C-w>_
 nnoremap <leader>htv <C-w>t<C-w>H
 nnoremap <leader>vth <C-w>t<C-w>K
 
-" markdown bold
-vnoremap <leader>B S*gvS*
-
 " moves between splits {{{
 nnoremap wh <C-w>h
 nnoremap wj <C-w>j

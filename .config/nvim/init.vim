@@ -29,6 +29,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
 Plug 'NLKNguyen/papercolor-theme'
@@ -73,7 +74,7 @@ Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
-Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoUpdateBinaries'}
+Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
 Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
 Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
@@ -89,19 +90,22 @@ Plug 'reedes/vim-lexical'          " Better spellcheck mappings
 Plug 'reedes/vim-litecorrect'      " Better autocorrections
 Plug 'reedes/vim-textobj-sentence' " Treat sentences as text objects
 Plug 'reedes/vim-wordy'            " Weasel words and passive voice
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+autocmd! User goyo.vim echom 'Goyo is now loaded!'
 Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'masukomi/vim-markdown-folding'
 Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
-Plug 'JamshedVesuna/vim-markdown-preview',{'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
 Plug 'gyim/vim-boxdraw'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
+Plug 'ferrine/md-img-paste.vim'
 " If you don't have nodejs and yarn use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-"}}}
+"Plug 'vim-pandoc/vim-pandoc'
+"Plug 'vim-pandoc/vim-pandoc-syntax'
+;"}}}
 " Generics                           {{{
 Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
@@ -113,7 +117,6 @@ Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
 Plug 'clobrano-forks/vim-slumlord'
 "}}}
-let g:deoplete#enable_at_startup = 1
 call plug#end()
 set nocompatible
 syntax enable
@@ -172,6 +175,7 @@ nnoremap <leader>sw :set wrap<cr>
 autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
+
 augroup litecorrect
   autocmd!
   autocmd FileType markdown,mkd call litecorrect#init()
@@ -190,8 +194,9 @@ iabbr dmk ⚫
 iabbr omk ⚪
 
 let g:vimwiki_list = [{'path': '~/MyBox/Work/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
-nnoremap <leader>+ :VimwikiIncrementListItem<cr>
-vnoremap <leader>+ :VimwikiIncrementListItem<cr>
+nnoremap <leader>c :VimwikiToggleListItem<cr>
+nnoremap <leader>= :VimwikiIncrementListItem<cr>
+vnoremap <leader>= :VimwikiIncrementListItem<cr>
 nnoremap <leader>- :VimwikiDecrementListItem<cr>
 vnoremap <leader>- :VimwikiDecrementListItem<cr>
 " }}}

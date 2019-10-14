@@ -96,6 +96,7 @@ Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'masukomi/vim-markdown-folding'
+Plug 'masukomi/vim-markdown-folding'
 Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
 Plug 'vim-jp/vital.vim'
 Plug 'gyim/vim-boxdraw'

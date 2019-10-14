@@ -3,7 +3,7 @@ function! clobrano#status#git()
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
-    	return strlen(branchname) > 0 ? '['.l:branchname.']' : ''
+        return strlen(branchname) > 0 ? ' '.l:branchname.' ' : ''
     endif
 endfunction
 
@@ -23,7 +23,7 @@ function! clobrano#status#linter()
     if l:counts.total == 0
         let _ .= ''
     else
-        let _ .= '[' . all_errors . 'E,' . all_non_errors . 'W]'
+        let _ .= '[' . all_errors . ',' . all_non_errors . ']'
     endif
     return _
 endfunction

@@ -93,13 +93,12 @@ set splitright                            " Style open split on the right
 
 set showtabline=2
 set statusline=
-set statusline+=%<\                        " cut at start
-set statusline+=%{clobrano#status#git()}\  " git branch
-set statusline+=\ %f\                     " path
-set statusline+=%h%m%R%W\                  " flags and buf no
-"set statusline+=%{clobrano#status#funcname()}\  " function name (only C filetype)
-set statusline+=%=                         " right side
-set statusline+=%y\                        " file type
+set statusline+=%<\                                     " cut at start
+set statusline+=%{clobrano#status#git()}\               " git branch
+set statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %f\  " path
+set statusline+=%h%m%R%W\                               " flags and buf no
+set statusline+=%=                                      " right side
+set statusline+=%y\                                     " file type
 if has('nvim')
     set statusline+=%{clobrano#status#linter()}\    " Linter status
 endif

@@ -1,4 +1,4 @@
 alias f='fuz'
 alias fv='fuz -e gvim'
-alias fn='fuz -e nvim -d ~/MyBox/Work/Notes/'
+alias fn='fuz -e nvim -d ~/MyBox/'
 

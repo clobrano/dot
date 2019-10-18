@@ -98,7 +98,6 @@ set statusline+=%{clobrano#status#git()}\               " git branch
 set statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %f\  " path
 set statusline+=%h%m%R%W\                               " flags and buf no
 set statusline+=%=                                      " right side
-set statusline+=%y\                                     " file type
 if has('nvim')
     set statusline+=%{clobrano#status#linter()}\    " Linter status
 endif

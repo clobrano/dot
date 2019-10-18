@@ -201,11 +201,9 @@ vnoremap <leader>= :VimwikiIncrementListItem<cr>
 nnoremap <leader>- :VimwikiDecrementListItem<cr>
 vnoremap <leader>- :VimwikiDecrementListItem<cr>
 " }}}
+"
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
-
-
-

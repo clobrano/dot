@@ -85,7 +85,7 @@ PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
 
 # Redtimer
-export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/Work/Telit/redtimer-session-log.txt"
+export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/Work/telit/redtimer-session-log.txt"
 
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1

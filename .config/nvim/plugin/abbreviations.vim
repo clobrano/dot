@@ -20,10 +20,5 @@ iabbr i16t  int16_t
 iabbr i32t  int32_t
 iabbr i64t  int64_t
 
-iabbr taska <esc>i⚫<space><C-R>=strftime("%y%02m%02d")<CR><space>(A)
-iabbr taskb <esc>i⚫<space><C-R>=strftime("%y%02m%02d")<CR><space>(B)
-iabbr taskc <esc>i⚫<space><C-R>=strftime("%y%02m%02d")<CR><space>(C)
-iabbr taskd <esc>i⚫<space><C-R>=strftime("%y%02m%02d")<CR><space>(D)
-
 iabbr perche perché
 iabbr puo può

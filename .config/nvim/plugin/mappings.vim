@@ -165,10 +165,11 @@ inoremap jj <Esc>
 " Notes (see plugin/tasks)
 
 " replace current word with confirmation and magic \v
-nnoremap c* <esc>:%s/\v//gc<left><left><left><left><C-r><C-w><right>
+nnoremap c* <esc>:%s///gc<left><left><left><left><C-r><C-w><right>
+vnoremap c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>
 
 " replace in all buffer
-noremap rep <Esc>:%s/\v/gc<Left><Left><Left>
+noremap rep <Esc>:%s//gc<Left><Left><Left>
 
 " resize vertical window splits {{{
 nnoremap <silent> + :exe "resize +2"<CR>

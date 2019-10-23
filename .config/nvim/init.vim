@@ -193,13 +193,6 @@ iabbr xmk ✘
 iabbr amk ⮕
 iabbr dmk ⚫
 iabbr omk ⚪
-
-let g:vimwiki_list = [{'path': '~/MyBox/Work/Notes/', 'syntax': 'markdown', 'ext': '.md'}]
-nnoremap <leader>c :VimwikiToggleListItem<cr>
-nnoremap <leader>= :VimwikiIncrementListItem<cr>
-vnoremap <leader>= :VimwikiIncrementListItem<cr>
-nnoremap <leader>- :VimwikiDecrementListItem<cr>
-vnoremap <leader>- :VimwikiDecrementListItem<cr>
 " }}}
 "
 

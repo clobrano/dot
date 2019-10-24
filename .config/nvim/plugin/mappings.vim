@@ -11,10 +11,6 @@ nnoremap < <<
 " open link in browser
 nnoremap <leader>w :silent !xdg-open <C-R>=escape("<C-R><C-F>", "#?&;\|%")<CR><CR>
 
-" buffer copy ALL
-nnoremap C :%y+<cr>
-
-
 " buffer: motion {{{
 noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>
@@ -165,8 +161,8 @@ inoremap jj <Esc>
 " Notes (see plugin/tasks)
 
 " replace current word with confirmation and magic \v
-nnoremap c* <esc>:%s///gc<left><left><left><left><C-r><C-w><right>
-vnoremap c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>
+nnoremap <leader>c* <esc>:%s///gc<left><left><left><left><C-r><C-w><right>
+vnoremap <leader>c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>
 
 " replace in all buffer
 noremap rep <Esc>:%s//gc<Left><Left><Left>
@@ -253,6 +249,10 @@ nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<C
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
 " reload syntax
 nnoremap <silent> <leader>r  :syntax sync fromstart
+
+" buffer select ALL
+nnoremap C :%y+<cr>
+nnoremap C ggvGE
 
 " yank till the end of the line
 nnoremap Y y$

@@ -70,6 +70,7 @@ Screencast
 Systemd
 TFI
 TMUS
+TODO
 TTYs
 Telit
 TelitSDK
@@ -129,6 +130,7 @@ fwup
 gInspector
 github
 gitlab
+gobi
 gobject
 google
 goroutine
@@ -181,6 +183,7 @@ pid
 plugin
 plugins
 powercycling
+ppp
 qmcli
 qualcomm
 radiobuttons
@@ -195,6 +198,7 @@ schroot
 schroots
 scsi
 sdk
+selinux
 sim's
 sms
 snapcraft
@@ -224,6 +228,7 @@ uploader
 usb
 uxfp
 v2
+valgrind
 vid
 vim
 wMaxPacketSize
@@ -237,7 +242,3 @@ yaru
 youtube
 zlp
 ⮕
-ppp
-selinux
-gobi
-valgrind

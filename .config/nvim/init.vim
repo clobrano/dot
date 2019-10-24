@@ -191,10 +191,10 @@ augroup END
 iabbr vmk ✔
 iabbr xmk ✘
 iabbr amk ⮕
-iabbr dmk ⚫
-iabbr omk ⚪
+
 " }}}
-"
+
+autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

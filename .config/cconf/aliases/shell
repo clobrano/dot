@@ -5,3 +5,4 @@ alias l='ls -l'
 alias ll='ls -l'
 
 alias itsmine='sudo chown $USER'
+alias xo='xdg-open'

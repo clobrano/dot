@@ -64,7 +64,9 @@ noremap <C-s>       <Esc>:w<CR>
 " clipboard yank till the end of the line
 vnoremap Y "+y
 " clipboard paste
-nnoremap P "+p
+"nnoremap P "+p
+" paste above current line
+noremap P <up>o<esc>p
 
 " directory explore
 nnoremap <leader>ex <esc>:Explore<cr>

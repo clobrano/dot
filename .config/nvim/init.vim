@@ -148,9 +148,11 @@ let g:pandoc#syntax#conceal#urls = 1
 "" no side folding sign
 let g:pandoc#folding#fdc = 0
 
+autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
+
 cabbr toc Toc
 cabbr toch Toch
-nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css problem-speedoffset-uc.00.07.md -o /tmp/markdown-preview.html
+nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html
 " }}}
 
 " Notes {{{
@@ -186,11 +188,11 @@ augroup END
 
 iabbr vmk ✔
 iabbr xmk ✘
+iabbr fmk 
 iabbr amk ⮕
 
 " }}}
 
-autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

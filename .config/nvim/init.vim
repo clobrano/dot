@@ -84,29 +84,24 @@ Plug 'davidhalter/jedi-vim',             {'for': 'python'}
 Plug 'ambv/black',                       {'for': 'python'}
 "}}}
 " For Writers                        {{{
-Plug 'tpope/vim-surround'
+Plug 'ferrine/md-img-paste.vim'
+"Plug 'gabrielelana/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'gyim/vim-boxdraw'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/vim-easy-align'
+Plug 'kyuhi/vim-emoji-complete'
 Plug 'reedes/vim-lexical'          " Better spellcheck mappings
 Plug 'reedes/vim-litecorrect'      " Better autocorrections
 Plug 'reedes/vim-textobj-sentence' " Treat sentences as text objects
 Plug 'reedes/vim-wordy'            " Weasel words and passive voice
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-autocmd! User goyo.vim echom 'Goyo is now loaded!'
 Plug 'sotte/presenting.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
-Plug 'masukomi/vim-markdown-folding'
-Plug 'masukomi/vim-markdown-folding'
-Plug 'plasticboy/vim-markdown',           {'for': 'markdown'}
+Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
-Plug 'gyim/vim-boxdraw'
-"Plug 'vimwiki/vimwiki'
-Plug 'ferrine/md-img-paste.vim'
-" If you don't have nodejs and yarn use pre build
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-"Plug 'vim-pandoc/vim-pandoc'
-"Plug 'vim-pandoc/vim-pandoc-syntax'
-;"}}}
+"}}}
 " Generics                           {{{
 Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
@@ -148,11 +143,11 @@ command! Monokai :colorscheme monokai | set termguicolors
 " }}}
 
 " Markdown {{{
-let g:vim_markdown_no_extensions_in_markdown = 1
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_toc_autofit = 1
-let vim_markdown_preview_github=1
-autocmd FileType markdown set conceallevel=2
+let g:pandoc#syntax#conceal#use = 1
+let g:pandoc#syntax#conceal#urls = 1
+"" no side folding sign
+let g:pandoc#folding#fdc = 0
+
 cabbr toc Toc
 cabbr toch Toch
 " }}}

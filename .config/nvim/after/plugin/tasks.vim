@@ -5,7 +5,7 @@ nnoremap <leader>tpb v$:s/([A-D])/(B)/g<CR><space><space>:nohlsearch<cr>
 " Change priority to C
 nnoremap <leader>tpc v$:s/([A-D])/(C)/g<CR><space><space>:nohlsearch<cr>
 " Change priority to D
-nnoremap <leader>tpc v$:s/([A-D])/(D)/g<CR><space><space>:nohlsearch<cr>
+nnoremap <leader>tpd v$:s/([A-D])/(D)/g<CR><space><space>:nohlsearch<cr>
 
 " Move task UP in the same list
 nnoremap <leader>tu dd?^#<cr>p<leader><space>``

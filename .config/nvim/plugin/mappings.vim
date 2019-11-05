@@ -11,6 +11,9 @@ nnoremap < <<
 " open link in browser
 nnoremap <leader>w :silent !xdg-open <C-R>=escape("<C-R><C-F>", "#?&;\|%")<CR><CR>
 
+" buffer: delete till the end of the line
+nnoremap X vg_x
+
 " buffer: motion {{{
 noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>
@@ -58,9 +61,8 @@ inoremap <C-s>      <Esc>:w<CR>
 noremap <C-s>       <Esc>:w<CR>
 "}}}
 
-
-" clipboard yank
-vnoremap Y "+y<CR>
+" clipboard yank till the end of the line
+vnoremap Y "+y
 " clipboard paste
 nnoremap P "+p
 
@@ -255,7 +257,7 @@ nnoremap C :%y+<cr>
 nnoremap C ggvGE
 
 " yank till the end of the line
-nnoremap Y y$
+nnoremap Y yg_
 
 
 " Don't know what this is...

@@ -150,6 +150,7 @@ let g:pandoc#folding#fdc = 0
 
 cabbr toc Toc
 cabbr toch Toch
+nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css problem-speedoffset-uc.00.07.md -o /tmp/markdown-preview.html
 " }}}
 
 " Notes {{{

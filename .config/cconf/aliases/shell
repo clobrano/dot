@@ -6,3 +6,5 @@ alias ll='ls -l'
 
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
+
+alias td='todo-txt -d ~/MyBox/notes/work/todo-txt/todo.cfg'

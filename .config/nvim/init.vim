@@ -15,6 +15,7 @@
 " Plugins                            {{{
 " VimPlug configuration              {{{
 let mapleader = ' '
+let maplocalleader=' '
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source ~/.config/nvim/init.vim
@@ -103,6 +104,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
 "}}}
 " Generics                           {{{
+Plug 'freitass/todo.txt-vim'
 Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
@@ -190,6 +192,8 @@ iabbr vmk ✔
 iabbr xmk ✘
 iabbr fmk 
 iabbr amk ⮕
+
+cabbr draft e /tmp/draft.md
 
 " }}}
 

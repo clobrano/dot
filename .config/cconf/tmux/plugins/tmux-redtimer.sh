@@ -16,8 +16,8 @@ function time_left() {
 }
 
 function get_icon() {
-    [ -f /tmp/redtimer-work-job ] && icon=' '
-    [ -f /tmp/redtimer-pause-job ] && icon=' '
+    [ -f /tmp/redtimer-work-job ] && icon=''
+    [ -f /tmp/redtimer-pause-job ] && icon=''
     echo "$icon"
 }
 function get_job_id() {

@@ -68,6 +68,10 @@ vnoremap Y "+y
 " paste above current line
 noremap P <up>o<esc>p
 
+" colorscheme
+nnoremap od    :colorscheme onehalfdark<cr>
+nnoremap ol    :colorscheme onehalflight<cr>
+
 " directory explore
 nnoremap <leader>ex <esc>:Explore<cr>
 " directory change here
@@ -86,6 +90,9 @@ inoremap <C-c> <c-x><c-o>
 
 " no ex-mode
 nnoremap Q <nop>
+
+" execute current line as command in bash (ex. zathura path/to/pdf -P 10)
+nnoremap <leader><leader>x :.w !bash<cr>
 
 " exit vim
 nnoremap qa <esc>:qa

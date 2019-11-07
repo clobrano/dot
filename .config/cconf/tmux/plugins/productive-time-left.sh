@@ -12,5 +12,5 @@ time=$(cat $HOME/.productive-time-deadline)
 left=$(date_in_seconds $time)
 echo $left
 if [[ $left -gt 0 ]]; then
-    echo " ❪-$(humanizetime $left)❫ "
+    echo " 🕖-$(humanizetime $left) "
 fi

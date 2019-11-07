@@ -36,7 +36,9 @@ exists=$(which redtimer | grep home | wc -l)
 
 if [[ $exists == 1 ]]; then
     job_id=$(get_job_id)
-    end_time=$(get_end_time $job_id)
-    icon=$(get_icon)
-    echo " $icon" -$(time_left "$end_time")
+    if [ ! -z $job_id ]; then
+        end_time=$(get_end_time $job_id)
+        icon=$(get_icon)
+        echo " $icon" -$(time_left "$end_time")
+    fi
 fi

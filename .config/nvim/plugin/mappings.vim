@@ -69,8 +69,8 @@ vnoremap Y "+y
 noremap P <up>o<esc>p
 
 " colorscheme
-nnoremap od    :colorscheme onehalfdark<cr>
-nnoremap ol    :colorscheme onehalflight<cr>
+nnoremap <leader>od    :colorscheme onehalfdark<cr>
+nnoremap <leader>ol    :colorscheme onehalflight<cr>
 
 " directory explore
 nnoremap <leader>ex <esc>:Explore<cr>

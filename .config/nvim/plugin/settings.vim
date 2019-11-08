@@ -12,7 +12,7 @@ set clipboard+=unnamedplus
 set cino+=(0                              " Align function arguments
 set colorcolumn=0
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
-set cursorline                            " Disable highlight current line
+set nocursorline                          " Disable highlight current line
 set expandtab
 
 if has('folding')

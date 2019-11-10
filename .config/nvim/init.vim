@@ -184,6 +184,17 @@ cabbr draft e /tmp/draft.md
 
 " }}}
 
+" startify
+let g:startify_files_number = 5
+let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '~/MyBox/notes/work/telit/todo-txt/todo.txt'} ]
+
+let g:startify_lists = [
+          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'files',     'header': ['   MRU']            },
+          \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
+          \ { 'type': 'commands',  'header': ['   Commands']       },
+          \ ]
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

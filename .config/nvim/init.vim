@@ -141,7 +141,7 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
 
 cabbr toc Toc
 cabbr toch Toch
-nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html
+nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
 " }}}
 
 " Notes {{{

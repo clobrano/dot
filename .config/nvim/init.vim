@@ -137,11 +137,14 @@ let g:pandoc#syntax#conceal#urls = 1
 "" no side folding sign
 let g:pandoc#folding#fdc = 0
 
+" clipboard images into md file
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
-cabbr toc Toc
-cabbr toch Toch
+" preview html in tmp directory
 nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
+
+nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
+
 " }}}
 
 " Notes {{{
@@ -186,7 +189,7 @@ cabbr draft e /tmp/draft.md
 
 " startify
 let g:startify_files_number = 5
-let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '~/MyBox/notes/work/telit/todo-txt/todo.txt'} ]
+let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
 
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },

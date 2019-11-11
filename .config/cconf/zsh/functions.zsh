@@ -29,7 +29,7 @@ function humanizetime() {
     fi
 
     seconds=$ELAPSED_TIME
-    echo "${hours}H ${minutes}M ${seconds}S"
+    printf "%sh:%02sm" ${hours} ${minutes}
 }
 
 function precmd() {

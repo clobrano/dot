@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 # show redtimer end session time on tmux
 
+[[ ! -f $HOME/.config/cconf/zsh/functions.zsh ]] && exit 1
+
 function time_left() {
     TIME1=`date +%H:%M`
     TIME2=$(echo $1 | cut -d' ' -f3)

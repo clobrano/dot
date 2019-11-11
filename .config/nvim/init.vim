@@ -184,7 +184,11 @@ cabbr draft e /tmp/draft.md
 
 " }}}
 
+nnoremap gN :cd ~/MyBox/notes
+
 " startify
+nnoremap gS :Startify<cr>
+let g:startify_change_to_dir=0
 let g:startify_files_number = 5
 let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '~/MyBox/notes/work/telit/todo-txt/todo.txt'} ]
 

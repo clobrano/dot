@@ -141,7 +141,7 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
 
 cabbr toc Toc
 cabbr toch Toch
-nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html
+nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
 " }}}
 
 " Notes {{{
@@ -184,6 +184,17 @@ cabbr draft e /tmp/draft.md
 
 " }}}
 
+" startify
+let g:startify_files_number = 5
+let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '~/MyBox/notes/work/telit/todo-txt/todo.txt'} ]
+
+let g:startify_lists = [
+          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'files',     'header': ['   MRU']            },
+          \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
+          \ { 'type': 'commands',  'header': ['   Commands']       },
+          \ ]
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

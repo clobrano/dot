@@ -88,6 +88,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
+Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
@@ -183,6 +184,8 @@ iabbr amk ⮕
 
 cabbr draft e /tmp/draft.md
 
+au FileType html,php,markdown,mmd,text,mail,gitcommit
+    \ runtime macros/emoji-ab.vim
 " }}}
 
 nnoremap gN :cd ~/MyBox/notes

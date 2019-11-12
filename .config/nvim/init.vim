@@ -156,8 +156,7 @@ nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
 
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
-
-"autocmd FileType markdown,txt source ~/.config/nvim/snippets/markdown.vim
+nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 
 "}}}
 
@@ -194,7 +193,7 @@ nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
 let g:startify_files_number = 5
 let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
-
+let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
           \ { 'type': 'files',     'header': ['   MRU']            },

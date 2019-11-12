@@ -85,6 +85,7 @@ set showmatch
 
 set smarttab                              " <tab>/<BS> indent/dedent in leading whitespace
 set spelllang=en,it                       " accept both english and italian words
+set nospell
 if has('syntax')
   set spellcapcheck=                      " don't check for capital letters at start of sentence
 endif

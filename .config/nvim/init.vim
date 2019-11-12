@@ -79,7 +79,7 @@ Plug 'gyim/vim-boxdraw'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/vim-easy-align'
 Plug 'kyuhi/vim-emoji-complete'
-Plug 'reedes/vim-lexical'          " Better spellcheck mappings
+"Plug 'reedes/vim-lexical'          " Better spellcheck mappings
 Plug 'reedes/vim-litecorrect'      " Better autocorrections
 Plug 'reedes/vim-textobj-sentence' " Treat sentences as text objects
 Plug 'reedes/vim-wordy'            " Weasel words and passive voice
@@ -108,10 +108,7 @@ syntax enable
 filetype on
 "}}}
 
-"
 " global
-"
-
 " Shortcut to full configuration
 " ~/.config/nvim/
 
@@ -134,6 +131,7 @@ command! Monokai :colorscheme monokai | set termguicolors
 " Markdown {{{
 let g:pandoc#syntax#conceal#use = 1
 let g:pandoc#syntax#conceal#urls = 1
+let g:pandoc#spell#enabled=0
 "" no side folding sign
 let g:pandoc#folding#fdc = 0
 
@@ -142,6 +140,7 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
 
 " preview html in tmp directory
 nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
+nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
 
 nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
 
@@ -171,11 +170,11 @@ augroup litecorrect
   autocmd FileType markdown,mkd call litecorrect#init()
   autocmd FileType textile call litecorrect#init()
 augroup END
-augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-augroup END
+"augroup lexical
+  "autocmd!
+  "autocmd FileType markdown,mkd call lexical#init()
+  "autocmd FileType textile call lexical#init()
+"augroup END
 
 iabbr vmk ✔
 iabbr xmk ✘

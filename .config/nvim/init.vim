@@ -1,4 +1,3 @@
-
 " Plugins                            {{{
 " VimPlug configuration              {{{
 let mapleader = ' '

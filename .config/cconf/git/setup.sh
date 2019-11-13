@@ -4,4 +4,5 @@
 git config --global user.name "Carlo Lobrano"
 git config --global user.email c.lobrano@gmail.com
 git config --global core.excludesfile ~/.gitignore_global
+git config --global core.editor gedit
 git config --global merge.conflictStyle diff3 # include common ancestor

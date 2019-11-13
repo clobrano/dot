@@ -38,6 +38,10 @@ nnoremap <leader>e :e<cr>
 nnoremap <leader>a :FSHere<cr>
 nnoremap <leader>av :FSSplitRight<cr>
 
+" buffer select ALL
+"nnoremap C :%y+<cr>
+nnoremap C ggvG$
+
 " buffer: show full path
 nnoremap <leader>g :echo expand('%')<cr>
 
@@ -64,9 +68,8 @@ noremap <C-s>       <Esc>:w<CR>
 " clipboard yank till the end of the line
 vnoremap Y "+y
 " clipboard paste
-"nnoremap P "+p
+nnoremap P "+p
 " paste above current line
-noremap P <up>o<esc>p
 
 " colorscheme
 nnoremap <leader>od    :colorscheme onehalfdark<cr>
@@ -78,7 +81,7 @@ nnoremap <leader>ex <esc>:Explore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 11.5
+nnoremap <leader>ef :set guifont=Ubuntu\ Mono:h12
 
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>
@@ -222,8 +225,8 @@ if ! executable('fzf')
     nnoremap <leader>ff :find **/*
 endif
 
-" select all
-nnoremap <leader>va ggvGE
+" select till the end of the line
+nnoremap T v$<left>
 
 "close current split without closing the buffer
 nnoremap cl :close<cr>
@@ -261,9 +264,6 @@ nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vi
 " reload syntax
 nnoremap <silent> <leader>r  :syntax sync fromstart
 
-" buffer select ALL
-nnoremap C :%y+<cr>
-nnoremap C ggvGE
 
 " yank till the end of the line
 nnoremap Y yg_

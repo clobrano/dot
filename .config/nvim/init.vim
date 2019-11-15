@@ -34,7 +34,6 @@ Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --a
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'szw/vim-g' " Quick Google lookup
-Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
 Plug 'vim-scripts/taglist.vim'
 Plug 'tpope/vim-abolish'
@@ -196,7 +195,11 @@ nnoremap gN :cd ~/MyBox/notes
 nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
 let g:startify_files_number = 5
-let g:startify_bookmarks = [ {'h': '~/MyBox/notes'}, {'m': '~/MyBox/notes/work/todo-txt/todo.txt'}, {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
+let g:startify_bookmarks = [ {'h': '~/MyBox/notes'},
+ \ {'m': '~/MyBox/notes/work/sideproject/taskell.md'},
+ \ {'m': '~/MyBox/notes/work/todo-txt/todo.txt'},
+ \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.md'},
+ \ {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },

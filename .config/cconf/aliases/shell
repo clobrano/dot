@@ -7,5 +7,10 @@ alias ll='ls -l'
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
-alias td='todo-txt -ntd /mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.cfg'
-alias md='todo-txt -ntd ~/MyBox/notes/work/todo-txt/todo.cfg'
+alias gt='cd /mnt/4EBCC563BCC545E5/Store/telit/'
+alias tsk='taskell /mnt/4EBCC563BCC545E5/Store/telit/taskell.md'
+alias dt='todo-txt -ntd /mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.cfg'
+
+alias dm='todo-txt -ntd ~/MyBox/notes/work/todo-txt/todo.cfg'
+alias gm='cd ~/MyBox/notes/work/sideproject'
+alias msk='taskell ~/MyBox/notes/work/sideproject/taskell.md'

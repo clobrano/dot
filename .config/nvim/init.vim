@@ -165,6 +165,8 @@ nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
+" Strike through "X"
+autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
 
 augroup litecorrect
   autocmd!

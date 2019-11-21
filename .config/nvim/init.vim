@@ -90,6 +90,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'chrisbra/unicode.vim'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'

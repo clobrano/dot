@@ -1,8 +1,8 @@
 #xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
 
 apt-file
+bat
 build-essential
-byobu
 clang
 clang-format
 cmake
@@ -10,7 +10,9 @@ cppcheck
 cscope
 ctags
 curl
+expect
 exuberant-ctags
+neovim
 pkg-config
 python-pip
 python3-pip
@@ -24,6 +26,3 @@ vim-gtk
 xclip
 zathura
 zsh
-neovim
-curl
-bat

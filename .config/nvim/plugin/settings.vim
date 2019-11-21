@@ -27,7 +27,7 @@ if has('folding')
 endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Ubuntu\ Mono:h12
+set guifont=Ubuntu\ Mono\ 12
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 
@@ -65,7 +65,7 @@ set noswapfile
 set number                                " Show line numbers
 set path+=**
 set relativenumber
-set scrolloff=3                           " Keeping the cursor away from the last line
+set scrolloff=10                           " Keeping the cursor away from the last line
 set sidescrolloff=3                       " Same as scrolloff, but for columns
 set shiftround                            " always indent by multiple of shiftwidth
 "set shiftwidth=2                          " spaces per tab (when shifting)

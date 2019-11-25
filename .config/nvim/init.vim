@@ -68,6 +68,7 @@ Plug 'vim-scripts/cflow-output-colorful'
 Plug 'davidhalter/jedi',                 {'for': 'python'}
 Plug 'davidhalter/jedi-vim',             {'for': 'python'}
 Plug 'ambv/black',                       {'for': 'python'}
+Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
@@ -94,7 +95,6 @@ Plug 'chrisbra/unicode.vim'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
-Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros

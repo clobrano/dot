@@ -68,6 +68,8 @@ Plug 'vim-scripts/cflow-output-colorful'
 Plug 'davidhalter/jedi',                 {'for': 'python'}
 Plug 'davidhalter/jedi-vim',             {'for': 'python'}
 Plug 'ambv/black',                       {'for': 'python'}
+Plug 'janko/vim-test'
+"Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
 Plug 'ferrine/md-img-paste.vim'
@@ -89,10 +91,10 @@ Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'chrisbra/unicode.vim'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
-Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
@@ -141,6 +143,7 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
 " preview html in tmp directory
 nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
 nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
+nnoremap <leader>mw :MarkdownPreview<cr>
 
 nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
 
@@ -164,6 +167,8 @@ nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
+" Strike through "X"
+autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
 
 augroup litecorrect
   autocmd!
@@ -195,7 +200,7 @@ let g:startify_change_to_dir=0
 let g:startify_files_number = 5
 let g:startify_bookmarks = [ {'h': '~/MyBox/notes'},
  \ {'m': '~/MyBox/notes/work/sideproject/taskell.md'},
- \ {'m': '~/MyBox/notes/work/todo-txt/todo.txt'},
+ \ {'d': '~/MyBox/notes/work/todo-txt/todo.txt'},
  \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.md'},
  \ {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
 let g:startify_change_to_dir = 0

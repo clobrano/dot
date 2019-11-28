@@ -95,7 +95,7 @@ inoremap <C-c> <c-x><c-o>
 nnoremap Q <nop>
 
 " execute current line as command in bash (ex. zathura path/to/pdf -P 10)
-nnoremap <leader><leader>x :.w !bash<cr>
+nnoremap <leader>z :.w !bash<cr>
 
 " execute external command
 nnoremap ! :!
@@ -256,9 +256,6 @@ nnoremap wk <C-w>k
 nnoremap wl <C-w>l
 "}}}
 
-" open split on current tag
-nnoremap D <C-w>}
-
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
@@ -266,6 +263,11 @@ nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vi
 " reload syntax
 nnoremap <silent> <leader>r  :syntax sync fromstart
 
+" tag open in split
+nnoremap D <C-w>}
+
+" tag jump to occurence if there's only one (use always tselect instead of tag)
+nnoremap <C-]> g<C-]>
 
 " yank till the end of the line
 nnoremap Y yg_

@@ -221,9 +221,9 @@ nnoremap } }zz
 "}}}
 
 " search file
-if ! executable('fzf')
-    nnoremap <leader>ff :find **/*
-endif
+"if ! executable('fzf')
+    "nnoremap <leader>ff :find **/*
+"endif
 
 " select till the end of the line
 nnoremap T v$<left>

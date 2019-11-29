@@ -97,6 +97,8 @@ nnoremap Q <nop>
 " execute current line as command in bash (ex. zathura path/to/pdf -P 10)
 nnoremap <leader>z :.w !bash<cr>
 
+" execute external command
+nnoremap ! :!
 " exit vim
 nnoremap qa <esc>:qa
 

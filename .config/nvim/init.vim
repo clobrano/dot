@@ -198,11 +198,13 @@ nnoremap gN :cd ~/MyBox/notes
 nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
 let g:startify_files_number = 5
-let g:startify_bookmarks = [ {'h': '~/MyBox/notes'},
- \ {'m': '~/MyBox/notes/work/sideproject/taskell.md'},
- \ {'d': '~/MyBox/notes/work/todo-txt/todo.txt'},
+let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/inbox.md'},
+ \ {'J': '~/MyBox/notes/me/journal/📒 journal.md'},
+ \ {'T': '~/MyBox/notes/work/sideproject/taskell.md'},
+ \ {'D': '~/MyBox/notes/work/todo-txt/todo.txt'},
+ \ {'i': '/mnt/4EBCC563BCC545E5/Store/telit/inbox.md'},
  \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.md'},
- \ {'w': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
+ \ {'d': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },

@@ -198,7 +198,7 @@ nnoremap gN :cd ~/MyBox/notes
 nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
 let g:startify_files_number = 5
-let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/inbox.md'},
+let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭 Inbox.md'},
  \ {'J': '~/MyBox/notes/me/journal/📒 journal.md'},
  \ {'T': '~/MyBox/notes/work/sideproject/taskell.md'},
  \ {'D': '~/MyBox/notes/work/todo-txt/todo.txt'},

@@ -181,10 +181,8 @@ augroup END
   "autocmd FileType textile call lexical#init()
 "augroup END
 
-iabbr vmk ✔
-iabbr xmk ✘
-iabbr fmk 
-iabbr amk ⮕
+iabbr vmk ✅
+iabbr xmk ❌
 
 cabbr draft e /tmp/draft.md
 

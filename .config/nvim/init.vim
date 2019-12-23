@@ -183,6 +183,7 @@ augroup END
 
 iabbr vmk ✅
 iabbr xmk ❌
+iabbr qmk ❔
 
 cabbr draft e /tmp/draft.md
 

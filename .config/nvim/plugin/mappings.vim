@@ -44,6 +44,8 @@ nnoremap C ggvG$
 
 " buffer: show full path
 nnoremap <leader>g :echo expand('%')<cr>
+" buffer: copy full path
+nnoremap <leader>G :let @" = expand("%")<cr>
 
 
 " buffer: close {{{

@@ -181,10 +181,9 @@ augroup END
   "autocmd FileType textile call lexical#init()
 "augroup END
 
-iabbr vmk ✔
-iabbr xmk ✘
-iabbr fmk 
-iabbr amk ⮕
+iabbr vmk ✅
+iabbr xmk ❌
+iabbr qmk ❔
 
 cabbr draft e /tmp/draft.md
 
@@ -197,7 +196,7 @@ nnoremap gN :cd ~/MyBox/notes
 " startify
 nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
-let g:startify_files_number = 5
+let g:startify_files_number = 10
 let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭 Inbox.md'},
  \ {'J': '~/MyBox/notes/me/journal/📒 journal.md'},
  \ {'T': '~/MyBox/notes/work/sideproject/taskell.md'},
@@ -209,9 +208,9 @@ let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
           \ { 'type': 'files',     'header': ['   MRU']            },
-          \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+          "\ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
           \ { 'type': 'sessions',  'header': ['   Sessions']       },
-          \ { 'type': 'commands',  'header': ['   Commands']       },
+          "\ { 'type': 'commands',  'header': ['   Commands']       },
           \ ]
 
 " after a re-source, fix syntax matching issues (concealing brackets):

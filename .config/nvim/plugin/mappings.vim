@@ -71,7 +71,6 @@ noremap <C-s>       <Esc>:w<CR>
 vnoremap Y "+y
 " clipboard paste
 nnoremap P "+p
-" paste above current line
 
 " colorscheme
 nnoremap <leader>od    :colorscheme onehalfdark<cr>
@@ -127,6 +126,8 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 " macro repeat last in normal buffer.
 nnoremap <expr> <cr> empty(&buftype) ? '@@' : '<cr>'
 
+" make
+nnoremap <F3> :make<cr>
 
 " move: fix weird chars in terminal using arrow keys in insert mode {{{
 inoremap [1;5A <esc>ki

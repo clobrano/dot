@@ -249,8 +249,8 @@ nnoremap <leader>o <C-w>o
 nnoremap <C-w>m <C-w>\|<C-w>_
 
 " convert horizontal splits to vertical and vice versa
-nnoremap <leader>htv <C-w>t<C-w>H
-nnoremap <leader>vth <C-w>t<C-w>K
+nnoremap <leader>tv <C-w>t<C-w>H
+nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits {{{
 nnoremap wh <C-w>h

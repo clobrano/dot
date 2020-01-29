@@ -8,9 +8,8 @@ alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
 alias gt='cd /mnt/4EBCC563BCC545E5/Store/telit/'
-alias tsk='taskell /mnt/4EBCC563BCC545E5/Store/telit/taskell.md'
+alias tsk='taskell /mnt/4EBCC563BCC545E5/Store/telit/taskell.todo'
 alias dt='todo-txt -ntd /mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.cfg'
 
 alias dm='todo-txt -ntd ~/MyBox/notes/work/todo-txt/todo.cfg'
 alias gm='cd ~/MyBox/notes/work/sideproject'
-alias msk='taskell ~/MyBox/notes/work/sideproject/taskell.md'

@@ -1,2 +1,2 @@
-GuiFont Ubuntu\ Mono:h12
+GuiFont Monospace:h10
 GuiTabline 0

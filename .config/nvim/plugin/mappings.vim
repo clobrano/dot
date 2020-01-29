@@ -82,7 +82,7 @@ nnoremap <leader>ex <esc>:Explore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Ubuntu\ Mono:h12
+nnoremap <leader>ef :set guifont=Monospace:h10
 
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>

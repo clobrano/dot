@@ -92,6 +92,7 @@ Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'chrisbra/unicode.vim'
+Plug  'aserebryakov/vim-todo-lists'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
@@ -160,6 +161,9 @@ nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
 nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 
+" vim todo list
+let g:VimTodoListsMoveItems = 0
+nnoremap <C-space> :VimTodoListsMoveItems<cr>
 "}}}
 
 " Writers {{{

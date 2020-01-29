@@ -82,7 +82,7 @@ nnoremap <leader>ex <esc>:Explore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Ubuntu\ Mono:h12
+nnoremap <leader>ef :set guifont=Monospace:h10
 
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>
@@ -249,8 +249,8 @@ nnoremap <leader>o <C-w>o
 nnoremap <C-w>m <C-w>\|<C-w>_
 
 " convert horizontal splits to vertical and vice versa
-nnoremap <leader>htv <C-w>t<C-w>H
-nnoremap <leader>vth <C-w>t<C-w>K
+nnoremap <leader>tv <C-w>t<C-w>H
+nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits {{{
 nnoremap wh <C-w>h

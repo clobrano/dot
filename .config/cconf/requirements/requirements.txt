@@ -26,3 +26,5 @@ vim-gtk
 xclip
 zathura
 zsh
+tmux
+expect

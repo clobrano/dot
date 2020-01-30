@@ -117,9 +117,9 @@ set tags=tags;/                           " Makes ctags visible from subdirector
 set thesaurus+=~/.config/nvim/thesaurus/thesaurus.txt
 
 set updatetime=250
-set virtualedit=block                     "  allow cursor to move where there is no text in visual block mode
+set virtualedit=block                     " allow cursor to move where there is no text in visual block mode
 set wildignore+=*.o,*.rej                 " patterns to ignore during file-navigation
 set wildmode=longest:full,full            " shell-like autocomplete to unambiguous portion
-set wildmenu                              " graphical menu of autocomplete matches
 "set wildmode=list:longest,full
+set wildmenu                              " graphical menu of autocomplete matches
 set wrap linebreak nolist

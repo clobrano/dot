@@ -210,6 +210,7 @@ let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},
  \ {'i': '/mnt/4EBCC563BCC545E5/Store/telit/inbox.md'},
  \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.todo'},
  \ {'d': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
+
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },

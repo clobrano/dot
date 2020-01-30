@@ -1,4 +1,4 @@
-if executable('fzf')
+"if executable('fzf')
     if has('nvim')
         let g:fzf_launcher = 'xterm -T fzf -fa monaco -fs 10 -e bash -ic %s'
     endif
@@ -11,4 +11,4 @@ if executable('fzf')
     nnoremap <leader>fl :BLines<cr>
     nnoremap <leader>ft :Tags<cr>
     nnoremap <leader>fx :Commits<cr>
-endif
+"endif

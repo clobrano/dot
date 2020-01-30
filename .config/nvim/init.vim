@@ -92,7 +92,7 @@ Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'chrisbra/unicode.vim'
-Plug  'aserebryakov/vim-todo-lists'
+Plug 'clobrano-forks/vim-todo-lists'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
@@ -163,7 +163,7 @@ nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 
 " vim todo list
 let g:VimTodoListsMoveItems = 0
-nnoremap <C-space> :VimTodoListsMoveItems<cr>
+nnoremap <C-space> :VimTodoListsToggleItem<cr>
 "}}}
 
 " Writers {{{
@@ -173,6 +173,9 @@ autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
 " Strike through "X"
 autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
+
+autocmd BufNew,BufEnter *.todo set foldmethod=indent
+autocmd BufNew,BufEnter *.todo set foldlevel=0
 
 augroup litecorrect
   autocmd!
@@ -205,7 +208,7 @@ let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},
  \ {'J': '~/MyBox/notes/me/journal/📒journal.md'},
  \ {'D': '~/MyBox/notes/work/todo-txt/todo.txt'},
  \ {'i': '/mnt/4EBCC563BCC545E5/Store/telit/inbox.md'},
- \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.md'},
+ \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.todo'},
  \ {'d': '/mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.txt'} ]
 let g:startify_change_to_dir = 0
 let g:startify_lists = [

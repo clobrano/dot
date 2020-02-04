@@ -1,4 +1,4 @@
-colorscheme onehalfdark
+colorscheme ayu
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')
@@ -27,7 +27,7 @@ if has('folding')
 endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=Monospace\ 10
+"set guifont=Monospace\ 10
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 

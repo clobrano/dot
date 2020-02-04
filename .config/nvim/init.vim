@@ -24,6 +24,7 @@ Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}
+Plug 'ayu-theme/ayu-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ryanoasis/vim-devicons'
 "}}}
@@ -222,3 +223,6 @@ let g:startify_lists = [
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+" TODO move it to a dedicated configuration file
+let ayucolor="mirage"

@@ -1,2 +1,2 @@
-GuiFont Monospace:h10
+set guifont=Monaco:h10
 GuiTabline 0

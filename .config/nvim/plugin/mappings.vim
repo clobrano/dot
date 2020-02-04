@@ -73,7 +73,7 @@ vnoremap Y "+y
 nnoremap P "+p
 
 " colorscheme
-nnoremap <leader>od    :colorscheme onehalfdark<cr>
+nnoremap <leader>od    :colorscheme ayu<cr>
 nnoremap <leader>ol    :colorscheme onehalflight<cr>
 
 " directory explore
@@ -82,7 +82,7 @@ nnoremap <leader>ex <esc>:Explore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " edit font (effects on GUI only)
-nnoremap <leader>ef :set guifont=Monospace:h10
+nnoremap <leader>ef :set guifont=Monaco:h10.5
 
 " edit: remove trailing space
 nnoremap <leader>ss :StripWhitespace<cr>

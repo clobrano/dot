@@ -6,6 +6,8 @@ set -e
 #./$HOME/.powerline-fonts/install.sh
 #rm -r $HOME/.powerline-fonts
 
-wget $HOME/.local/share/fonts https://github.com/hbin/top-programming-fonts/raw/master/Monaco-Linux.ttf
+if [ ! -f $HOME/.local/share/fonts/Monaco-Linux.ttf ]; then
+    wget -O $HOME/.local/share/fonts/Monaco-Linux.ttf https://github.com/hbin/top-programming-fonts/raw/master/Monaco-Linux.ttf
 
-fc-cache -vf
+    fc-cache -vf
+fi

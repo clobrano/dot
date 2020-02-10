@@ -15,5 +15,5 @@ if executable("ctags")
         exe "CtagsMake"
         exe "cscope add cscope.out"
     endfunction
-    nnoremap <leader>tr :call TagsRedo()
+    "nnoremap <leader>tr :call TagsRedo()
 endif

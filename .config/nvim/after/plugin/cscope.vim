@@ -6,17 +6,17 @@ set csverb
 set cscopetag nocscopeverbose
 
 
-function! TagsReload(mode)
+function! CscopeReload(mode)
+    exe "CscopeClear"
     if a:mode == 'kernel'
         exe "!cscope -bRqk"
     else
         exe "!cscope -bRq"
     endif
+    exe "cscope add cscope.out"
 endfunction
-nnoremap <leader>tr :call TagsReload('normal')
-nnoremap <leader>tkr :call TagsReload('kernel')
-
-nnoremap <leader>l :cscope add cscope.out
+nnoremap <leader>tr :call CscopeReload('normal')
+nnoremap <leader>tkr :call CscopeReload('kernel')
 
 " find symbol
 nnoremap <leader>fs :cscope find s <C-R>=expand("<cword>")<cr><cr>

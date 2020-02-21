@@ -226,3 +226,5 @@ endif
 
 " TODO move it to a dedicated configuration file
 let ayucolor="mirage"
+
+nnoremap ct :checktime<cr>

@@ -176,7 +176,7 @@ autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
 autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
 
 autocmd BufNew,BufEnter *.todo set foldmethod=indent
-autocmd BufNew,BufEnter *.todo set foldlevel=0
+autocmd BufReadPost *.todo set foldlevel=0
 
 augroup litecorrect
   autocmd!

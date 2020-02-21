@@ -1,4 +1,4 @@
-colorscheme ayu
+colorscheme onehalfdark
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')

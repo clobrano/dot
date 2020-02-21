@@ -73,8 +73,10 @@ vnoremap Y "+y
 nnoremap P "+p
 
 " colorscheme
-nnoremap <leader>od    :colorscheme ayu<cr>
+nnoremap <leader>mk    :Monokai<cr>
+nnoremap <leader>pc    :Papercolor<cr>
 nnoremap <leader>ol    :colorscheme onehalflight<cr>
+nnoremap <leader>od    :colorscheme onehalfdark<cr>
 
 " directory explore
 nnoremap <leader>ex <esc>:Explore<cr>

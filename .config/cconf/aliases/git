@@ -9,9 +9,7 @@ alias gco='git checkout'
 
 alias gd='git diff'
 
-alias gh='git log --decorate --oneline --graph --date=short --pretty=format:"%C(auto)%d%Creset %C(auto)%h%Creset - %C(cyan)%an%Creset %Cgreen(%ad)%Creset : %s" '
-
-alias gl='git log --decorate=short'
+alias gl='git log --decorate --oneline --graph --date=short --pretty=format:"%C(auto)%d%Creset %C(auto)%h%Creset - %C(cyan)%an%Creset %Cgreen(%ad)%Creset : %s" '
 
 alias gr='git reset --hard HEAD'
 

@@ -19,6 +19,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
+Plug 'camspiers/animate.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
@@ -226,3 +227,9 @@ endif
 
 " TODO move it to a dedicated configuration file
 let ayucolor="mirage"
+
+
+nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
+nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
+nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
+nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>

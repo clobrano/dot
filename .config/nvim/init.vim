@@ -98,7 +98,7 @@ Plug 'clobrano-forks/vim-todo-lists'
 "}}}
 " Generics                           {{{
 Plug 'freitass/todo.txt-vim'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'

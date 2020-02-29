@@ -3,6 +3,10 @@
         let g:fzf_launcher = 'xterm -T fzf -fa monaco -fs 10 -e bash -ic %s'
     endif
 
+    let g:fzf_layout = {
+    \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.4)'
+    \ }
+
     let g:fzf_history_dir = '~/.local/share/fzf-history'
 
     nnoremap <leader>fa :Ag<cr>

@@ -8,6 +8,8 @@ bind generic + !git commit --amend
 # Copy current commit hash
 bind generic 9 !@sh -c "echo -n %(commit) | xclip -selection c"
 
+bind generic B !git checkout %(branch)
+
 # colorscheme, thanks to https://carlobertoldi.wordpress.com/2013/07/08/a-colour-scheme-for-tig-ncurses-git/
 # *color* 'area' 'fgcolor' 'bgcolor' '[attributes]'
 # general

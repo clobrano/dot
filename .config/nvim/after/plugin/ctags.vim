@@ -7,7 +7,8 @@ if executable("ctags")
     vnoremap <C-]> g<C-]>
     " Open Tag in vertical split
     "map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-    noremap <A-]>  :exec("ptjump ".expand("<cword>"))<CR>
+    "noremap <A-]>  :exec("ptjump ".expand("<cword>"))<CR>
+    noremap <A-]>  <C-w>v<C-]>
     command! CtagsMake !ctags -R --extra=+f --exclude=.git .
 
     function TagsRedo()

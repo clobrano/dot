@@ -237,7 +237,7 @@ nnoremap } }zz
 "endif
 
 " select till the end of the line
-nnoremap T v$<left>
+vnoremap T $h
 
 "close current split without closing the buffer
 nnoremap cl :close<cr>

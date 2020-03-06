@@ -10,6 +10,7 @@ set autowrite
 set backspace=indent,eol,start            " fix backspace misbehavior
 set clipboard+=unnamedplus
 set cino+=(0                              " Align function arguments
+set cmdheight=2
 set colorcolumn=0
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
 set nocursorline                          " Disable highlight current line

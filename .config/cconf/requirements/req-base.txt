@@ -1,11 +1,7 @@
 #xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
 
-apt-file
-bat
 build-essential
 clang
-clang-format
-cmake
 cppcheck
 cscope
 ctags
@@ -13,18 +9,10 @@ curl
 expect
 exuberant-ctags
 neovim
-pkg-config
-python-pip
-python3-pip
 ranger
-rar
 silversearcher-ag
 tig
-tree
-unrar
+tmux
 vim-gtk
 xclip
-zathura
 zsh
-tmux
-expect

@@ -1,0 +1,13 @@
+#xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
+
+apt-file
+clang-format
+cmake
+pkg-config
+python-pip
+python3-pip
+rar
+tree
+unrar
+uptimed
+zathura

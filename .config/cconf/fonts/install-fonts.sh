@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
-set -e
+set -eu
 
-#git clone https://github.com/powerline/fonts.git --depth=1 $HOME/.powerline-fonts
-#./$HOME/.powerline-fonts/install.sh
-#rm -r $HOME/.powerline-fonts
+fonts=(
+    "https://github.com/microsoft/cascadia-code/releases/download/v1911.21/CascadiaMono.ttf"
+    "https://github.com/hbin/top-programming-fonts/raw/master/Monaco-Linux.ttf"
+)
 
-if [ ! -f $HOME/.local/share/fonts/Monaco-Linux.ttf ]; then
-    wget -O $HOME/.local/share/fonts/Monaco-Linux.ttf https://github.com/hbin/top-programming-fonts/raw/master/Monaco-Linux.ttf
+new_font=0
+for font in ${fonts[@]}; do
+    filename=$(basename $font)
+    dst=$HOME/.local/share/fonts/$filename
+    if [ ! -f $dst ]; then
+        echo installing $filename from $font
+        wget -O $dst $font
+        new_font=1
+    fi
+done
 
-    fc-cache -vf
-fi
+[ $new_font == 1 ] && fc-cache -vf
+
+exit 0

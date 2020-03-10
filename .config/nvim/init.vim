@@ -74,6 +74,7 @@ Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
+Plug 'sedm0784/vim-you-autocorrect'
 Plug 'ferrine/md-img-paste.vim'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
@@ -97,6 +98,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'clobrano-forks/vim-todo-lists'
 "}}}
 " Generics                           {{{
+Plug 'DougBeney/pickachu'
 Plug 'freitass/todo.txt-vim'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16

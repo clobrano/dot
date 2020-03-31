@@ -236,6 +236,7 @@ nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
 nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 
 nnoremap ct :checktime<cr>
-cabbr activereview !active-review-update.py -d ./notes
+
+command! Activereview !active-review-update.py -d ./notes
 
 let g:Hexokinase_highlighter=['foregroundfull']

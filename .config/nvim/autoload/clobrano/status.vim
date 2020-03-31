@@ -27,9 +27,10 @@ function! clobrano#status#linter()
     return _
 endfunction
 
-" Show current function name
-function! clobrano#status#funcname()
+" Use TagList plugin to show current function context
+function! clobrano#status#context()
     let _ = ''
-    let l:funcname = getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bWn'))
-    return strlen(l:funcname) > 0 ? l:funcname : _
+        let l:context = Tlist_Get_Tagname_By_Line()
+        let _ = strlen(l:context) > 0 ? 'f:' . l:context : ''
+    return _
 endfunction

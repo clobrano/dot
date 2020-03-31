@@ -51,7 +51,8 @@ Plug 'jreybert/vimagit'
 Plug 'pechorin/any-jump.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-syntastic/syntastic'
-Plug 'chrisbra/Colorizer'
+"Plug 'chrisbra/Colorizer'
+Plug 'rrethy/vim-hexokinase',            {'do': 'make hexokinase'}
 Plug 'tpope/vim-dispatch'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
@@ -81,7 +82,7 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'gyim/vim-boxdraw'
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kyuhi/vim-emoji-complete'
 "Plug 'reedes/vim-lexical'          " Better spellcheck mappings
@@ -231,10 +232,10 @@ endif
 " TODO move it to a dedicated configuration file
 let ayucolor="mirage"
 
-nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
 nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
 nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 
 nnoremap ct :checktime<cr>
 cabbr activereview !active-review-update.py -d ./notes
+
+let g:Hexokinase_highlighter=['foregroundfull']

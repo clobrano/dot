@@ -240,3 +240,5 @@ nnoremap ct :checktime<cr>
 command! Activereview !active-review-update.py -d ./notes
 
 let g:Hexokinase_highlighter=['foregroundfull']
+
+let Tlist_Process_File_Always=1

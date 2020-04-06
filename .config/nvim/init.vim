@@ -48,6 +48,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-syntastic/syntastic'

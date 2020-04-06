@@ -13,3 +13,9 @@ nnoremap <leader>gd <esc>:Gvdiff<space>
 nnoremap gdh :diffget //2
 " Gvdiff get from right split
 nnoremap gdl :diffget //3
+
+" move to parent directory when exploring the tree
+autocmd User fugitive
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \   nnoremap <buffer> <leader>.. :edit %:h<CR> |
+  \ endif

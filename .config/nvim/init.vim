@@ -48,11 +48,11 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-syntastic/syntastic'
-"Plug 'chrisbra/Colorizer'
-Plug 'rrethy/vim-hexokinase',            {'do': 'make hexokinase'}
+Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-dispatch'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
@@ -76,7 +76,6 @@ Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
-Plug 'sedm0784/vim-you-autocorrect'
 Plug 'ferrine/md-img-paste.vim'
 "Plug 'gabrielelana/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
@@ -158,8 +157,8 @@ nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
 
 " Notes {{{
 
-nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
-nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
+nnoremap <leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
 nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
 
@@ -232,13 +231,12 @@ endif
 " TODO move it to a dedicated configuration file
 let ayucolor="mirage"
 
+nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
+nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
 nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
 nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 
 nnoremap ct :checktime<cr>
-
 command! Activereview !active-review-update.py -d ./notes
-
-let g:Hexokinase_highlighter=['foregroundfull']
 
 let Tlist_Process_File_Always=1

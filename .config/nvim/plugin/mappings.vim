@@ -103,7 +103,8 @@ inoremap <C-c> <c-x><c-o>
 nnoremap Q <nop>
 
 " execute current line as command in bash (ex. zathura path/to/pdf -P 10)
-"nnoremap <leader>z :.w !bash<cr>
+nnoremap <leader>z :.w !bash<cr>
+nnoremap <leader>Z :.w !sudo bash<cr>
 
 " execute external command
 nnoremap ! :!

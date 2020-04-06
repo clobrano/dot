@@ -237,3 +237,10 @@ nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 
 nnoremap ct :checktime<cr>
 command! Activereview !active-review-update.py -d ./notes
+
+cnoremap ww execute 'silent! write !SUDO_ASKPASS=`which ssh-askpass` sudo tee % >/dev/null' <bar> edit!
+
+command! CLint :r!~/workspace/CLint/clint.sh -s %<cr>
+
+autocmd! BufRead,BufNewFile *.todo setfiletype markdown
+autocmd! Filetype markdown colorscheme onehalflight

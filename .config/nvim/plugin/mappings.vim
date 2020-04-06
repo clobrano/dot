@@ -4,6 +4,7 @@ inoremap {{ {}<left><cr><cr><up><tab>
 
 " variable definition in command line
 nnoremap I [i
+nnoremap <leader>I :TlistShowPrototype<cr>
 
 " align block of text {{{
 vnoremap < <gv
@@ -117,9 +118,10 @@ nnoremap qa <esc>:qa
 nnoremap <leader>x :split term:// %:p:r
 nnoremap <leader>X :split term:// sudo %:p:r
 
-" fold: toggle fold at current position
-nnoremap <leader>m zA
-nnoremap <leader>M zM
+" fold: always toggle all fold at current position
+nnoremap za zA
+" toggle folding
+nnoremap <leader>z zA
 
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>

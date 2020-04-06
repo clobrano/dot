@@ -81,7 +81,7 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'gyim/vim-boxdraw'
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kyuhi/vim-emoji-complete'
 "Plug 'reedes/vim-lexical'          " Better spellcheck mappings
@@ -99,6 +99,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'clobrano-forks/vim-todo-lists'
 "}}}
 " Generics                           {{{
+Plug 'DougBeney/pickachu'
 Plug 'freitass/todo.txt-vim'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
@@ -237,10 +238,3 @@ nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 
 nnoremap ct :checktime<cr>
 command! Activereview !active-review-update.py -d ./notes
-
-cnoremap ww execute 'silent! write !SUDO_ASKPASS=`which ssh-askpass` sudo tee % >/dev/null' <bar> edit!
-
-command! CLint :r!~/workspace/CLint/clint.sh -s %<cr>
-
-autocmd! BufRead,BufNewFile *.todo setfiletype markdown
-autocmd! Filetype markdown colorscheme onehalflight

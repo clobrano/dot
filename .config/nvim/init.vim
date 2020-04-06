@@ -155,8 +155,8 @@ nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
 
 " Notes {{{
 
-nnoremap <leader>d a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
-nnoremap <leader>dd a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
+nnoremap <leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
 nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
 

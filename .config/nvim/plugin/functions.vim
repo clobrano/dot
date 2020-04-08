@@ -27,3 +27,5 @@ function! WincentFoldtext() abort
   let l:dashes=substitute(v:folddashes, '-', s:middot, 'g')
   return s:raquo . s:middot . s:middot . l:lines . l:dashes . ': ' . l:first
 endfunction
+
+command! Activereview !active-review-update.py -d ./notes

@@ -38,6 +38,7 @@ nnoremap m9       :bfirst<cr>:8bn<cr>
 
 " buffer: reload
 nnoremap <leader>e :e<cr>
+nnoremap ct :checktime<cr>
 
 " buffer: open alternate file (ex. .c/.cpp <-> .h)
 nnoremap <leader>a :FSHere<cr>

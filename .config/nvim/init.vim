@@ -19,7 +19,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
-Plug 'camspiers/animate.vim'
+"Plug 'camspiers/animate.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
@@ -125,17 +125,14 @@ source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim
 "}}}
-
 " Gerrit review {{{
 cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
-
 " Look&Feel {{{
 command! Papercolor :colorscheme PaperColor | set background=light
 command! Monokai :colorscheme monokai | set termguicolors
 
 " }}}
-
 " Markdown {{{
 let g:pandoc#syntax#conceal#use = 1
 let g:pandoc#syntax#conceal#urls = 1
@@ -154,7 +151,6 @@ nnoremap <leader>mw :MarkdownPreview<cr>
 nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
 
 " }}}
-
 " Notes {{{
 
 nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
@@ -170,7 +166,6 @@ nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
 let g:VimTodoListsMoveItems = 0
 nnoremap <C-space> :VimTodoListsToggleItem<cr>
 "}}}
-
 " Writers {{{
 " Bold text with "B"
 autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
@@ -202,11 +197,12 @@ cabbr draft e /tmp/draft.md
 au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 " }}}
+" startify {{{
+nnoremap Gs :Startify<cr>
 
-nnoremap gN :cd ~/MyBox/notes
+nnoremap Gn :lcd ~/MyBox/notes
+nnoremap Gw :lcd ~/MyBox/notes
 
-" startify
-nnoremap gS :Startify<cr>
 let g:startify_change_to_dir=0
 let g:startify_files_number = 10
 let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},
@@ -222,21 +218,17 @@ let g:startify_lists = [
           \ { 'type': 'files',     'header': ['   Files']          },
           \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ ]
+" }}}
+
+"nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
+"nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
+"nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
+"nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
+
+let Tlist_Process_File_Always=1
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
 
-" TODO move it to a dedicated configuration file
-let ayucolor="mirage"
-
-nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
-
-nnoremap ct :checktime<cr>
-command! Activereview !active-review-update.py -d ./notes
-
-let Tlist_Process_File_Always=1

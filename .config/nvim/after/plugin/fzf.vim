@@ -4,7 +4,7 @@
     endif
 
     let g:fzf_layout = {
-    \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.4)'
+    \ 'window': 'new | wincmd J | resize 15'
     \ }
 
     let g:fzf_history_dir = '~/.local/share/fzf-history'

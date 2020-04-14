@@ -77,7 +77,6 @@ Plug 'janko/vim-test'
 "}}}
 " For Writers                        {{{
 Plug 'ferrine/md-img-paste.vim'
-"Plug 'gabrielelana/vim-markdown'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'gyim/vim-boxdraw'
@@ -198,10 +197,10 @@ au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 " }}}
 " startify {{{
-nnoremap Gs :Startify<cr>
+nnoremap gS :Startify<cr>
 
-nnoremap Gn :lcd ~/MyBox/notes
-nnoremap Gw :lcd ~/MyBox/notes
+nnoremap gN :lcd ~/MyBox/notes
+nnoremap gW :lcd /mnt/4EBCC563BCC545E5/Store/telit
 
 let g:startify_change_to_dir=0
 let g:startify_files_number = 10
@@ -232,3 +231,4 @@ if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
 
+"let g:pandoc#syntax#conceal#blacklist = ["list", "titleblock"]

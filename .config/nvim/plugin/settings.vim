@@ -1,4 +1,5 @@
-colorscheme onehalfdark
+"colorscheme onehalfdark
+colorscheme monokai
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')

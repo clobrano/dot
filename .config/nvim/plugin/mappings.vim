@@ -189,6 +189,9 @@ inoremap jj <Esc>
 
 " Notes (see plugin/tasks)
 
+" open file with xdg-open (e.g. images in markdown files)
+nnoremap <leader>gx :!xdg-open %:p:h/<cfile>
+
 " replace current word with confirmation and magic \v
 nnoremap <leader>c* <esc>:%s///gc<left><left><left><left><C-r><C-w><right>
 vnoremap <leader>c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>

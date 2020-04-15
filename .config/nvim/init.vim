@@ -20,6 +20,7 @@ let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
 "Plug 'camspiers/animate.vim'
+Plug 'dracula/vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'

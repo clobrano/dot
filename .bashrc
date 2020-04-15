@@ -64,7 +64,7 @@ if ! shopt -oq posix; then
     fi
 fi
 
-export EDITOR="gvim -f"
+export EDITOR="gedit"
 
 source $HOME/.config/cconf/dot/dot.sh
 

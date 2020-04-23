@@ -142,6 +142,7 @@ let g:pandoc#folding#fdc = 0
 
 " clipboard images into md file
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
+autocmd BufRead taskell.md :Goyo<cr>
 
 " preview html in tmp directory
 nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r

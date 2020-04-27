@@ -89,8 +89,8 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 autoload -Uz vcs_info
 
 # vcs info (for git)
-zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
-zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
+zstyle ':vcs_info:*' stagedstr "%F{green}!%f" # default 'S'
+zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
@@ -101,13 +101,13 @@ zstyle ':vcs_info:git*:*' actionformats '[(%a)%b|%m%c%u]' # default ' (%s)-[%b|%
 function +vi-git-untracked() {
   emulate -L zsh
   if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-    hook_com[unstaged]+="%F{blue}●%f"
+    hook_com[unstaged]+="%F{blue}!%f"
   fi
 }
 
-LPROMPT_BASE=" %F{gray}%n%F{yellow} ● %F{gray}%c%f"
+LPROMPT_BASE=" %F{gray}%n%F{yellow}:%F{gray}%c%f"
 RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f %F{green}»%f "
+export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f %F{green}$%f "
 export RPROMPT="$RPROMPT_BASE %F{yellow}%~%f"

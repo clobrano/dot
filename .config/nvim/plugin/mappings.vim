@@ -82,7 +82,7 @@ nnoremap P "+p
 nnoremap <leader>mk    :Monokai<cr>
 nnoremap <leader>pc    :Papercolor<cr>
 nnoremap <leader>ol    :colorscheme onehalflight<cr>
-nnoremap <leader>od    :colorscheme onehalfdark<cr>
+nnoremap <leader>od    :colorscheme dracula<cr>
 
 " directory explore
 nnoremap <leader>ex <esc>:Explore<cr>

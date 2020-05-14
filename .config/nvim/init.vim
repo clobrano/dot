@@ -49,6 +49,8 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
+Plug 'neovim/nvim-lsp'
+Plug 'sheerun/vim-polyglot'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -70,9 +72,9 @@ Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
 Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
-Plug 'davidhalter/jedi',                 {'for': 'python'}
-Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-Plug 'ambv/black',                       {'for': 'python'}
+"Plug 'davidhalter/jedi',                 {'for': 'python'}
+"Plug 'davidhalter/jedi-vim',             {'for': 'python'}
+"Plug 'ambv/black',                       {'for': 'python'}
 Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
@@ -99,8 +101,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'clobrano-forks/vim-todo-lists'
 "}}}
 " Generics                           {{{
-Plug 'DougBeney/pickachu'
-Plug 'freitass/todo.txt-vim'
+"Plug 'freitass/todo.txt-vim'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'           " testing 2019-05-16
 Plug 'vim-scripts/marvim' " give a name to macros
@@ -109,6 +110,7 @@ Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
 Plug 'clobrano-forks/vim-slumlord'
+Plug 'liuchengxu/vim-which-key'
 "}}}
 call plug#end()
 set nocompatible

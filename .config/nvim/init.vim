@@ -19,7 +19,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
-"Plug 'camspiers/animate.vim'
+Plug 'voldikss/vim-floaterm'
 Plug 'dracula/vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
@@ -49,7 +49,6 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
-Plug 'neovim/nvim-lsp'
 Plug 'sheerun/vim-polyglot'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
@@ -79,6 +78,7 @@ Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
+Plug 'vimwiki/vimwiki'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -151,7 +151,7 @@ nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css
 nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
 nnoremap <leader>mw :MarkdownPreview<cr>
 
-nnoremap <leader>ta  vip:EasyAlign *<bar><cr>
+nnoremap <leader>at  vip:EasyAlign *<bar><cr>
 
 " }}}
 " Notes {{{
@@ -234,40 +234,6 @@ if exists('g:loaded_webdevicons')
 endif
 
 "let g:pandoc#syntax#conceal#blacklist = ["list", "titleblock"]
-let settings = {
-          \   "pyls" : {
-          \     "enable" : v:true,
-          \     "trace" : { "server" : "verbose", },
-          \     "commandPath" : "",
-          \     "configurationSources" : [ "pycodestyle" ],
-          \     "plugins" : {
-          \       "jedi_completion" : { "enabled" : v:true, },
-          \       "jedi_hover" : { "enabled" : v:true, },
-          \       "jedi_references" : { "enabled" : v:true, },
-          \       "jedi_signature_help" : { "enabled" : v:true, },
-          \       "jedi_symbols" : {
-          \         "enabled" : v:true,
-          \         "all_scopes" : v:true,
-          \       },
-          \       "mccabe" : {
-          \         "enabled" : v:true,
-          \         "threshold" : 15,
-          \       },
-          \       "preload" : { "enabled" : v:true, },
-          \       "pycodestyle" : { "enabled" : v:true, },
-          \       "pydocstyle" : {
-          \         "enabled" : v:false,
-          \         "match" : "(?!test_).*\\.py",
-          \         "matchDir" : "[^\\.].*",
-          \       },
-          \       "pyflakes" : { "enabled" : v:true, },
-          \       "rope_completion" : { "enabled" : v:true, },
-          \       "yapf" : { "enabled" : v:true, },
-          \     }}}
-call nvim_lsp#setup("pyls", settings)
 
-" disable preview window
-set completeopt-=preview
-
-" use omni completion provided by lsp
-set omnifunc=lsp#omnifunc
+let g:vimwiki_list = [{'path': '/mnt/4EBCC563BCC545E5/Store/telit/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_folding = 'list'

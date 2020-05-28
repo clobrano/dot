@@ -124,6 +124,11 @@ nnoremap za zA
 " toggle folding
 nnoremap <leader>z zA
 
+" git diff shortcuts: enhance diff put and diff obtain moving automatically to
+" the next change
+nnoremap dp dp]c
+nnoremap do do]c
+
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " highlight current word and do not move to next match
@@ -229,7 +234,9 @@ nnoremap <leader><space> :nohlsearch<CR>
 "}}}
 
 " search or go to Next/Prev match {{{
-nnoremap fn <esc>/\v
+nnoremap / /\<\><left><left>
+nnoremap // /
+nnoremap fn /
 vnoremap fn y/<C-r>"<cr>
 nnoremap fp <esc>?
 vnoremap fp y?<C-r>"<cr>

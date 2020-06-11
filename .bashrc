@@ -69,7 +69,7 @@ export EDITOR="gedit"
 source $HOME/.config/cconf/dot/dot.sh
 
 export CDPATH=$HOME/workspace/devel
-export GOROOT=/usr/local/go
+export GOROOT=/usr/lib/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1

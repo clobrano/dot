@@ -144,7 +144,6 @@ let g:pandoc#folding#fdc = 0
 
 " clipboard images into md file
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
-autocmd BufRead taskell.md :Goyo<cr>
 
 " preview html in tmp directory
 nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/me/pandoc.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
@@ -163,7 +162,7 @@ nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
 
 nnoremap <leader>snw :set nowrap<cr>
 nnoremap <leader>sw :set wrap<cr>
-nnoremap gW :cd /mnt/4EBCC563BCC545E5/Store/telit
+nnoremap gW :cd ~/Sync/tnotes
 
 " vim todo list
 let g:VimTodoListsMoveItems = 0
@@ -204,14 +203,13 @@ au FileType html,php,markdown,mmd,text,mail,gitcommit
 nnoremap gS :Startify<cr>
 
 nnoremap gN :lcd ~/MyBox/notes
-nnoremap gW :lcd /mnt/4EBCC563BCC545E5/Store/telit
+nnoremap gW :lcd ~/Sync/tnotes
 
 let g:startify_change_to_dir=0
 let g:startify_files_number = 10
 let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},
  \ {'J': '~/MyBox/notes/me/journal/📒journal.md'},
- \ {'i': '/mnt/4EBCC563BCC545E5/Store/telit/inbox.md'},
- \ {'t': '/mnt/4EBCC563BCC545E5/Store/telit/taskell.md'} ]
+ \ {'t': '~/Sync/tnotes/taskell.md'} ]
 
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
@@ -235,5 +233,5 @@ endif
 
 "let g:pandoc#syntax#conceal#blacklist = ["list", "titleblock"]
 
-let g:vimwiki_list = [{'path': '/mnt/4EBCC563BCC545E5/Store/telit/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_folding = 'list'

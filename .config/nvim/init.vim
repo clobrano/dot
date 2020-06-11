@@ -233,5 +233,7 @@ endif
 
 "let g:pandoc#syntax#conceal#blacklist = ["list", "titleblock"]
 
-let g:vimwiki_list = [{'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [
+    \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
+    \ {'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
 let g:vimwiki_folding = 'list'

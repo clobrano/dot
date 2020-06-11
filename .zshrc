@@ -16,9 +16,9 @@ source ~/.config/cconf/zsh/bindings.zsh
 # Editor for local and remote sessions
 #
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='gvim'
+  export EDITOR='gedit'
 fi
 
 #

@@ -234,8 +234,6 @@ nnoremap <leader><space> :nohlsearch<CR>
 "}}}
 
 " search or go to Next/Prev match {{{
-nnoremap / /\<\><left><left>
-nnoremap // /
 nnoremap fn /
 vnoremap fn y/<C-r>"<cr>
 nnoremap fp <esc>?

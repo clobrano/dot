@@ -121,13 +121,19 @@ set nocompatible
 syntax enable
 filetype on
 
-" Work custom nippets
+" VimWiki {{{
+    let g:vimwiki_list = [
+        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
+        \ {'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
+    let g:vimwiki_folding = 'list'
+" }}}
+" Work custom nippets {{{
 nnoremap gW :cd ~/Sync/tnotes
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim
 cabbr gerrit  !git push origin HEAD:refs/for/
-
+" }}}
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()

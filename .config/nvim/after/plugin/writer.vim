@@ -1,15 +1,6 @@
 " Configuration to simplify edit text/markdow files
 " This configuration file operates on more than one single plugin
 
-
-" VimWiki {{{
-    let g:vimwiki_list = [
-        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-        \ {'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
-    let g:vimwiki_folding = 'list'
-" }}}
-
-
 " Pandoc {{{
     let g:pandoc#syntax#conceal#use = 1
     let g:pandoc#syntax#conceal#urls = 1

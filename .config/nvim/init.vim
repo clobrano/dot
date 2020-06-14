@@ -1,7 +1,12 @@
-" Plugins                            {{{
-" VimPlug configuration              {{{
+" global
+" Shortcut to full configuration
+" ~/.config/nvim/
+
 let mapleader = ' '
 let maplocalleader=' '
+
+" Plugins
+" VimPlug configuration              {{{
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source ~/.config/nvim/init.vim
@@ -86,7 +91,6 @@ Plug 'gyim/vim-boxdraw'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kyuhi/vim-emoji-complete'
-"Plug 'reedes/vim-lexical'          " Better spellcheck mappings
 Plug 'reedes/vim-litecorrect'      " Better autocorrections
 Plug 'reedes/vim-textobj-sentence' " Treat sentences as text objects
 Plug 'reedes/vim-wordy'            " Weasel words and passive voice
@@ -116,125 +120,17 @@ call plug#end()
 set nocompatible
 syntax enable
 filetype on
-"}}}
 
-" global
-" Shortcut to full configuration
-" ~/.config/nvim/
-
-" Custom Snippets {{{
+" Work custom nippets
+nnoremap gW :cd ~/Sync/tnotes
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim
-"}}}
-" Gerrit review {{{
 cabbr gerrit  !git push origin HEAD:refs/for/
-" }}}
-" Look&Feel {{{
-command! Papercolor :colorscheme PaperColor | set background=light
-command! Monokai :colorscheme monokai | set termguicolors
-
-" }}}
-" Markdown {{{
-let g:pandoc#syntax#conceal#use = 1
-let g:pandoc#syntax#conceal#urls = 1
-let g:pandoc#spell#enabled=0
-"" no side folding sign
-let g:pandoc#folding#fdc = 0
-
-" clipboard images into md file
-autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
-
-" preview html in tmp directory
-nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/air.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
-nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
-let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/css/kult-mod.css'
-nnoremap <leader>mw :MarkdownPreview<cr>
-
-nnoremap <leader>at  vip:EasyAlign *<bar><cr>
-
-" }}}
-" Notes {{{
-
-nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
-nnoremap <leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
-inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
-nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
-
-nnoremap <leader>snw :set nowrap<cr>
-nnoremap <leader>sw :set wrap<cr>
-nnoremap gW :cd ~/Sync/tnotes
-
-" vim todo list
-let g:VimTodoListsMoveItems = 0
-nnoremap <C-space> :VimTodoListsToggleItem<cr>
-"}}}
-" Writers {{{
-" Bold text with "B"
-autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
-" Link with "L"
-autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
-" Strike through "X"
-autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
-
-autocmd BufNew,BufEnter *.todo set foldmethod=indent
-autocmd BufReadPost *.todo set foldlevel=0
-
-augroup litecorrect
-  autocmd!
-  autocmd FileType markdown,mkd call litecorrect#init()
-  autocmd FileType textile call litecorrect#init()
-augroup END
-"augroup lexical
-  "autocmd!
-  "autocmd FileType markdown,mkd call lexical#init()
-  "autocmd FileType textile call lexical#init()
-"augroup END
-
-iabbr vmk ✅
-iabbr xmk ❌
-iabbr qmk ❔
-
-cabbr draft e /tmp/draft.md
-
-au FileType html,php,markdown,mmd,text,mail,gitcommit
-    \ runtime macros/emoji-ab.vim
-" }}}
-" startify {{{
-nnoremap gS :Startify<cr>
-
-nnoremap gN :lcd ~/MyBox/notes
-nnoremap gW :lcd ~/Sync/tnotes
-
-let g:startify_change_to_dir=0
-let g:startify_files_number = 10
-let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},
- \ {'J': '~/MyBox/notes/me/journal/📒journal.md'},
- \ {'t': '~/Sync/tnotes/taskell.md'} ]
-
-let g:startify_change_to_dir = 0
-let g:startify_lists = [
-          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-          \ { 'type': 'files',     'header': ['   Files']          },
-          \ { 'type': 'sessions',  'header': ['   Sessions']       },
-          \ ]
-" }}}
-
-"nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-"nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-"nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-"nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
-
-let Tlist_Process_File_Always=1
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
 
-"let g:pandoc#syntax#conceal#blacklist = ["list", "titleblock"]
 
-let g:vimwiki_list = [
-    \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-    \ {'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
-let g:vimwiki_folding = 'list'

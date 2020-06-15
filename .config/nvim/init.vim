@@ -146,7 +146,7 @@ let g:pandoc#folding#fdc = 0
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
 " preview html in tmp directory
-nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/air.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
+nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/css/kult-mod.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
 nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
 let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/css/kult-mod.css'
 nnoremap <leader>mw :MarkdownPreview<cr>

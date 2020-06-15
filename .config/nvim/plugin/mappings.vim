@@ -189,8 +189,9 @@ nnoremap <M-l> gt
 nnoremap <M-h> gT
 
 
-" normal mode enter
+" normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)
 inoremap jj <Esc>
+inoremap kk <Esc>
 
 " Notes (see plugin/tasks)
 

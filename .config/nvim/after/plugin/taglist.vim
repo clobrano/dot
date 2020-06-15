@@ -8,6 +8,7 @@ let Tlist_WinWidth=40
 let Tlist_Compact_Format=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
+let Tlist_Process_File_Always=1
 
 nnoremap <leader>to :TlistOpen<cr>
 nnoremap <leader>tc :TlistClose<cr>

@@ -20,6 +20,7 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
 
 " Markdown-preview {{{
     let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/css/kult-mod.css'
+    let g:mkdp_page_title = '${name}'
     nnoremap <leader>mw :MarkdownPreview<cr>
 " }}}
 

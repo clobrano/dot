@@ -22,7 +22,7 @@ function! clobrano#status#linter()
     if l:counts.total == 0
         let _ .= ''
     else
-        let _ .= '[:' . all_errors . ' :' . all_non_errors . ']'
+        let _ .= ' [' . all_errors . ']  [' . all_non_errors . ']'
     endif
     return _
 endfunction

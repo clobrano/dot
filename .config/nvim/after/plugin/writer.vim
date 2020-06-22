@@ -24,7 +24,6 @@ autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardI
     nnoremap <leader>mw :MarkdownPreview<cr>
 " }}}
 
-
 " EasyAlign align tables
 nnoremap <leader>at  vip:EasyAlign *<bar><cr>
 

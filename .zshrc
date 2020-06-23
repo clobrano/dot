@@ -79,7 +79,7 @@ done
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 
 #
 # Prompt

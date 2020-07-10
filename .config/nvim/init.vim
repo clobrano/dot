@@ -124,7 +124,7 @@ filetype on
 " VimWiki {{{
     let g:vimwiki_list = [
         \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-        \ {'path': '~/Sync/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
+        \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
     let g:vimwiki_folding = 'list'
 " }}}
 " Work custom nippets {{{
@@ -138,5 +138,3 @@ cabbr gerrit  !git push origin HEAD:refs/for/
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
-
-

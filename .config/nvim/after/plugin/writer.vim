@@ -8,7 +8,7 @@
     "" no side folding sign
     let g:pandoc#folding#fdc = 0
     " Pandoc based preview html in tmp directory
-    nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/projects/css/kult-mod.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
+    nnoremap <leader>mp  :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
     nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
 " }}}
 
@@ -17,9 +17,8 @@
 " remember)
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
-
 " Markdown-preview
-let g:mkdp_markdown_css = '/home/TMT/carlolo/MyBox/notes/projects/css/kult-mod.css'
+let g:mkdp_markdown_css = '~/MyBox/notes/projects/css/kult-mod.css'
 let g:mkdp_page_title = '${name}'
 nnoremap <leader>mw :MarkdownPreview<cr>
 
@@ -59,3 +58,6 @@ cabbr draft e /tmp/draft.md
 " Enable emoji support on text related filetypes
 au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
+
+" Requires Markdown or pandoc plugins
+nnoremap tv :Tocv<cr>

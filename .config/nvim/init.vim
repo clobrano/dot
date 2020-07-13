@@ -123,8 +123,8 @@ filetype on
 
 " VimWiki {{{
     let g:vimwiki_list = [
-        \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'},
-        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'}]
+        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
+        \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
     let g:vimwiki_folding = 'list'
 " }}}
 " Work custom nippets {{{

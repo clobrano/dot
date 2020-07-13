@@ -8,7 +8,7 @@
     "" no side folding sign
     let g:pandoc#folding#fdc = 0
     " Pandoc based preview html in tmp directory
-    nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/air.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
+    nnoremap <leader>mp  :!pandoc -s --self-contained --toc -H ~/MyBox/notes/projects/css/kult-mod.css % -o /tmp/markdown-preview.html --metadata title=%:t:r
     nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
 " }}}
 
@@ -18,11 +18,10 @@
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
 
-" Markdown-preview {{{
-    let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/css/kult-mod.css'
-    let g:mkdp_page_title = '${name}'
-    nnoremap <leader>mw :MarkdownPreview<cr>
-" }}}
+" Markdown-preview
+let g:mkdp_markdown_css = '/home/TMT/carlolo/MyBox/notes/projects/css/kult-mod.css'
+let g:mkdp_page_title = '${name}'
+nnoremap <leader>mw :MarkdownPreview<cr>
 
 " EasyAlign align tables
 nnoremap <leader>at  vip:EasyAlign *<bar><cr>

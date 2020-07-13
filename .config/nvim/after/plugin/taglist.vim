@@ -8,7 +8,8 @@ let Tlist_WinWidth=40
 let Tlist_Compact_Format=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
-let Tlist_Process_File_Always=1
+" let Tlist_Process_File_Always=1 this shall be in init.vim, otherwise for
+" some reason it is not executed unless the plugin is loaded first
 
 nnoremap <leader>to :TlistOpen<cr>
 nnoremap <leader>tc :TlistClose<cr>

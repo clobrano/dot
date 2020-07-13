@@ -31,6 +31,6 @@ endfunction
 function! clobrano#status#context()
     let _ = ''
     let l:context = Tlist_Get_Tagname_By_Line()
-    let _ = strlen(l:context) > 0 ? '﹫' . l:context : ''
+    let _ = strlen(l:context) > 0 ? '@' . l:context : ''
     return _
 endfunction

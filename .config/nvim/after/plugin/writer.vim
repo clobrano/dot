@@ -17,12 +17,10 @@
 " remember)
 autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
 
-
-" Markdown-preview {{{
-    let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/projects/css/kult-mod.css'
-    let g:mkdp_page_title = '${name}'
-    nnoremap <leader>mw :MarkdownPreview<cr>
-" }}}
+" Markdown-preview
+let g:mkdp_markdown_css = '~/MyBox/notes/projects/css/kult-mod.css'
+let g:mkdp_page_title = '${name}'
+nnoremap <leader>mw :MarkdownPreview<cr>
 
 " EasyAlign align tables
 nnoremap <leader>at  vip:EasyAlign *<bar><cr>

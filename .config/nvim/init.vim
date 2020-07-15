@@ -128,7 +128,7 @@ filetype on
     let g:vimwiki_folding = 'list'
 " }}}
 " Work custom nippets {{{
-nnoremap gW :cd ~/Sync/tnotes
+nnoremap gW :cd ~/MyBox/work/telit/tnotes
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim
@@ -138,3 +138,7 @@ cabbr gerrit  !git push origin HEAD:refs/for/
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+" This shall be in init.vim, otherwise for
+" some reason it is not executed unless the plugin is loaded first
+let Tlist_Process_File_Always=1

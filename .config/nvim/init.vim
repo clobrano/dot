@@ -54,6 +54,8 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
+Plug 'arrufat/vala.vim'
+Plug 'shinglyu/vim-codespell'
 Plug 'sheerun/vim-polyglot'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'

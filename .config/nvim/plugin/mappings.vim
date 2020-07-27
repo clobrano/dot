@@ -73,6 +73,8 @@ inoremap <C-s>      <Esc>:w<CR>
 noremap <C-s>       <Esc>:w<CR>
 "}}}
 
+" register 0 hold latest Yank, let's map yp to `"0p`
+nnoremap yp "0p
 " clipboard yank till the end of the line
 vnoremap Y "+y
 " clipboard paste

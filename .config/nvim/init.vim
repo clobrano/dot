@@ -128,7 +128,6 @@ filetype on
     let g:vimwiki_folding = 'list'
 " }}}
 " Work custom nippets {{{
-nnoremap gW :cd ~/MyBox/work/telit/tnotes
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim

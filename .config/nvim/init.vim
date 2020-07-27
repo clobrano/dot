@@ -24,7 +24,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
-Plug 'voldikss/vim-floaterm'
+"Plug 'voldikss/vim-floaterm'
 Plug 'dracula/vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'

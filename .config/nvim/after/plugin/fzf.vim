@@ -14,4 +14,4 @@ nnoremap <leader>fb :Buffers<cr>
 nnoremap <leader>fl :BLines<cr>
 nnoremap <leader>ft :Tags<cr>
 nnoremap <leader>fx :Commits<cr>
-nnoremap <leader>ff :FloatermNew fzf --preview='head -$LINES {}'<cr>
+nnoremap <leader>ff :FZF<cr>

@@ -3,7 +3,7 @@
 set -xeu
 [ ! -d  neovim-qt ] && git clone https://github.com/equalsraf/neovim-qt.git
 
-sudo apt install -y qt5-default cmake
+sudo apt install -y libqt5svg5-dev qt5-default cmake
 
 cd neovim-qt
 mkdir -p build

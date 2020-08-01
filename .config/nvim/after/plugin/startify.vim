@@ -1,8 +1,5 @@
 nnoremap gS :Startify<cr>
 
-nnoremap gN :lcd ~/MyBox/notes
-nnoremap gW :lcd ~/Sync/tnotes
-
 let g:startify_change_to_dir=0
 let g:startify_files_number = 10
 let g:startify_bookmarks = [ {'I': '~/MyBox/notes/me/📭Inbox.md'},

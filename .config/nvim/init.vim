@@ -24,7 +24,7 @@ endif
 let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
-Plug 'voldikss/vim-floaterm'
+"Plug 'voldikss/vim-floaterm'
 Plug 'dracula/vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'crusoexia/vim-monokai'
@@ -130,7 +130,6 @@ filetype on
     let g:vimwiki_folding = 'list'
 " }}}
 " Work custom nippets {{{
-nnoremap gW :cd ~/MyBox/work/telit/tnotes
 source ~/.config/nvim/snippets/canonical.config.vim
 source ~/.config/nvim/snippets/cisco.vim
 source ~/.config/nvim/snippets/programming.vim

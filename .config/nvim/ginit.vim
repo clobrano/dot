@@ -1,2 +1,2 @@
-set guifont=Monaco:h10
+set guifont=Ubuntu\ Mono:h12
 GuiTabline 0

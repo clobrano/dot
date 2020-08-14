@@ -32,8 +32,9 @@ nnoremap <leader>at  vip:EasyAlign *<bar><cr>
 " Add dates, short and long formats
 nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
 nnoremap <leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
-inoremap <A-d> <C-R>=strftime("%y%m%d")<CR>
-nnoremap <A-d> a<C-R>=strftime("%y%m%d")<CR><Esc>
+inoremap <A-d> <C-R>=strftime("%d.%m.%y")<CR>
+nnoremap <A-d> a<C-R>=strftime("%d.%m.%y")<CR><Esc>
+inoremap hhmm <C-R>=strftime("%H:%M")<CR>
 
 
 " The following works with surround plugin

@@ -286,3 +286,8 @@ debugfs
 usbnet
 qmi
 wwan
+Destructors
+carlo
+ctor
+dtor
+CamelCase

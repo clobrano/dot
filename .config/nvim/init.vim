@@ -31,20 +31,16 @@ Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}
-Plug 'ayu-theme/ayu-vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'ryanoasis/vim-devicons'
 "}}}
 " Search & Replace                   {{{
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'derekwyatt/vim-fswitch'
 Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
 Plug 'vim-scripts/taglist.vim'
-Plug 'tpope/vim-abolish'
+"Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdtree'
 "}}}
 "  GIT helpers                        {{{
@@ -55,13 +51,10 @@ Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
 Plug 'arrufat/vala.vim'
-Plug 'shinglyu/vim-codespell'
 Plug 'sheerun/vim-polyglot'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-syntastic/syntastic'
-Plug 'chrisbra/Colorizer'
 Plug 'tpope/vim-dispatch'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
@@ -75,20 +68,20 @@ Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
 Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
 Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
-Plug 'vim-scripts/cflow-output-colorful'
+"Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 "Plug 'davidhalter/jedi',                 {'for': 'python'}
 "Plug 'davidhalter/jedi-vim',             {'for': 'python'}
 "Plug 'ambv/black',                       {'for': 'python'}
-Plug 'janko/vim-test'
+"Plug 'janko/vim-test'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
-Plug 'vimwiki/vimwiki'
 Plug 'ferrine/md-img-paste.vim'
-Plug 'vim-pandoc/vim-pandoc'
+"Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vimwiki/vimwiki'
 Plug 'gyim/vim-boxdraw'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
@@ -141,3 +134,7 @@ endif
 " This shall be in init.vim, otherwise for
 " some reason it is not executed unless the plugin is loaded first
 let Tlist_Process_File_Always=1
+
+augroup pandoc_syntax
+  autocmd! FileType vimwiki set syntax=markdown.pandoc
+augroup END

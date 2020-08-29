@@ -1,2 +1,7 @@
+SRC = main.cpp
+OBJ = main
 all:
-	g++ -std=c++11 -O2 -Wall main.cpp -o main
+	g++ -std=c++11 -O2 -Wall ${SRC} -o ${OBJ}
+
+clean:
+	rm ${SRC} ${OBJ}

@@ -291,3 +291,6 @@ carlo
 ctor
 dtor
 CamelCase
+Inline
+inline
+destructors

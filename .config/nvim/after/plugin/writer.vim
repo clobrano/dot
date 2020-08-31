@@ -4,16 +4,17 @@
 nnoremap gN :lcd ~/MyBox/notes
 nnoremap gW :lcd ~/MyBox/work/telit/tnotes
 
-" Pandoc {{{
-    let g:pandoc#syntax#conceal#use = 1
-    let g:pandoc#syntax#conceal#urls = 1
-    let g:pandoc#spell#enabled=0
-    "" no side folding sign
-    let g:pandoc#folding#fdc = 0
-    " Pandoc based preview html in tmp directory
-    nnoremap <leader>mp  :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
-    nnoremap <leader>mpw :silent !xdg-open /tmp/markdown-preview.html
-" }}}
+" Pandoc
+let g:pandoc#syntax#conceal#use = 1
+let g:pandoc#syntax#conceal#urls = 1
+let g:pandoc#spell#enabled=1
+" no side folding sign
+let g:pandoc#folding#fdc = 1
+" Pandoc based preview html in tmp directory
+nnoremap <leader>pm  :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -t html -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
+nnoremap <leader>pmf :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -t html -F mermaid-filter -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
+nnoremap <leader>pmw :silent !xdg-open /tmp/markdown-preview.html
+" end-pandoc
 
 
 " clipboard images into md file (this must belong to some plugin I don't

@@ -66,7 +66,7 @@ Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
-Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
+"Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
 Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
 "Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}

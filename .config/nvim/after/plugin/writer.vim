@@ -18,7 +18,7 @@ nnoremap gW :lcd ~/MyBox/work/telit/tnotes
 
 " clipboard images into md file (this must belong to some plugin I don't
 " remember)
-autocmd FileType markdown nmap <silent> <leader>ic :call mdip#MarkdownClipboardImage()<CR>
+autocmd FileType markdown nmap <silent> <leader>ip :call mdip#MarkdownClipboardImage()<CR>
 
 " Markdown-preview
 let g:mkdp_markdown_css = '~/MyBox/notes/projects/css/kult-mod.css'

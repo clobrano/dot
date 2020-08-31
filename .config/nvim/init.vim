@@ -138,3 +138,6 @@ let Tlist_Process_File_Always=1
 augroup pandoc_syntax
   autocmd! FileType vimwiki set syntax=markdown.pandoc
 augroup END
+
+iabbr divcenter <div style="display: grid; place-items: center;">
+iabbr divend </div>

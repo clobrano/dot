@@ -22,7 +22,7 @@ nnoremap <leader>pmw :silent !xdg-open /tmp/markdown-preview.html
 autocmd FileType markdown nmap <silent> <leader>ip :call mdip#MarkdownClipboardImage()<CR>
 
 " Markdown-preview
-let g:mkdp_markdown_css = '~/MyBox/notes/projects/css/kult-mod.css'
+let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/projects/css/kult-mod.css'
 let g:mkdp_page_title = '${name}'
 nnoremap <leader>mw :MarkdownPreview<cr>
 

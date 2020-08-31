@@ -1,7 +1,9 @@
 " C/C++ template
+iabbr ::j <esc>:0r ~/.config/nvim/plugin/templates/journal
 iabbr cmakefile <esc>:0r ~/.config/nvim/plugin/templates/cmakefile
-iabbr cppmake <esc>:0r ~/.config/nvim/plugin/templates/cppmakefile
 iabbr comp++ <esc>:0r ~/.config/nvim/plugin/templates/competitivecpp
+iabbr cppmake <esc>:0r ~/.config/nvim/plugin/templates/cppmakefile
+iabbr cpptemplate <esc>:0r ~/.config/nvim/plugin/templates/cpptemplate
 iabbr #i #include
 iabbr #d #define
 

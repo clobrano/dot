@@ -57,7 +57,7 @@ nnoremap <leader>g :echo expand('%')<cr>
 nnoremap <leader>G :let @" = expand("%")<cr>
 
 
-" buffer: close {{{
+" buffer: close
 nnoremap x          <Esc>:bd
 nnoremap xx         <Esc>:bd<CR>
 nnoremap x1         m1:bd
@@ -69,12 +69,12 @@ nnoremap x6         m6<cr>:5bn<cr>:bd
 nnoremap x7         m7<cr>:6bn<cr>:bd
 nnoremap x8         m8<cr>:7bn<cr>:bd
 nnoremap x9         m9<cr>:8bn<cr>:bd
-"}}}
+" end buffer: close
 
-" buffer: save {{{
-inoremap <C-s>      <Esc>:w<CR>
-noremap <C-s>       <Esc>:w<CR>
-"}}}
+" buffer: save
+inoremap <C-s>  <Esc>:silent write<CR>
+noremap <C-s>   <Esc>:silent write<CR>
+"
 
 " register 0 hold latest Yank, let's map yp to `"0p`
 nnoremap yp "0p

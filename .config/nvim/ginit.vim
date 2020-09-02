@@ -1,3 +1,3 @@
-set guifont=Ubuntu\ Mono:h12
+set guifont=Ubuntu\ Mono:h13
 colorscheme onehalfdark
 GuiTabline 0

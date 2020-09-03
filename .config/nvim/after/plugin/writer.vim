@@ -36,7 +36,7 @@ nnoremap <leader>d a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 inoremap <A-d> <C-R>=strftime("%d.%m.%y")<CR>
 nnoremap <A-d> a<C-R>=strftime("%d.%m.%y")<CR><Esc>
 inoremap hhmm <C-R>=strftime("%H:%M")<CR>
-
+inoremap wwd <C-r>=strftime("%a")<CR>
 
 " The following works with surround plugin
 " Bold text with "B"

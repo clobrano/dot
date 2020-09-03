@@ -141,3 +141,5 @@ augroup END
 
 iabbr divcenter <div style="display: grid; place-items: center;">
 iabbr divend </div>
+
+let g:vimwiki_table_mappings = 0

@@ -1,0 +1,21 @@
+snippet jtoday "Today journal template" b
+# `!p import datetime
+tomorrow = datetime.date.today()
+snip.rv = tomorrow.strftime("%a %d.%m.%y")` 😊
+
+## Notes/Recap
+
+## Planned
+1. 
+endsnippet
+
+snippet jtomorrow "Tomorrow journal template" b
+# `!p import datetime
+tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+snip.rv = tomorrow.strftime("%a %d.%m.%y")` 😊
+
+## Notes/Recap
+
+## Planned
+1. 
+endsnippet

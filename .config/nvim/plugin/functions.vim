@@ -1,3 +1,22 @@
+function! WriteRoom()
+    " TODO change line number color to make it invisible, but colorscheme-wise
+    if !exists("g:writeroom")
+        let g:writeroom="true"
+        exec "setlocal norelativenumber"
+        exec "setlocal number"
+        exec "setlocal numberwidth=15"
+        exec "setlocal columns=100"
+    else
+        unlet g:writeroom
+        exec "setlocal nonumber"
+        exec "setlocal relativenumber"
+        exec "setlocal numberwidth=4"
+        exec "setlocal columns=160"
+    endif
+endfunction
+
+command! WriteRoom :call WriteRoom()
+
 function! ToggleBackground()
     if "light" == &background
         exec "set background=dark"

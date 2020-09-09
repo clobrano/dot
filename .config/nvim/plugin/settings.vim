@@ -66,8 +66,7 @@ set nobackup
 set nojoinspaces                          " No add space when joining lines
 set noswapfile
 set path+=**
-set nonumber                                " Show line numbers
-set relativenumber
+set number relativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
 set scrolloff=10                           " Keeping the cursor away from the last line
 set sidescrolloff=10                       " Same as scrolloff, but for columns
 set shiftround                            " always indent by multiple of shiftwidth

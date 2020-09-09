@@ -13,6 +13,7 @@ Bitbucket
 Bugfix
 CEST
 CHANGELOG
+CLI
 CamelCase
 Creational
 DBus
@@ -22,6 +23,7 @@ Destructors
 Didier
 Digitax
 Dijkstras
+Downcasting
 Esc
 F2
 FTDI
@@ -92,6 +94,7 @@ Todos
 Tosal
 UI
 Ubuntu
+Upcasting
 Userspace
 VCS
 VID
@@ -136,6 +139,7 @@ destructors
 dev
 diff
 distro
+downcasting
 dropdown
 dtor
 endian
@@ -272,6 +276,7 @@ udev
 uninstall
 uninstalling
 univocally
+upcasting
 uploader
 usb
 usbmon
@@ -297,4 +302,3 @@ zathura
 zazen
 zlp
 ⮕
-CLI

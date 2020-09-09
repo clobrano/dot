@@ -119,6 +119,9 @@ filetype on
         \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
         \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
     let g:vimwiki_folding = 'list'
+    let g:vimwiki_table_mappings = 0
+    nnoremap <leader>vn :VimwikiDiaryNextDay
+    nnoremap <leader>vp :VimwikiDiaryPrevDay
 " }}}
 " Work custom nippets {{{
 source ~/.config/nvim/snippets/canonical.config.vim
@@ -142,4 +145,3 @@ augroup END
 iabbr divcenter <div style="display: grid; place-items: center;">
 iabbr divend </div>
 
-let g:vimwiki_table_mappings = 0

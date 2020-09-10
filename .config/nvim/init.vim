@@ -78,8 +78,8 @@ Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "}}}
 " For Writers                        {{{
+Plug 'tools-life/taskwiki'
 Plug 'ferrine/md-img-paste.vim'
-"Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vimwiki/vimwiki'
 Plug 'gyim/vim-boxdraw'

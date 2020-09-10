@@ -7,6 +7,10 @@ snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 
 ## Planned
 -  
+
+== Planned tasks | due:`!p import datetime
+tomorrow = datetime.date.today()
+snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet
 
 snippet jtomorrow "Tomorrow journal template" b
@@ -18,6 +22,10 @@ snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 
 ## Planned
 - 
+
+== Planned tasks | due:`!p import datetime
+tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet
 
 snippet hcm "HTML comment"

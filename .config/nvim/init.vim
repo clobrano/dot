@@ -52,7 +52,7 @@ Plug 'jreybert/vimagit'
 " Development                        {{{
 Plug 'arrufat/vala.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase', 'for': ['scss', 'css']}
 Plug 'pechorin/any-jump.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-dispatch'
@@ -116,8 +116,8 @@ filetype on
 
 " VimWiki {{{
     let g:vimwiki_list = [
-        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-        \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
+        \ {'path': '/mnt/c/Users/carlolo/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
+        \ {'path': '/mnt/c/Users/carlolo/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
     let g:vimwiki_folding = 'list'
     let g:vimwiki_table_mappings = 0
     nnoremap <leader>vn :VimwikiDiaryNextDay

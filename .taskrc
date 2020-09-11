@@ -11,7 +11,7 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/MyBox/work/taskwarrior
+data.location=/mnt/c/Users/carlolo/MyBox/work/taskwarrior
 
 # Color theme (uncomment one to use)
 #include /usr/share/taskwarrior/light-16.theme
@@ -29,5 +29,6 @@ data.location=~/MyBox/work/taskwarrior
 #include /usr/share/taskwarrior/solarized-light-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
-context.work=+telit
-context.sideproject=-work
+context.work=pro:hsw or pro:training
+context.me=!pro:hsw
+context=work

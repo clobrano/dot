@@ -18,5 +18,5 @@ xnoremap <C-Down> :<C-u>silent! '<,'>move'>+<CR>gv=gv
 
 " Taskwiki for taskwarrior
 let g:taskwiki_sort_orders={"T": "project+,due-"}
-nnoremap <leader>tb :TaskWikiStart
-nnoremap <leader>ts :TaskWikiStstop
+nnoremap <leader>tg :TaskWikiStart
+nnoremap <leader>th :TaskWikiStop

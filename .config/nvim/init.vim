@@ -52,7 +52,7 @@ Plug 'jreybert/vimagit'
 " Development                        {{{
 Plug 'arrufat/vala.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'pechorin/any-jump.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-dispatch'
@@ -141,7 +141,3 @@ let Tlist_Process_File_Always=1
 augroup pandoc_syntax
   autocmd! FileType vimwiki set syntax=markdown.pandoc
 augroup END
-
-iabbr divcenter <div style="display: grid; place-items: center;">
-iabbr divend </div>
-

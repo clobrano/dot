@@ -1,13 +1,20 @@
 nnoremap gS :Startify<cr>
 
 let g:startify_change_to_dir=0
-let g:startify_files_number = 10
-let g:startify_bookmarks = [ {'I': '~/MyBox/notes/index.md'},
- \ {'J': '~/MyBox/notes/me/journal/📒journal.md'},
- \ {'t': '~/MyBox/work/telit/tnotes/index.md'} ]
+let g:startify_files_number = 5
+let g:startify_change_to_vcs_root = 1
+let g:startify_session_delete_buffers = 1
+let g:startify_enable_special = 0
+let g:startify_bookmarks = [ {'b': '~/workspace/me/blog'},
+            \ {'t': '~/MyBox/work/telit/tnotes/index.md'},
+            \ {'m': '~/MyBox/notes/index.md'},
+            \ {'u': '~/workspace/devel/uxfp'},
+            \ {'y': '~/workspace/ubuntu/yaru'},
+            \ ]
 
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
+          \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
           \ { 'type': 'files',     'header': ['   Files']          },
           \ { 'type': 'sessions',  'header': ['   Sessions']       },

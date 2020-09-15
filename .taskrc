@@ -29,6 +29,6 @@ data.location=/mnt/c/Users/carlolo/MyBox/work/taskwarrior
 #include /usr/share/taskwarrior/solarized-light-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
-context.work=pro:hsw or pro:training
-context.me=!pro:hsw
+context.work=pro:hsw
+context.me=pro:me
 context=work

@@ -219,6 +219,13 @@ nnoremap <silent> - :exe "resize -2"<CR>
 " sudo save
 cmap w!! w !sudo tee > /dev/null %
 
+" search with * with smartcase (if set): Store cword in search register, with
+" search-magic and boundaries, then search forward and go to next
+nnoremap * :let @/='\v<'.expand('<cword>').'>'<cr>:let v:searchforward=1<cr>n``
+nnoremap # :let @/='\v<'.expand('<cword>').'>'<cr>:let v:searchforward=0<cr>n``
+nnoremap g* :let @/='\v<'.expand('<cword>').'>'<cr>:let v:searchforward=1<cr>n``
+nnoremap g# :let @/='\v<'.expand('<cword>').'>'<cr>:let v:searchforward=0<cr>n``
+
 " search word in all visible filesystem
 nnoremap fa <Esc>:grep! ""<left>
 

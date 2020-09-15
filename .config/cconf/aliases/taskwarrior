@@ -1,0 +1,4 @@
+alias tw='task'
+alias tdo='task start'
+alias tstop='task stop'
+

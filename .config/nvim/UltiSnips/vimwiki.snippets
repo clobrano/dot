@@ -3,12 +3,12 @@ snippet jtoday "Today journal template" b
 tomorrow = datetime.date.today()
 snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 
-## Notes/Recap
+# Notes/Recap
 
-## Planned
+# Planned
 -  
 
-== Planned tasks | due:`!p import datetime
+== Planned tasks | ${1:pro:hsw} due:`!p import datetime
 tomorrow = datetime.date.today()
 snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet
@@ -18,12 +18,12 @@ snippet jtomorrow "Tomorrow journal template" b
 tomorrow = datetime.date.today() + datetime.timedelta(days=1)
 snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 
-## Notes/Recap
+# Notes/Recap
 
-## Planned
+# Planned
 - 
 
-== Planned tasks | due:`!p import datetime
+== Planned tasks | ${1:pro:hsw} due:`!p import datetime
 tomorrow = datetime.date.today() + datetime.timedelta(days=1)
 snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet

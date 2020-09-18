@@ -1,4 +1,4 @@
-alias tw='task'
+alias tt='task'
 alias tdo='task start'
-alias tstop='task stop'
+alias tst='task stop'
 

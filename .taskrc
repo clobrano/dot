@@ -19,7 +19,7 @@ data.location=~/MyBox/work/taskwarrior
 #include /usr/share/taskwarrior/dark-16.theme
 #include /usr/share/taskwarrior/dark-256.theme
 #include /usr/share/taskwarrior/dark-red-256.theme
-#include /usr/share/taskwarrior/dark-green-256.theme
+include /usr/share/taskwarrior/dark-green-256.theme
 #include /usr/share/taskwarrior/dark-blue-256.theme
 #include /usr/share/taskwarrior/dark-violets-256.theme
 #include /usr/share/taskwarrior/dark-yellow-green.theme
@@ -31,4 +31,6 @@ data.location=~/MyBox/work/taskwarrior
 
 context.work=pro:hsw
 context.me=pro:me
-context=work
+context=me
+report.next.columns=id,start.age,project,tags,description,due.relative,until.remaining,scheduled.countdown,depends,recur
+report.next.labels=ID,Act,Project,Tags,Description,Due,Until,Scheduled,Depends,Recur

@@ -32,5 +32,5 @@ include /usr/share/taskwarrior/dark-green-256.theme
 context.work=pro:hsw
 context.me=pro:me
 context=me
-report.next.columns=id,start.age,project,tags,description,due.relative,until.remaining,scheduled.countdown,depends,recur
-report.next.labels=ID,Act,Project,Tags,Description,Due,Until,Scheduled,Depends,Recur
+report.next.columns=id,start.age,project,tags,due.relative,until.remaining,scheduled.countdown,description,depends,recur
+report.next.labels=ID,Act,Project,Tags,Due,Until,Scheduled,Description,Depends,Recur

@@ -16,6 +16,7 @@ let g:startify_change_to_dir = 0
 let g:startify_lists = [
           \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'files',     'header': ['   Files']      },
           \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ ]
 

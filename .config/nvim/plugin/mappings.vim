@@ -174,8 +174,8 @@ noremap <silent> j gj
 
 
 " move fast
-nnoremap <C-l> 10l
-nnoremap <C-h> 10h
+nnoremap <C-l> w
+nnoremap <C-h> b
 nnoremap <C-k> 10k
 nnoremap <C-j> 10j
 nnoremap E $

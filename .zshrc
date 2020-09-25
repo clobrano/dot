@@ -1,7 +1,7 @@
 #
 # Aliases
 #
-source ~/.config/cconf/dot/dot.sh
+source ~/.config/cconf/dot/dotfiles.sh
 
 #
 # Bindings

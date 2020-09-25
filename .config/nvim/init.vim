@@ -124,9 +124,6 @@ filetype on
     nnoremap <leader>vp :VimwikiDiaryPrevDay
 " }}}
 " Work custom nippets {{{
-source ~/.config/nvim/snippets/canonical.config.vim
-source ~/.config/nvim/snippets/cisco.vim
-source ~/.config/nvim/snippets/programming.vim
 cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
 " after a re-source, fix syntax matching issues (concealing brackets):

@@ -1,8 +1,0 @@
-CFLAGS  := -g -Wall
-LDFLAGS :=
-
-all:
-    $(CC) $(CFLAGS) main.c -o main $(LDFLAGS)
-
-clean:
-	rm main

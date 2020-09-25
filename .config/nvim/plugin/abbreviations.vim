@@ -22,3 +22,7 @@ iabbr i64t  int64_t
 
 iabbr perche perché
 iabbr puo può
+iabbr piu più
+iabbr i' ì
+iabbr a' à
+iabbr u' ù

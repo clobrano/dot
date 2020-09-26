@@ -55,6 +55,9 @@ if [ ${_deploy} == 1 ]; then
         if [[ ${f} == "./dot.sh" ]]; then continue ; fi # skip this file
         if [[ ${f} == "./README.md" ]]; then continue ; fi # skip this file
         if [[ ${f} =~ ".git/" ]]; then continue ; fi # skip .git directory
-        ln -sf ${SRC}/${f:2} ${HOME}/${f:2}
+        DST=${HOME}/${f:2}
+        DIR=$(dirname ${DST})
+        [ ! -d ${DIR} ] && mkdir -p ${DIR}
+        ln -sf ${SRC}/${f:2} ${DST}
     done
 fi

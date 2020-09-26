@@ -66,7 +66,7 @@ fi
 
 export EDITOR="gedit"
 
-source $HOME/.config/cconf/dot/dot.sh
+source $HOME/.config/cconf/dot/dotfiles.sh
 
 export CDPATH=$HOME/workspace/devel
 export GOROOT=/usr/lib/go

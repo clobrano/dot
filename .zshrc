@@ -71,7 +71,7 @@ setopt SHARE_HISTORY        # share history across terminals
 # Plugins
 #
 
-ZSH_CUSTOM=~/.config/cconf/zsh
+ZSH_CUSTOM=~/.dot/.config/cconf/zsh
 for plugin in $(ls $ZSH_CUSTOM/plugins); do
     source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
 done

@@ -3,11 +3,15 @@
 apt-file
 clang-format
 cmake
+locate
+net-tools
+pandoc
 pkg-config
+ppa-purge
 python-pip
 python3-pip
 rar
 tree
 unrar
-uptimed
+vit
 zathura

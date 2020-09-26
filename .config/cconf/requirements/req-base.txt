@@ -8,11 +8,13 @@ ctags
 curl
 expect
 exuberant-ctags
+git
 neovim
 ranger
 silversearcher-ag
+taskwarrior
 tig
 tmux
-vim-gtk
+uptimed
 xclip
 zsh

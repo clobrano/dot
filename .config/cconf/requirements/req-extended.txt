@@ -1,6 +1,7 @@
 #xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
 
 apt-file
+at
 clang-format
 cmake
 locate

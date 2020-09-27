@@ -1,3 +1,15 @@
+snippet mcpp "markdown sh code paragraph"
+~~~cpp
+$1
+~~~
+endsnippet
+
+snippet msh "markdown sh code paragraph"
+~~~sh
+$1
+~~~
+endsnippet
+
 snippet jtoday "Today journal template" b
 # `!p import datetime
 tomorrow = datetime.date.today()
@@ -6,11 +18,8 @@ snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 # Notes/Recap
 
 # Planned
--  
+- $1
 
-== Planned tasks | ${1:pro:hsw} due:`!p import datetime
-tomorrow = datetime.date.today()
-snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet
 
 snippet jtomorrow "Tomorrow journal template" b
@@ -21,11 +30,8 @@ snip.rv = tomorrow.strftime("%a %d.%m.%y")` 👍
 # Notes/Recap
 
 # Planned
-- 
+- $1
 
-== Planned tasks | ${1:pro:hsw} due:`!p import datetime
-tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-snip.rv = tomorrow.strftime("%Y-%m-%d")` ==
 endsnippet
 
 snippet hcm "HTML comment"

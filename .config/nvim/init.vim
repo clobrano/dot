@@ -25,9 +25,6 @@ let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
 "Plug 'voldikss/vim-floaterm'
-Plug 'dracula/vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'crusoexia/vim-monokai'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}
@@ -40,42 +37,41 @@ Plug 'mileszs/ack.vim'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
 Plug 'vim-scripts/taglist.vim'
-"Plug 'tpope/vim-abolish'
 Plug 'scrooloose/nerdtree'
 "}}}
 "  GIT helpers                        {{{
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'rhysd/git-messenger.vim'
+"Plug 'rhysd/git-messenger.vim'  " <leader>gm to show line's commit message
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
-Plug 'arrufat/vala.vim'
-Plug 'sheerun/vim-polyglot'
-"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'pechorin/any-jump.vim'
-Plug 'vim-syntastic/syntastic'
-Plug 'tpope/vim-dispatch'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'scrooloose/nerdcommenter'
-Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
-Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
-Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
-Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
-Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
-Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
-"Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
-Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
-"Plug 'vim-scripts/cflow-output-colorful'
-"plug 'moll/vim-node',                    {'for': 'javascript'}
-"Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
+"Plug 'ambv/black',                       {'for': 'python'}
 "Plug 'davidhalter/jedi',                 {'for': 'python'}
 "Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-"Plug 'ambv/black',                       {'for': 'python'}
+"Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
+"Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
+"Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 "Plug 'janko/vim-test'
+"Plug 'ntpeters/vim-better-whitespace'
+"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
+"Plug 'vim-scripts/cflow-output-colorful'
+"plug 'moll/vim-node',                    {'for': 'javascript'}
+Plug 'arrufat/vala.vim'
+Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
+Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
+Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
+Plug 'pechorin/any-jump.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-dispatch'
+Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
+Plug 'vim-syntastic/syntastic'
+Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 "}}}
 " For Writers                        {{{
 Plug 'tools-life/taskwiki'

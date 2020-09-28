@@ -12,6 +12,8 @@ set backspace=indent,eol,start            " fix backspace misbehavior
 set clipboard+=unnamedplus
 set cino+=(0                              " Align function arguments
 set cmdheight=2
+set conceallevel=2                        " conceal text hiddend unless it has a custom replacement.
+set concealcursor=c                       " do not conceal text in normal mode, otherwise it is too hard to edit it.
 set colorcolumn=0
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
 set nocursorline                          " Disable highlight current line

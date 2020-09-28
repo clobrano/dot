@@ -47,7 +47,6 @@ set hidden
 "set highlight+=c:LineNr                  " blend vertical separators with line numbers
 set lazyredraw                            " don't update screen during macro replay
 set laststatus=2                          " always show status
-set lcs=trail:·,tab:»·                    " Highlight spaces, tabs, end of line chars, wrap and brake lines
 set linebreak                             " wrap long lines at characters in 'breakat'
 if has('nvim')
 else
@@ -56,11 +55,11 @@ else
 endif
 set list                                  " show whitespace
 set listchars=nbsp:⦸                      " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-set listchars+=tab:▷┅                     " WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7)
-                                          " + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
+set listchars+=tab:··»                    " 
+                                          " 
 set listchars+=extends:»                  " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
 set listchars+=precedes:«                 " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-set listchars+=trail:•                    " BULLET (U+2022, UTF-8: E2 80 A2)
+set listchars+=trail:·                    " BULLET
 set mouse=a
 set nobackup
 set nojoinspaces                          " No add space when joining lines
@@ -125,4 +124,4 @@ set wildignore+=*.o,*.rej                 " patterns to ignore during file-navig
 set wildmode=longest:full,full            " shell-like autocomplete to unambiguous portion
 "set wildmode=list:longest,full
 set wildmenu                              " graphical menu of autocomplete matches
-set wrap linebreak nolist
+set wrap linebreak

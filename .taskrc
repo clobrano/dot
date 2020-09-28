@@ -31,7 +31,7 @@ include /usr/share/taskwarrior/dark-gray-256.theme
 
 context.work=pro:hsw
 context.me=pro:me
-report.next.columns=id,start.age,project,tags,description,depends,due.relative,until.remaining,scheduled.relative,recur
+report.next.columns=id,start.age,project,tags,description,due.relative,until.remaining,scheduled.relative,depends,recur
 report.next.labels=ID,Act,Project,Tags,Description,Due,Until,Scheduled,Depends,Recur
 
 report.minimal.columns=id,start.age,project,tags,description.count,due.relative,scheduled.relative

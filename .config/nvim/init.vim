@@ -42,7 +42,7 @@ Plug 'scrooloose/nerdtree'
 "  GIT helpers                        {{{
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-"Plug 'rhysd/git-messenger.vim'  " <leader>gm to show line's commit message
+Plug 'rhysd/git-messenger.vim'  " <leader>gm to show line's commit message
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
@@ -74,7 +74,6 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 "}}}
 " For Writers                        {{{
-Plug 'tools-life/taskwiki'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vimwiki/vimwiki'
@@ -111,17 +110,22 @@ syntax enable
 filetype on
 
 " VimWiki {{{
-    let g:vimwiki_list = [
-        \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-        \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
-    let g:vimwiki_folding = 'list'
-    let g:vimwiki_table_mappings = 0
-    nnoremap <leader>vn :VimwikiDiaryNextDay
-    nnoremap <leader>vp :VimwikiDiaryPrevDay
+let g:vimwiki_list = [
+    \ {'path': '~/MyBox/notes',
+        \ 'syntax': 'markdown', 
+        \ 'ext': '.md',
+        \ 'path_html': '~/MyBox/notes/_site'},
+    \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
+let g:vimwiki_folding = 'list'
+let g:vimwiki_table_mappings = 0
+nnoremap <leader>vn :VimwikiDiaryNextDay
+nnoremap <leader>vp :VimwikiDiaryPrevDay
 " }}}
+
 " Work custom nippets {{{
 cabbr gerrit  !git push origin HEAD:refs/for/
 " }}}
+
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()

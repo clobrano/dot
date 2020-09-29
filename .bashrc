@@ -46,7 +46,8 @@ function _virtualenv() {
 
 function _update_ps1() {
     dir=`basename $(dirname $PWD)`/`basename $PWD`
-    PS1="${debian_chroot:+\[\e[0;31m\]($debian_chroot)\[\e[m\]·}$(_virtualenv)\[\e[31m\] \u\[\e[m\]\[\e[33m\] ● \[\e[m\]\[\e[31m\]${dir}\[\e[m\]$([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
+    #PS1="${debian_chroot:+\[\e[0;31m\]($debian_chroot)\[\e[m\]·}$(_virtualenv)\[\e[31m\] \u\[\e[m\]\[\e[33m\] ● \[\e[m\]\[\e[31m\]${dir}\[\e[m\]$([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
+    PS1="\u • ${dir} $([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
 }
 
 if [ "$TERM" != "linux" ]; then
@@ -105,13 +106,10 @@ letsbin=$(which lets 2>/dev/null)
 
 # aliases
 alias bi='source ${HOME}/.bashrc'
-alias sa='sudo apt'
 alias ls='ls --color=auto --group-directories-first'
-alias l='ls'
 alias ll='ls -l'
 alias la='ls -alF'
 alias grep='grep --color=auto'
-alias ccat='highlight --out-format=ansi'
 alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'

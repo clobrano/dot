@@ -57,7 +57,7 @@ function preexec() {
     CMD_NAME=$1
     unset CMD_START_TIME
 
-    WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim taskell tsk msk"
+    WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim taskell tsk msk mocp"
     for i in $(echo $WHITELIST); do
         if [[ "$CMD_NAME" =~ "$i" ]]; then
             return

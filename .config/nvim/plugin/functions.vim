@@ -48,3 +48,6 @@ function! WincentFoldtext() abort
 endfunction
 
 command! Activereview !active-review-update.py
+
+" Remove trailing whitespaces
+command! TrimTrailingSpaces :%s/\s\+$//gc

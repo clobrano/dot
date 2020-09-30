@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
-set -e
 
-echo [+] installing dependencies
-sudo apt install -y python3-pip
-pip3 install --user tasklib
-pip3 install --user letsdo
+OK=$(dpkg -s python3-pip >/dev/null 2>&1)
+[[ "$OK" -eq 1 ]] && (echo "installing pip..."; sudo apt install -y python3-pip)
 
-echo [+] checking hook and action file...
+OK=$(pip3 search tasklib)
+[[ ! $OK =~ "INSTALLED" ]] && (echo "installing tasklib..."; pip3 install --user tasklib)
+
+OK=$(pip3 search letsdo)
+[[ ! $OK =~ "INSTALLED" ]] && (echo "installing letsdo..."; pip3 install --user letsdo)
+echo [+] check dependencies OK
+
 HOOKS=~/MyBox/work/taskwarrior/hooks
-ACTION=~/workspace/script-fu/letsdo-taskwarrior-hook.py
 [ ! -d ${HOOKS} ] && echo [!] could not find hook dir ${HOOKS} && exit 1
-[ ! -f ${ACTION} ] && echo [!] could not find action ${ACTION} && exit 1
+echo [+] check taskwarrior hook directory OK
 
-echo [+] linking hook and action file...
-ln -s ${ACTION} ${HOOKS}/on-modify.letsdo
+PLUGINS="letsdo redtimer"
+for PLUGIN in ${PLUGINS}; do
+    ACTION=~/workspace/script-fu/${PLUGIN}-taskwarrior-hook.py
+    [ ! -f ${ACTION} ] && echo [!] could not find action ${ACTION} && exit 1
+    echo [+] check hook and action file for ${PLUGIN} OK
 
-echo [+] taskwarrior diagnostic
-task diagnostic
+    ln -sf ${ACTION} ${HOOKS}/on-modify.${PLUGIN}
+    echo [+] link hook and action file for ${PLUGIN} OK
+done
 
 echo [+] done.

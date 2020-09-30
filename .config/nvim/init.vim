@@ -53,7 +53,6 @@ Plug 'jreybert/vimagit'
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 "Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 "Plug 'janko/vim-test'
-"Plug 'ntpeters/vim-better-whitespace'
 "Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "Plug 'vim-scripts/cflow-output-colorful'

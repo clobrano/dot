@@ -1,6 +1,6 @@
 inoremap [[ []<left>
 inoremap (( ()<left>
-inoremap {{ {}<left><cr><cr><up><tab>
+inoremap {{ {}<left>
 
 " variable definition in command line
 nnoremap I [i

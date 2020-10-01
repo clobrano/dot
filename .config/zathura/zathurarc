@@ -1,5 +1,7 @@
 set selection-clipboard clipboard
 set page-padding 1
+set window-width 1000
+set window-height 800
 
 map i recolor
 map p print

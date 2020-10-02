@@ -105,9 +105,9 @@ function +vi-git-untracked() {
   fi
 }
 
-LPROMPT_BASE=" %F{gray}%n%F{yellow}:%F{gray}%c%f"
+LPROMPT_BASE=" %n • %F{gray}%c"
 RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f %F{green}$%f "
+export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f » "
 export RPROMPT="$RPROMPT_BASE %F{yellow}%~%f"

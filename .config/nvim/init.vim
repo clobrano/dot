@@ -57,6 +57,7 @@ Plug 'jreybert/vimagit'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
+Plug 'jiangmiao/auto-pairs'
 Plug 'arrufat/vala.vim'
 Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}

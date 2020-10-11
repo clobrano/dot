@@ -96,12 +96,10 @@ Plug 'chrisbra/unicode.vim'
 "}}}
 " Generics                           {{{
 Plug 'w0rp/ale'           " testing 2019-05-16
-Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
-Plug 'clobrano-forks/vim-slumlord'
 Plug 'liuchengxu/vim-which-key'
 "}}}
 call plug#end()

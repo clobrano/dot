@@ -1,7 +1,3 @@
-inoremap [[ []<left>
-inoremap (( ()<left>
-inoremap {{ {}<left>
-
 " variable definition in command line
 nnoremap I [i
 nnoremap <leader>I :TlistShowPrototype<cr>

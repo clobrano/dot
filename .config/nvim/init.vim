@@ -25,6 +25,7 @@ let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
 "Plug 'voldikss/vim-floaterm'
+Plug 'dracula/vim'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}
@@ -49,7 +50,7 @@ Plug 'jreybert/vimagit'
 "Plug 'ambv/black',                       {'for': 'python'}
 "Plug 'davidhalter/jedi',                 {'for': 'python'}
 "Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-"Plug 'fatih/vim-go',                     {'for': 'go', 'do': 'GoUpdateBinaries'}
+Plug 'fatih/vim-go',                     {'do': 'GoUpdateBinaries'}
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 "Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 "Plug 'janko/vim-test'
@@ -57,6 +58,7 @@ Plug 'jreybert/vimagit'
 "Plug 'shmargum/vim-sass-colors',         {'for': 'scss'}
 "Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
+Plug 'jiangmiao/auto-pairs'
 Plug 'arrufat/vala.vim'
 Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}

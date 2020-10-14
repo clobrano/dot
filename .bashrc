@@ -46,8 +46,7 @@ function _virtualenv() {
 
 function _update_ps1() {
     dir=`basename $(dirname $PWD)`/`basename $PWD`
-    #PS1="${debian_chroot:+\[\e[0;31m\]($debian_chroot)\[\e[m\]·}$(_virtualenv)\[\e[31m\] \u\[\e[m\]\[\e[33m\] ● \[\e[m\]\[\e[31m\]${dir}\[\e[m\]$([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
-    PS1="\u • ${dir} $([[ $(which git | wc -l) > 0 ]] && _branchname && _gitstatus)$ "
+    PS1="\u • ${dir} $ "
 }
 
 if [ "$TERM" != "linux" ]; then
@@ -117,3 +116,4 @@ alias sendat='sudo $GOBIN/sendat'
 alias hikeydefconf='make ARCH=arm64 hikey_defconfig'
 alias hikeymenuconf='make ARCH=arm64 menuconfig'
 alias hikeymake='make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j2'
+export USE_CCACHE=1

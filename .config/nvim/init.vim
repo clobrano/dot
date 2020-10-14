@@ -25,6 +25,7 @@ let g:deoplete#enable_at_startup = 1
 "}}}
 " Look & Feel                        {{{
 "Plug 'voldikss/vim-floaterm'
+Plug 'dracula/vim'
 Plug 'ap/vim-buftabline'
 Plug 'mhinz/vim-startify'
 Plug 'clobrano-forks/onehalf', {'rtp': 'vim/'}

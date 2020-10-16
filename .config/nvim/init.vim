@@ -47,10 +47,10 @@ Plug 'rhysd/git-messenger.vim'  " <leader>gm to show line's commit message
 Plug 'jreybert/vimagit'
 "}}}
 " Development                        {{{
-"Plug 'ambv/black',                       {'for': 'python'}
-"Plug 'davidhalter/jedi',                 {'for': 'python'}
-"Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-Plug 'fatih/vim-go',                     {'do': 'GoUpdateBinaries'}
+Plug 'ambv/black',                       {'for': 'python'}
+Plug 'davidhalter/jedi',                 {'for': 'python'}
+Plug 'davidhalter/jedi-vim',             {'for': 'python'}
+Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 "Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 "Plug 'janko/vim-test'
@@ -97,12 +97,10 @@ Plug 'chrisbra/unicode.vim'
 "}}}
 " Generics                           {{{
 Plug 'w0rp/ale'           " testing 2019-05-16
-Plug 'vim-scripts/marvim' " give a name to macros
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
-Plug 'clobrano-forks/vim-slumlord'
 Plug 'liuchengxu/vim-which-key'
 "}}}
 call plug#end()
@@ -139,3 +137,5 @@ let Tlist_Process_File_Always=1
 augroup pandoc_syntax
   autocmd! FileType vimwiki set syntax=markdown.pandoc
 augroup END
+
+

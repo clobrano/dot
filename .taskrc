@@ -23,19 +23,19 @@ data.location=~/MyBox/work/taskwarrior
 #include /usr/share/taskwarrior/dark-blue-256.theme
 #include /usr/share/taskwarrior/dark-violets-256.theme
 #include /usr/share/taskwarrior/dark-yellow-green.theme
-include /usr/share/taskwarrior/dark-gray-256.theme
+#include /usr/share/taskwarrior/dark-gray-256.theme
 #include /usr/share/taskwarrior/dark-gray-blue-256.theme
-#include /usr/share/taskwarrior/solarized-dark-256.theme
+include /usr/share/taskwarrior/solarized-dark-256.theme
 #include /usr/share/taskwarrior/solarized-light-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
-context.work=pro:hsw or pro:setup or pro:uxfp or pro:tosal or pro:releasecraft or pro:gobisdk or pro:qmisdk or pro:mhi or pro:mobilecomputing
+context.work=pro:hsw or pro:setup or pro:uxfp or pro:tosal or pro:releasecraft or pro:gobisdk or pro:qmisdk or pro:mhi or pro:mobilecomputing or pro:modemmanager
 context.me=pro:me
-report.next.columns=id,start.age,project,tags,description,due.relative,until.remaining,scheduled.relative,depends,recur
-report.next.labels=ID,Act,Project,Tags,Description,Due,Until,Scheduled,Depends,Recur
+report.next.columns=id,start.age,recur,project,tags,description.count,due.relative,until.remaining,scheduled.relative
+report.next.labels=ID,Act,Recur,Project,Tags,Description,Due,Until,Scheduled
 
 report.minimal.columns=id,start.age,project,tags,description.count,due.relative,scheduled.relative
-report.minimal.labels=ID,Act,Project,Tags,Description,Due,Sched.
+report.minimal.labels=ID,Act,Project,Tags,Description,Due,Scheduled
 
 
 context=work

@@ -38,4 +38,4 @@ report.minimal.columns=id,start.age,project,tags,description.count,due.relative,
 report.minimal.labels=ID,Act,Project,Tags,Description,Due,Scheduled
 
 
-context=work
+context=me

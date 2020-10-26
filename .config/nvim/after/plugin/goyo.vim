@@ -1,4 +1,4 @@
-nnoremap <leader>gy :Goyo
+nnoremap <leader>gy :Goyo<cr>
 
 function! s:goyo_enter()
     set noshowmode

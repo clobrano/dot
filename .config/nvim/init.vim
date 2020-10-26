@@ -45,6 +45,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/git-messenger.vim'  " <leader>gm to show line's commit message
 Plug 'jreybert/vimagit'
+Plug 'junegunn/gv.vim'
 "}}}
 " Development                        {{{
 Plug 'ambv/black',                       {'for': 'python'}

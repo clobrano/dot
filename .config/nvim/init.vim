@@ -113,8 +113,7 @@ let g:vimwiki_list = [
     \ {'path': '~/MyBox/notes',
         \ 'syntax': 'markdown', 
         \ 'ext': '.md',
-        \ 'path_html': '~/MyBox/notes/_site'},
-    \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
+        \ 'path_html': '~/MyBox/notes/_site'} ]
 let g:vimwiki_folding = 'list'
 let g:vimwiki_table_mappings = 0
 nnoremap <leader>vn :VimwikiDiaryNextDay

@@ -99,8 +99,8 @@ set showtabline=2
 set statusline=
 set statusline+=%<\                                     " cut at start
 set statusline+=%{clobrano#status#git()}\               " git branch
-set statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %f\  " path
-set statusline+=%{clobrano#status#context()}\          " context
+set statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
+set statusline+=%{clobrano#status#context()}\           " context
 set statusline+=%h%m%R%W\                               " flags and buf no
 set statusline+=%=                                      " right side
 if has('nvim')

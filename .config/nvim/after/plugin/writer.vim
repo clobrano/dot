@@ -42,7 +42,7 @@ inoremap wwd <C-r>=strftime("%a")<CR>
 " Bold text with "B"
 autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
 " Link with "L"
-autocmd FileType markdown,todo let b:surround_76 = "[[\r]]"
+autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
 " Strike through "X"
 autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
 

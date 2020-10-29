@@ -34,3 +34,9 @@ function! clobrano#status#context()
     let _ = strlen(l:context) > 0 ? '@' . l:context : ''
     return _
 endfunction
+
+function! clobrano#status#relpath()
+    let cwd = fnamemodify(getcwd(), ':t:r')
+    let filename =  cwd . '/' .expand("%")
+    return filename
+endfunction

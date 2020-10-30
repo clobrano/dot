@@ -53,9 +53,11 @@ augroup litecorrect
 augroup END
 
 " Nice abbreviation when emoji support is not enable
-iabbr vmk ✅
-iabbr xmk ❌
+iabbr vmk 🗸
+iabbr xmk 🗙
 iabbr qmk ❔
+iabbr lmk ↶
+iabbr rmk ↷
 
 " Open a draft file with a command `draft`
 cabbr draft e /tmp/draft.md

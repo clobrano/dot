@@ -1,3 +1,51 @@
+function mkdir() {
+    # extend mkdir with custom features
+
+    # use "go" as first argument to move into
+    # the newly created directory.
+    move_to_new_dir=0
+    if [[ $1 == "go" ]]; then
+        move_to_new_dir=1
+        shift
+    fi
+
+    # propose adding "--parents" flag.
+    echo $1 | grep -E -q '[\S+/]+'
+    if [[ $? == 0 && ! -d $1 ]]; then
+        # one of the directories in $1 path do not exist
+        # suggest adding "--parents" flag.
+        echo "Some parents in $1 do not exist. Press ENTER to run mkdir with --parents."
+        read
+        command mkdir --parents $@
+    else
+        command mkdir $@
+    fi
+
+    if [[ $move_to_new_dir == 1 ]]; then
+        cd $1
+    fi
+}
+
+function rm() {
+    executed=0
+    # extend rm with custom features
+    for arg in $@; do
+        # propose adding "recursive" flag
+        if [[ -d $arg ]]; then
+            # $1 is a directory. Add --recursive
+            echo "$arg is a directory. Press ENTER to run rm with --recursive flag."
+            read
+            executed=1
+            command rm --recursive $@
+        fi
+    done
+
+    if [[ ! $executed == 1 ]]; then
+        command rm $@
+    fi
+}
+
+
 function date_in_seconds() {
     DEADLINE=$1 # e.g. 17:00 for today's 5pm
 

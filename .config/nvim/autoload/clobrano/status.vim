@@ -40,3 +40,22 @@ function! clobrano#status#relpath()
     let filename =  cwd . '/' .expand("%")
     return filename
 endfunction
+
+function! clobrano#status#statusline_update(state)
+    if (a:state == 'focus')
+        "set statusline=
+        setlocal statusline=
+        setlocal statusline+=%<\                                     " cut at start
+        setlocal statusline+=%{clobrano#status#git()}\               " git branch
+        setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
+        setlocal statusline+=%{clobrano#status#context()}\           " context
+        setlocal statusline+=%h%m%R%W\                               " flags and buf no
+        setlocal statusline+=%=                                      " right side
+        setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
+        setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
+    endif
+    if (a:state == 'unfocus')
+        setlocal statusline=
+        setlocal statusline=%f
+    endif
+endfunction

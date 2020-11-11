@@ -95,19 +95,6 @@ endif
 set splitbelow                            " Style open split below
 set splitright                            " Style open split on the right
 
-set showtabline=2
-set statusline=
-set statusline+=%<\                                     " cut at start
-set statusline+=%{clobrano#status#git()}\               " git branch
-set statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
-set statusline+=%{clobrano#status#context()}\           " context
-set statusline+=%h%m%R%W\                               " flags and buf no
-set statusline+=%=                                      " right side
-if has('nvim')
-    set statusline+=%{clobrano#status#linter()}\    " Linter status
-endif
-set statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
-
 set t_Co=256
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"

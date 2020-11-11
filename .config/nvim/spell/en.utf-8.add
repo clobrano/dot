@@ -329,3 +329,6 @@ automake
 cron
 nextcloud
 golang
+nowrap
+vimwiki
+K8s

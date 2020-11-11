@@ -47,7 +47,7 @@ function! WincentFoldtext() abort
   return s:raquo . s:middot . s:middot . l:lines . l:dashes . ': ' . l:first
 endfunction
 
-command! Activereview !active-review-update.py
+command! ActiveReview !active-review-update.py
 
 " Remove trailing whitespaces
 command! TrimTrailingSpaces :%s/\s\+$//gc

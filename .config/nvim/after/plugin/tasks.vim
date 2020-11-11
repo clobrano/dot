@@ -6,8 +6,5 @@ inoremap <C-t><tab> <esc>:VimTodoListsIncreaseIndent<cr>A
 nnoremap <C-t>b :VimTodoListsCreateNewItemBelow<cr>
 nnoremap <C-t>n :VimTodoListsCreateNewItem<cr>
 
-" move lines up/down
-nnoremap <C-Up>   :<C-u>silent! move-2<CR>==
-nnoremap <C-Down> :<C-u>silent! move+<CR>==
-xnoremap <C-Up>   :<C-u>silent! '<,'>move-2<CR>gv=gv
-xnoremap <C-Down> :<C-u>silent! '<,'>move'>+<CR>gv=gv
+" support for vim-taskwarrior
+nnoremap tw :TW<cr>

@@ -264,13 +264,13 @@ vnoremap T $h
 "close current split without closing the buffer
 nnoremap cl :close<cr>
 " close right split
-nnoremap xl <C-w>l:bd<CR>
+nnoremap xl <C-w>l:close<CR>
 " close left split
-nnoremap xh <C-w>h:bd<CR>
+nnoremap xh <C-w>h:close<CR>
 " close split below
-nnoremap xj <C-w>j:bd<CR>
+nnoremap xj <C-w>j:close<CR>
 " close split above
-nnoremap xk <C-w>k:bd<CR>
+nnoremap xk <C-w>k:close<CR>
 " keep only current split
 nnoremap <leader>o <C-w>o
 " maximize current split

@@ -1,14 +1,5 @@
 function mkdir() {
     # extend mkdir with custom features
-
-    # use "go" as first argument to move into
-    # the newly created directory.
-    move_to_new_dir=0
-    if [[ $1 == "go" ]]; then
-        move_to_new_dir=1
-        shift
-    fi
-
     # propose adding "--parents" flag.
     echo $1 | grep -E -q '[\S+/]+'
     if [[ $? == 0 && ! -d $1 ]]; then
@@ -20,15 +11,15 @@ function mkdir() {
     else
         command mkdir $@
     fi
-
-    if [[ $move_to_new_dir == 1 ]]; then
-        cd $1
-    fi
 }
 
 function rm() {
     executed=0
     # extend rm with custom features
+    if [[ $1 =~ "-r" ]]; then
+        command rm $@
+    fi
+
     for arg in $@; do
         # propose adding "recursive" flag
         if [[ -d $arg ]]; then
@@ -84,33 +75,33 @@ function precmd() {
     # update vcs_info at each prompt update
     vcs_info
 
-    if [[ -z $CMD_START_TIME ]]; then
-        return
-    fi
+    #if [[ -z $CMD_START_TIME ]]; then
+        #return
+    #fi
 
-    CMD_STOP_TIME=$(date +%s)
-    CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
-    THRESHOLD=60
-    if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
-        notify-send -i time "job finished after $(humanizetime $CMD_ELAPSED_TIME)" "$CMD_NAME"
-    fi
-    unset CMD_START_TIME
-    unset CMD_STOP_TIME
-    unset CMD_ELAPSED_TIME
+    #CMD_STOP_TIME=$(date +%s)
+    #CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
+    #THRESHOLD=60
+    #if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
+        #notify-send -i time "job finished after $(humanizetime $CMD_ELAPSED_TIME)" "$CMD_NAME"
+    #fi
+    #unset CMD_START_TIME
+    #unset CMD_STOP_TIME
+    #unset CMD_ELAPSED_TIME
 }
 
 
-function preexec() {
-    # Save the name of the command and the time when it starts
-    CMD_NAME=$1
-    unset CMD_START_TIME
+#function preexec() {
+    ## Save the name of the command and the time when it starts
+    #CMD_NAME=$1
+    #unset CMD_START_TIME
 
-    WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim taskell tsk msk mocp"
-    for i in $(echo $WHITELIST); do
-        if [[ "$CMD_NAME" =~ "$i" ]]; then
-            return
-        fi
-    done
+    #WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim taskell tsk msk mocp"
+    #for i in $(echo $WHITELIST); do
+        #if [[ "$CMD_NAME" =~ "$i" ]]; then
+            #return
+        #fi
+    #done
 
-    CMD_START_TIME=$(date +%s)
-}
+    #CMD_START_TIME=$(date +%s)
+#}

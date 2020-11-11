@@ -93,7 +93,7 @@ zstyle ':vcs_info:*' stagedstr "%F{green}!%f" # default 'S'
 zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:*' check-for-changes false
+zstyle ':vcs_info:*' check-for-changes true
 #zstyle ':vcs_info:git+set-message:*' hooks git-untracked
 zstyle ':vcs_info:git*:*' formats '[%b%m%c%u]' # default ' (%s)-[%b]%c%u-'
 zstyle ':vcs_info:git*:*' actionformats '[(%a)%b|%m%c%u]' # default ' (%s)-[%b|%a]%c%u-'
@@ -109,5 +109,5 @@ LPROMPT_BASE=" %F{yellow}%B%n%b%f • %c"
 RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE » "
+export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f » "
 export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"

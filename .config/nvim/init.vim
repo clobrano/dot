@@ -103,7 +103,7 @@ Plug 'honza/vim-snippets'
 Plug 'matze/vim-meson'
 Plug 'aklt/plantuml-syntax'
 Plug 'liuchengxu/vim-which-key'
-Plug 'blindFS/vim-taskwarrior'
+Plug 'xarthurx/taskwarrior.vim'
 "}}}
 call plug#end()
 set nocompatible

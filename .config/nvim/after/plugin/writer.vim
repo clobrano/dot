@@ -40,11 +40,11 @@ inoremap wwd <C-r>=strftime("%a")<CR>
 
 " The following works with surround plugin
 " Bold text with "B"
-autocmd FileType markdown,todo,plantuml let b:surround_66 = "**\r**"
+autocmd FileType markdown,todo,plantuml let b:surround_{char2nr("B")} = "**\r**"
 " Link with "L"
-autocmd FileType markdown,todo let b:surround_76 = "[\r]()"
+autocmd FileType markdown,todo let b:surround_{char2nr("L")} = "[\r]()"
 " Strike through "X"
-autocmd FileType markdown,todo let b:surround_88 = "~~\r~~"
+autocmd FileType markdown,todo let b:surround_{char2nr("X")} = "~~\r~~"
 
 augroup litecorrect
   autocmd!

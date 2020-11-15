@@ -1,4 +1,6 @@
 alias tt='task'
+alias ttw='task context work'
+alias ttm='task context me'
 alias tdo='task start'
 alias tst='task stop'
 

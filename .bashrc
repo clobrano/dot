@@ -86,8 +86,8 @@ PATH=~/.local/bin:$PATH
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"
-export REDTIMER_WORK_SESSION_TIME=35
-export REDTIMER_PAUSE_SESSION_TIME=10
+export REDTIMER_WORK_SESSION_TIME=40
+export REDTIMER_PAUSE_SESSION_TIME=5
 
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1

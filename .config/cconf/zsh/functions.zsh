@@ -73,7 +73,7 @@ function humanizetime() {
 
 function precmd() {
     # update vcs_info at each prompt update
-    vcs_info
+    #vcs_info
 
     #if [[ -z $CMD_START_TIME ]]; then
         #return

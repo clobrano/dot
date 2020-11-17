@@ -16,7 +16,6 @@ nnoremap <leader>pmf :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/
 nnoremap <leader>pmw :silent !xdg-open /tmp/markdown-preview.html
 " end-pandoc
 
-
 " clipboard images into md file (this must belong to some plugin I don't
 " remember)
 autocmd FileType markdown nmap <silent> <leader>ip :call mdip#MarkdownClipboardImage()<CR>
@@ -28,7 +27,6 @@ nnoremap <leader>mw :MarkdownPreview<cr>
 
 " EasyAlign align tables
 nnoremap <leader>at  vip:EasyAlign *<bar><cr>
-
 
 " Add dates, short and long formats
 nnoremap <leader>D a#<space><C-R>=strftime("%Y-%m-%d")<CR><Esc>
@@ -73,5 +71,6 @@ cabbr draft e /tmp/draft.md
 au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 
-" Requires Markdown or pandoc plugins
-nnoremap tv :Tocv<cr>
+" indent/de-indent in insertmode
+inoremap <C-i> <esc>>>A
+inoremap <A-i> <esc><<A

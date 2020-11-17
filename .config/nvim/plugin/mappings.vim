@@ -1,13 +1,12 @@
 " variable definition in command line
-nnoremap I [i
+"nnoremap I [i
 nnoremap <leader>I :TlistShowPrototype<cr>
 
-" align block of text {{{
+" align block of text.
 vnoremap < <gv
 vnoremap > >gv
 nnoremap > >>
 nnoremap < <<
-" }}}
 
 " open link in browser
 nnoremap <leader>w :silent !xdg-open <C-R>=escape("<C-R><C-F>", "#?&;\|%")<CR><CR>
@@ -54,17 +53,16 @@ nnoremap <leader>G :let @" = expand("%")<cr>
 
 
 " buffer: close
-nnoremap x          <Esc>:bd
-nnoremap xx         <Esc>:bd<CR>
-nnoremap x1         m1:bd
-nnoremap x2         m2<cr>:bn<cr>:bd
-nnoremap x3         m3<cr>:2bn<cr>:bd
-nnoremap x4         m4<cr>:3bn<cr>:bd
-nnoremap x5         m5<cr>:4bn<cr>:bd
-nnoremap x6         m6<cr>:5bn<cr>:bd
-nnoremap x7         m7<cr>:6bn<cr>:bd
-nnoremap x8         m8<cr>:7bn<cr>:bd
-nnoremap x9         m9<cr>:8bn<cr>:bd
+nnoremap cc bd<CR>
+nnoremap c1 m1:bd
+nnoremap c2 m2<cr>:bn<cr>:bd
+nnoremap c3 m3<cr>:2bn<cr>:bd
+nnoremap c4 m4<cr>:3bn<cr>:bd
+nnoremap c5 m5<cr>:4bn<cr>:bd
+nnoremap c6 m6<cr>:5bn<cr>:bd
+nnoremap c7 m7<cr>:6bn<cr>:bd
+nnoremap c8 m8<cr>:7bn<cr>:bd
+nnoremap c9 m9<cr>:8bn<cr>:bd
 " end buffer: close
 
 " buffer: save
@@ -95,7 +93,7 @@ nnoremap <leader>here :lcd %:p:h<CR>
 nnoremap <leader>ef :set guifont=Ubuntu\ Mono:h12
 
 " edit: remove trailing space
-nnoremap <leader>ss :StripWhitespace<cr>
+nnoremap <leader>ss :TrimTrailingSpaces<cr>
 
 " enter command mode
 nnoremap ; :
@@ -264,13 +262,13 @@ vnoremap T $h
 "close current split without closing the buffer
 nnoremap cl :close<cr>
 " close right split
-nnoremap xl <C-w>l:close<CR>
+nnoremap <leader>xl <C-w>l:close<CR>
 " close left split
-nnoremap xh <C-w>h:close<CR>
+nnoremap <leader>xh <C-w>h:close<CR>
 " close split below
-nnoremap xj <C-w>j:close<CR>
+nnoremap <leader>xj <C-w>j:close<CR>
 " close split above
-nnoremap xk <C-w>k:close<CR>
+nnoremap <leader>xk <C-w>k:close<CR>
 " keep only current split
 nnoremap <leader>o <C-w>o
 " maximize current split
@@ -280,12 +278,11 @@ nnoremap <C-w>m <C-w>\|<C-w>_
 nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
 
-" moves between splits {{{
-nnoremap wh <C-w>h
-nnoremap wj <C-w>j
-nnoremap wk <C-w>k
-nnoremap wl <C-w>l
-"}}}
+" moves between splits
+"nnoremap wh <C-w>h
+"nnoremap wj <C-w>j
+"nnoremap wk <C-w>k
+"nnoremap wl <C-w>l
 
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>

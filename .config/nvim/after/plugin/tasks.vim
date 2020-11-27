@@ -1,5 +1,6 @@
 " support for vim-taskwarrior
 nnoremap tw :TW<cr>
+let g:task_rc_override = 'rc.defaultwidth=999'
 let g:task_info_size=70
 let g:task_info_vsplit=1
 

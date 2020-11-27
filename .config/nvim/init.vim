@@ -136,7 +136,6 @@ endif
 let Tlist_Process_File_Always=1
 
 augroup pandoc_syntax
-  autocmd! FileType vimwiki set syntax=markdown.pandoc
+  autocmd! FileType vimwiki set syntax=markdown
 augroup END
-
 

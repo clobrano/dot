@@ -11,13 +11,10 @@ nnoremap < <<
 " open link in browser
 nnoremap <leader>w :silent !xdg-open <C-R>=escape("<C-R><C-F>", "#?&;\|%")<CR><CR>
 
-" buffer: close all buffers except the current one
-nnoremap <leader>bdo :%bd<CR><C-O>:bd#<CR>
-
 " buffer: delete till the end of the line
 nnoremap X vg_x
 
-" buffer: motion {{{
+" buffer: motion
 noremap <A-Left>  <Esc>:bprevious<CR>
 noremap <A-Right> <Esc>:bnext<CR>
 noremap H         <Esc>:bprevious<CR>
@@ -32,7 +29,7 @@ nnoremap m6       :bfirst<cr>:5bn<cr>
 nnoremap m7       :bfirst<cr>:6bn<cr>
 nnoremap m8       :bfirst<cr>:7bn<cr>
 nnoremap m9       :bfirst<cr>:8bn<cr>
-" }}}
+"
 
 " buffer: reload
 nnoremap <leader>e :e<cr>
@@ -53,16 +50,18 @@ nnoremap <leader>G :let @" = expand("%")<cr>
 
 
 " buffer: close
-nnoremap cc bd<CR>
-nnoremap c1 m1:bd
-nnoremap c2 m2<cr>:bn<cr>:bd
-nnoremap c3 m3<cr>:2bn<cr>:bd
-nnoremap c4 m4<cr>:3bn<cr>:bd
-nnoremap c5 m5<cr>:4bn<cr>:bd
-nnoremap c6 m6<cr>:5bn<cr>:bd
-nnoremap c7 m7<cr>:6bn<cr>:bd
-nnoremap c8 m8<cr>:7bn<cr>:bd
-nnoremap c9 m9<cr>:8bn<cr>:bd
+nnoremap xx bd<CR>
+nnoremap x1 m1:bd
+nnoremap x2 m2<cr>:bn<cr>:bd
+nnoremap x3 m3<cr>:2bn<cr>:bd
+nnoremap x4 m4<cr>:3bn<cr>:bd
+nnoremap x5 m5<cr>:4bn<cr>:bd
+nnoremap x6 m6<cr>:5bn<cr>:bd
+nnoremap x7 m7<cr>:6bn<cr>:bd
+nnoremap x8 m8<cr>:7bn<cr>:bd
+nnoremap x9 m9<cr>:8bn<cr>:bd
+" buffer: close all buffers except the current one
+nnoremap <leader>bdo :%bd<CR><C-O>:bd#<CR>
 " end buffer: close
 
 " buffer: save
@@ -259,16 +258,12 @@ nnoremap } }zz
 " select till the end of the line
 vnoremap T $h
 
-"close current split without closing the buffer
+"close splits
 nnoremap cl :close<cr>
-" close right split
-nnoremap <leader>xl <C-w>l:close<CR>
-" close left split
-nnoremap <leader>xh <C-w>h:close<CR>
-" close split below
-nnoremap <leader>xj <C-w>j:close<CR>
-" close split above
-nnoremap <leader>xk <C-w>k:close<CR>
+nnoremap xl <C-w>l:close<CR>
+nnoremap xh <C-w>h:close<CR>
+nnoremap xj <C-w>j:close<CR>
+nnoremap xk <C-w>k:close<CR>
 " keep only current split
 nnoremap <leader>o <C-w>o
 " maximize current split
@@ -279,10 +274,10 @@ nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits
-"nnoremap wh <C-w>h
-"nnoremap wj <C-w>j
-"nnoremap wk <C-w>k
-"nnoremap wl <C-w>l
+nnoremap wh <C-w>h
+nnoremap wj <C-w>j
+nnoremap wk <C-w>k
+nnoremap wl <C-w>l
 
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>

@@ -41,6 +41,8 @@ inoremap wwd <C-r>=strftime("%a")<CR>
 autocmd FileType markdown,todo,plantuml let b:surround_{char2nr("B")} = "**\r**"
 " Link with "L"
 autocmd FileType markdown,todo let b:surround_{char2nr("L")} = "[\r]()"
+" Wiki link with "l"
+autocmd FileType markdown,todo let b:surround_{char2nr("l")} = "[[\r]]"
 " Strike through "X"
 autocmd FileType markdown,todo let b:surround_{char2nr("X")} = "~~\r~~"
 

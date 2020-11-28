@@ -73,6 +73,5 @@ cabbr draft e /tmp/draft.md
 au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 
-" indent/de-indent in insertmode
-inoremap <C-i> <esc>>>A
-inoremap <A-i> <esc><<A
+" indent/de-indent in insertmode (de-dent is <C-d> by default)
+inoremap <C-i> <C-t>

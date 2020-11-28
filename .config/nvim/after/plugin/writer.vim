@@ -1,8 +1,8 @@
 " Configuration to simplify edit text/markdow files
 " This configuration file operates on more than one single plugin
 
-nnoremap gN :lcd ~/MyBox/notes
-nnoremap gW :lcd ~/MyBox/work/telit/tnotes
+nnoremap gn :lcd ~/MyBox/notes
+nnoremap gw :lcd ~/MyBox/work/telit/tnotes
 
 " Pandoc
 let g:pandoc#syntax#conceal#use = 1

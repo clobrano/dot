@@ -1,11 +1,9 @@
-if isdirectory($HOME . "/.config/nvim/plugged/fzf")
-    let g:fzf_layout = { 'down': '~40%' }
-    let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-    nnoremap <leader>fa :Ag<cr>
-    nnoremap <leader>fb :Buffers<cr>
-    nnoremap <leader>ff :Files<cr>
-    nnoremap <leader>fl :BLines<cr>
-    nnoremap <leader>ft :Tags<cr>
-    nnoremap <leader>fx :Commits<cr>
-endif
+nnoremap <leader>fa :Ag<cr>
+nnoremap <leader>fb :Buffers<cr>
+nnoremap <leader>ff :Files<cr>
+nnoremap <leader>fl :BLines<cr>
+nnoremap <leader>ft :Tags<cr>
+nnoremap <leader>fx :Commits<cr>

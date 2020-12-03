@@ -30,9 +30,6 @@ endfunction
 " Use TagList plugin to show current function context
 function! clobrano#status#context()
     let _ = ''
-    if !isdirectory($HOME . "/.config/nvim/plugged/taglist.vim")
-        return _
-    endif
     let l:context = Tlist_Get_Tagname_By_Line()
     let _ = strlen(l:context) > 0 ? '@' . l:context : ''
     return _

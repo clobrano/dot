@@ -60,7 +60,7 @@ xnoremap <C-Up>   :<C-u>silent! '<,'>move-2<CR>gv=gv
 xnoremap <C-Down> :<C-u>silent! '<,'>move'>+<CR>gv=gv
 
 " Emoji abbreviations
-iabbr vmk 🗸
+iabbr vmk ✔
 iabbr xmk 🗙
 iabbr qmk ❔
 iabbr lmk ↶

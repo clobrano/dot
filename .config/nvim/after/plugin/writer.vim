@@ -74,4 +74,4 @@ au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 
 " indent/de-indent in insertmode (de-dent is <C-d> by default)
-inoremap <C-i> <C-t>
+"inoremap <C-i> <C-t>

@@ -50,16 +50,16 @@ nnoremap <leader>G :let @" = expand("%")<cr>
 
 
 " buffer: close
-nnoremap xx bd<CR>
-nnoremap x1 m1:bd
-nnoremap x2 m2<cr>:bn<cr>:bd
-nnoremap x3 m3<cr>:2bn<cr>:bd
-nnoremap x4 m4<cr>:3bn<cr>:bd
-nnoremap x5 m5<cr>:4bn<cr>:bd
-nnoremap x6 m6<cr>:5bn<cr>:bd
-nnoremap x7 m7<cr>:6bn<cr>:bd
-nnoremap x8 m8<cr>:7bn<cr>:bd
-nnoremap x9 m9<cr>:8bn<cr>:bd
+nnoremap xx :bd<CR>
+nnoremap x1 :m1:bd
+nnoremap x2 :m2<cr>:bn<cr>:bd
+nnoremap x3 :m3<cr>:2bn<cr>:bd
+nnoremap x4 :m4<cr>:3bn<cr>:bd
+nnoremap x5 :m5<cr>:4bn<cr>:bd
+nnoremap x6 :m6<cr>:5bn<cr>:bd
+nnoremap x7 :m7<cr>:6bn<cr>:bd
+nnoremap x8 :m8<cr>:7bn<cr>:bd
+nnoremap x9 :m9<cr>:8bn<cr>:bd
 " buffer: close all buffers except the current one
 nnoremap <leader>bdo :%bd<CR><C-O>:bd#<CR>
 " end buffer: close

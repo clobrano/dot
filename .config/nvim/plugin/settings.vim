@@ -16,7 +16,7 @@ set conceallevel=2                        " conceal text hiddend unless it has a
 set concealcursor=c                       " do not conceal text in normal mode, otherwise it is too hard to edit it.
 set colorcolumn=0
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
-set nocursorline                          " Disable highlight current line
+set cursorline                            " Disable highlight current line
 set expandtab
 
 if has('folding')

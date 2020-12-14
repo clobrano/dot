@@ -1,5 +1,5 @@
 " variable definition in command line
-"nnoremap I [i
+nnoremap <C-i> [i
 nnoremap <leader>I :TlistShowPrototype<cr>
 
 " align block of text.

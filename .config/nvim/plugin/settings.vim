@@ -15,6 +15,7 @@ set cmdheight=2
 set conceallevel=2                        " conceal text hiddend unless it has a custom replacement.
 set concealcursor=c                       " do not conceal text in normal mode, otherwise it is too hard to edit it.
 set colorcolumn=0
+set complete=.,w,b,u,t,i
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
 set cursorline                            " Disable highlight current line
 set expandtab

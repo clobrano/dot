@@ -60,7 +60,7 @@ xnoremap <C-Up>   :<C-u>silent! '<,'>move-2<CR>gv=gv
 xnoremap <C-Down> :<C-u>silent! '<,'>move'>+<CR>gv=gv
 
 " Emoji abbreviations
-iabbr vmk 🗸
+iabbr vmk ✔
 iabbr xmk 🗙
 iabbr qmk ❔
 iabbr lmk ↶
@@ -74,4 +74,4 @@ au FileType html,php,markdown,mmd,text,mail,gitcommit
     \ runtime macros/emoji-ab.vim
 
 " indent/de-indent in insertmode (de-dent is <C-d> by default)
-inoremap <C-i> <C-t>
+"inoremap <C-i> <C-t>

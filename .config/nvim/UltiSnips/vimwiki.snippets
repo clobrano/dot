@@ -1,39 +1,46 @@
-snippet suml "Startuml"
+snippet !j "Journal template" b
+### `!p import datetime
+tomorrow = datetime.date.today()
+snip.rv = tomorrow.strftime("%a %d.%m.%y")`
+
+**Grateful for**:
+1. $1
+2.
+3.
+
+**Most important things**:
+1.
+
+**Notes**:
+
+endsnippet
+
+
+snippet !tag "markdown metadata section" b
+---
+tags: $1
+---
+endsnippet
+
+snippet !uml "Startuml"
 @startuml
 $1
 @enduml
 endsnippet
 
-snippet mcpp "markdown sh code paragraph"
+snippet ~cpp "markdown sh code paragraph"
 ~~~cpp
 $1
 ~~~
 endsnippet
 
-snippet msh "markdown sh code paragraph"
+snippet ~sh "markdown sh code paragraph"
 ~~~sh
 $1
 ~~~
 endsnippet
 
-snippet ddd "Journal template" b
-### `!p import datetime
-tomorrow = datetime.date.today()
-snip.rv = tomorrow.strftime("%a %d.%m.%y")`
-
-- **Grateful for**:
-	1.
-	2.
-	3.
-- **most important things**:
-	1.
-- **other Notes**:
-
-
-endsnippet
-
-snippet hcm "HTML comment"
+snippet <! "HTML comment"
 <!--
 -->
 endsnippet
-	

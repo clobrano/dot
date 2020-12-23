@@ -67,6 +67,7 @@ fi
 export EDITOR="gedit"
 
 source $HOME/.config/cconf/dot/dotfiles.sh
+source $HOME/.config/cconf/requirements/pyenv.sh
 
 export CDPATH=$HOME/workspace/devel
 export GOROOT=/usr/lib/go

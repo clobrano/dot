@@ -18,6 +18,7 @@ function rm() {
     # extend rm with custom features
     if [[ $1 =~ "-r" ]]; then
         command rm $@
+        executed=1
     fi
 
     for arg in $@; do

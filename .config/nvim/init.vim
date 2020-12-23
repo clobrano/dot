@@ -1,5 +1,4 @@
-" global
-" Shortcut to full configuration
+" Global Shortcut to full configuration
 " ~/.config/nvim/
 
 let mapleader = ' '
@@ -15,9 +14,9 @@ endif
 call plug#begin()
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " autocomplete
 else
-  Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/deoplete.nvim'   " autocomplete
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -48,10 +47,14 @@ Plug 'jreybert/vimagit'
 Plug 'junegunn/gv.vim'
 "}}}
 " Development                        {{{
+Plug 'bfrg/vim-opengl-syntax'
+
 Plug 'ambv/black',                       {'for': 'python'}
 Plug 'davidhalter/jedi',                 {'for': 'python'}
 Plug 'davidhalter/jedi-vim',             {'for': 'python'}
+Plug 'lambdalisue/vim-pyenv',            {'for': 'python'}
 Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
+
 "Plug 'guileen/vim-node-dict',            {'for': 'javascript'}
 "Plug 'hari-rangarajan/CCTree',           {'for': ['c', 'cpp']}
 "Plug 'janko/vim-test'
@@ -60,7 +63,7 @@ Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
 "Plug 'vim-scripts/cflow-output-colorful'
 "plug 'moll/vim-node',                    {'for': 'javascript'}
 Plug 'jiangmiao/auto-pairs'
-Plug 'arrufat/vala.vim'
+"Plug 'arrufat/vala.vim'
 Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
 Plug 'editorconfig/editorconfig-vim'
@@ -120,9 +123,8 @@ nnoremap <leader>vn :VimwikiDiaryNextDay
 nnoremap <leader>vp :VimwikiDiaryPrevDay
 " }}}
 
-" Work custom nippets {{{
-cabbr gerrit  !git push origin HEAD:refs/for/
-" }}}
+" Work custom nippets
+abbr gerrit  !git push origin HEAD:refs/for/
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
@@ -134,6 +136,6 @@ endif
 let Tlist_Process_File_Always=1
 
 augroup pandoc_syntax
-  autocmd! FileType vimwiki set syntax=markdown
+  autocmd! FileType vimwiki set syntax=markdown.pandoc
 augroup END
 

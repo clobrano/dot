@@ -96,6 +96,8 @@ Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 Plug 'chrisbra/unicode.vim'
 "Plug 'clobrano-forks/vim-todo-lists'
 "}}}
@@ -136,6 +138,9 @@ endif
 let Tlist_Process_File_Always=1
 
 augroup pandoc_syntax
-  autocmd! FileType vimwiki set syntax=markdown.pandoc
+  autocmd! FileType vimwiki set syntax=markdown
 augroup END
 
+"call deoplete#custom#option('auto_complete_popup', "manual")
+"
+let g:vimwiki_folding='custom'

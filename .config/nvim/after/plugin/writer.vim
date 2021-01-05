@@ -1,8 +1,16 @@
 " Configuration to simplify edit text/markdow files
 " This configuration file operates on more than one single plugin
 
-nnoremap gn :lcd ~/MyBox/notes
-nnoremap gw :lcd ~/MyBox/work/telit/tnotes
+nnoremap gn :lcd ~/MyBox/notes<cr>
+nnoremap gw :lcd ~/MyBox/work/telit/tnotes<cr>
+nnoremap <leader>to :Toc<cr>
+
+
+inoremap !j <esc>:-1r~/MyBox/notes/templates/journal.md<cr>
+
+" Vimwiki
+nnoremap <leader>vb :VimwikiBacklinks<cr>
+
 
 " Pandoc
 let g:pandoc#syntax#conceal#use = 1

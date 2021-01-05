@@ -17,7 +17,7 @@ set concealcursor=c                       " do not conceal text in normal mode, 
 set colorcolumn=0
 set complete=.,w,b,u,t,i
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
-set cursorline                            " Disable highlight current line
+set nocursorline                            " Disable highlight current line
 set expandtab
 
 if has('folding')
@@ -114,4 +114,4 @@ set wildignore+=*.o,*.rej                 " patterns to ignore during file-navig
 set wildmode=longest:full,full            " shell-like autocomplete to unambiguous portion
 "set wildmode=list:longest,full
 set wildmenu                              " graphical menu of autocomplete matches
-set wrap linebreak
+set nowrap linebreak

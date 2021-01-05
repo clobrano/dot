@@ -1,3 +1,8 @@
+" Problem solving
+iabbr problemsolving <esc>:r ~/MyBox/notes/templates/problem-solving.md<cr>
+
+iabbr mdmeta <esc>:0r ~/MyBox/notes/templates/meta.md<cr>
+
 " C/C++ template
 iabbr ::j <esc>:0r ~/.config/nvim/plugin/templates/journal
 iabbr cmakefile <esc>:0r ~/.config/nvim/plugin/templates/cmakefile

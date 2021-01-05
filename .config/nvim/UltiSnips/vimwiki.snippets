@@ -1,14 +1,36 @@
+snippet !w "12 week year template"
+## `!p import datetime
+today = datetime.date.today()
+year = today.strftime("%Y")
+week = int(today.strftime("%U"))
+firstdayweekdate = datetime.datetime.strptime(f"{year} {week}-1", "%Y %W-%w").date()
+lastdayweekdate = firstdayweekdate + datetime.timedelta(days=6.9)
+firstdayweek = firstdayweekdate.strftime("%d %b")
+lastdayweek = lastdayweekdate.strftime("%d %b")
+snip.rv = f"week {week}, {firstdayweek} - {lastdayweek} [0/100]"`
+
+- [ ] weekly success
+	- [ ] previous week review
+	- [ ] 0/7 daily review
+	- [ ] $1
+
+### journal
+
+- 
+endsnippet
+
+
 snippet !j "Journal template" b
 ### `!p import datetime
-tomorrow = datetime.date.today()
-snip.rv = tomorrow.strftime("%a %d.%m.%y")`
+today = datetime.date.today()
+snip.rv = today.strftime("%a %d.%m.%y")`
 
 **Grateful for**:
 1. $1
 2.
 3.
 
-**Most important things**:
+**Most important thing**:
 1.
 
 **Notes**:
@@ -16,7 +38,7 @@ snip.rv = tomorrow.strftime("%a %d.%m.%y")`
 endsnippet
 
 
-snippet !tag "markdown metadata section" b
+snippet !meta "markdown metadata section" b
 ---
 tags: $1
 ---
@@ -30,6 +52,20 @@ endsnippet
 
 snippet ~cpp "markdown sh code paragraph"
 ~~~cpp
+$1
+~~~
+endsnippet
+
+snippet ~go "markdown sh code paragraph"
+~~~go
+$1
+~~~
+endsnippet
+
+
+
+snippet ~py "markdown python code paragraph"
+~~~python
 $1
 ~~~
 endsnippet

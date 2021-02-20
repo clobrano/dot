@@ -20,20 +20,23 @@ snip.rv = f"week {week}, {firstdayweek} - {lastdayweek} [0/100]"`
 endsnippet
 
 
-snippet !j "Journal template" b
+snippet !d "Journal template" b
 ### `!p import datetime
 today = datetime.date.today()
 snip.rv = today.strftime("%a %d.%m.%y")`
 
-**Grateful for**:
+`!p import datetime
+today = datetime.date.today()
+yesterday = today - datetime.timedelta(days=1)
+tomorrow = today + datetime.timedelta(days=1)
+snip.rv = "[[" + yesterday.strftime("%Y-%m-%d") + "]] - [[" + tomorrow.strftime("%Y-%m-%d") + "]]"`
+
+Grateful for:
 1. $1
 2.
 3.
 
-**Most important thing**:
-1.
-
-**Notes**:
+Most important:
 
 endsnippet
 

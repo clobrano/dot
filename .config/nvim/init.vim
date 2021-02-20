@@ -79,6 +79,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
 "}}}
 " For Writers                        {{{
+Plug 'mattn/calendar-vim'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vimwiki/vimwiki'
@@ -144,3 +145,7 @@ augroup END
 "call deoplete#custom#option('auto_complete_popup', "manual")
 "
 let g:vimwiki_folding='custom'
+
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
+    \ "find . -path '*/\.*' -prune -o -print ",
+    \ fzf#wrap({'dir': expand('%:p:h')}))

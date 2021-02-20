@@ -15,7 +15,7 @@ set cmdheight=2
 set conceallevel=2                        " conceal text hiddend unless it has a custom replacement.
 set concealcursor=c                       " do not conceal text in normal mode, otherwise it is too hard to edit it.
 set colorcolumn=0
-set complete=.,w,b,u,t,i
+set complete=.,w,b,u,t
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
 set nocursorline                            " Disable highlight current line
 set expandtab
@@ -114,4 +114,4 @@ set wildignore+=*.o,*.rej                 " patterns to ignore during file-navig
 set wildmode=longest:full,full            " shell-like autocomplete to unambiguous portion
 "set wildmode=list:longest,full
 set wildmenu                              " graphical menu of autocomplete matches
-set nowrap linebreak
+set wrap linebreak

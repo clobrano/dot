@@ -10,6 +10,13 @@ inoremap !j <esc>:-1r~/MyBox/notes/templates/journal.md<cr>
 
 " Vimwiki
 nnoremap <leader>vb :VimwikiBacklinks<cr>
+let g:vimwiki_listsyms = ' .oOx'
+command! Diary VimwikiDiaryIndex
+augroup vimwikigroup
+    autocmd!
+    " automatically update links on read diary
+    autocmd BufRead,BufNewFile diary.md VimwikiDiaryGenerateLinks
+augroup end
 
 
 " Pandoc

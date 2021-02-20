@@ -9,7 +9,7 @@ if executable("ctags")
     "map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
     "noremap <A-]>  :exec("ptjump ".expand("<cword>"))<CR>
     noremap <A-]>  <C-w>vg<C-]>
-    command! CtagsMake !ctags -R --extra=+f --exclude=.git .
+    command! CtagsMake !ctags -R --extra=+f --exclude=.git --exclude=.obsidian .
 
     function TagsRedo()
         exe "CscopeClear"

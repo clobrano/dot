@@ -9,7 +9,7 @@ package=exercism-$version-linux-x86_64.tar.gz
 echo [+] getting Exercism $version CLI
 wget https://github.com/exercism/cli/releases/download/v$version/$package
 tar -xf $package
-mkdir -p ~/.local/share/bin
+mkdir -p ~/.local/bin
 chmod +x exercism
-mv exercism ~/.local/share/bin
+mv exercism ~/.local/bin
 rm $package

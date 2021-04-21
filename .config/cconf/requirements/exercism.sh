@@ -14,4 +14,4 @@ chmod +x exercism
 mv exercism ~/.local/bin
 rm $package
 
-echo [+] Now configure exercism CLI: exercism configure --token=[your token]
+echo [+] Now configure exercism CLI: exercism configure --token=[your token] --workspace ~/MyBox/work/exercism

@@ -149,3 +149,6 @@ let g:vimwiki_folding='custom'
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print ",
     \ fzf#wrap({'dir': expand('%:p:h')}))
+
+nnoremap <leader>h :find %<.
+

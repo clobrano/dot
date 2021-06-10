@@ -36,8 +36,8 @@ nnoremap <leader>e :e<cr>
 nnoremap ct :checktime<cr>
 
 " buffer: open alternate file (ex. .c/.cpp <-> .h)
-nnoremap <leader>a :FSHere<cr>
-nnoremap <leader>av :FSSplitRight<cr>
+nnoremap <leader>a :find %<.
+nnoremap <leader>av :vsplit %<.
 
 " buffer select ALL
 "nnoremap C :%y+<cr>

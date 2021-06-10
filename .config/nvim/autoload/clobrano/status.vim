@@ -51,11 +51,14 @@ function! clobrano#status#statusline_update(state)
         setlocal statusline+=%{clobrano#status#context()}\           " context
         setlocal statusline+=%h%m%R%W\                               " flags and buf no
         setlocal statusline+=%=                                      " right side
+        setlocal statusline+=(%{&fileformat})\               " git branch
         setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
         setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif
     if (a:state == 'unfocus')
         setlocal statusline=
+        setlocal statusline+=%{clobrano#status#git()}\               " git branch
         setlocal statusline=%f
+        setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif
 endfunction

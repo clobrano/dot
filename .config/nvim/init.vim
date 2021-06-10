@@ -96,9 +96,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-jp/vital.vim'
 Plug 'https://gitlab.com/gi1242/vim-emoji-ab.git' " https://www.webfx.com/tools/emoji-cheat-sheet/
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'plasticboy/vim-markdown'
 Plug 'chrisbra/unicode.vim'
 "Plug 'clobrano-forks/vim-todo-lists'
 "}}}
@@ -149,3 +149,6 @@ let g:vimwiki_folding='custom'
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print ",
     \ fzf#wrap({'dir': expand('%:p:h')}))
+
+nnoremap <leader>h :find %<.
+

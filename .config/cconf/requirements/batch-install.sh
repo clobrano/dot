@@ -9,7 +9,7 @@ distro=`cat /etc/os-release | grep -E "^NAME" | cut -d'=' -f2`
 
 FILEPATH=$1
 
-if [[ "$distro" == "Ubuntu" ]]; then
+if [[ "$distro" == "\"Ubuntu\"" ]]; then
     for d in $(awk '/^\s*[^#]/' "$FILEPATH"); do
         if [ 0 == $(dpkg -l | grep $d | wc -l) ]; then
             echo installing $d...

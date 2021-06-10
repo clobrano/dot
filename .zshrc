@@ -88,8 +88,10 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 # async vcs_info update wrapper
 _vbe_vcs_info() {
     cd -q $1
-    vcs_info
-    print ${vcs_info_msg_0_}
+    if [ -n vsc_info ]; then
+        vcs_info
+        print ${vcs_info_msg_0_}
+    fi
 }
 # async vcs_info update worker
 _vbe_vcs_info_done() {

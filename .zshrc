@@ -73,8 +73,11 @@ setopt SHARE_HISTORY        # share history across terminals
 
 ZSH_CUSTOM=~/.dot/.config/cconf/zsh
 for plugin in $(ls $ZSH_CUSTOM/plugins); do
-    source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
+    if [[ -f $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh ]]; then
+        source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
+    fi
 done
+source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 

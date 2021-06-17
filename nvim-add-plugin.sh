@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-PACKAGE=$1
-NAME=${2:-`basename ${PACKAGE}`}
+MODE=$1
+if [[ ${MODE} != "start" ]] && [[ ${MODE} != "opt" ]]; then
+    echo "[!] MODE must be [start|opt], it was '${MODE}'"
+    exit
+fi
+PACKAGE=$2
+NAME=${3:-`basename ${PACKAGE}`}
 URL=https://github.com/${PACKAGE}
-DST=${HOME}/.dot/.config/nvim/pack/plugged/start/${NAME}
+DST=.config/nvim/pack/plugged/${MODE}/${NAME}
 CMD="git submodule add --name ${NAME} ${URL} ${DST}"
 echo ${CMD}
 ${CMD}

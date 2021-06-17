@@ -1,5 +1,5 @@
 function! clobrano#status#git()
-    if !isdirectory($HOME . "/.config/nvim/plugged/vim-fugitive")
+    if empty(glob('~/.config/nvim/pack/plugged/start/vim-fugitive'))
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()

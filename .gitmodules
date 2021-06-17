@@ -7,3 +7,6 @@
 [submodule ".config/cconf/zsh/zsh-async"]
 	path = .config/cconf/zsh/plugins/zsh-async
 	url = https://github.com/mafredri/zsh-async
+[submodule "dracula"]
+	path = .config/nvim/pack/plugged/start/dracula
+	url = https://github.com/dracula/vim

@@ -7,3 +7,60 @@
 [submodule ".config/cconf/zsh/zsh-async"]
 	path = .config/cconf/zsh/plugins/zsh-async
 	url = https://github.com/mafredri/zsh-async
+[submodule "dracula"]
+	path = .config/nvim/pack/plugged/start/dracula
+	url = https://github.com/dracula/vim
+[submodule "fzf"]
+	path = .config/nvim/pack/plugged/start/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "fzf.vim"]
+	path = .config/nvim/pack/plugged/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "vim-fugitive"]
+	path = .config/nvim/pack/plugged/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "vim-gitgutter"]
+	path = .config/nvim/pack/plugged/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
+[submodule "vimagit"]
+	path = .config/nvim/pack/plugged/start/vimagit
+	url = https://github.com/jreybert/vimagit
+[submodule "gv.vim"]
+	path = .config/nvim/pack/plugged/start/gv.vim
+	url = https://github.com/junegunn/gv.vim
+[submodule "vim-buftabline"]
+	path = .config/nvim/pack/plugged/start/vim-buftabline
+	url = https://github.com/ap/vim-buftabline
+[submodule "ack.vim"]
+	path = .config/nvim/pack/plugged/start/ack.vim
+	url = https://github.com/mileszs/ack.vim
+[submodule "nerdtree"]
+	path = .config/nvim/pack/plugged/opt/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "vim-devicons"]
+	path = .config/nvim/pack/plugged/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons
+[submodule "vim-go"]
+	path = .config/nvim/pack/plugged/opt/vim-go
+	url = https://github.com/fatih/vim-go
+[submodule "black"]
+	path = .config/nvim/pack/plugged/opt/black
+	url = https://github.com/ambv/black
+[submodule "any-jump.vim"]
+	path = .config/nvim/pack/plugged/start/any-jump.vim
+	url = https://github.com/pechorin/any-jump.vim
+[submodule "vim-dispatch"]
+	path = .config/nvim/pack/plugged/opt/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch
+[submodule "vim-man"]
+	path = .config/nvim/pack/plugged/opt/vim-man
+	url = https://github.com/vim-utils/vim-man
+[submodule "vim-eunuch"]
+	path = .config/nvim/pack/plugged/start/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch
+[submodule "vim-repeat"]
+	path = .config/nvim/pack/plugged/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "vim-surround"]
+	path = .config/nvim/pack/plugged/start/vim-surround
+	url = https://github.com/tpope/vim-surround

@@ -64,3 +64,6 @@
 [submodule "vim-surround"]
 	path = .config/nvim/pack/plugged/start/vim-surround
 	url = https://github.com/tpope/vim-surround
+[submodule "deoplete.nvim"]
+	path = .config/nvim/pack/plugged/start/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim

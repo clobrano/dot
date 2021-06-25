@@ -67,3 +67,6 @@
 [submodule "deoplete.nvim"]
 	path = .config/nvim/pack/plugged/start/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim
+[submodule "taglist.vim"]
+	path = .config/nvim/pack/plugged/start/taglist.vim
+	url = https://github.com/vim-scripts/taglist.vim

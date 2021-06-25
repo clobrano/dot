@@ -12,6 +12,9 @@ if has('packages')
     packadd! fzf
     packadd! fzf.vim
     packadd! ack.vim
+    packadd! deoplete.nvim
+    packadd! taglist.vim
+
     packadd! gv.vim
     packadd! vim-fugitive
     packadd! vim-gitgutter

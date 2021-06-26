@@ -1,18 +1,16 @@
 #xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
 
 apt-file
-at
-clang-format
+#at
 cmake
 locate
 net-tools
-pandoc
+#pandoc
 pkg-config
-ppa-purge
-python-pip
+#ppa-purge
 python3-pip
-rar
-tree
-unrar
-vit
-zathura
+#rar
+#tree
+#unrar
+#vit
+#zathura

@@ -70,3 +70,24 @@
 [submodule "taglist.vim"]
 	path = .config/nvim/pack/plugged/start/taglist.vim
 	url = https://github.com/vim-scripts/taglist.vim
+[submodule "auto-pairs"]
+	path = .config/nvim/pack/plugged/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs
+[submodule "vim-startify"]
+	path = .config/nvim/pack/plugged/start/vim-startify
+	url = https://github.com/mhinz/vim-startify
+[submodule "cscope.vim"]
+	path = .config/nvim/pack/plugged/start/cscope.vim
+	url = https://github.com/brookhong/cscope.vim
+[submodule "cscope_maps"]
+	path = .config/nvim/pack/plugged/start/cscope_maps
+	url = https://github.com/chazy/cscope_maps
+[submodule "vim-gutentags"]
+	path = .config/nvim/pack/plugged/start/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags
+[submodule "nerdcommenter"]
+	path = .config/nvim/pack/plugged/opt/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter
+[submodule "editorconfig-vim"]
+	path = .config/nvim/pack/plugged/opt/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim

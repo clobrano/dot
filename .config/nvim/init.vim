@@ -8,20 +8,31 @@ let maplocalleader=' '
 
 if has('packages')
     packadd! dracula
+    packadd! vim-startify
     packadd! any-jump.vim
+    packadd! nerdtree
     packadd! fzf
     packadd! fzf.vim
     packadd! ack.vim
+
     packadd! deoplete.nvim
     packadd! taglist.vim
+    packadd! vim-gutentags
+    packadd! cscope.vim
+    "packadd! cscope_maps
 
     packadd! gv.vim
     packadd! vim-fugitive
     packadd! vim-gitgutter
     packadd! vimagit
+
     packadd! vim-devicons
+
+    packadd! editorconfig-vim
+    packadd! nerdcommenter
     packadd! vim-eunuch
     packadd! vim-repeat
+    packadd! auto-pairs
     packadd! vim-surround
 else
     " VimPlug configuration              {{{
@@ -157,3 +168,4 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 
 nnoremap <leader>h :find %<.
 
+set nocscopeverbose

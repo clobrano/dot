@@ -91,3 +91,6 @@
 [submodule "editorconfig-vim"]
 	path = .config/nvim/pack/plugged/opt/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
+[submodule "DoxygenToolkit.vim"]
+	path = .config/nvim/pack/plugged/opt/DoxygenToolkit.vim
+	url = https://github.com/vim-scripts/DoxygenToolkit.vim

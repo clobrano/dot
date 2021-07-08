@@ -97,10 +97,6 @@ ZSH_VERSION=${ZSH_VERSION-"none"}
 # Let's have core dumps
 ulimit -c unlimited
 
-# Let's do configuration
-letsbin=$(which lets 2>/dev/null)
-[[ ! -z ${letsbin:x} ]] && [[ -f $HOME/.letsdo_completion ]] && source $HOME/.letsdo_completion
-
 # Fuzzy finder configuration
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 

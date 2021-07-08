@@ -1,5 +1,6 @@
-colorscheme dracula
-"colorscheme dracula
+if !empty(glob('~/.config/nvim/pack/plugged/start/dracula'))
+    colorscheme dracula
+endif
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start
   if exists('&breakindentopt')

@@ -53,6 +53,7 @@ if [ ${_deploy} == 1 ]; then
     IFS=$'\n'
     for f in $(find ./ -type f); do
         if [[ ${f} == "./dot.sh" ]]; then continue ; fi # skip this file
+        if [[ ${f} == "./nvim-pack.sh" ]]; then continue ; fi # skip this file
         if [[ ${f} == "./README.md" ]]; then continue ; fi # skip this file
         if [[ ${f} =~ ".git/" ]]; then continue ; fi # skip .git directory
         DST=${HOME}/${f:2}

@@ -1,45 +1,6 @@
 " Configuration to simplify edit text/markdow files
 " This configuration file operates on more than one single plugin
 
-nnoremap gn :lcd ~/MyBox/notes<cr>
-nnoremap gw :lcd ~/MyBox/work/telit/tnotes<cr>
-nnoremap <leader>to :Toc<cr>
-
-
-inoremap !j <esc>:-1r~/MyBox/notes/templates/journal.md<cr>
-
-" Vimwiki
-nnoremap <leader>vb :VimwikiBacklinks<cr>
-let g:vimwiki_listsyms = ' .oOx'
-command! Diary VimwikiDiaryIndex
-augroup vimwikigroup
-    autocmd!
-    " automatically update links on read diary
-    autocmd BufRead,BufNewFile diary.md VimwikiDiaryGenerateLinks
-augroup end
-
-
-" Pandoc
-let g:pandoc#syntax#conceal#use = 1
-let g:pandoc#syntax#conceal#urls = 1
-let g:pandoc#spell#enabled=1
-" no side folding sign
-let g:pandoc#folding#fdc = 1
-" Pandoc based preview html in tmp directory
-nnoremap <leader>pm  :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -t html -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
-nnoremap <leader>pmf :!pandoc -s --self-contained -c ~/MyBox/notes/projects/css/kult-mod.css % -t html -F mermaid-filter -o /tmp/markdown-preview.html --metadata pagetitle=%:t:r
-nnoremap <leader>pmw :silent !xdg-open /tmp/markdown-preview.html
-" end-pandoc
-
-" clipboard images into md file (this must belong to some plugin I don't
-" remember)
-autocmd FileType markdown nmap <silent> <leader>ip :call mdip#MarkdownClipboardImage()<CR>
-
-" Markdown-preview
-"let g:mkdp_markdown_css = '/home/carlo/MyBox/notes/projects/css/kult-mod.css'
-let g:mkdp_page_title = '${name}'
-nnoremap <leader>mw :MarkdownPreview<cr>
-
 " EasyAlign align tables
 nnoremap <leader>at  vip:EasyAlign *<bar><cr>
 

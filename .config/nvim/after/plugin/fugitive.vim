@@ -5,7 +5,7 @@ nnoremap <leader>gcan <esc>:G commit --amend --no-edit<cr>
 nnoremap <leader>gl   <esc>:G log<cr>
 nnoremap <leader>gph  <esc>:G push<cr>
 nnoremap <leader>gpl  <esc>:G pull<cr>
-nnoremap <leader>gs   <esc>:G status<cr>
+nnoremap <leader>gs   <esc>:G<cr>
 
 " Fugitive vertical diff
 nnoremap <leader>gd <esc>:Gvdiff<space>

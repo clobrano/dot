@@ -94,3 +94,6 @@
 [submodule "DoxygenToolkit.vim"]
 	path = .config/nvim/pack/plugged/opt/DoxygenToolkit.vim
 	url = https://github.com/vim-scripts/DoxygenToolkit.vim
+[submodule "vim-tldr"]
+	path = .config/nvim/pack/plugged/opt/vim-tldr
+	url = https://github.com/wlemuel/vim-tldr

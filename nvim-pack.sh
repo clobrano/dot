@@ -61,9 +61,9 @@ DST=.config/nvim/pack/plugged/${MODE}/${NAME}
 if [[ -n "$_add" ]]; then
     CMD="git submodule add --name ${NAME} ${URL} ${DST}"
 else if [[ -n "$_remove" ]]; then
-    CMD="git rm -r ${DST} && \
-        git -rf .git/modules/${NAME} && \
-        git config -f .git/config --remove-section submodule.${NAME} 2> /dev/null"
+    CMD="git submodule deinit ${DST} && \
+        git rm -r ${DST} && \
+        git -rf .git/modules/${NAME}"
 fi
 fi
 

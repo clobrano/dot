@@ -63,7 +63,7 @@ if [[ -n "$_add" ]]; then
 else if [[ -n "$_remove" ]]; then
     CMD="git submodule deinit ${DST} && \
         git rm -r ${DST} && \
-        git -rf .git/modules/${NAME}"
+        git rm -rf .git/modules/${NAME}"
 fi
 fi
 

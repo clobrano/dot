@@ -97,3 +97,6 @@
 [submodule "vim-tldr"]
 	path = .config/nvim/pack/plugged/opt/vim-tldr
 	url = https://github.com/wlemuel/vim-tldr
+[submodule "vim-g"]
+	path = .config/nvim/pack/plugged/opt/vim-g
+	url = https://github.com/szw/vim-g

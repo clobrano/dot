@@ -1,4 +1,4 @@
-autocmd * set textwidth=0
+"autocmd * set textwidth=0
 " Make current window more obvious by turning off/adjusting some features in non-current
 " windows.
 "if exists('+winhighlight')

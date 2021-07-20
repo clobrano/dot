@@ -100,3 +100,6 @@
 [submodule "vim-g"]
 	path = .config/nvim/pack/plugged/opt/vim-g
 	url = https://github.com/szw/vim-g
+[submodule "vim-meson"]
+	path = .config/nvim/pack/plugged/opt/vim-meson
+	url = https://github.com/matze/vim-meson

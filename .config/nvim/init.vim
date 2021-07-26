@@ -169,3 +169,6 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 nnoremap <leader>h :find %<.
 
 set nocscopeverbose
+
+" TODO move it to a dedicated file or in vimrc.local
+let g:posero_default_mappings = 1

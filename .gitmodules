@@ -103,3 +103,6 @@
 [submodule "vim-meson"]
 	path = .config/nvim/pack/plugged/opt/vim-meson
 	url = https://github.com/matze/vim-meson
+[submodule "posero.vim"]
+	path = .config/nvim/pack/plugged/opt/posero.vim
+	url = https://github.com/alfredodeza/posero.vim

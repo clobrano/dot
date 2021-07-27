@@ -58,7 +58,7 @@ if [ ${_deploy} == 1 ]; then
         if [[ ${f} =~ ".git/" ]]; then continue ; fi # skip .git directory
         DST=${HOME}/${f:2}
         DIR=$(dirname ${DST})
-        [ ! -d ${DIR} ] && mkdir -p ${DIR}
+        [ ! -d ${DIR} ] && mkdir -pv ${DIR}
         ln -sf ${SRC}/${f:2} ${DST}
     done
 fi

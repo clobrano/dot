@@ -15,6 +15,7 @@ if has('packages')
     packadd! fzf.vim
     packadd! ack.vim
 
+    packadd! nvim-lspconfig
     packadd! deoplete.nvim
     packadd! taglist.vim
     packadd! vim-gutentags
@@ -172,3 +173,6 @@ set nocscopeverbose
 
 " TODO move it to a dedicated file or in vimrc.local
 let g:posero_default_mappings = 1
+lua require'lspconfig'.clangd.setup{}
+lua require'lspconfig'.pylsp.setup{}
+lua require'lspconfig'.gopls.setup{}

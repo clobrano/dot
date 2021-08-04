@@ -30,6 +30,15 @@ augroup Shebang
   autocmd BufNewFile *.\(cc\|hh\) 0put =\"//\<nl>// \".expand(\"<afile>:t\").\" -- \<nl>//\<nl>\"|2|start!
 augroup END
 
+augroup exe_code
+    autocmd FileType bash,sh :nnoremap <buffer> <localleader>r 
+                \ :sp<cr> :term bash %<cr> :startinsert<cr>
+    autocmd FileType python :nnoremap <buffer> <localleader>r 
+                \ :sp<cr> :term python3 %<cr> :startinsert<cr>
+    autocmd FileType cpp,c :nnoremap <buffer> <localleader>r 
+                \ :sp<cr> :term ./%<<cr> :startinsert<cr>
+augroup END
+
 " Filetypes with specific settings (e.g. formatting)
 " thanks to Wincent https://github.com/wincent/wincent
 let g:clobrano_format_filetypes=[

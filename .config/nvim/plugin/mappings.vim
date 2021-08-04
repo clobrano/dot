@@ -282,8 +282,6 @@ nnoremap wl <C-w>l
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
-" reload syntax
-nnoremap <silent> <leader>r  :syntax sync fromstart
 
 " tag open in split
 nnoremap D <C-w>}

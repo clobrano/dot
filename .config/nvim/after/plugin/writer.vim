@@ -22,13 +22,6 @@ autocmd FileType markdown,todo let b:surround_{char2nr("l")} = "[[\r]]"
 " Strike through "X"
 autocmd FileType markdown,todo let b:surround_{char2nr("X")} = "~~\r~~"
 
-augroup litecorrect
-  autocmd!
-  autocmd FileType markdown,mkd call litecorrect#init()
-  autocmd FileType textile call litecorrect#init()
-augroup END
-
-
 " Lines, move up/down
 nnoremap <C-Up>   :<C-u>silent! move-2<CR>==
 nnoremap <C-Down> :<C-u>silent! move+<CR>==

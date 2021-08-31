@@ -129,6 +129,11 @@ async_start_worker vcs_info
 async_register_callback vcs_info _vbe_vcs_info_done
 # async vcs_info schedule
 add-zsh-hook precmd () {
+    local cmd_end="$SECONDS"
+    elapsed=$((cmd_end-cmd_start))
+    if [[ $elapsed -gt 1 ]]; then
+        echo elapsed: $elapsed seconds
+    fi
     vcs_info_msg_0_="[...]"
     if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
         async_init
@@ -138,6 +143,9 @@ add-zsh-hook precmd () {
 }
 add-zsh-hook chwd (){
     vcs_info_msg_0_="[...]"
+}
+add-zsh-hook preexec () {
+    cmd_start="$SECONDS"
 }
 
 

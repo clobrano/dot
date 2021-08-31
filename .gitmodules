@@ -109,3 +109,9 @@
 [submodule "nvim-lspconfig"]
 	path = .config/nvim/pack/plugged/opt/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
+[submodule "UltiSnips"]
+	path = .config/nvim/pack/plugged/opt/UltiSnips
+	url = https://github.com/sirver/UltiSnips
+[submodule "vim-snippets"]
+	path = .config/nvim/pack/plugged/opt/vim-snippets
+	url = https://github.com/honza/vim-snippets

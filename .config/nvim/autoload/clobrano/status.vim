@@ -49,7 +49,7 @@ function! clobrano#status#statusline_update(state)
         setlocal statusline=
         setlocal statusline+=%<\                                     " cut at start
         setlocal statusline+=%{clobrano#status#git()}\               " git branch
-        if !empty(glob('~/.config/nvim/pack/plugged/start/vim-devicon.vim'))
+        if !empty(glob('~/.config/nvim/pack/plugged/start/vim-devicons'))
             setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
         else
             setlocal statusline+=%{clobrano#status#relpath()}\  " path

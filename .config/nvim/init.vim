@@ -131,7 +131,7 @@ else
     call plug#end()
 endif
 set nocompatible
-syntax enable
+"syntax enable
 filetype on
 
 " VimWiki {{{

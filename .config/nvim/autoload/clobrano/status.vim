@@ -1,9 +1,9 @@
 function! clobrano#status#git()
-    if empty(glob('~/.config/nvim/pack/plugged/start/vim-fugitive'))
+    if !isdirectory($HOME . '/.config/nvim/pack/plugged/start/vim-fugitive')
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
-        return strlen(branchname) > 0 ? ' '.l:branchname.' ' : ''
+        return strlen(branchname) > 0 ? ' '.l:branchname : ''
     endif
 endfunction
 
@@ -12,7 +12,7 @@ endfunction
 function! clobrano#status#linter()
     let _ = ''
     if !isdirectory($HOME . "/.config/nvim/plugged/ale")
-        return "[ale-linter KO]"
+        return ""
     endif
 
     let l:counts = ale#statusline#Count(bufnr(''))

@@ -144,7 +144,7 @@ nnoremap <leader>vp :VimwikiDiaryPrevDay
 " }}}
 
 " Work custom nippets
-abbr gerrit  !git push origin HEAD:refs/for/
+abbr grt  !git push origin HEAD:refs/for/
 
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')

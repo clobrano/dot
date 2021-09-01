@@ -92,7 +92,7 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 _vbe_vcs_info() {
     cd -q $1
     if [ -n vsc_info ]; then
-        vcs_info
+        vcs_info 2>&1 >/dev/null
         print ${vcs_info_msg_0_}
     fi
 }
@@ -130,9 +130,12 @@ async_register_callback vcs_info _vbe_vcs_info_done
 # async vcs_info schedule
 add-zsh-hook precmd () {
     local cmd_end="$SECONDS"
-    elapsed=$((cmd_end-cmd_start))
-    if [[ $elapsed -gt 1 ]]; then
-        echo elapsed: $elapsed seconds
+    if [[ $cmd_start -gt 0 ]]; then
+        elapsed=$((cmd_end-cmd_start))
+        if [[ $elapsed -gt 1 ]]; then
+            echo elapsed: $elapsed seconds
+            cmd_start=0
+        fi
     fi
     vcs_info_msg_0_="[...]"
     if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then

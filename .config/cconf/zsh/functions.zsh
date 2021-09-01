@@ -71,38 +71,3 @@ function humanizetime() {
     seconds=$ELAPSED_TIME
     printf "%sh:%02sm" ${hours} ${minutes}
 }
-
-function precmd() {
-    # update vcs_info at each prompt update
-    #vcs_info
-
-    #if [[ -z $CMD_START_TIME ]]; then
-        #return
-    #fi
-
-    #CMD_STOP_TIME=$(date +%s)
-    #CMD_ELAPSED_TIME=$(($CMD_STOP_TIME - $CMD_START_TIME))
-    #THRESHOLD=60
-    #if [[ $CMD_ELAPSED_TIME -gt $THRESHOLD ]]; then
-        #notify-send -i time "job finished after $(humanizetime $CMD_ELAPSED_TIME)" "$CMD_NAME"
-    #fi
-    #unset CMD_START_TIME
-    #unset CMD_STOP_TIME
-    #unset CMD_ELAPSED_TIME
-}
-
-
-#function preexec() {
-    ## Save the name of the command and the time when it starts
-    #CMD_NAME=$1
-    #unset CMD_START_TIME
-
-    #WHITELIST="dw dmesg tig fzf fn f nvim ndm nd n vim vng vg v gvim taskell tsk msk mocp"
-    #for i in $(echo $WHITELIST); do
-        #if [[ "$CMD_NAME" =~ "$i" ]]; then
-            #return
-        #fi
-    #done
-
-    #CMD_START_TIME=$(date +%s)
-#}

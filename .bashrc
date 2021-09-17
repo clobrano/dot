@@ -118,4 +118,4 @@ export USE_CCACHE=1
 
 # Temporary workaround for Thinkpad T440 trackpoint speed
 # property is Accel speed, range [-1.0: 1.0]
-xinput set-prop 13 333 -0.6
+xinput set-prop 13 333 -0.5

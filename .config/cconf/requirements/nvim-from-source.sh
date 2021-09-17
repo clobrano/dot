@@ -24,3 +24,4 @@ git checkout stable
 make -j$(nproc)
 sudo make install
 popd
+rm -r neovim

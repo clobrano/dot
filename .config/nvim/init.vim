@@ -38,7 +38,7 @@ if has('packages')
     packadd! vim-dispatch
     packadd! auto-pairs
     packadd! vim-surround
-    packadd! mesonic
+    "packadd! mesonic
 else
     " VimPlug configuration              {{{
     if empty(glob('~/.config/nvim/autoload/plug.vim'))

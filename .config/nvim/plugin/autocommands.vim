@@ -60,4 +60,6 @@ if has('statusline')
     autocmd FocusLost,WinLeave * call clobrano#status#statusline_update('unfocus')
 endif
 
-
+" open Man and Help page in vertical split
+autocmd FileType help wincmd L
+autocmd FileType man wincmd L

@@ -9,7 +9,7 @@ distro=`cat /etc/os-release | grep -E "^NAME" | cut -d'=' -f2`
 
 FILEPATH=$1
 
-if [[ "$distro" == "\"Ubuntu\"" ]]; then
+if [[ "$distro" == "\"Ubuntu\"" ]] || [[ "$distro" == "\"elementary OS\"" ]]; then
     installer=apt-get
 else if [[ "$distro" == "Fedora" ]]; then
         installer=dnf

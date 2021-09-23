@@ -114,3 +114,8 @@ alias hikeydefconf='make ARCH=arm64 hikey_defconfig'
 alias hikeymenuconf='make ARCH=arm64 menuconfig'
 alias hikeymake='make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j2'
 export USE_CCACHE=1
+
+
+# Temporary workaround for Thinkpad T440 trackpoint speed
+# property is Accel speed, range [-1.0: 1.0]
+xinput set-prop 13 333 -0.5

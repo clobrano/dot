@@ -1,4 +1,4 @@
-nnoremap gS :Startify<cr>
+nnoremap SS :Startify<cr>
 
 let g:startify_change_to_dir=0
 let g:startify_files_number = 8

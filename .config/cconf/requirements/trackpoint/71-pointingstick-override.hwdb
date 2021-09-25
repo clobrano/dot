@@ -1,0 +1,3 @@
+evdev:name:TPPS/2 Elan TrackPoint:dmi:bvn*:bvr*:bd*:svnLENOVO:pn*:pvrThinkPadX1Carbon6th:*
+ POINTINGSTICK_SENSITIVITY=5
+ POINTINGSTICK_CONST_ACCEL=2.5

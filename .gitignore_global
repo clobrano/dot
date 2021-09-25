@@ -1,10 +1,13 @@
+.clangd
 .dot
 .editorconfig
+build/
+compile_commands.json
+core
 cscope.files
+cscope.in.out
 cscope.out
+cscope.po.out
 tags
 tags/tags.temp
 vimrc.local
-cscope.in.out
-cscope.po.out
-compile_commands.json

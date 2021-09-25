@@ -12,5 +12,5 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 sudo make install
 cd -
-
+rm -rv neovim-qt
 

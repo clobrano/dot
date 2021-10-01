@@ -177,6 +177,19 @@ set nocscopeverbose
 
 " TODO move it to a dedicated file or in vimrc.local
 let g:posero_default_mappings = 1
+
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    }
+)
+EOF
+
+
 lua require'lspconfig'.clangd.setup{}
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
+
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()

@@ -17,8 +17,8 @@ if has('packages')
 
     packadd! nvim-lspconfig
     packadd! deoplete.nvim
-    packadd! UltiSnips
-    packadd! vim-snippets
+    "packadd! UltiSnips
+    "packadd! vim-snippets
     packadd! taglist.vim
     packadd! vim-gutentags
     packadd! cscope.vim
@@ -38,7 +38,7 @@ if has('packages')
     packadd! vim-dispatch
     packadd! auto-pairs
     packadd! vim-surround
-    "packadd! mesonic
+    packadd! mesonic
 else
     " VimPlug configuration              {{{
     if empty(glob('~/.config/nvim/autoload/plug.vim'))

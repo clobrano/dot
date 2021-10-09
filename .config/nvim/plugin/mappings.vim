@@ -65,8 +65,9 @@ nnoremap <leader>bdo :%bd<CR><C-O>:bd#<CR>
 " end buffer: close
 
 " buffer: save
-inoremap <C-s>  <Esc>:silent write<CR>
-noremap <C-s>   <Esc>:silent write<CR>
+inoremap <C-s>  <Esc>:write<CR>
+noremap <C-s>   <Esc>:write<CR>
+noremap ww   <Esc>:write<CR>
 "
 
 " register 0 hold latest Yank, let's map yp to `"0p`

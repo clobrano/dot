@@ -175,8 +175,38 @@ nnoremap <leader>h :find %<.
 
 set nocscopeverbose
 
+
+lua << EOF
+virtual_text = {}
+
+virtual_text.show = true
+
+virtual_text.toggle = function()
+    virtual_text.show = not virtual_text.show
+    vim.lsp.diagnostic.display(
+        vim.lsp.diagnostic.get(0, 1),
+        0,
+        1,
+        {virtual_text = virtual_text.show}
+    )
+end
+
+vim.api.nvim_set_keymap(
+    'n',
+    '<Leader>lv',
+    '<Cmd>lua virtual_text.toggle()<CR>',
+    {silent=true, noremap=true}
+)
+EOF
+
 " TODO move it to a dedicated file or in vimrc.local
 let g:posero_default_mappings = 1
 lua require'lspconfig'.clangd.setup{}
+lua require'lspconfig'.ccls.setup{}
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
+
+"set completeopt-=preview
+
+" use omni completion provided by lsp
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc

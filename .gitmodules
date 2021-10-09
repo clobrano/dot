@@ -115,3 +115,6 @@
 [submodule "vim-snippets"]
 	path = .config/nvim/pack/plugged/opt/vim-snippets
 	url = https://github.com/honza/vim-snippets
+[submodule "mesonic"]
+	path = .config/nvim/pack/plugged/start/mesonic
+	url = https://github.com/igankevich/mesonic

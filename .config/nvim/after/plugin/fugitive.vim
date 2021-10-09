@@ -1,11 +1,12 @@
 nnoremap <leader>ga   <esc>:Gwrite
+nnoremap <leader>gb   <esc>:G blame<cr>
 nnoremap <leader>gc   <esc>:G commit<cr>
 nnoremap <leader>gca  <esc>:G commit --amend<cr>
 nnoremap <leader>gcan <esc>:G commit --amend --no-edit<cr>
 nnoremap <leader>gl   <esc>:G log<cr>
 nnoremap <leader>gph  <esc>:G push<cr>
 nnoremap <leader>gpl  <esc>:G pull<cr>
-nnoremap <leader>gs   <esc>:G<cr>
+nnoremap <leader>gs   <esc>:vertical G<cr>
 
 " Fugitive vertical diff
 nnoremap <leader>gd <esc>:Gvdiff<space>

@@ -55,20 +55,44 @@ fi
 
 PACKAGE=${_add:-$_remove}
 NAME=${_name:-`basename ${PACKAGE}`}
-
 URL=https://github.com/${PACKAGE}
-DST=.config/nvim/pack/plugged/${MODE}/${NAME}
-if [[ -n "$_add" ]]; then
-    CMD="git submodule add --name ${NAME} ${URL} ${DST}"
-else if [[ -n "$_remove" ]]; then
-    CMD="git submodule deinit ${DST} && \
-        git rm -r ${DST} && \
-        git rm -rf .git/modules/${NAME}"
-fi
-fi
 
-echo "[WARNING] Execute the following command [press ENTER]?"
-echo ${CMD}
-read
-${CMD}
-echo done
+add_submodule() {
+    # Add NVIM package as submodule.
+    # MODE: opt/start -> either the package is optional or not
+    # NAME: package name (e.g. nerdtree)
+    pushd ${HOME}/.dot
+    DST=.config/nvim/pack/plugged/${MODE}/${NAME}
+    echo "[WARNING] adding ${URL} to ${DST} [press ENTER]?"
+    read
+    git submodule add --name ${NAME} ${URL} ${DST}
+    popd
+}
+
+remove_submodule() {
+    # Remove NVIM submodule package
+    # NAME: package name (e.g. nerdtree)
+    pushd ${HOME}/.dot
+
+    # detect where the package is stored (start or opt folder)
+    DST=$(find . -name ${NAME}| grep "pack" | grep "plugged")
+    if [[ ! ${DST} ]]; then
+        DST=$(find . -name ${NAME}| grep "pack" | grep "plugged")
+        echo "[!] could not find package ${NAME}"
+        popd
+        return -1
+    fi
+    [[ "start" =~ DTS ]] && MODE="start"
+    [[ "opt" =~ DTS ]] && MODE="opt"
+
+    DST=.config/nvim/pack/plugged/${MODE}/${NAME}
+    echo "[WARNING] removing ${DST} [press ENTER]?"
+    read
+    git submodule deinit ${DST} \
+        && git rm -r ${DST} \
+        && rm -rf .git/modules/${NAME}
+    popd
+}
+
+[[ -n "$_add" ]] && add_submodule
+[[ -n "$_remove" ]] && remove_submodule

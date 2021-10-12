@@ -84,6 +84,7 @@ PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
+PATH=~/workspace/codesonar/codesonar/bin:$PATH
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"
@@ -108,12 +109,11 @@ alias la='ls -alF'
 alias grep='grep --color=auto'
 alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias sendat='sudo $GOBIN/sendat'
-alias hikeydefconf='make ARCH=arm64 hikey_defconfig'
-alias hikeymenuconf='make ARCH=arm64 menuconfig'
-alias hikeymake='make ARCH=arm64 CROSS_COMPILE=aarch64-linux-android- -j2'
+alias mmake='meson compile'
 export USE_CCACHE=1
+
+[ -f $HOME/.local_bash_aliases ] && source $HOME/.local_bash_aliases
 
 
 # Temporary workaround for Thinkpad T440 trackpoint speed

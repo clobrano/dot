@@ -114,8 +114,3 @@ alias mmake='meson compile'
 export USE_CCACHE=1
 
 [ -f $HOME/.local_bash_aliases ] && source $HOME/.local_bash_aliases
-
-
-# Temporary workaround for Thinkpad T440 trackpoint speed
-# property is Accel speed, range [-1.0: 1.0]
-xinput set-prop 13 333 -0.5

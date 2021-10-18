@@ -5,12 +5,13 @@ set -xeu
 
 sudo apt install -y libqt5svg5-dev qt5-default cmake
 
-cd neovim-qt
+pushd neovim-qt
 mkdir -p build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 sudo make install
 cd -
+popd
 rm -rv neovim-qt
 

@@ -118,3 +118,9 @@
 [submodule "mesonic"]
 	path = .config/nvim/pack/plugged/start/mesonic
 	url = https://github.com/igankevich/mesonic
+[submodule "nvim-cmp"]
+	path = .config/nvim/pack/plugged/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "cmp-nvim-lsp"]
+	path = .config/nvim/pack/plugged/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp

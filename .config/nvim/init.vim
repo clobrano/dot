@@ -186,8 +186,15 @@ vim.lsp.diagnostic.on_publish_diagnostics, {
 )
 EOF
 
+lua << EOF
+require'lspconfig'.clangd.setup{}
+local on_attach = function(client, bufnr)
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-lua require'lspconfig'.clangd.setup{}
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  end
+EOF
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
 

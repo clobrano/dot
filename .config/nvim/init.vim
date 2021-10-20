@@ -32,8 +32,9 @@ if has('packages')
     packadd! vim-gitgutter
 
     packadd! black
-    packadd! vim-go
     packadd! mesonic
+    packadd! vala.vim
+    packadd! vim-go
 
     packadd! editorconfig-vim
     packadd! nerdcommenter

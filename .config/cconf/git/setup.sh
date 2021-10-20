@@ -14,3 +14,4 @@ git config --global alias.sw switch
 git config --global alias.st status
 git config --global alias.sh stash
 
+git config pull.rebase false

@@ -8,40 +8,42 @@ let maplocalleader=' '
 
 if has('packages')
     packadd! dracula
-    packadd! vim-startify
     packadd! vim-devicons
+    packadd! vim-startify
 
+    packadd! ack.vim
     packadd! any-jump.vim
-    packadd! nerdtree
     packadd! fzf
     packadd! fzf.vim
-    packadd! ack.vim
+    packadd! nerdtree
     packadd! vim-g
 
-    packadd! nvim-lspconfig
+    packadd! cscope.vim
     packadd! deoplete.nvim
+    packadd! nvim-lspconfig
     packadd! taglist.vim
     packadd! vim-gutentags
-    packadd! cscope.vim
-    "packadd! cscope_maps
     "packadd! UltiSnips
+    "packadd! cscope_maps
     "packadd! vim-snippets
 
     packadd! gv.vim
     packadd! vim-fugitive
+    packadd! vim-g
     packadd! vim-gitgutter
 
     packadd! black
     packadd! mesonic
     packadd! vala.vim
     packadd! vim-go
+    packadd! vim-go
 
+    packadd! auto-pairs
     packadd! editorconfig-vim
     packadd! nerdcommenter
+    packadd! vim-dispatch
     packadd! vim-eunuch
     packadd! vim-repeat
-    packadd! vim-dispatch
-    packadd! auto-pairs
     packadd! vim-surround
 else
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -182,13 +184,67 @@ vim.lsp.diagnostic.on_publish_diagnostics, {
 )
 EOF
 
+lua << EOF
+require'lspconfig'.clangd.setup{}
+local on_attach = function(client, bufnr)
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-lua require'lspconfig'.clangd.setup{}
-lua require'lspconfig'.ccls.setup{}
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  end
+EOF
+
+set completeopt=menu,menuone,noselect
+
+lua << EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        -- For `vsnip` user.
+        vim.fn["vsnip#anonymous"](args.body)
+
+        -- For `luasnip` user.
+        -- require('luasnip').lsp_expand(args.body)
+
+        -- For `ultisnips` user.
+        -- vim.fn["UltiSnips#Anon"](args.body)
+      end,
+    },
+    mapping = {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+
+      -- For vsnip user.
+      { name = 'vsnip' },
+
+      -- For luasnip user.
+      -- { name = 'luasnip' },
+
+      -- For ultisnips user.
+      -- { name = 'ultisnips' },
+
+      { name = 'buffer' },
+    }
+  })
+
+  -- Setup lspconfig.
+  require('lspconfig').clangd.setup {
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  }
+EOF
+
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
 
-"set completeopt-=preview
 
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc

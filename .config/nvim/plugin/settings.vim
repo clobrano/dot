@@ -44,6 +44,7 @@ endif
 
 set ignorecase                            " case management in search
 set incsearch                             " search as characters are entered
+set inccommand=split                      " Shows the effects of a command incrementally, as you type
 set hlsearch                              " highlight matches
 set hidden
 "set highlight+=@:ColorColumn             " ~/@ at end of window, 'showbreak'

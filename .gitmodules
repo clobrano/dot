@@ -124,3 +124,9 @@
 [submodule "vim-monokai"]
 	path = .config/nvim/pack/plugged/start/vim-monokai
 	url = https://github.com/sickill/vim-monokai
+[submodule "nvim-cmp"]
+	path = .config/nvim/pack/plugged/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "cmp-nvim-lsp"]
+	path = .config/nvim/pack/plugged/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp

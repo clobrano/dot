@@ -8,7 +8,7 @@ let g:startify_enable_special = 0
 
 let g:startify_change_to_dir = 0
 let g:startify_lists = [
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
           \ { 'type': 'files',     'header': ['   Files']      },
-          \ { 'type': 'sessions',  'header': ['   Sessions']       },
           \ ]

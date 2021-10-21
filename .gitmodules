@@ -115,3 +115,18 @@
 [submodule "vim-snippets"]
 	path = .config/nvim/pack/plugged/opt/vim-snippets
 	url = https://github.com/honza/vim-snippets
+[submodule "mesonic"]
+	path = .config/nvim/pack/plugged/start/mesonic
+	url = https://github.com/igankevich/mesonic
+[submodule "vala.vim"]
+	path = .config/nvim/pack/plugged/opt/vala.vim
+	url = https://github.com/arrufat/vala.vim
+[submodule "vim-monokai"]
+	path = .config/nvim/pack/plugged/start/vim-monokai
+	url = https://github.com/sickill/vim-monokai
+[submodule "nvim-cmp"]
+	path = .config/nvim/pack/plugged/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "cmp-nvim-lsp"]
+	path = .config/nvim/pack/plugged/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp

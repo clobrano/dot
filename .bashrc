@@ -84,6 +84,7 @@ PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
+PATH=~/workspace/depot_tools:$PATH
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"

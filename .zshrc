@@ -133,7 +133,7 @@ add-zsh-hook precmd () {
     if [[ $cmd_start -gt 0 ]]; then
         elapsed=$((cmd_end-cmd_start))
         if [[ $elapsed -gt 1 ]]; then
-            echo elapsed: $elapsed seconds
+            echo elapsed: `humanizetime $elapsed`
             cmd_start=0
         fi
     fi

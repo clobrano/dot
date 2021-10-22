@@ -84,6 +84,7 @@ PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
+PATH=~/workspace/depot_tools:$PATH
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
 
 # Redtimer

@@ -130,3 +130,15 @@
 [submodule "cmp-nvim-lsp"]
 	path = .config/nvim/pack/plugged/start/cmp-nvim-lsp
 	url = https://github.com/hrsh7th/cmp-nvim-lsp
+[submodule "plenary.nvim"]
+	path = .config/nvim/pack/plugged/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule "telescope.nvim"]
+	path = .config/nvim/pack/plugged/start/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim
+[submodule "telescope-fzf-native.nvim"]
+	path = .config/nvim/pack/plugged/start/telescope-fzf-native.nvim
+	url = https://github.com/nvim-telescope/telescope-fzf-native.nvim
+[submodule "ripgrep"]
+	path = .config/nvim/pack/plugged/start/ripgrep
+	url = https://github.com/BurntSushi/ripgrep

@@ -92,6 +92,10 @@ export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.
 export REDTIMER_WORK_SESSION_TIME=40
 export REDTIMER_PAUSE_SESSION_TIME=5
 
+# Android/Chromebook
+export USE_CCACHE=1
+export PATH=~/workspace/depot_tools:$PATH
+
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1
 # Fix ZSH_VERSION unbound variable
@@ -112,5 +116,4 @@ alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
 alias sendat='sudo $GOBIN/sendat'
 alias mmake='meson compile'
-export USE_CCACHE=1
 [ -f $HOME/.local_bash_aliases ] && source $HOME/.local_bash_aliases

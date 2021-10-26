@@ -1,4 +1,4 @@
-if !empty(glob('~/.config/nvim/pack/plugged/start/dracula'))
+if !empty(glob('~/.config/nvim/plugged/vim'))
     colorscheme dracula
 endif
 if has('linebreak')

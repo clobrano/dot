@@ -1,5 +1,5 @@
 function! clobrano#status#git()
-    if !isdirectory($HOME . '/.config/nvim/pack/plugged/start/vim-fugitive')
+    if !isdirectory($HOME . '/.config/nvim/plugged/vim-fugitive')
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
@@ -30,7 +30,7 @@ endfunction
 " Use TagList plugin to show current function context
 function! clobrano#status#context()
     let _ = ''
-    if !empty(glob('~/.config/nvim/pack/plugged/start/taglist.vim'))
+    if !empty(glob('~/.config/nvim/plugged/taglist.vim'))
         let l:context = Tlist_Get_Tagname_By_Line()
         let _ = strlen(l:context) > 0 ? '| @' . l:context : ''
     endif
@@ -48,7 +48,7 @@ function! clobrano#status#statusline_update(state)
         "set statusline=
         setlocal statusline=
         setlocal statusline+=%<\                                     " cut at start
-        if !empty(glob('~/.config/nvim/pack/plugged/start/vim-devicons'))
+        if !empty(glob('~/.config/nvim/plugged/vim-devicons'))
             setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
         else
             setlocal statusline+=%{clobrano#status#relpath()}\  " path

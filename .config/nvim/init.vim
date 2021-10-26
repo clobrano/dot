@@ -5,121 +5,53 @@ let mapleader = ' '
 let maplocalleader=' '
 
 " Plugins
+call plug#begin()
+Plug 'dracula/vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'mhinz/vim-startify'
+Plug 'ap/vim-buftabline'
 
-if has('packages')
-    packadd! dracula
-    packadd! vim-devicons
-    packadd! vim-startify
+Plug 'mileszs/ack.vim'
+Plug 'pechorin/any-jump.vim'
+Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'szw/vim-g' " Quick Google lookup
 
-    packadd! ack.vim
-    packadd! any-jump.vim
-    packadd! fzf
-    packadd! fzf.vim
-    packadd! nerdtree
-    packadd! vim-g
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 
-    packadd! cscope.vim
-    packadd! deoplete.nvim
-    packadd! nvim-lspconfig
-    packadd! taglist.vim
-    packadd! vim-gutentags
-    "packadd! UltiSnips
-    "packadd! cscope_maps
-    "packadd! vim-snippets
+Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
+Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'vim-scripts/taglist.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
-    packadd! gv.vim
-    packadd! vim-fugitive
-    packadd! vim-g
-    packadd! vim-gitgutter
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
-    packadd! black
-    packadd! mesonic
-    packadd! vala.vim
-    packadd! vim-go
-    packadd! vim-go
+Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
-    packadd! auto-pairs
-    packadd! editorconfig-vim
-    packadd! nerdcommenter
-    packadd! vim-dispatch
-    packadd! vim-eunuch
-    packadd! vim-repeat
-    packadd! vim-surround
-else
-    if empty(glob('~/.config/nvim/autoload/plug.vim'))
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall | source ~/.config/nvim/init.vim
-    endif
+Plug 'ambv/black',                       {'for': 'python'}
+Plug 'matze/vim-meson'
+Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
 
-    call plug#begin()
-
-    Plug 'dracula/vim'
-    Plug 'mhinz/vim-startify'
-    Plug 'ap/vim-buftabline'
-    Plug 'scrooloose/nerdtree'
-    Plug 'ryanoasis/vim-devicons'
-
-    Plug 'pechorin/any-jump.vim'
-    Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
-    Plug 'mileszs/ack.vim'
-    Plug 'szw/vim-g' " Quick Google lookup
-
-    Plug 'tpope/vim-fugitive'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'junegunn/gv.vim'
-
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'ambv/black',                       {'for': 'python'}
-    Plug 'davidhalter/jedi',                 {'for': 'python'}
-    Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-    Plug 'lambdalisue/vim-pyenv',            {'for': 'python'}
-    Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
-
-    Plug 'ambv/black',                       {'for': 'python'}
-    Plug 'davidhalter/jedi',                 {'for': 'python'}
-    Plug 'davidhalter/jedi-vim',             {'for': 'python'}
-    Plug 'lambdalisue/vim-pyenv',            {'for': 'python'}
-    Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
-
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
-    Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
-    Plug 'editorconfig/editorconfig-vim'
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
-    Plug 'pangloss/vim-javascript',          {'for': 'javascript'}
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'sheerun/vim-polyglot'
-    Plug 'tpope/vim-dispatch'
-    Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
-    Plug 'vim-utils/vim-man',                {'for': ['c', 'cpp']}
-    Plug 'matze/vim-meson'
-
-    Plug 'tpope/vim-eunuch'
-    Plug 'tpope/vim-surround'
-
-
-    "Plug 'vim-scripts/Mark--Karkat',         { 'on': 'Mark'}
-    "Plug 'vim-scripts/taglist.vim'
-    "Plug 'vim-syntastic/syntastic'
-    "Plug 'SirVer/ultisnips'
-    "Plug 'honza/vim-snippets'
-    call plug#end()
-endif
+Plug 'jiangmiao/auto-pairs'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
+call plug#end()
 set nocompatible
 "syntax enable
 filetype on
-
-" VimWiki {{{
-let g:vimwiki_list = [
-    \ {'path': '~/MyBox/notes', 'syntax': 'markdown', 'ext': '.md'},
-    \ {'path': '~/MyBox/work/telit/tnotes', 'syntax': 'markdown', 'ext': '.md'} ]
-let g:vimwiki_folding = 'list'
-let g:vimwiki_table_mappings = 0
-nnoremap <leader>vn :VimwikiDiaryNextDay
-nnoremap <leader>vp :VimwikiDiaryPrevDay
-" }}}
 
 " Work custom nippets
 abbr grt  !git push origin HEAD:refs/for/
@@ -133,14 +65,6 @@ endif
 " some reason it is not executed unless the plugin is loaded first
 let Tlist_Process_File_Always=1
 
-augroup pandoc_syntax
-  autocmd! FileType vimwiki set syntax=markdown
-augroup END
-
-"call deoplete#custom#option('auto_complete_popup', "manual")
-"
-let g:vimwiki_folding='custom'
-
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print ",
     \ fzf#wrap({'dir': expand('%:p:h')}))
@@ -148,7 +72,6 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 nnoremap <leader>h :find %<.
 
 set nocscopeverbose
-
 
 lua << EOF
 virtual_text = {}
@@ -218,19 +141,19 @@ lua << EOF
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      --['<CR>'] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
       { name = 'nvim_lsp' },
 
       -- For vsnip user.
-      { name = 'vsnip' },
+      -- { name = 'vsnip' },
 
       -- For luasnip user.
       -- { name = 'luasnip' },
 
       -- For ultisnips user.
-      -- { name = 'ultisnips' },
+      { name = 'ultisnips' },
 
       { name = 'buffer' },
     }

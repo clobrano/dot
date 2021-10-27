@@ -37,9 +37,14 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-Plug 'ambv/black',                       {'for': 'python'}
+Plug 'ambv/black', {'for': 'python'}
+Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
-Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
+Plug 'igankevich/mesonic'
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'akinsho/flutter-tools.nvim'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
@@ -167,7 +172,9 @@ EOF
 
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
-
+lua << EOF
+require("flutter-tools").setup{} -- use defaults
+EOF
 
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc

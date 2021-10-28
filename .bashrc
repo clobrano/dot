@@ -116,4 +116,6 @@ alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
 alias sendat='sudo $GOBIN/sendat'
 alias mmake='meson compile'
-[ -f $HOME/.local_bash_aliases ] && source $HOME/.local_bash_aliases
+
+# Local bash configuration I don't want to save upstream
+[ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc

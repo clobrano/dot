@@ -179,5 +179,5 @@ EOF
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
 autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()

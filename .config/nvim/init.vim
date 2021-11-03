@@ -111,6 +111,12 @@ vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
     }
 )
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+        -- Use a sharp border with `FloatBorder` highlights
+        border = "single"
+    }
+)
 EOF
 
 lua << EOF
@@ -181,4 +187,4 @@ EOF
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
-autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
+autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()

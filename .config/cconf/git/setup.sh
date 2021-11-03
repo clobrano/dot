@@ -14,5 +14,7 @@ git config --global alias.cm commit
 git config --global alias.sw switch
 git config --global alias.st status
 git config --global alias.sh stash
+git config --global alias.pl pull
+git config --global alias.l "log --graph --oneline -n"
 
 git config pull.rebase false

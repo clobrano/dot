@@ -57,20 +57,17 @@ source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/requirements/pyenv.sh
 [[ -f $HOME/.config/cconf/requirements/z.sh ]] && source $HOME/.config/cconf/requirements/z.sh
 
-export CDPATH=$HOME/workspace/devel
+export CDPATH=$HOME/workspace
 export GOROOT=/usr/lib/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
 # PATH
-ANDROID_REPO=$HOME/external/bin/
-PATH=$PATH:$HOME/workspace/tscript
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
-PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
 PATH=~/workspace/depot_tools:$PATH
 PATH=~/workspace/codesonar/codesonar/bin:$PATH

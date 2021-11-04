@@ -55,6 +55,7 @@ export EDITOR="nvim"
 
 source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/requirements/pyenv.sh
+[[ -f $HOME/.config/cconf/requirements/z.sh ]] && source $HOME/.config/cconf/requirements/z.sh
 
 export CDPATH=$HOME/workspace/devel
 export GOROOT=/usr/lib/go

@@ -31,19 +31,6 @@ fi
 
 [[ -e /etc/profile.d/vte-2.91.sh ]] && source /etc/profile.d/vte-2.91.sh
 
-
-function _branchname() {
-    printf $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /' -e 's/((HEAD detached at\(.*\)))/\1/') 2>/dev/null
-}
-
-function _gitstatus() {
-   [[ $(git status --short 2>/dev/null | wc -l) > 0 ]] && printf "~"
-}
-
-function _virtualenv() {
-    [[ ! -z $VIRTUAL_ENV ]] && echo "\[\e[0;32m\]($(basename $VIRTUAL_ENV))\[\e[m\]·" || echo ""
-}
-
 function _update_ps1() {
     dir=`basename $(dirname $PWD)`/`basename $PWD`
     PS1="\u • ${dir} $ "

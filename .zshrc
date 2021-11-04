@@ -28,7 +28,6 @@ fi
 # extend change directory
 #setopt auto_cd
 cdpath=($HOME $HOME/workspace)
-[[ -f $HOME/.config/cconf/requirements/z.sh ]] && source $HOME/.config/cconf/requirements/z.sh
 
 autoload -U compinit
 compinit -u

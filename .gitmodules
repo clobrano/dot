@@ -142,3 +142,6 @@
 [submodule "ripgrep"]
 	path = .config/nvim/pack/plugged/start/ripgrep
 	url = https://github.com/BurntSushi/ripgrep
+[submodule ".config/cconf/zsh/plugins/zsh-z"]
+	path = .config/cconf/zsh/plugins/zsh-z
+	url = https://github.com/agkozak/zsh-z

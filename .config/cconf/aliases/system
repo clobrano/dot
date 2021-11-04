@@ -1,4 +1,4 @@
-alias dw='dmesg -wH'
+alias dw='sudo dmesg -wH'
 alias jc='journalctl'
 alias jcs='sudo journalctl'
 alias psg='ps aux | grep'

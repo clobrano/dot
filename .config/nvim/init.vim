@@ -42,6 +42,7 @@ Plug 'alfredodeza/pytest.vim', {'for': 'python'}
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'
+Plug 'ap/vim-css-color'
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'

@@ -102,7 +102,10 @@ alias grep='grep --color=auto'
 alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
 alias sendat='sudo $GOBIN/sendat'
-alias mmake='meson compile'
+## Meson aliases
+alias mmake='meson compile -C build'
+alias mconf='meson setup build'
+alias mtest='meson test -C build'
 
 # Local bash configuration I don't want to save upstream
 [ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc

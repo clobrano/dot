@@ -41,6 +41,7 @@ Plug 'ambv/black', {'for': 'python'}
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'
+Plug 'ap/vim-css-color'
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'
@@ -180,4 +181,4 @@ EOF
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
+autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()

@@ -1,0 +1,3 @@
+alias mmake='meson compile -C build'
+alias mconf='meson setup build'
+alias mtest='meson test -C build'

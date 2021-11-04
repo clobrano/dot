@@ -51,7 +51,7 @@ if ! shopt -oq posix; then
     fi
 fi
 
-export EDITOR="gedit"
+export EDITOR="nvim"
 
 source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/requirements/pyenv.sh

@@ -18,6 +18,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-g' " Quick Google lookup
 
+Plug 'vimlab/split-term.vim'
+
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -37,9 +39,16 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-Plug 'ambv/black',                       {'for': 'python'}
+Plug 'ambv/black', {'for': 'python'}
+Plug 'alfredodeza/pytest.vim', {'for': 'python'}
+Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
-Plug 'fatih/vim-go',                      {'do': 'GoUpdateBinaries'}
+Plug 'igankevich/mesonic'
+Plug 'ap/vim-css-color'
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'akinsho/flutter-tools.nvim'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
@@ -105,6 +114,12 @@ vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
     }
 )
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+        -- Use a sharp border with `FloatBorder` highlights
+        border = "single"
+    }
+)
 EOF
 
 lua << EOF
@@ -167,10 +182,12 @@ EOF
 
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
-
+lua << EOF
+require("flutter-tools").setup{} -- use defaults
+EOF
 
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()

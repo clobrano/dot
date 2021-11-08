@@ -1,9 +1,1 @@
 alias n='nvim'
-alias nd='nvim -c "set background=dark"'
-# Neovim dark monokai
-alias ndm='nvim -c "colorscheme monokai"'
-
-alias v='vim'
-alias vng='gvim -c "colorscheme monokai"'
-alias vg='gvim'
-

@@ -31,19 +31,6 @@ fi
 
 [[ -e /etc/profile.d/vte-2.91.sh ]] && source /etc/profile.d/vte-2.91.sh
 
-
-function _branchname() {
-    printf $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1) /' -e 's/((HEAD detached at\(.*\)))/\1/') 2>/dev/null
-}
-
-function _gitstatus() {
-   [[ $(git status --short 2>/dev/null | wc -l) > 0 ]] && printf "~"
-}
-
-function _virtualenv() {
-    [[ ! -z $VIRTUAL_ENV ]] && echo "\[\e[0;32m\]($(basename $VIRTUAL_ENV))\[\e[m\]·" || echo ""
-}
-
 function _update_ps1() {
     dir=`basename $(dirname $PWD)`/`basename $PWD`
     PS1="\u • ${dir} $ "
@@ -64,25 +51,22 @@ if ! shopt -oq posix; then
     fi
 fi
 
-export EDITOR="gedit"
+export EDITOR="nvim"
 
 source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/requirements/pyenv.sh
 
-export CDPATH=$HOME/workspace/devel
+export CDPATH=$HOME/workspace
 export GOROOT=/usr/lib/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
 # PATH
-ANDROID_REPO=$HOME/external/bin/
-PATH=$PATH:$HOME/workspace/tscript
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
-PATH=$PATH:$ANDROID_REPO
 PATH=~/.local/bin:$PATH
 PATH=~/workspace/depot_tools:$PATH
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
@@ -115,5 +99,10 @@ alias grep='grep --color=auto'
 alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
 alias sendat='sudo $GOBIN/sendat'
-alias mmake='meson compile'
-[ -f $HOME/.local_bash_aliases ] && source $HOME/.local_bash_aliases
+## Meson aliases
+alias mmake='meson compile -C build'
+alias mconf='meson setup build'
+alias mtest='meson test -C build'
+
+# Local bash configuration I don't want to save upstream
+[ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc

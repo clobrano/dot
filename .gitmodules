@@ -10,30 +10,12 @@
 [submodule "dracula"]
 	path = .config/nvim/pack/plugged/start/dracula
 	url = https://github.com/dracula/vim
-[submodule "fzf"]
-	path = .config/nvim/pack/plugged/start/fzf
-	url = https://github.com/junegunn/fzf
 [submodule "fzf.vim"]
 	path = .config/nvim/pack/plugged/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
 [submodule "vim-fugitive"]
 	path = .config/nvim/pack/plugged/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule "vim-gitgutter"]
-	path = .config/nvim/pack/plugged/start/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter
-[submodule "vimagit"]
-	path = .config/nvim/pack/plugged/start/vimagit
-	url = https://github.com/jreybert/vimagit
-[submodule "gv.vim"]
-	path = .config/nvim/pack/plugged/start/gv.vim
-	url = https://github.com/junegunn/gv.vim
-[submodule "vim-buftabline"]
-	path = .config/nvim/pack/plugged/start/vim-buftabline
-	url = https://github.com/ap/vim-buftabline
-[submodule "ack.vim"]
-	path = .config/nvim/pack/plugged/start/ack.vim
-	url = https://github.com/mileszs/ack.vim
 [submodule "nerdtree"]
 	path = .config/nvim/pack/plugged/opt/nerdtree
 	url = https://github.com/scrooloose/nerdtree
@@ -43,90 +25,42 @@
 [submodule "vim-go"]
 	path = .config/nvim/pack/plugged/opt/vim-go
 	url = https://github.com/fatih/vim-go
-[submodule "black"]
-	path = .config/nvim/pack/plugged/opt/black
-	url = https://github.com/ambv/black
 [submodule "any-jump.vim"]
 	path = .config/nvim/pack/plugged/start/any-jump.vim
 	url = https://github.com/pechorin/any-jump.vim
 [submodule "vim-dispatch"]
 	path = .config/nvim/pack/plugged/opt/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch
-[submodule "vim-man"]
-	path = .config/nvim/pack/plugged/opt/vim-man
-	url = https://github.com/vim-utils/vim-man
-[submodule "vim-eunuch"]
-	path = .config/nvim/pack/plugged/start/vim-eunuch
-	url = https://github.com/tpope/vim-eunuch
 [submodule "vim-repeat"]
 	path = .config/nvim/pack/plugged/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat
 [submodule "vim-surround"]
 	path = .config/nvim/pack/plugged/start/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule "deoplete.nvim"]
-	path = .config/nvim/pack/plugged/start/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim
 [submodule "taglist.vim"]
 	path = .config/nvim/pack/plugged/start/taglist.vim
 	url = https://github.com/vim-scripts/taglist.vim
-[submodule "auto-pairs"]
-	path = .config/nvim/pack/plugged/start/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs
-[submodule "vim-startify"]
-	path = .config/nvim/pack/plugged/start/vim-startify
-	url = https://github.com/mhinz/vim-startify
-[submodule "cscope.vim"]
-	path = .config/nvim/pack/plugged/start/cscope.vim
-	url = https://github.com/brookhong/cscope.vim
 [submodule "cscope_maps"]
 	path = .config/nvim/pack/plugged/start/cscope_maps
 	url = https://github.com/chazy/cscope_maps
 [submodule "vim-gutentags"]
 	path = .config/nvim/pack/plugged/start/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags
-[submodule "nerdcommenter"]
-	path = .config/nvim/pack/plugged/opt/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter
 [submodule "editorconfig-vim"]
 	path = .config/nvim/pack/plugged/opt/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
-[submodule "DoxygenToolkit.vim"]
-	path = .config/nvim/pack/plugged/opt/DoxygenToolkit.vim
-	url = https://github.com/vim-scripts/DoxygenToolkit.vim
 [submodule "vim-tldr"]
 	path = .config/nvim/pack/plugged/opt/vim-tldr
 	url = https://github.com/wlemuel/vim-tldr
-[submodule "vim-g"]
-	path = .config/nvim/pack/plugged/opt/vim-g
-	url = https://github.com/szw/vim-g
 [submodule "vim-meson"]
 	path = .config/nvim/pack/plugged/opt/vim-meson
 	url = https://github.com/matze/vim-meson
 [submodule "posero.vim"]
 	path = .config/nvim/pack/plugged/opt/posero.vim
 	url = https://github.com/alfredodeza/posero.vim
-[submodule "nvim-lspconfig"]
-	path = .config/nvim/pack/plugged/opt/nvim-lspconfig
-	url = https://github.com/neovim/nvim-lspconfig
-[submodule "UltiSnips"]
-	path = .config/nvim/pack/plugged/opt/UltiSnips
-	url = https://github.com/sirver/UltiSnips
-[submodule "vim-snippets"]
-	path = .config/nvim/pack/plugged/opt/vim-snippets
-	url = https://github.com/honza/vim-snippets
 [submodule "mesonic"]
 	path = .config/nvim/pack/plugged/start/mesonic
 	url = https://github.com/igankevich/mesonic
-[submodule "vala.vim"]
-	path = .config/nvim/pack/plugged/opt/vala.vim
-	url = https://github.com/arrufat/vala.vim
-[submodule "vim-monokai"]
-	path = .config/nvim/pack/plugged/start/vim-monokai
-	url = https://github.com/sickill/vim-monokai
-[submodule "nvim-cmp"]
-	path = .config/nvim/pack/plugged/start/nvim-cmp
-	url = https://github.com/hrsh7th/nvim-cmp
 [submodule "cmp-nvim-lsp"]
 	path = .config/nvim/pack/plugged/start/cmp-nvim-lsp
 	url = https://github.com/hrsh7th/cmp-nvim-lsp
@@ -136,12 +70,6 @@
 [submodule "telescope.nvim"]
 	path = .config/nvim/pack/plugged/start/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim
-[submodule "telescope-fzf-native.nvim"]
-	path = .config/nvim/pack/plugged/start/telescope-fzf-native.nvim
-	url = https://github.com/nvim-telescope/telescope-fzf-native.nvim
-[submodule "ripgrep"]
-	path = .config/nvim/pack/plugged/start/ripgrep
-	url = https://github.com/BurntSushi/ripgrep
 [submodule ".config/cconf/zsh/plugins/zsh-z"]
 	path = .config/cconf/zsh/plugins/zsh-z
 	url = https://github.com/agkozak/zsh-z

@@ -46,19 +46,36 @@ while getopts 'hda:r:' OPT; do
 done
 # CLInt GENERATED_CODE: end
 
+to_link=(
+    ".bashrc"
+    ".gitignore_global"
+    ".inputrc"
+    ".tigrc"
+    ".tmux.conf"
+    ".vimrc"
+    ".zshrc"
+    ".config/cconf"
+    ".config/ranger"
+    ".config/zathura"
+    ".config/nvim/after"
+    ".config/nvim/autoload"
+    ".config/nvim/ginit.vim"
+    ".config/nvim/init.vim"
+    ".config/nvim/plugin"
+    ".config/nvim/spell"
+    ".config/nvim/thesaurus"
+    ".config/nvim/UltiSnips"
+)
+
+# nvim directory needs to be created first
+mkdir -pv ${HOME}/.config/nvim
+
 if [ ${_deploy} == 1 ]; then
-    set -e
-    echo [+] deploying...
     SRC=$(pwd)
-    IFS=$'\n'
-    for f in $(find ./ -type f); do
-        if [[ ${f} == "./dot.sh" ]]; then continue ; fi # skip this file
-        if [[ ${f} == "./nvim-pack.sh" ]]; then continue ; fi # skip this file
-        if [[ ${f} == "./README.md" ]]; then continue ; fi # skip this file
-        if [[ ${f} =~ ".git/" ]]; then continue ; fi # skip .git directory
-        DST=${HOME}/${f:2}
-        DIR=$(dirname ${DST})
-        [ ! -d ${DIR} ] && mkdir -pv ${DIR}
-        ln -sf ${SRC}/${f:2} ${DST}
+    for file in ${to_link[@]}; do
+        ln -sf ${SRC}/${file} ${HOME}/${file}
     done
 fi
+
+# install vim-plug
+./dot/.config/requirements/vim-plug-install.sh

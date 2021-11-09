@@ -51,6 +51,7 @@ Plug 'ap/vim-css-color'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
+Plug 'vimsence/vimsence'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
@@ -204,3 +205,13 @@ highlight = {
 },
 }
 EOF
+
+let g:vimsence_discord_flatpak=1
+let g:vimsence_client_id = '907672473938575380'
+let g:vimsence_small_text = 'NeoVim'
+let g:vimsence_small_image = 'neovim'
+let g:vimsence_editing_details = 'Editing some code'
+let g:vimsence_editing_state = 'Working on some secret project'
+let g:vimsence_file_explorer_text = 'In NERDTree'
+let g:vimsence_file_explorer_details = 'Looking for files'
+"let g:vimsence_custom_icons = {'filetype': 'iconname'}

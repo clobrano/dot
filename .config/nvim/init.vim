@@ -7,6 +7,7 @@ let maplocalleader=' '
 " Plugins
 call plug#begin()
 Plug 'dracula/vim'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'

@@ -25,6 +25,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
@@ -192,3 +193,14 @@ autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
 autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+ensure_installed = { "c", "cpp", "python", "go" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+ignore_install = { }, -- List of parsers to ignore installing
+highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { },  -- list of language that will be disabled
+},
+}
+EOF

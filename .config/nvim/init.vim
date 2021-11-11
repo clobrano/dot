@@ -17,6 +17,7 @@ Plug 'pechorin/any-jump.vim'
 Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'derekwyatt/vim-fswitch'
 Plug 'szw/vim-g' " Quick Google lookup
 
 Plug 'vimlab/split-term.vim'
@@ -206,6 +207,11 @@ highlight = {
 }
 EOF
 
+" Vim-g configuration
+let g:vim_g_query_url="https://duckduckgo.com/?q="
+let g:vim_g_command = "Wsearch"
+
+" Discord Rich presence configuration
 let g:vimsence_discord_flatpak=1
 let g:vimsence_client_id = '907672473938575380'
 let g:vimsence_small_text = 'NeoVim'

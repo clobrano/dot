@@ -1,5 +1,5 @@
 function! clobrano#status#git()
-    if !isdirectory($HOME . '/.config/nvim/plugged/vim-fugitive')
+    if !exists('g:loaded_fugitive')
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
@@ -30,7 +30,7 @@ endfunction
 " Use TagList plugin to show current function context
 function! clobrano#status#context()
     let _ = ''
-    if !empty(glob('~/.config/nvim/plugged/taglist.vim'))
+    if exists('loaded_taglist')
         let l:context = Tlist_Get_Tagname_By_Line()
         let _ = strlen(l:context) > 0 ? '| @' . l:context : ''
     endif

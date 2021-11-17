@@ -70,6 +70,7 @@ PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH
 PATH=~/workspace/depot_tools:$PATH
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"

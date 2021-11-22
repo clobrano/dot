@@ -19,6 +19,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'szw/vim-g' " Quick Google lookup
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 Plug 'vimlab/split-term.vim'
 

@@ -201,7 +201,7 @@ EOF
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
-autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()
+autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable=false})
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {

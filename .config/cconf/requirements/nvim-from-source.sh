@@ -25,3 +25,6 @@ make -j$(nproc)
 sudo make install
 popd
 sudo rm -r neovim
+
+# Needed for telescope live_grep/grep_string
+sudo apt install ripgrep

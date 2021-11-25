@@ -1,9 +1,10 @@
+let g:mysep = ' |'
 function! clobrano#status#git()
-    if !isdirectory($HOME . '/.config/nvim/plugged/vim-fugitive')
+    if !exists('g:loaded_fugitive')
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
-        return strlen(branchname) > 0 ? '|  '.l:branchname : ''
+        return strlen(branchname) > 0 ? ' '.l:branchname . g:mysep : ''
     endif
 endfunction
 
@@ -30,17 +31,15 @@ endfunction
 " Use TagList plugin to show current function context
 function! clobrano#status#context()
     let _ = ''
-    if !empty(glob('~/.config/nvim/plugged/taglist.vim'))
+    if exists('g:loaded_taglist')
         let l:context = Tlist_Get_Tagname_By_Line()
-        let _ = strlen(l:context) > 0 ? '| @' . l:context : ''
+        let _ = strlen(l:context) > 0 ? '::' . l:context : ''
     endif
     return _
 endfunction
 
-function! clobrano#status#relpath()
-    let cwd = fnamemodify(getcwd(), ':t:r')
-    let filename =  cwd . '/' .expand("%")
-    return filename
+function! clobrano#status#workingdirectory()
+    return '⛁ ' . fnamemodify(getcwd(), ':t:r') . g:mysep
 endfunction
 
 function! clobrano#status#statusline_update(state)
@@ -48,16 +47,15 @@ function! clobrano#status#statusline_update(state)
         "set statusline=
         setlocal statusline=
         setlocal statusline+=%<\                                     " cut at start
-        if !empty(glob('~/.config/nvim/plugged/vim-devicons'))
-            setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\ %{clobrano#status#relpath()}\  " path
-        else
-            setlocal statusline+=%{clobrano#status#relpath()}\  " path
-        endif
         setlocal statusline+=%{clobrano#status#git()}\               " git branch
+        setlocal statusline+=%{clobrano#status#workingdirectory()}\  " path
+        if !empty(glob('~/.config/nvim/plugged/vim-devicons'))
+            setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\  " path
+        endif
+        setlocal statusline+=%f  " path
         setlocal statusline+=%{clobrano#status#context()}\           " context
         setlocal statusline+=%h%m%R%W\                               " flags and buf no
         setlocal statusline+=%=                                      " right side
-        setlocal statusline+=(%{&fileformat})\               " git branch
         setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
         setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif

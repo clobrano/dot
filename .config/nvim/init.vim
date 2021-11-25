@@ -14,10 +14,18 @@ Plug 'ap/vim-buftabline'
 
 Plug 'mileszs/ack.vim'
 Plug 'pechorin/any-jump.vim'
-Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+"Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
+
 Plug 'scrooloose/nerdtree'
+Plug 'derekwyatt/vim-fswitch'
 Plug 'szw/vim-g' " Quick Google lookup
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 Plug 'vimlab/split-term.vim'
 
@@ -51,6 +59,7 @@ Plug 'ap/vim-css-color'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
+Plug 'vimsence/vimsence'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
@@ -192,7 +201,7 @@ EOF
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
-autocmd CursorHoldI * silent! lua vim.lsp.buf.hover()
+autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable=false})
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -204,3 +213,24 @@ highlight = {
 },
 }
 EOF
+
+" Vim-g configuration
+let g:vim_g_query_url="https://duckduckgo.com/?q="
+let g:vim_g_command = "Wsearch"
+
+" Discord Rich presence configuration
+let g:vimsence_discord_flatpak=1
+let g:vimsence_client_id = '907672473938575380'
+let g:vimsence_small_text = 'NeoVim'
+let g:vimsence_small_image = 'neovim'
+
+if isdirectory($HOME . "/TMT/carlolo")
+    let g:vimsence_editing_details = 'Editing some file'
+    let g:vimsence_editing_state = 'Working on secret project'
+else
+    let g:vimsence_editing_details = 'Editing {}'
+    let g:vimsence_editing_state = 'Working on {}'
+endif
+let g:vimsence_file_explorer_text = 'In NERDTree'
+let g:vimsence_file_explorer_details = 'Looking for files'
+"let g:vimsence_custom_icons = {'filetype': 'iconname'}

@@ -35,10 +35,6 @@ nnoremap m9       :bfirst<cr>:8bn<cr>
 nnoremap <leader>e :e<cr>
 nnoremap ct :checktime<cr>
 
-" buffer: open alternate file (ex. .c/.cpp <-> .h)
-nnoremap <leader>a :find %<.
-nnoremap <leader>av :vsplit %<.
-
 " buffer select ALL
 "nnoremap C :%y+<cr>
 nnoremap C ggvG$

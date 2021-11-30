@@ -223,8 +223,14 @@ let g:vimsence_discord_flatpak=1
 let g:vimsence_client_id = '907672473938575380'
 let g:vimsence_small_text = 'NeoVim'
 let g:vimsence_small_image = 'neovim'
-let g:vimsence_editing_details = 'Editing some code'
-let g:vimsence_editing_state = 'Working on some secret project'
+
+if isdirectory($HOME . "/TMT/carlolo")
+    let g:vimsence_editing_details = 'Editing some file'
+    let g:vimsence_editing_state = 'Working on secret project'
+else
+    let g:vimsence_editing_details = 'Editing {}'
+    let g:vimsence_editing_state = 'Working on {}'
+endif
 let g:vimsence_file_explorer_text = 'In NERDTree'
 let g:vimsence_file_explorer_details = 'Looking for files'
 "let g:vimsence_custom_icons = {'filetype': 'iconname'}

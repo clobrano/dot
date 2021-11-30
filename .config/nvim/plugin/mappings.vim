@@ -20,16 +20,6 @@ noremap <A-Right> <Esc>:bnext<CR>
 noremap H         <Esc>:bprevious<CR>
 noremap L         <Esc>:bnext<CR>
 nnoremap <c-b>    <esc>:b<space>
-nnoremap m1       :bfirst<cr>
-nnoremap m2       :bfirst<cr>:bn<cr>
-nnoremap m3       :bfirst<cr>:2bn<cr>
-nnoremap m4       :bfirst<cr>:3bn<cr>
-nnoremap m5       :bfirst<cr>:4bn<cr>
-nnoremap m6       :bfirst<cr>:5bn<cr>
-nnoremap m7       :bfirst<cr>:6bn<cr>
-nnoremap m8       :bfirst<cr>:7bn<cr>
-nnoremap m9       :bfirst<cr>:8bn<cr>
-"
 
 " buffer: reload
 nnoremap <leader>e :e<cr>

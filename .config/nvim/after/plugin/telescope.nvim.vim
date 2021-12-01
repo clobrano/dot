@@ -6,7 +6,7 @@ EOF
 " Mapping
 nnoremap <leader>fa :Telescope live_grep<cr>
 nnoremap <leader>fb :Telescope buffers<cr>
-nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>ff :Telescope find_files no_ignore=true<cr>
 nnoremap <leader>fm :Telescope man_pages<cr>
 nnoremap <leader>fq :Telescope quickfix<cr>
 nnoremap <leader>ft :Telescope tags<cr>

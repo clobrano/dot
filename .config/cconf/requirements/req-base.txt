@@ -2,19 +2,19 @@
 
 build-essential
 clang
-cppcheck
 cscope
-#ctags
+ctags
 curl
 expect
 exuberant-ctags
 git
-neovim
 ranger
 silversearcher-ag
-taskwarrior
+ripgrep
 tig
 tmux
 uptimed
 xclip
 zsh
+bat
+bear

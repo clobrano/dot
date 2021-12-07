@@ -10,7 +10,7 @@ EOF
 nnoremap <leader>fm :Telescope man_pages<cr>
 "nnoremap <leader>fq :Telescope quickfix<cr>
 "nnoremap <leader>ft :Telescope tags<cr>
-"nnoremap <leader>fw :Telescope grep_string<cr>
+nnoremap <leader>fs :Telescope grep_string<cr>
 
 " GIT mappings
 "nnoremap <leader>fgb :Telescope git_branches<cr>

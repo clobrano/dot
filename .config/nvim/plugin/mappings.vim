@@ -273,6 +273,9 @@ nnoremap wj <C-w>j
 nnoremap wk <C-w>k
 nnoremap wl <C-w>l
 
+" Remap move to next word, since we use "w" for other things
+nnoremap e w
+
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins

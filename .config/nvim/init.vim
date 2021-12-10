@@ -7,7 +7,7 @@ let maplocalleader=' '
 " Plugins
 call plug#begin()
 Plug 'dracula/vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'
@@ -54,6 +54,8 @@ Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'
 Plug 'ap/vim-css-color'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'
@@ -192,6 +194,7 @@ EOF
 
 lua require'lspconfig'.pylsp.setup{}
 lua require'lspconfig'.gopls.setup{}
+lua require'lspconfig'.rust_analyzer.setup({})
 lua << EOF
 require("flutter-tools").setup{} -- use defaults
 EOF

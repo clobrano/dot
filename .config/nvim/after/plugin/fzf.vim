@@ -1,4 +1,5 @@
-let g:fzf_layout = { 'down': '~40%' }
+" - Popup window (center of the screen)
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 

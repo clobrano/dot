@@ -18,7 +18,7 @@ set concealcursor=c                       " do not conceal text in normal mode, 
 set colorcolumn=0
 set complete=.,w,b,u,t
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
-set nocursorline                            " Disable highlight current line
+set cursorline                            " Disable highlight current line
 set expandtab
 
 if has('folding')

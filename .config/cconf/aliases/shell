@@ -14,6 +14,9 @@ alias dt='todo-txt -ntd /mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.cfg'
 alias dm='todo-txt -ntd ~/MyBox/notes/work/todo-txt/todo.cfg'
 alias gm='cd ~/MyBox/notes/work/sideproject'
 
-if [[ $(which batcat | grep batcat | wc -l) = "1" ]]; then
-    alias cat=batcat
-fi
+for b in bat batcat; do
+    if [[ $(which $b 2>/dev/null | grep bin | wc -l) = "1" ]]; then
+        alias cat=$b
+    fi
+done
+

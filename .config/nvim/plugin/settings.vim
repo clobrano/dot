@@ -18,7 +18,7 @@ set concealcursor=c                       " do not conceal text in normal mode, 
 set colorcolumn=0
 set complete=.,w,b,u,t
 set completeopt=longest,menu,preview      " Select block not limited to shortest line
-set nocursorline                            " Disable highlight current line
+set cursorline                            " Disable highlight current line
 set expandtab
 
 if has('folding')
@@ -72,8 +72,8 @@ set nojoinspaces                          " No add space when joining lines
 set noswapfile
 set path+=**
 set number relativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
-set scrolloff=10                           " Keeping the cursor away from the last line
-set sidescrolloff=10                       " Same as scrolloff, but for columns
+set scrolloff=5                           " Keeping the cursor away from the last line
+set sidescrolloff=5                       " Same as scrolloff, but for columns
 set shiftround                            " always indent by multiple of shiftwidth
 "set shiftwidth=2                          " spaces per tab (when shifting)
 set shortmess+=A                          " ignore annoying swapfile messages

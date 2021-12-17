@@ -1,4 +1,38 @@
 #
+# Configuration from Bashrc
+#
+setopt autocd     # cd into folder without typing 'cd'
+source $HOME/.config/cconf/dot/dotfiles.sh
+source $HOME/.config/cconf/requirements/pyenv.sh
+
+export CDPATH=$HOME/workspace
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/workspace/golang
+export GOBIN=${GOPATH}/bin
+export GIT_TERMINAL_PROMPT=1
+
+# PATH
+PATH=~/.local/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
+
+PATH=$PATH:$HOME/toolkit
+PATH=$PATH:$HOME/workspace/script-fu
+PATH=$PATH:${GOBIN}
+PATH=$PATH:${GOROOT}/bin
+
+PATH=~/workspace/codesonar/codesonar/bin:$PATH
+PATH=~/workspace/depot_tools:$PATH
+
+# Android/Chromebook
+export USE_CCACHE=1
+export PATH=~/workspace/depot_tools:$PATH
+
+# Let's have core dumps
+ulimit -c unlimited
+# Enable gcc colours, available since gcc 4.9.0
+GCC_COLORS=1
+
+#
 # Aliases
 #
 source ~/.config/cconf/dot/dotfiles.sh

@@ -73,7 +73,7 @@ mkdir -pv ${HOME}/.config/nvim
 if [ ${_deploy} == 1 ]; then
     SRC=$(pwd)
     for file in ${to_link[@]}; do
-        echo ln -sf ${SRC}/${file} ${HOME}/${file}
+        echo ln -s ${SRC}/${file} ${HOME}/${file}
         ln -sf ${SRC}/${file} ${HOME}/${file}
     done
 fi

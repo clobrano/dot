@@ -15,8 +15,5 @@ else if [[ $(which bat | grep bat | wc -l) = "1" ]]; then
     fi 
 fi
 
-
-
-
 alias sendat='sudo $GOBIN/sendat'
 alias node='nodejs'  # in ubuntu binary is called wrong

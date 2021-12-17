@@ -8,6 +8,7 @@ let maplocalleader=' '
 call plug#begin()
 Plug 'dracula/vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'altercation/vim-colors-solarized'
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'

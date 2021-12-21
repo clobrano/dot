@@ -1,11 +1,7 @@
-#xargs -a <(awk '/^\s*[^#]/' /path/to/this/file) -r -- sudo apt-get install
-
-build-essential
 clang
 cscope
 ctags
 curl
-expect
 exuberant-ctags
 git
 ranger

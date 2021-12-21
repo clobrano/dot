@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
-has_apt=$(which apt | wc -l)
+has_apt=$(which apt 2>/dev/null | wc -l)
 if [[ $has_apt == "1" ]]; then
     sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
 fi
 
 
-has_yum=$(which yum | wc -l)
+has_yum=$(which yum 2>/dev/null | wc -l)
 if [[ $has_yum == "1" ]]; then
     sudo yum -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext curl
+fi
+
+has_zypper=$(which zypper 2>/dev/null | wc -l)
+if [[ $has_yum == "1" ]]; then
+    sudo zypper -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext curl
 fi
 
 

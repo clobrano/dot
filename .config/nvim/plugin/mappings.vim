@@ -121,7 +121,7 @@ nnoremap <leader>z zA
 " the next change
 nnoremap dp dp]c
 nnoremap do do]c
-nnoremap wdt :windo diffthis
+nnoremap wds :windo diffthis
 nnoremap wdo :windo diffoff
 
 " highlight selected word

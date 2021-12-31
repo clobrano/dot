@@ -24,8 +24,7 @@ function! ToggleBackground()
         exec "set background=light"
     endif
 endfunction
-
-command! ToggleBg :call ToggleBackground()
+nnoremap <F4> :call ToggleBackground()<cr>
 
 let s:middot='·'
 let s:raquo='»'
@@ -51,3 +50,9 @@ command! ActiveReview !active-review-update.py
 
 " Remove trailing whitespaces
 command! TrimTrailingSpaces :%s/\s\+$//gc
+
+function! Solarized()
+    exec "set background=light"
+    exec "colorscheme solarized"
+endfunction
+command! Solarized :call Solarized()<cr>

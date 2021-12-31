@@ -7,13 +7,16 @@ alias ll='ls -l'
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
-alias gt='cd /mnt/4EBCC563BCC545E5/Store/telit/'
-alias tsk='taskell /mnt/4EBCC563BCC545E5/Store/telit/taskell.todo'
-alias dt='todo-txt -ntd /mnt/4EBCC563BCC545E5/Store/telit/todo-txt/todo.cfg'
-
-alias dm='todo-txt -ntd ~/MyBox/notes/work/todo-txt/todo.cfg'
-alias gm='cd ~/MyBox/notes/work/sideproject'
-
-if [[ $(which batcat | grep batcat | wc -l) = "1" ]]; then
+if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias cat=batcat
+else if [[ $(which bat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
+        # This is for openSUSE
+        alias cat=bat
+    fi 
+fi
+
+alias sendat='sudo $GOBIN/sendat'
+
+if [[ $(which nodejs 2>/dev/null | grep bin | wc -l) = "1" ]]; then
+    alias node='nodejs'  # in ubuntu binary is called wrong
 fi

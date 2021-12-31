@@ -33,7 +33,7 @@ function! clobrano#status#context()
     let _ = ''
     if exists('g:loaded_taglist')
         let l:context = Tlist_Get_Tagname_By_Line()
-        let _ = strlen(l:context) > 0 ? ' ' . l:context . '()' : ''
+        let _ = strlen(l:context) > 0 ? ' | ' . l:context . '()' : ''
     endif
     return _
 endfunction
@@ -63,6 +63,7 @@ function! clobrano#status#statusline_update(state)
         setlocal statusline=
         setlocal statusline+=%{clobrano#status#git()}\               " git branch
         setlocal statusline=%f
+        setlocal statusline+=%=                                      " right side
         setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif
 endfunction

@@ -52,7 +52,7 @@ source ~/.config/cconf/zsh/bindings.zsh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='gedit'
+  export EDITOR='nvim'
 fi
 
 # For thinkpad pointer (it only works on X11, but it is up to the script to detect it)

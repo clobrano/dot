@@ -55,6 +55,8 @@ else
   export EDITOR='gedit'
 fi
 
+# For thinkpad pointer (it only works on X11, but it is up to the script to detect it)
+[[ -e thinkpointer.sh ]] && thinkpointer.sh
 #
 # Completion
 #

@@ -107,3 +107,7 @@ alias mtest='meson test -C build'
 
 # Local bash configuration I don't want to save upstream
 [ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc
+
+# Temporary workaround for Thinkpad T440 trackpoint speed
+# property is Accel speed, range [-1.0: 1.0]
+xinput set-prop 13 333 -0.5

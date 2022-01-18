@@ -19,8 +19,10 @@ command! WriteRoom :call WriteRoom()
 
 function! ToggleBackground()
     if "light" == &background
+        exec "colorscheme dracula"
         exec "set background=dark"
     else
+        exec "colorscheme PaperColor"
         exec "set background=light"
     endif
 endfunction

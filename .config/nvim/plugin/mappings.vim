@@ -58,7 +58,7 @@ nnoremap <leader>bdo :%bd<CR><C-O>:bd#<CR>
 " buffer: save
 inoremap <C-s>  <Esc>:write<CR>
 noremap <C-s>   <Esc>:write<CR>
-noremap ww   <Esc>:write<CR>
+noremap ss   <Esc>:write<CR>
 "
 
 " register 0 hold latest Yank, let's map yp to `"0p`
@@ -118,8 +118,8 @@ nnoremap <leader>z zA
 " the next change
 nnoremap dp dp]c
 nnoremap do do]c
-nnoremap wds :windo diffthis
-nnoremap wdo :windo diffoff
+nnoremap <leader>wds :windo diffthis
+nnoremap <leader>wdo :windo diffoff
 
 " highlight selected word
 vnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
@@ -267,10 +267,10 @@ nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits
-nnoremap wh <C-w>h
-nnoremap wj <C-w>j
-nnoremap wk <C-w>k
-nnoremap wl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
 
 " Remap move to next word, since we use "w" for other things
 nnoremap e w

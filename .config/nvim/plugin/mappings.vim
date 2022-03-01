@@ -155,8 +155,8 @@ nnoremap ]b :cnext<cr>
 
 
 " move: always move line by line, regardless wrap
-"noremap <silent> k gk
-"noremap <silent> j gj
+noremap <silent> k gk
+noremap <silent> j gj
 
 
 " move fast

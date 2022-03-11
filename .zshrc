@@ -6,7 +6,7 @@ source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/environments/pyenv.sh
 
 export CDPATH=$HOME/workspace
-export GOROOT=/usr/local/go
+export GOROOT=/usr/local/go/
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
@@ -145,9 +145,9 @@ autoload -Uz vcs_info
 # vcs info (for git)
 zstyle ':vcs_info:*' enable git
 () {
-    zstyle ':vcs_info:git*:*' formats '[%b%m%c%u]' # default ' (%s)-[%b]%c%u-'
-    zstyle ':vcs_info:git*:*' actionformats '[(%a)%b|%m%c%u]' # default ' (%s)-[%b|%a]%c%u-'
-    zstyle ':vcs_info:*' stagedstr "%F{green}!%f" # default 'S'
+    zstyle ':vcs_info:git*:*' formats 'on %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
+    zstyle ':vcs_info:git*:*' actionformats 'on %F{green}(%a)%b|%m%c%u%f' # default ' (%s)-[%b|%a]%c%u-'
+    zstyle ':vcs_info:*' stagedstr "%F{green}+%f" # default 'S'
     zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
     zstyle ':vcs_info:*' use-simple true
     zstyle ':vcs_info:*' check-for-changes true
@@ -189,9 +189,11 @@ add-zsh-hook preexec () {
 
 
 
-LPROMPT_BASE=" %F{yellow}%B%n%b%f • %c"
-RPROMPT_BASE="\${vcs_info_msg_0_}"
+NEWLINE=$'\n'
+LPROMPT_BASE="%F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
+#RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE%F{yellow}%B%(1j.*.)%b%f❯ "
-export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
+export PS1="$LPROMPT_BASE \${vcs_info_msg_0_} ${NEWLINE}❯ "
+#export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
+export RPROMPT=""

@@ -19,9 +19,9 @@ Plug 'pechorin/any-jump.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'vim-scripts/MultipleSearch'
 
 Plug 'scrooloose/nerdtree'
 Plug 'derekwyatt/vim-fswitch'

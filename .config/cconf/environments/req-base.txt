@@ -14,3 +14,4 @@ xclip
 zsh
 bat
 bear
+python3-pip

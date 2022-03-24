@@ -195,7 +195,7 @@ nnoremap <leader>c* <esc>:%s///gc<left><left><left><left><C-r><C-w><right>
 vnoremap <leader>c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>
 
 " replace in all buffer
-noremap rep <Esc>:%s//gc<Left><Left><Left>
+noremap rep <Esc>:%s/
 
 " resize vertical window splits {{{
 nnoremap <silent> + :exe "resize +2"<CR>

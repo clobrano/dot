@@ -206,7 +206,7 @@ EOF
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-autocmd CursorHold * lua vim.diagnostic.open_float()
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})
 autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable=false})
 
 lua <<EOF

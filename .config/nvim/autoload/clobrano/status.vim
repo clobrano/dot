@@ -42,6 +42,14 @@ function! clobrano#status#workingdirectory()
     return '⛁ ' . fnamemodify(getcwd(), ':t:r') . g:mysep
 endfunction
 
+function! clobrano#status#show_tdd_result()
+    let l:tdd_result_file = $HOME . "/.tdd-result"
+    if !filereadable(l:tdd_result_file)
+        return "no file found " . l:tdd_result_file
+    endif
+    return readfile(l:tdd_result_file, '', 1)[0]
+endfunction
+
 function! clobrano#status#statusline_update(state)
     if (a:state == 'focus')
         "set statusline=
@@ -56,6 +64,7 @@ function! clobrano#status#statusline_update(state)
         setlocal statusline+=%{clobrano#status#context()}\           " context
         setlocal statusline+=%h%m%R%W\                               " flags and buf no
         setlocal statusline+=%=                                      " right side
+        setlocal statusline+=%{clobrano#status#show_tdd_result()}
         setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
         setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif
@@ -67,3 +76,4 @@ function! clobrano#status#statusline_update(state)
         setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
     endif
 endfunction
+

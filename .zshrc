@@ -63,6 +63,8 @@ fi
 
 # extend change directory
 #setopt auto_cd
+# allow comments on the shell
+setopt interactivecomments
 cdpath=($HOME $HOME/workspace)
 
 autoload -U compinit

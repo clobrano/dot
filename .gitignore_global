@@ -3,6 +3,7 @@
 .editorconfig
 build/
 compile_commands.json
+compile_flags.txt
 cscope.files
 cscope.in.out
 cscope.out

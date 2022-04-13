@@ -10,8 +10,9 @@ function mkdir() {
     if [[ $? == 0 && ! -d $1 ]]; then
         # one of the directories in $1 path do not exist
         # suggest adding "--parents" flag.
-        echo "Some parents in $1 do not exist. Press ENTER to run mkdir with --parents."
+        echo "# Some parents in $1 do not exist. Press ENTER to run mkdir with --parents."
         read
+        echo "# done"
         command mkdir --parents $@
     else
         command mkdir $@

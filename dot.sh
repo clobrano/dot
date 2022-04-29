@@ -5,11 +5,11 @@
 ## and replace it with a symlink.
 ## options:
 ##    -d, --deploy          Deploy dotfiles in HOME directory
-##    -a, --add <path>      Add <path> to dotfiles
-##    -r, --remove <path>   Remove <path> from dotfiles
+##    -i, --install         Install programs and dependencies
 
 
 # CLInt GENERATED_CODE: start
+# info: https://github.com/clobrano/CLInt.git
 
 # No-arguments is not allowed
 [ $# -eq 0 ] && sed -ne 's/^## \(.*\)/\1/p' $0 && exit 1
@@ -19,8 +19,7 @@ for arg in "$@"; do
   shift
   case "$arg" in
 "--deploy") set -- "$@" "-d";;
-"--add") set -- "$@" "-a";;
-"--remove") set -- "$@" "-r";;
+"--install") set -- "$@" "-i";;
   *) set -- "$@" "$arg"
   esac
 done
@@ -30,13 +29,12 @@ function print_illegal() {
 }
 
 # Parsing flags and arguments
-while getopts 'hda:r:' OPT; do
+while getopts 'hdi' OPT; do
     case $OPT in
         h) sed -ne 's/^## \(.*\)/\1/p' $0
            exit 1 ;;
         d) _deploy=1 ;;
-        a) _add=$OPTARG ;;
-        r) _remove=$OPTARG ;;
+        i) _install=1 ;;
         \?) print_illegal $@ >&2;
             echo "---"
             sed -ne 's/^## \(.*\)/\1/p' $0
@@ -46,37 +44,53 @@ while getopts 'hda:r:' OPT; do
 done
 # CLInt GENERATED_CODE: end
 
-to_link=(
-    ".bashrc"
-    ".gitignore_global"
-    ".inputrc"
-    ".tigrc"
-    ".tmux.conf"
-    ".vimrc"
-    ".zshrc"
-    ".config/cconf"
-    ".config/ranger"
-    ".config/zathura"
-    ".config/nvim/after"
-    ".config/nvim/autoload"
-    ".config/nvim/ginit.vim"
-    ".config/nvim/init.vim"
-    ".config/nvim/plugin"
-    ".config/nvim/spell"
-    ".config/nvim/thesaurus"
-    ".config/nvim/UltiSnips"
-)
+install() {
+    pushd ${HOME}/.dot/.config/cconf/environments
 
-# nvim directory needs to be created first
-mkdir -pv ${HOME}/.config/nvim
+    # install basic programs
+    ./batch-install.sh req-base.txt
+    ./github-cli-install.sh
+    ./lsp/python-lsp.sh
+    ./lsp/c-cpp.lsp.sh
+    ./z-directory-jump.sh
+    ./neovim-from-source.sh
+    ./vim-plug-install.sh
+    popd
+}
 
-if [ ${_deploy} == 1 ]; then
-    SRC=$(pwd)
-    for file in ${to_link[@]}; do
-        echo ln -s ${SRC}/${file} ${HOME}/${file}
-        ln -sf ${SRC}/${file} ${HOME}/${file}
-    done
-fi
+deploy() {
+    to_link=(
+        ".bashrc"
+        ".gitignore_global"
+        ".inputrc"
+        ".tigrc"
+        ".tmux.conf"
+        ".vimrc"
+        ".zshrc"
+        ".config/cconf"
+        ".config/ranger"
+        ".config/zathura"
+        ".config/nvim/after"
+        ".config/nvim/autoload"
+        ".config/nvim/ginit.vim"
+        ".config/nvim/init.vim"
+        ".config/nvim/plugin"
+        ".config/nvim/spell"
+        ".config/nvim/thesaurus"
+        ".config/nvim/UltiSnips"
+    )
 
-# install vim-plug
-${HOME}/.dot/.config/cconf/requirements/vim-plug-install.sh
+    # nvim directory needs to be created first
+    mkdir -pv ${HOME}/.config/nvim
+
+    if [ ${_deploy} == 1 ]; then
+        SRC=$(pwd)
+        for file in ${to_link[@]}; do
+            echo ln -s ${SRC}/${file} ${HOME}/${file}
+            ln -sf ${SRC}/${file} ${HOME}/${file}
+        done
+    fi
+}
+
+[ ! -z $_instal ] && install
+[ ! -z $_deploy ] && deploy

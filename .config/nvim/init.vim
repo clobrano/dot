@@ -51,6 +51,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'ambv/black', {'for': 'python'}
+Plug 'reinh/vim-makegreen'
+Plug 'vim-test/vim-test'
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'

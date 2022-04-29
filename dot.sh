@@ -83,14 +83,12 @@ deploy() {
     # nvim directory needs to be created first
     mkdir -pv ${HOME}/.config/nvim
 
-    if [ ${_deploy} == 1 ]; then
-        SRC=$(pwd)
-        for file in ${to_link[@]}; do
-            echo ln -s ${SRC}/${file} ${HOME}/${file}
-            ln -sf ${SRC}/${file} ${HOME}/${file}
-        done
-    fi
+    SRC=$(pwd)
+    for file in ${to_link[@]}; do
+        echo ln -s ${SRC}/${file} ${HOME}/${file}
+        ln -s ${SRC}/${file} ${HOME}/${file}
+    done
 }
 
-[ ! -z $_instal ] && install
+[ ! -z $_install ] && install
 [ ! -z $_deploy ] && deploy

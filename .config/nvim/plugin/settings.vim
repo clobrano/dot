@@ -54,7 +54,7 @@ set hidden
 "set highlight+=N:DiffText                " make current line number stand out a little
 "set highlight+=c:LineNr                  " blend vertical separators with line numbers
 set lazyredraw                            " don't update screen during macro replay
-set laststatus=2                          " always show status
+set laststatus=3                          " always show status
 set linebreak                             " wrap long lines at characters in 'breakat'
 if has('nvim')
 else

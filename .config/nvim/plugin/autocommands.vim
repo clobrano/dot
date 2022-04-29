@@ -63,10 +63,3 @@ endif
 " open Man and Help page in vertical split
 autocmd FileType help wincmd L
 autocmd FileType man wincmd L
-
-augroup vimrc_todo
-    au!
-    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX)/
-          \ containedin=.*Comment,vimCommentTitle
-augroup END
-hi def link MyTodo Todo

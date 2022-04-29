@@ -77,7 +77,7 @@ set nocompatible
 "syntax enable
 filetype on
 
-" Work custom nippets
+" Work custom snippets
 abbr grt  !git push origin HEAD:refs/for/
 
 " after a re-source, fix syntax matching issues (concealing brackets):

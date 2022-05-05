@@ -51,6 +51,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'ambv/black', {'for': 'python'}
+Plug 'reinh/vim-makegreen'
+Plug 'vim-test/vim-test'
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
 Plug 'vim-test/vim-test'
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
@@ -78,7 +80,7 @@ set nocompatible
 "syntax enable
 filetype on
 
-" Work custom nippets
+" Work custom snippets
 abbr grt  !git push origin HEAD:refs/for/
 
 " after a re-source, fix syntax matching issues (concealing brackets):

@@ -5,7 +5,7 @@ set -eu
 fonts=(
     "https://github.com/microsoft/cascadia-code/releases/download/v1911.21/CascadiaMono.ttf"
     "https://github.com/hbin/top-programming-fonts/raw/master/Monaco-Linux.ttf"
-    "https://github.com/adobe-fonts/source-code-pro.git"
+    "https://raw.githubusercontent.com/adobe-fonts/source-code-pro/release/TTF/SourceCodePro-Regular.ttf"
 )
 
 new_font=0

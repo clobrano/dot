@@ -1,6 +1,6 @@
 " variable definition in command line
-nnoremap <C-i> [i
-nnoremap <leader>I :TlistShowPrototype<cr>
+nnoremap <leader>fi [i
+nnoremap <leader>fI :TlistShowPrototype<cr>
 
 " align block of text.
 vnoremap < <gv

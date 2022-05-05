@@ -22,11 +22,10 @@ function! ToggleBackground()
         exec "colorscheme dracula"
         exec "set background=dark"
     else
-        exec "colorscheme onehalflight"
+        exec "colorscheme PaperColor"
         exec "set background=light"
     endif
 endfunction
-nnoremap <F4> :call ToggleBackground()<cr>
 
 let s:middot='·'
 let s:raquo='»'

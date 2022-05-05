@@ -1,3 +1,5 @@
+" toggle background
+nnoremap <F4> :call ToggleBackground()<cr>
 " variable definition in command line
 nnoremap <leader>fi [i
 nnoremap <leader>fI :TlistShowPrototype<cr>

@@ -52,6 +52,7 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'ambv/black', {'for': 'python'}
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
+Plug 'vim-test/vim-test'
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'

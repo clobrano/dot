@@ -7,14 +7,12 @@ print_tdd_status() {
     # else do nothing
 
     tdd_result_location=${TDD_RESULT_LOCATION:-~/.tdd-result}
-    if [[ ! -f ${tdd_result_location} ]]; then
-        echo "no tdd"
-    else
+    if [[ -f ${tdd_result_location} ]]; then
         result=$(cat ${tdd_result_location})
         if cat ${tdd_result_location} | grep -ci "OK"; then
-            echo "#[fg=green]${result}"
+            echo "#[fg=green] ${result}"
         else
-            echo "#[fg=red]${result}"
+            echo "#[fg=red] ${result}"
         fi
     fi
 }

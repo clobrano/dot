@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 ## Helper script to install/manage kubectl
 ## options:
-##     -i, --install   Install kind binary from release
+##     -i, --install   Install kubectl binary from release
 
 # CLInt GENERATED_CODE: start
 

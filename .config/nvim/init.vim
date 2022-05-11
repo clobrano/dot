@@ -50,6 +50,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+Plug 'rhysd/vim-clang-format'
 Plug 'ambv/black', {'for': 'python'}
 Plug 'reinh/vim-makegreen'
 Plug 'vim-test/vim-test'

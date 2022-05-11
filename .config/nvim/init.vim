@@ -6,7 +6,7 @@ let maplocalleader=' '
 
 " Plugins
 call plug#begin()
-Plug 'dracula/vim'
+Plug 'clobrano-forks/vim'  " Dracula customized theme
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'altercation/vim-colors-solarized'

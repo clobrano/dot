@@ -4,5 +4,11 @@ PWD=$1
 if [[ ${PWD} == ${HOME} ]]; then
     echo "~"
 else
-    echo `basename ${PWD}`
+    parent=$(dirname ${PWD})
+    current=$(basename ${PWD})
+    if [[ $parent != ${HOME} ]]; then
+        echo $(basename "$parent")/"$current"
+    else
+        echo "$current"
+    fi
 fi

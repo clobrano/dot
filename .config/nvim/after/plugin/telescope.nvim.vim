@@ -7,6 +7,7 @@ EOF
 nnoremap <leader>fm :Telescope man_pages<cr>
 nnoremap <leader>fs :Telescope grep_string<cr>
 nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>fl :Telescope current_buffer_fuzzy_find<cr>
 nnoremap <leader>ft :Telescope lsp_dynamic_workspace_symbols<cr>
 nnoremap <leader>fi :Telescope lsp_implementations<cr>
 nnoremap <leader>fd :Telescope lsp_definitions<cr>

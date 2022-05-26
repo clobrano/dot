@@ -6,7 +6,11 @@ EOF
 " Mapping
 nnoremap <leader>fm :Telescope man_pages<cr>
 nnoremap <leader>fs :Telescope grep_string<cr>
-nnoremap <leader>fd :Telescope file_browser<cr>
+nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>ft :Telescope lsp_dynamic_workspace_symbols<cr>
+nnoremap <leader>fi :Telescope lsp_implementations<cr>
+nnoremap <leader>fd :Telescope lsp_definitions<cr>
+nnoremap <leader>fr :Telescope lsp_references<cr>
 
 " GIT mappings
 nnoremap <leader>fgb :Telescope git_branches<cr>

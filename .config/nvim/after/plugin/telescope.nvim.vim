@@ -1,5 +1,13 @@
 lua << EOF
 require('telescope').setup{
+    defaults = {  
+        layout_config = {
+            width = 0.9,
+            height = 0.9,
+            horizontal = {preview_width = 0.6},
+            vertical = {preview_height = 0.8},
+        },
+    }
 }
 EOF
 

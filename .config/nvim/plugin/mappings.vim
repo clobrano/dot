@@ -274,6 +274,14 @@ nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
 
+" move selected lines up and down
+vnoremap <A-Down> :m '>+1<CR>gv=gv
+vnoremap <A-Up> :m '<-2<CR>gv=gv
+
+" quickfix (and local) window mapping to open at the full bottom (even with splits)
+nnoremap <leader>co :botright cwindow<cr>
+nnoremap <leader>lo :botright lwindow<cr>
+
 " reload vimrc
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins

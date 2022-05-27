@@ -22,7 +22,7 @@ function! ToggleBackground()
         exec "colorscheme dracula"
         exec "set background=dark"
     else
-        exec "colorscheme PaperColor"
+        exec "colorscheme onehalflight"
         exec "set background=light"
     endif
 endfunction

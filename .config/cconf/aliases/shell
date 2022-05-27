@@ -20,3 +20,10 @@ alias sendat='sudo $GOBIN/sendat'
 if [[ $(which nodejs 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias node='nodejs'  # in ubuntu binary is called wrong
 fi
+
+alias k=kubectl
+alias kd='kubectl describe'
+alias kc='kubectl create'
+alias kdry='--dry-run=client --output=yaml'
+
+alias d=docker

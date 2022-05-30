@@ -7,6 +7,11 @@ require('telescope').setup{
             horizontal = {preview_width = 0.6},
             vertical = {preview_height = 0.8},
         },
+    },
+    pickers = {
+        find_files = {
+            no_ignore = true,
+        }
     }
 }
 EOF

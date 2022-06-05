@@ -181,6 +181,13 @@ lua << EOF
       ['<C-p>'] = cmp.mapping.select_prev_item(),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
+      ['<C-y>'] = cmp.mapping(function(fallback)
+        if luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+        end, {"i", "s"}),
       ['<Tab>'] = cmp.mapping.confirm { select = true },
     },
     sources = {

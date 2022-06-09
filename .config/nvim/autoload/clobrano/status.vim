@@ -4,7 +4,7 @@ function! clobrano#status#git()
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
-        return strlen(branchname) > 0 ? ' '.l:branchname . g:mysep : ''
+        return strlen(branchname) > 0 ? '  '.l:branchname . g:mysep : ''
     endif
 endfunction
 
@@ -52,14 +52,22 @@ endfunction
 
 function! clobrano#status#statusline_update(state)
     setlocal statusline=
+    setlocal statusline+=%#wildmenu#
     setlocal statusline+=%<\                                     " cut at start
     setlocal statusline+=%{clobrano#status#workingdirectory()}\  " path
+    setlocal statusline+=%*
+    setlocal statusline+=%#title#
     setlocal statusline+=%{clobrano#status#git()}\               " git branch
+    setlocal statusline+=%*
+    setlocal statusline+=%#conceal#
     if !empty(glob('~/.config/nvim/plugged/vim-devicons'))
         setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\  " path
     endif
     setlocal statusline+=%f  " path
+    setlocal statusline+=%*
+    setlocal statusline+=%#statement#
     setlocal statusline+=%{clobrano#status#context()}\           " context
+    setlocal statusline+=%*
     setlocal statusline+=%h%m%R%W\                               " flags and buf no
     setlocal statusline+=%=                                      " right side
     setlocal statusline+=%{clobrano#status#show_tdd_result()}

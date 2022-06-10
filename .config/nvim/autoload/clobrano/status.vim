@@ -4,7 +4,7 @@ function! clobrano#status#git()
         return '[fugitive KO]'
     else
         let l:branchname = FugitiveHead()
-        return strlen(branchname) > 0 ? ' '.l:branchname . g:mysep : ''
+        return strlen(branchname) > 0 ? '  '.l:branchname . g:mysep : ''
     endif
 endfunction
 
@@ -50,20 +50,34 @@ function! clobrano#status#show_tdd_result()
     return readfile(l:tdd_result_file, '', 1)[0]
 endfunction
 
+
+highlight User1 cterm=bold ctermfg=236 ctermbg=141 gui=bold guifg=#282A36 guibg=#BD93F9
+highlight User2 ctermbg=238 guibg=#424450 ctermfg=84 guifg=#50FA7B
+highlight User3 ctermbg=238 guibg=#424450 ctermfg=117 guifg=#8BE9FD
+highlight User4 ctermbg=238 guibg=#424450 ctermfg=11 gui=bold guifg=#ffff60
+
 function! clobrano#status#statusline_update(state)
     setlocal statusline=
+    setlocal statusline+=%1*
     setlocal statusline+=%<\                                     " cut at start
     setlocal statusline+=%{clobrano#status#workingdirectory()}\  " path
+    setlocal statusline+=%*
+    setlocal statusline+=%2*
     setlocal statusline+=%{clobrano#status#git()}\               " git branch
+    setlocal statusline+=%*
+    setlocal statusline+=%3*
     if !empty(glob('~/.config/nvim/plugged/vim-devicons'))
         setlocal statusline+=%{WebDevIconsGetFileTypeSymbol()}\  " path
     endif
     setlocal statusline+=%f  " path
+    setlocal statusline+=%*
+    setlocal statusline+=%4*
     setlocal statusline+=%{clobrano#status#context()}\           " context
+    setlocal statusline+=%*
     setlocal statusline+=%h%m%R%W\                               " flags and buf no
     setlocal statusline+=%=                                      " right side
     setlocal statusline+=%{clobrano#status#show_tdd_result()}
     setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
-    setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
+    setlocal statusline+=%20(ℓ:%l/%L\ [%P]%) " line and file percentage
 endfunction
 

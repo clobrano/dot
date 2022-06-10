@@ -12,7 +12,7 @@ endfunction
 " Show the number of errors and warning
 function! clobrano#status#linter()
     let _ = ''
-    if !isdirectory($HOME . "/.config/nvim/plugged/ale")
+    if !isdirectory($HOME . "/.local/share/nvim/plugged/ale")
         return ""
     endif
 

@@ -75,5 +75,6 @@ function humanizetime() {
     fi
 
     seconds=$ELAPSED_TIME
-    printf "%sh:%sm.%ss" ${hours} ${minutes} ${seconds}
+    #printf "%sh:%sm.%ss" ${hours} ${minutes} ${seconds}
+    printf "%sh:%sm" ${hours} ${minutes}
 }

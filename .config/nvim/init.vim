@@ -73,7 +73,6 @@ Plug 'cespare/vim-toml'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
-Plug 'vimsence/vimsence'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
@@ -245,23 +244,6 @@ EOF
 let g:vim_g_query_url="https://duckduckgo.com/?q="
 let g:vim_g_command = "Wsearch"
 
-" Discord Rich presence configuration
-let g:vimsence_discord_flatpak=1
-let g:vimsence_client_id = '907672473938575380'
-let g:vimsence_small_text = 'NeoVim'
-let g:vimsence_small_image = 'neovim'
-
-if isdirectory($HOME . "/TMT/carlolo")
-    let g:vimsence_editing_details = 'Editing some file'
-    let g:vimsence_editing_state = 'Working on secret project'
-else
-    let g:vimsence_editing_details = 'Editing {}'
-    let g:vimsence_editing_state = 'Working on {}'
-endif
-let g:vimsence_file_explorer_text = 'In NERDTree'
-let g:vimsence_file_explorer_details = 'Looking for files'
-"let g:vimsence_custom_icons = {'filetype': 'iconname'}
-"
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>

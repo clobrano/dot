@@ -3,7 +3,7 @@
 #
 setopt autocd     # cd into folder without typing 'cd'
 source $HOME/.config/cconf/dot/dotfiles.sh
-source $HOME/.config/cconf/environments/pyenv.sh
+source $HOME/.config/cconf/environments/pyenv-init.sh
 
 export CDPATH=$HOME/workspace
 export GOROOT=/usr/local/go/
@@ -19,6 +19,7 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
+PATH=$PATH:${HOME}/workspace/me/flutter/bin
 
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
 PATH=~/workspace/depot_tools:$PATH
@@ -192,7 +193,7 @@ add-zsh-hook preexec () {
 
 
 NEWLINE=$'\n'
-LPROMPT_BASE="%F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
+LPROMPT_BASE=" %F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
 #RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 

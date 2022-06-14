@@ -54,7 +54,7 @@ set hidden
 "set highlight+=@:ColorColumn             " ~/@ at end of window, 'showbreak'
 "set highlight+=N:DiffText                " make current line number stand out a little
 "set highlight+=c:LineNr                  " blend vertical separators with line numbers
-set lazyredraw                            " don't update screen during macro replay
+set nolazyredraw                          " disabled for now ( don't update screen during macro replay )
 set laststatus=3                          " always show status
 set linebreak                             " wrap long lines at characters in 'breakat'
 if has('nvim')
@@ -74,10 +74,10 @@ set nobackup
 set nojoinspaces                          " No add space when joining lines
 set noswapfile
 set path+=**
-set number relativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
+set number norelativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
 set scrolloff=5                           " Keeping the cursor away from the last line
 set sidescrolloff=5                       " Same as scrolloff, but for columns
-set signcolumn=yes
+set signcolumn=yes:2
 set shiftround                            " always indent by multiple of shiftwidth
 "set shiftwidth=2                          " spaces per tab (when shifting)
 set shortmess+=A                          " ignore annoying swapfile messages

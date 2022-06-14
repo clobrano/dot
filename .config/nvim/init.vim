@@ -193,7 +193,7 @@ lua << EOF
     sources = {
       { name = 'nvim_lsp' },
       { name = 'path' },
-      { name = 'buffer', keyword_length = 5 },
+      { name = 'buffer', keyword_length = 3 },
       { name = 'luasnip' },
     },
     experimental = {

@@ -1,4 +1,4 @@
-if !empty(glob('~/.config/nvim/plugged/vim'))
+if !empty(glob('~/.local/share/nvim/plugged/vim'))
     colorscheme dracula
     hi NORMAL guibg=NONE
 endif

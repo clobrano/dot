@@ -277,3 +277,5 @@ require("luasnip.loaders.from_vscode").lazy_load()
 EOF
 
 let test#strategy = 'neovim'
+
+set guifont=Source\ Code\ Pro:h10

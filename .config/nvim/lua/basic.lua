@@ -37,3 +37,8 @@ require 'treesitter'
 require('nvim-lspconfig')
 require('flutter-tools').setup{} 
 require("luasnip.loaders.from_vscode").lazy_load()
+require'hop'.setup{}
+
+vim.api.nvim_set_keymap('n', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
+vim.api.nvim_set_keymap('v', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
+vim.api.nvim_set_keymap('o', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, inclusive_jump = true })<cr>", {})

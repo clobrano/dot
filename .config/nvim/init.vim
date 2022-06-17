@@ -15,7 +15,8 @@ Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'
 
 Plug 'mileszs/ack.vim'
-Plug 'pechorin/any-jump.vim'
+"Plug 'pechorin/any-jump.vim'
+Plug 'phaazon/hop.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }

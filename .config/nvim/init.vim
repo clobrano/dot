@@ -83,6 +83,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/DoxygenToolkit.vim',   {'for': ['c', 'cpp']}
+
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 set nocompatible
 "syntax enable

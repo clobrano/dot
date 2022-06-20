@@ -49,10 +49,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-scripts/taglist.vim'
 Plug 'ludovicchabant/vim-gutentags'
 
-"Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
-"Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'

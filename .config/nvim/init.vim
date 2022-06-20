@@ -99,17 +99,14 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print ",
     \ fzf#wrap({'dir': expand('%:p:h')}))
 
-nnoremap <leader>h :find %<.
-
 set nocscopeverbose
+set completeopt=menu,menuone,noselect
 
 lua require('basic')
 
-set completeopt=menu,menuone,noselect
 
 " use omni completion provided by lsp
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})
 autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable=false})
 

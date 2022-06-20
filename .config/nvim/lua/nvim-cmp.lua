@@ -1,13 +1,13 @@
 -- Setup nvim-cmp.
 local cmp = require'cmp'
---local luasnip = require'luasnip'
+local luasnip = require'luasnip'
 
 cmp.setup({
-    -- snippet = {
-    --   expand = function(args)
-    --     vim.fn["luasnip#anonymous"](args.body)
-    --   end,
-    -- },
+     snippet = {
+       expand = function(args)
+         vim.fn["luasnip#anonymous"](args.body)
+       end,
+     },
     mapping = {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -15,13 +15,13 @@ cmp.setup({
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
-        -- ['<C-y>'] = cmp.mapping(function(fallback)
-        --   if luasnip.expand_or_jumpable() then
-        --     luasnip.expand_or_jump()
-        --   else
-        --     fallback()
-        --   end
-        --   end, {"i", "s"}),
+         ['<C-y>'] = cmp.mapping(function(fallback)
+           if luasnip.expand_or_jumpable() then
+             luasnip.expand_or_jump()
+           else
+             fallback()
+           end
+           end, {"i", "s"}),
         ['<Tab>'] = cmp.mapping.confirm { select = true },
     },
     sources = {

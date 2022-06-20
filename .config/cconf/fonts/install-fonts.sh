@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
-set -eu
+set -u
 
 fonts=(
     "https://github.com/microsoft/cascadia-code/releases/download/v1911.21/CascadiaMono.ttf"
@@ -8,6 +8,7 @@ fonts=(
     "https://raw.githubusercontent.com/adobe-fonts/source-code-pro/release/TTF/SourceCodePro-Regular.ttf"
 )
 
+mkdir -pv $HOME/.local/share/fonts
 new_font=0
 for font in ${fonts[@]}; do
     filename=$(basename $font)

@@ -49,12 +49,11 @@ deploy() {
                         ;;
                 esac
             done
-	else
-                        echo ln -fs ${SRC}/${file} ${HOME}/${file}
-                        ln -fs ${SRC}/${file} ${HOME}/${file}
- 
+        else
+            echo ln -fs ${SRC}/${file} ${HOME}/${file}
+            ln -fs ${SRC}/${file} ${HOME}/${file}
         fi
-            done
+    done
 }
 
 # -- main --

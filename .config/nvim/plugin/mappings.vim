@@ -269,10 +269,10 @@ nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits
-nnoremap sh <C-w>h
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
+nnoremap mh <C-w>h
+nnoremap mj <C-w>j
+nnoremap mk <C-w>k
+nnoremap ml <C-w>l
 
 " move selected lines up and down
 vnoremap <A-Down> :m '>+1<CR>gv=gv

@@ -1,11 +1,12 @@
 lua << EOF
 require('telescope').setup{
     defaults = {  
+        layout_strategy = 'vertical',
         layout_config = {
-            width = 0.9,
-            height = 0.9,
-            horizontal = {preview_width = 0.6},
-            vertical = {preview_height = 0.8},
+            width = 0.95,
+            height = 0.95,
+            horizontal = {preview_width = 0.5},
+            vertical = {preview_height = 0.7},
         },
     },
     pickers = {
@@ -26,6 +27,7 @@ nnoremap <leader>fd :Telescope lsp_definitions<cr>
 nnoremap <leader>fr :Telescope lsp_references<cr>
 nnoremap <leader>fb :Telescope buffers<cr>
 nnoremap <leader>fl :Telescope resume<cr>
+nnoremap <leader>ft :Telescope tags<cr>
 
 " GIT mappings
 nnoremap <leader>fgb :Telescope git_branches<cr>

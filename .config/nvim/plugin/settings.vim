@@ -1,6 +1,5 @@
 if !empty(glob('~/.local/share/nvim/plugged/vim'))
     colorscheme dracula
-    hi NORMAL guibg=NONE
 endif
 if has('linebreak')
   set breakindent              " indent wrapped lines to match start

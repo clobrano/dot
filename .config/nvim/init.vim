@@ -56,10 +56,9 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'rhysd/vim-clang-format'
 Plug 'ambv/black', {'for': 'python'}
-Plug 'reinh/vim-makegreen'
 Plug 'vim-test/vim-test'
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
-Plug 'vim-test/vim-test'
+
 Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'

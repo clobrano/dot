@@ -12,7 +12,30 @@ end
 --}
 
 
-require('lspconfig').pylsp.setup{}                 
-require('lspconfig').gopls.setup{}                 
-require('lspconfig').rust_analyzer.setup({})       
+--require('lspconfig').pylsp.setup{}
+require('lspconfig').gopls.setup{}
+require('lspconfig').rust_analyzer.setup({})
+
+
+lspconfig = require'lspconfig'
+lspconfig.pylsp.setup{
+  settings = {
+    formatCommand = {"black"},
+    pylsp = {
+      plugins = {
+        pyls_flake8 = {
+            enabled = true,
+            ignore = "E501"
+        },
+        pylint = { enabled = true},
+        pycodestyle = {
+            enabled = true,
+            ignore = "E501"
+        },
+      },
+    }
+  }
+}
+
+
 

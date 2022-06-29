@@ -23,9 +23,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/MultipleSearch'
+Plug 'kshenoy/vim-signature'
 
 Plug 'scrooloose/nerdtree'
-Plug 'derekwyatt/vim-fswitch'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 

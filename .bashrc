@@ -111,3 +111,4 @@ alias mtest='meson test -C build'
 # Temporary workaround for Thinkpad T440 trackpoint speed
 # property is Accel speed, range [-1.0: 1.0]
 #xinput set-prop 13 333 -0.5 -> use thinkpointer.sh instead
+. "$HOME/.cargo/env"

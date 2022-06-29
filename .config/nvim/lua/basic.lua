@@ -12,6 +12,12 @@ end
 
 vim.api.nvim_set_keymap(
     'n',
+    '<leader>a',
+    '<Cmd>lua vim.lsp.buf.code_action()<CR>',
+    {silent=true, noremap=true}
+)
+vim.api.nvim_set_keymap(
+    'n',
     '<Leader>lv',
     '<Cmd>lua virtual_text.toggle()<CR>',
     {silent=true, noremap=true}

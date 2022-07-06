@@ -52,6 +52,7 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'rhysd/vim-clang-format'

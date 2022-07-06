@@ -77,3 +77,8 @@ function humanizetime() {
     seconds=$ELAPSED_TIME
     printf "%sh:%sm.%ss" ${hours} ${minutes} ${seconds}
 }
+
+function mkdin() {
+    # create directory and cd into in
+    mkdir -p $1 && cd $1
+}

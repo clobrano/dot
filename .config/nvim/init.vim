@@ -127,5 +127,3 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 
 let test#strategy = 'neovim'
-
-set guifont=Source\ Code\ Pro:h10

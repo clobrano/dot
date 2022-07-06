@@ -2,7 +2,7 @@
 
 has_apt=$(which apt 2>/dev/null | wc -l)
 if [[ $has_apt == "1" ]]; then
-    sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
+    sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen
 fi
 
 
@@ -31,9 +31,11 @@ fi
 pushd ${NVIMDIR}
 git pull
 git checkout stable
-make -j$(nproc)
+make -j$(nproc) CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 popd
 
+# Needed for python plugins
+pip3 install --user --upgrade neovim
 # Needed for telescope live_grep/grep_string
 sudo apt install ripgrep

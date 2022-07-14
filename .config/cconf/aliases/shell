@@ -29,3 +29,5 @@ alias kdry='--dry-run=client --output=yaml'
 alias d=docker
 
 alias duf="duf -theme dark"
+
+alias neovide="neovide --multigrid"

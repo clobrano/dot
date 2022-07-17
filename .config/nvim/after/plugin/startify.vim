@@ -1,16 +1,27 @@
 nnoremap SS :Startify<cr>
 
+let g:startify_custom_header =
+    \ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))
+
+let g:startify_bookmarks = systemlist("cut -sd' ' -f 2- ~/.NERDTreeBookmarks")
 let g:startify_change_to_dir=1
-let g:startify_files_number = 3
 let g:startify_change_to_vcs_root = 1
-let g:startify_session_delete_buffers = 1
+let g:startify_commands = [
+    \ { 'I': ['Open init.vim', 'e $MYVIMRC | lcd %:p:h'] }
+    \ ]
 let g:startify_enable_special = 0
-let g:startify_session_persistence = 1
+let g:startify_files_number = 3
 let g:startify_session_delete_buffers = 1
+let g:startify_session_delete_buffers = 1
+let g:startify_session_persistence = 1
 
 let g:startify_lists = [
-          \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-          \ { 'type': 'files',     'header': ['   Files']      },
-          \ { 'type': 'sessions',  'header': ['   Sessions']       },
-          \ { 'type': 'commands',  'header': ['   Commands']       },
-          \ ]
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ { 'type': 'files',     'header': ['   MRU']      },
+    \ { 'type': 'dir',       'header': ['   MRU in '. getcwd()] },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ ]
+
+function! StartifyEntryFormat()
+    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+endfunction

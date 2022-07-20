@@ -15,7 +15,6 @@ Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'
 
 Plug 'mileszs/ack.vim'
-"Plug 'pechorin/any-jump.vim'
 Plug 'phaazon/hop.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -23,7 +22,6 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/MultipleSearch'
-Plug 'kshenoy/vim-signature'
 
 Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-g' " Quick Google lookup
@@ -68,7 +66,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
 
 Plug 'jiangmiao/auto-pairs'

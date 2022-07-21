@@ -38,7 +38,7 @@ function! clobrano#status#context()
     let _ = ''
     if exists('g:loaded_taglist')
         let l:context = Tlist_Get_Tagname_By_Line()
-        let _ = strlen(l:context) > 0 ? g:mysep. " " . l:context . '()' : ''
+        let _ = strlen(l:context) > 0 ? g:mysep. " " . l:context : ''
     endif
     return _
 endfunction

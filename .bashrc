@@ -68,7 +68,6 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH
-PATH=~/workspace/depot_tools:$PATH
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
 PATH=$HOME/.cargo/bin:$PATH
 
@@ -79,7 +78,6 @@ export REDTIMER_PAUSE_SESSION_TIME=5
 
 # Android/Chromebook
 export USE_CCACHE=1
-export PATH=~/workspace/depot_tools:$PATH
 
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1

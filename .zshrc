@@ -22,11 +22,9 @@ PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${HOME}/workspace/me/flutter/bin
 
 PATH=~/workspace/codesonar/codesonar/bin:$PATH
-PATH=~/workspace/depot_tools:$PATH
 
 # Android/Chromebook
 export USE_CCACHE=1
-export PATH=~/workspace/depot_tools:$PATH
 
 # Let's have core dumps
 ulimit -c unlimited

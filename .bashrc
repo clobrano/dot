@@ -68,18 +68,14 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH
-PATH=~/workspace/depot_tools:$PATH
-PATH=~/workspace/codesonar/codesonar/bin:$PATH
-PATH=$HOME/.cargo/bin:$PATH
+if [[ -d $HOME/.cargo ]]; then
+    PATH=$HOME/.cargo/bin:$PATH
+fi
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"
 export REDTIMER_WORK_SESSION_TIME=40
 export REDTIMER_PAUSE_SESSION_TIME=5
-
-# Android/Chromebook
-export USE_CCACHE=1
-export PATH=~/workspace/depot_tools:$PATH
 
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1
@@ -108,7 +104,6 @@ alias mtest='meson test -C build'
 # Local bash configuration I don't want to save upstream
 [ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc
 
-# Temporary workaround for Thinkpad T440 trackpoint speed
-# property is Accel speed, range [-1.0: 1.0]
-#xinput set-prop 13 333 -0.5 -> use thinkpointer.sh instead
-. "$HOME/.cargo/env"
+if [[ -d  $HOME/.cargo ]]; then
+    . "$HOME/.cargo/env"
+fi

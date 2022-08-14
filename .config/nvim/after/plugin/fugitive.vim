@@ -1,3 +1,4 @@
+cnoremap gg G
 nnoremap <leader>ga   <esc>:Gwrite
 nnoremap <leader>gb   <esc>:G blame<cr>
 nnoremap <leader>gc   <esc>:G commit<cr>

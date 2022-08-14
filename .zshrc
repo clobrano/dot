@@ -13,20 +13,17 @@ export GIT_TERMINAL_PROMPT=1
 
 # PATH
 PATH=~/.local/bin:$PATH
-PATH=$HOME/.cargo/bin:$PATH
+if [[ -d $HOME/.cargo ]]; then
+    PATH=$HOME/.cargo/bin:$PATH
+fi
 
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
-PATH=$PATH:${HOME}/workspace/me/flutter/bin
-
-PATH=~/workspace/codesonar/codesonar/bin:$PATH
-PATH=~/workspace/depot_tools:$PATH
-
-# Android/Chromebook
-export USE_CCACHE=1
-export PATH=~/workspace/depot_tools:$PATH
+if [[ -d ${HOME}/workspace/me/flutter ]]; then
+    PATH=$PATH:${HOME}/workspace/me/flutter/bin
+fi
 
 # Let's have core dumps
 ulimit -c unlimited
@@ -57,7 +54,7 @@ else
 fi
 
 # For thinkpad pointer (it only works on X11, but it is up to the script to detect it)
-[[ -e thinkpointer.sh ]] && thinkpointer.sh
+#[[ -e thinkpointer.sh ]] && thinkpointer.sh
 #
 # Completion
 #

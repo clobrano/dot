@@ -195,6 +195,6 @@ LPROMPT_BASE=" %F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
 #RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE \${vcs_info_msg_0_} ${NEWLINE} ❯ "
+export PS1="$LPROMPT_BASE \${vcs_info_msg_0_} ${NEWLINE} %(?.%F{green}%B❯%b%f.%F{red}❯%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""

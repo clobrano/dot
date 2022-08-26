@@ -1,5 +1,7 @@
 " toggle background
 nnoremap <F4> :call ToggleBackground()<cr>
+" toggle transparent background
+nnoremap <F8> :hi Normal guibg=none ctermbg=none<cr>
 " variable definition in command line
 nnoremap <leader>fi [i
 nnoremap <leader>fI :TlistShowPrototype<cr>

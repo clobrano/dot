@@ -7,6 +7,7 @@ chmod u+x ./get-docker.sh
 ./get-docker.sh
 sudo systemctl enable docker
 sudo usermod -G docker -a $USER
+newgrp docker
 sudo systemctl restart docker
 docker version
 docker run --rm hello-world

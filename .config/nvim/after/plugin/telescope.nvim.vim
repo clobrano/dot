@@ -18,6 +18,7 @@ require('telescope').setup{
 EOF
 
 " Mapping
+nnoremap <leader>fa :Telescope live_grep<cr>
 nnoremap <leader>fb :Telescope buffers<cr>
 nnoremap <leader>fd :Telescope lsp_definitions<cr>
 nnoremap <leader>ff :Telescope find_files<cr>

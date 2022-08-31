@@ -69,7 +69,7 @@ set nobackup
 set nojoinspaces                          " No add space when joining lines
 set noswapfile
 set path+=**
-set number norelativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
+set number relativenumber                 " Set hybrid numbering: absolute number on current line and relative on other lines
 set scrolloff=5                           " Keeping the cursor away from the last line
 set sidescrolloff=5                       " Same as scrolloff, but for columns
 set signcolumn=yes:2

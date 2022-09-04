@@ -127,7 +127,7 @@ let test#strategy = 'neovim'
 
 if exists("g:neovide")
     " Put anything you want to happen only in Neovide here
-    let g:neovide_transparency=0.75
+    let g:neovide_transparency=0.9
     let g:neovide_scroll_animation_length = 0.1
     let g:neovide_confirm_quit=v:false
 endif

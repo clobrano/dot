@@ -35,3 +35,7 @@ if command -v exa 2>&1 >/dev/null; then
 fi
 
 alias neovide="neovide --multigrid"
+
+if command -v vagrant 2>&1 > /dev/null; then
+    alias v=vagrant
+fi

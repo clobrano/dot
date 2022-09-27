@@ -83,6 +83,10 @@ nnoremap <leader>ex <esc>:Explore<cr>
 " directory change here
 nnoremap <leader>here :lcd %:p:h<CR>
 
+" vimdiff
+nnoremap <leader>vdt :windo diffthis
+nnoremap <leader>vdo :windo diffoff
+
 " edit font (effects on GUI only)
 nnoremap <leader>ef :set guifont=
 

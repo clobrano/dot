@@ -12,4 +12,6 @@ sudo dnf install -y \
     zsh \
     bat \
     bear \
-    python3-pip
+    python3-pip \
+    neovim \
+    figlet

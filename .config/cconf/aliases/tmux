@@ -1,3 +1,11 @@
-alias t="tmux"
+tmux-try-attach () {
+    no_session=`tmux list-sessions 2>&1 | grep -c "no server running"`
+    if [[ $no_session == 1 ]]; then
+        tmux
+    else
+        tmux attach
+    fi
+}
+alias t="tmux-try-attach"
 alias ta="tmux attach"
 alias ts="tmux list-sessions"

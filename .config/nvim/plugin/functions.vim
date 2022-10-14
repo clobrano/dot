@@ -25,6 +25,18 @@ function! ToggleBackground()
         exec "colorscheme onehalflight"
         exec "set background=light"
     endif
+
+    highlight User1 ctermfg=236 ctermbg=141 guifg=#282A36 guibg=#BD93F9
+    if "dark" == &background
+        highlight User2 ctermbg=238 guibg=#424450 ctermfg=84 guifg=#50FA7B
+        highlight User3 ctermbg=238 guibg=#424450 ctermfg=117 guifg=#8BE9FD
+        highlight User4 ctermbg=238 guibg=#424450 ctermfg=11 gui=bold guifg=#ffff60
+    else
+        highlight User2 ctermbg=247 guibg=#f0f0f0 ctermfg=71 guifg=#50a14f
+        highlight User3 ctermbg=247 guibg=#f0f0f0 ctermfg=31 guifg=#0184bc
+        highlight User4 ctermbg=247 guibg=#f0f0f0 ctermfg=136 guifg=#c18401
+    endif
+
 endfunction
 
 let s:middot='·'

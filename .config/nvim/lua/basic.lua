@@ -48,3 +48,13 @@ require'hop'.setup{}
 vim.api.nvim_set_keymap('n', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
 vim.api.nvim_set_keymap('v', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
 vim.api.nvim_set_keymap('o', '<leader>j', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, inclusive_jump = true })<cr>", {})
+
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+--vim.opt.listchars:append "eol:↴"
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = false,
+}

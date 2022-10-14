@@ -33,7 +33,7 @@ if has('folding')
 endif
 
 set formatoptions+=n                      " smart auto-indenting in numbered lists
-set guifont=FiraCode\ Nerd\ Font\ Mono:h9
+set guifont=FiraCode\ Nerd\ Font\ Mono:h10
 set guioptions-=m                         " Remove the menubar
 set guioptions-=T                         " Remove the toolbar
 
@@ -58,12 +58,12 @@ else
   set linespace=1
 endif
 set list                                  " show whitespace
-set listchars=nbsp:⦸                      " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-set listchars+=tab:··»                    " BULLET, followed by N BULLETS and ends with a double arrow
+"set listchars=nbsp:⦸                      " CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+"set listchars+=tab:··»                    " BULLET, followed by N BULLETS and ends with a double arrow
                                           "
-set listchars+=extends:»                  " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-set listchars+=precedes:«                 " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-set listchars+=trail:·                    " BULLET
+"set listchars+=extends:»                  " RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+"set listchars+=precedes:«                 " LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+"set listchars+=trail:·                    " BULLET
 set mouse=a
 set nobackup
 set nojoinspaces                          " No add space when joining lines

@@ -9,10 +9,10 @@ call plug#begin()
 Plug 'clobrano-forks/vim'  " Dracula customized theme
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'altercation/vim-colors-solarized'
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'mileszs/ack.vim'
 Plug 'phaazon/hop.nvim'
@@ -58,7 +58,7 @@ Plug 'ambv/black', {'for': 'python'}
 Plug 'vim-test/vim-test'
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
 
-Plug 'fatih/vim-go', {'do': 'GoUpdateBinaries'}
+Plug 'fatih/vim-go', {'do': 'GoInstallBinaries'}
 Plug 'matze/vim-meson'
 Plug 'igankevich/mesonic'
 Plug 'ap/vim-css-color'
@@ -126,7 +126,7 @@ let test#strategy = 'neovim'
 
 if exists("g:neovide")
     " Put anything you want to happen only in Neovide here
-    let g:neovide_transparency=0.9
+    let g:neovide_transparency=0.95
     let g:neovide_scroll_animation_length = 0.1
     let g:neovide_confirm_quit=v:false
 endif

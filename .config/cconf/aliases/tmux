@@ -1,6 +1,5 @@
 tmux-try-attach () {
-    no_session=`tmux list-sessions 2>&1 | grep -c "no server running"`
-    if [[ $no_session == 1 ]]; then
+    if ! tmux list-sessions 2>&1 >/dev/null; then
         tmux
     else
         tmux attach

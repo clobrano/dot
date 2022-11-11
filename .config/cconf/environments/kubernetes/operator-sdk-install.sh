@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
 # see https://sdk.operatorframework.io/docs/installation/
-VERSION="v1.23.0"
+VERSION="v1.25.1"
 
 echo "[+] Install from GitHub release"
 export ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)

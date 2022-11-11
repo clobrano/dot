@@ -6,10 +6,8 @@
 
 deploy() {
     to_link=(
-        ".bashrc"
         ".gitignore_global"
         ".inputrc"
-        ".tigrc"
         ".tmux.conf"
         ".vimrc"
         ".zshrc"
@@ -54,6 +52,14 @@ deploy() {
             ln -fs ${SRC}/${file} ${HOME}/${file}
         fi
     done
+
+    # source custom bash inside default .bashrc
+
+    if `grep -ic "dot-bashrc" $HOME/.bashrc`; then
+	echo "[+] bashrc already configured"
+    else
+	echo ". $HOME/.dot/dot-bashrc" >> $HOME/.bashrc
+    fi
 }
 
 # -- main --

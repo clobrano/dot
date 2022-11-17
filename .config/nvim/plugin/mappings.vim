@@ -111,6 +111,7 @@ nnoremap ! :!
 nnoremap qa <esc>:qa
 
 nnoremap <leader>x :15Term<cr>
+nnoremap <leader>vx :VTerm<cr>
 
 " fold: always toggle all fold at current position
 nnoremap za zA

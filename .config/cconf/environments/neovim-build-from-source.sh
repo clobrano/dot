@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
+# Ripgrep Needed for telescope live_grep/grep_string
+#
 has_apt=$(which apt 2>/dev/null | wc -l)
 if [[ $has_apt == "1" ]]; then
-    sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen
+    sudo apt-get install -y ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen ripgrep
 fi
 
 
 has_yum=$(which yum 2>/dev/null | wc -l)
 if [[ $has_yum == "1" ]]; then
-    sudo yum -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext curl
+    sudo yum -y install ninja-build libtool autoconf automake cmake gcc gcc-c++ make pkgconfig unzip patch gettext curl ripgrep
 fi
 
 has_zypper=$(which zypper 2>/dev/null | wc -l)
@@ -37,5 +39,3 @@ popd
 
 # Needed for python plugins
 pip3 install --user --upgrade neovim
-# Needed for telescope live_grep/grep_string
-sudo apt install ripgrep

@@ -45,7 +45,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
 Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'junegunn/gv.vim'

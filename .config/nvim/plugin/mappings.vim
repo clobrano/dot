@@ -281,7 +281,7 @@ vnoremap <A-Down> :m '>+1<CR>gv=gv
 vnoremap <A-Up> :m '<-2<CR>gv=gv
 
 " quickfix (and local) window mapping to open at the full bottom (even with splits)
-nnoremap <leader>co :botright cwindow<cr>
+nnoremap <leader>co :Copen<cr>
 nnoremap <leader>lo :botright lwindow<cr>
 
 " reload vimrc

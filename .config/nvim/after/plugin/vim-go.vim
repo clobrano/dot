@@ -1,3 +1,9 @@
+let g:go_term_enabled = 1
+"let g:go_term_mode = "vsplit"
+let g:go_term_close_on_exit = 0
+
+let $GINKGO_EDITOR_INTEGRATION = "true"
+
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -13,6 +19,16 @@ au FileType go nmap <A-]> <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gI <Plug>(go-imports)
 au FileType go nmap <Leader>gi <Plug>(go-install)
 au FileType go nmap <Leader>gw <Plug>(go-doc-browser)
-au FileType go nmap <leader>gc <Plug>(go-coverage)
+au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gr <Plug>(go-run)
 au FileType go nmap <leader>gt <Plug>(go-test)
+
+" For debugger only
+let g:go_debug_breakpoint_sign_text = 'B'
+au FileType go nmap <C-n> <Plug>(go-debug-next)
+au FileType go nmap <C-p> <Plug>(go-debug-print)
+au FileType go nmap <C-s> <Plug>(go-debug-step)
+au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
+au FileType go nmap <C-c> <Plug>(go-debug-continue)
+
+cnoremap ga GoAlternate<cr>

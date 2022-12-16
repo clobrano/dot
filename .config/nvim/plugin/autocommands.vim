@@ -63,3 +63,6 @@ endif
 " open Man and Help page in vertical split
 autocmd FileType help wincmd L
 autocmd FileType man wincmd L
+
+" open Quickfix window below all splits
+au FileType qf wincmd J

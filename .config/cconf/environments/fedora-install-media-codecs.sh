@@ -5,3 +5,4 @@ sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-o
 sudo dnf install -y lame\* --exclude=lame-devel
 
 sudo dnf group upgrade --with-optional Multimedia
+sudo dnf group update multimedia sound-and-video

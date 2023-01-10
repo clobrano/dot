@@ -14,4 +14,5 @@ sudo dnf install -y \
     bear \
     python3-pip \
     neovim \
-    figlet
+    figlet \
+    conserver-client

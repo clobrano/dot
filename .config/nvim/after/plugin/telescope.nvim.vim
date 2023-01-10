@@ -8,6 +8,9 @@ require('telescope').setup{
             horizontal = {preview_width = 0.5},
             vertical = {preview_height = 0.7},
         },
+        file_ignore_patterns = {
+            ".git/", "node_modules"
+        },
     },
     pickers = {
         find_files = {
@@ -21,7 +24,7 @@ EOF
 "nnoremap <leader>fa :Telescope live_grep<cr>
 nnoremap <leader>fb :Telescope buffers<cr>
 nnoremap <leader>fd :Telescope lsp_definitions<cr>
-nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>ff :Telescope find_files hidden=true<cr>
 nnoremap <leader>fh :Telescope current_buffer_fuzzy_find<cr>
 nnoremap <leader>fi :Telescope lsp_implementations<cr>
 nnoremap <leader>fl :Telescope resume<cr>

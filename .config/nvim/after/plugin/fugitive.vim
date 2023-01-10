@@ -1,7 +1,7 @@
 cnoremap gg G
 nnoremap <leader>ga   <esc>:Gwrite
 nnoremap <leader>gb   <esc>:G blame<cr>
-nnoremap <leader>gc   <esc>:G commit<cr>
+nnoremap <leader>gco  <esc>:G commit -s<cr>
 nnoremap <leader>gca  <esc>:G commit --amend<cr>
 nnoremap <leader>gcan <esc>:G commit --amend --no-edit<cr>
 nnoremap <leader>gl   <esc>:G log<cr>

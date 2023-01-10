@@ -88,8 +88,6 @@ function! clobrano#status#statusline_update(state)
     setlocal statusline+=%h%m%R%W\                               " flags and buf no
     setlocal statusline+=%=                                      " right side
     setlocal statusline+=%{clobrano#status#linter()}\    " Linter status
-    setlocal statusline+=%{clobrano#status#show_tdd_result()}
-    setlocal statusline+=%{clobrano#status#gitstatus()}
     setlocal statusline+=%20(ℓ:%l/%L\ c:%v\ [%P]%) " line and file percentage
 endfunction
 

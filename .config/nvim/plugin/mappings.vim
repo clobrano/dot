@@ -65,6 +65,9 @@ noremap <C-s>   <Esc>:write<CR>
 noremap ss   <Esc>:write<CR>
 "
 
+" buffer: show list
+nnoremap <C-b> :b
+
 " register 0 hold latest Yank, let's map yp to `"0p`
 nnoremap yp "0p
 " clipboard yank till the end of the line
@@ -183,6 +186,9 @@ nnoremap tn gt
 nnoremap tb gT
 nnoremap <M-l> gt
 nnoremap <M-h> gT
+" also create and delete tabs
+nnoremap tc :tabnew<cr>
+nnoremap td :tabclose<cr>
 
 
 " normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)

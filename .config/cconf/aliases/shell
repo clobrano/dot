@@ -39,3 +39,6 @@ alias neovide="neovide --multigrid"
 if command -v vagrant 2>&1 > /dev/null; then
     alias v=vagrant
 fi
+
+alias cclip="xclip -sel clipboard"
+

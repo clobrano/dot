@@ -10,7 +10,7 @@ function zsh_kube_prompt() {
     fi
     cluster="$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.cluster}")"
     if [[ -n $cluster ]]; then
-        printf "kluster:%s " ${cluster}
+        printf "cluster:%s " ${cluster}
     else
         printf ""
     fi

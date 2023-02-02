@@ -116,7 +116,7 @@ for plugin in $(ls $ZSH_CUSTOM/plugins); do
 done
 source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'

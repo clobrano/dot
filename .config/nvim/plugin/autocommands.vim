@@ -66,3 +66,29 @@ autocmd FileType man wincmd L
 
 " open Quickfix window below all splits
 au FileType qf wincmd J
+
+" Hightlight word under cursor (all splits)
+" Just like windo, but restore the current window when done. (see: https://vim.fandom.com/wiki/Windo_and_restore_current_window)
+function! WinDoAndRestore(command)
+  let currwin=winnr()
+  execute 'windo ' . a:command
+  execute currwin . 'wincmd w'
+endfunction
+com! -nargs=+ -complete=command Windo call WinDoAndRestore(<q-args>)
+
+let g:toggle_hl_cur_word = 0
+function! ToggleHlCurWord()
+    if !g:toggle_hl_cur_word
+        augroup HL_CUR_WORD
+            autocmd!
+            autocmd CursorHold * :exec 'windo match Search /\V\<' . expand('<cword>') . '\>/'
+        augroup END
+        let g:toggle_hl_cur_word = 1
+    else
+        augroup HL_CUR_WORD
+            autocmd!
+            autocmd CursorHold * :exec 'windo match none'
+        augroup END
+        let g:toggle_hl_cur_word = 0
+    endif
+endfunction

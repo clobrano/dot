@@ -69,3 +69,22 @@ function! Solarized()
     exec "colorscheme solarized"
 endfunction
 command! Solarized :call Solarized()<cr>
+
+function ToggleDiff()
+    if &diff
+        exec ":windo diffoff"
+    else
+        exec ":windo diffthis"
+    endif
+endfunction
+
+function! ToggleScrollBind()
+    if &scrollbind
+        exec ":windo set noscrollbind"
+        exec ":windo set scrollopt-=hor"
+    else
+        exec ":windo set scrollbind"
+        exec ":windo set scrollopt+=hor"
+    endif
+    "exec ":call ToggleHlCurWord()"
+endfunction

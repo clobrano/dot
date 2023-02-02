@@ -84,8 +84,8 @@ nnoremap <leader>ex <esc>:Explore<cr>
 nnoremap <leader>here :lcd %:p:h<CR>
 
 " vimdiff
-nnoremap <leader>vdt :windo diffthis
-nnoremap <leader>vdo :windo diffoff
+nnoremap <leader>do :call ToggleDiff()<cr>
+
 
 " edit font (effects on GUI only)
 nnoremap <leader>ef :set guifont=
@@ -266,6 +266,9 @@ nnoremap <leader>o <C-w>o
 " maximize current split
 nnoremap <C-w>m <C-w>\|<C-w>_
 
+" toggle highlight word under cursor
+nnoremap <leader>hw :call ToggleHlCurWord()<cr>
+
 " convert horizontal splits to vertical and vice versa
 nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
@@ -288,6 +291,9 @@ nnoremap <leader>lo :botright lwindow<cr>
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>:exe ":echo 'vimrc reloaded'"<CR>:e<CR>
 " reload vim and install plugins
 nnoremap <silent> <leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" scrollbind
+nnoremap <leader>sb :call ToggleScrollBind()<cr>
 
 " tag open in split
 nnoremap D <C-w>}

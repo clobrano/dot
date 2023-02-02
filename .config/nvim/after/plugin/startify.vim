@@ -18,7 +18,6 @@ let g:startify_session_persistence = 1
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ { 'type': 'dir',       'header': ['   MRU in '. getcwd()] },
-    \ { 'type': 'files',     'header': ['   MRU']      },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 

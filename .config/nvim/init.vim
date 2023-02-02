@@ -11,8 +11,10 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
-Plug 'ap/vim-buftabline'
+"Plug 'ap/vim-buftabline'
 Plug 'dosimple/workspace.vim'
+Plug 'kdheepak/tabline.nvim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'mileszs/ack.vim'

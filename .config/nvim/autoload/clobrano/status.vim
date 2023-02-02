@@ -44,7 +44,16 @@ function! clobrano#status#context()
 endfunction
 
 function! clobrano#status#workingdirectory()
-    return '⛁ ' . fnamemodify(getcwd(), ':t:r') . g:mysep
+    "return '⛁ ' . fnamemodify(getcwd(), ':t:r')
+    let cwd = getcwd()
+    let channel = ''
+    if stridx(l:cwd, "upstream") != -1
+        let channel = " upstream/"
+    endif
+    if stridx(l:cwd, "midstream") != -1
+        let channel = " midstream/"
+    endif
+    return '⛁ ' . l:channel . fnamemodify(getcwd(), ':t:r')
 endfunction
 
 function! clobrano#status#show_tdd_result()

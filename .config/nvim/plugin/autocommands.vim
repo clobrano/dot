@@ -56,8 +56,8 @@ let s:pattern=join(g:clobrano_format_filetypes, ',')
 execute 'autocmd FileType ' . s:pattern . " call clobrano#format#customize(expand('<afile>'), expand('<amatch>'))"
 
 if has('statusline')
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * call clobrano#status#statusline_update('focus')
-    autocmd FocusLost,WinLeave * call clobrano#status#statusline_update('unfocus')
+    "autocmd BufEnter,FocusGained,VimEnter,WinEnter * call clobrano#status#statusline_update('focus')
+    "autocmd FocusLost,WinLeave * call clobrano#status#statusline_update('unfocus')
 endif
 
 " open Man and Help page in vertical split

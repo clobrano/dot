@@ -166,6 +166,7 @@ async_start_worker vcs_info
 async_register_callback vcs_info _vbe_vcs_info_done
 # async vcs_info schedule
 add-zsh-hook precmd () {
+    now_timestamp_=$(date +%H:%M:%S)
     local cmd_end="$SECONDS"
     if [[ $cmd_start -gt 0 ]]; then
         elapsed=$((cmd_end-cmd_start))
@@ -178,10 +179,11 @@ add-zsh-hook precmd () {
     if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
         async_init
         async_start_worker vcs_info
-        async_register_callback vcs_info _vbe_vcs_info_done       
+        async_register_callback vcs_info _vbe_vcs_info_done
     fi
 }
 add-zsh-hook chwd (){
+    now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
 }
 add-zsh-hook preexec () {
@@ -195,6 +197,6 @@ LPROMPT_BASE=" %F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
 #RPROMPT_BASE="\${vcs_info_msg_0_}"
 setopt PROMPT_SUBST
 
-export PS1="$LPROMPT_BASE \${vcs_info_msg_0_} ${NEWLINE} %(?.%F{green}%B❯%b%f.%F{red}❯%f) "
+export PS1=" \${now_timestamp_}$LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B❯%b%f.%F{red}❯%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""

@@ -12,6 +12,7 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
 Plug 'ap/vim-buftabline'
+Plug 'dosimple/workspace.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'mileszs/ack.vim'

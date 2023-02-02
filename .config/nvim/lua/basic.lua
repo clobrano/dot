@@ -33,6 +33,22 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     }
 )
 
+require('lualine').setup {
+    options = {
+        icons_enabled = true,
+        theme = 'auto',
+    },
+    sections = {
+        lualine_a = {'clobrano#status#workingdirectory'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+    },
+}
+
+require 'tabline'.setup{}
 require 'nvim-cmp'
 require 'treesitter'
 require('nvim-lspconfig')

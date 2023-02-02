@@ -1,6 +1,13 @@
+let $GOROOT="/usr/local/go"
+let $GOPATH=$HOME."/workspace/golang"
+let $GOBIN=$GOPATH."/bin"
+let $PATH=$PATH.":".$GOROOT."/bin"
+let $PATH=$PATH.":".$GOBIN
+
 let g:go_term_enabled = 1
-"let g:go_term_mode = "vsplit"
+let g:go_term_reuse = 1
 let g:go_term_close_on_exit = 0
+let g:go_list_type = "locationlist"
 
 let $GINKGO_EDITOR_INTEGRATION = "true"
 
@@ -18,6 +25,7 @@ au FileType go nmap <A-]> <Plug>(go-def-vertical)
 
 au FileType go nmap <Leader>gI <Plug>(go-imports)
 au FileType go nmap <Leader>gi <Plug>(go-install)
+au FileType go nmap <Leader>gk <Plug>(go-doc)
 au FileType go nmap <Leader>gw <Plug>(go-doc-browser)
 au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gr <Plug>(go-run)
@@ -31,4 +39,4 @@ au FileType go nmap <C-s> <Plug>(go-debug-step)
 au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
 au FileType go nmap <C-c> <Plug>(go-debug-continue)
 
-cnoremap ga GoAlternate<cr>
+cnoreabbrev <expr> ga getcmdtype() == ":" && getcmdline() == 'ga' ? 'GoAlternate' : 'ga'

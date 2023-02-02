@@ -1,2 +1,2 @@
 GuiTabline 0
-GuiFont Source\ Code\ Pro\ for\ Powerline:h11
+GuiFont Source\ Code\ Pro:h10

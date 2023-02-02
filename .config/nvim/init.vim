@@ -127,7 +127,9 @@ let test#strategy = 'neovim'
 
 if exists("g:neovide")
     " Put anything you want to happen only in Neovide here
-    let g:neovide_transparency=0.95
+    set shell=/usr/bin/zsh
+    let g:neovide_transparency=0.99
     let g:neovide_scroll_animation_length = 0.1
     let g:neovide_confirm_quit=v:false
+    let g:neovide_scale_factor=1
 endif

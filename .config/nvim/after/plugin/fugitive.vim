@@ -1,4 +1,4 @@
-cnoremap gg G
+cnoreabbrev <expr> gg getcmdtype() == ":" && getcmdline() == 'gg' ? 'G ' : 'gg'
 nnoremap <leader>ga   <esc>:Gwrite
 nnoremap <leader>gb   <esc>:G blame<cr>
 nnoremap <leader>gco  <esc>:G commit -s<cr>

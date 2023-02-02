@@ -40,7 +40,7 @@ source ~/.config/cconf/dot/dotfiles.sh
 # Bindings
 #
 
-# emacs based bindings because I am used to
+# bindings (-e emacs, -v vi)
 bindkey -e
 # custom bindings
 source ~/.config/cconf/zsh/bindings.zsh

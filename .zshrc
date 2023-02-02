@@ -19,6 +19,7 @@ fi
 
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
+PATH=$PATH:$HOME/workspace/toolbelt
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then

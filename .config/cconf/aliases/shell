@@ -42,3 +42,6 @@ fi
 
 alias cclip="xclip -sel clipboard"
 
+alias hamster="flatpak run org.gnome.Hamster"
+
+alias shuttle="sshuttle -r root@bm1.local 192.168.111.0/24"

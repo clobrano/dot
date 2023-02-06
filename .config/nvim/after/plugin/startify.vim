@@ -10,7 +10,7 @@ let g:startify_commands = [
     \ { 'I': ['Open init.vim', 'e $MYVIMRC | lcd %:p:h'] }
     \ ]
 let g:startify_enable_special = 0
-let g:startify_files_number = 5
+let g:startify_files_number = 3
 let g:startify_session_delete_buffers = 1
 let g:startify_session_delete_buffers = 1
 let g:startify_session_persistence = 1

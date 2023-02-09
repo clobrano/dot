@@ -22,3 +22,7 @@ autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
   \   nnoremap <buffer> <leader>.. :edit %:h<CR> |
   \ endif
+
+
+" this is for fugitive-gitlab
+let g:fugitive_gitlab_domains = ['https://gitlab.cee.redhat.com']

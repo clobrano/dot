@@ -3,6 +3,7 @@
 ## Convenience script to install, update and remove Docker
 ## options
 ##     -i, --install
+##     -s, --setup
 ##     -r, --remove
 
 # CLInt GENERATED_CODE: start
@@ -16,6 +17,7 @@ for arg in "$@"; do
   shift
   case "$arg" in
 "--install") set -- "$@" "-i";;
+"--setup") set -- "$@" "-s";;
 "--remove") set -- "$@" "-r";;
   *) set -- "$@" "$arg"
   esac
@@ -26,11 +28,12 @@ function print_illegal() {
 }
 
 # Parsing flags and arguments
-while getopts 'hir' OPT; do
+while getopts 'hisr' OPT; do
     case $OPT in
         h) sed -ne 's/^## \(.*\)/\1/p' $0
            exit 1 ;;
         i) _install=1 ;;
+        s) _setup=1 ;;
         r) _remove=1 ;;
         \?) print_illegal $@ >&2;
             echo "---"
@@ -46,6 +49,10 @@ install () {
     curl -fsSL https://get.docker.com -o get-docker.sh
     chmod u+x ./get-docker.sh
     ./get-docker.sh
+    rootless
+}
+
+rootless () {
     sudo systemctl enable docker
     sudo usermod -G docker -a $USER
     newgrp docker
@@ -63,4 +70,5 @@ remove () {
 }
 
 [[ $_install ]] && install
+[[ $_setup ]] && rootless
 [[ $_remove ]] && remove

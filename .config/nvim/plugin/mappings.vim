@@ -207,10 +207,13 @@ vnoremap <leader>c* y<esc>:%s///gc<left><left><left><left><C-r>"<right>
 " replace in all buffer
 noremap rep <Esc>:%s/
 
-" resize vertical window splits {{{
-nnoremap <silent> + :exe "resize +2"<CR>
+" resize horizontal window splits (using "=" in place of "+" to avoid
+" combinations)
+nnoremap <silent> h= :exe "vertical resize +2"<CR>
+nnoremap <silent> h- :exe "vertical resize -2"<CR>
+" resize vertical window splits
+nnoremap <silent> = :exe "resize +2"<CR>
 nnoremap <silent> - :exe "resize -2"<CR>
-"}}}
 
 " sudo save
 cmap w!! w !sudo tee > /dev/null %

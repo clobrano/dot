@@ -209,8 +209,8 @@ noremap rep <Esc>:%s/
 
 " resize horizontal window splits (using "=" in place of "+" to avoid
 " combinations)
-nnoremap <silent> h= :exe "vertical resize +2"<CR>
-nnoremap <silent> h- :exe "vertical resize -2"<CR>
+nnoremap <silent> <leader>= :exe "vertical resize +5"<CR>
+nnoremap <silent> <leader>- :exe "vertical resize -5"<CR>
 " resize vertical window splits
 nnoremap <silent> = :exe "resize +2"<CR>
 nnoremap <silent> - :exe "resize -2"<CR>

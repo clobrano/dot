@@ -21,7 +21,7 @@ require('telescope').setup{
 EOF
 
 " Mapping
-"nnoremap <leader>fa :Telescope live_grep<cr>
+nnoremap <leader>fa :Telescope live_grep<cr>
 nnoremap <leader>fb :Telescope buffers<cr>
 nnoremap <leader>fd :Telescope lsp_definitions<cr>
 nnoremap <leader>ff :Telescope find_files hidden=true<cr>
@@ -34,5 +34,6 @@ nnoremap <leader>fr :Telescope lsp_references<cr>
 nnoremap <leader>fs :Telescope grep_string<cr>
 
 " GIT mappings
-nnoremap <leader>fgb :Telescope git_branches<cr>
+nnoremap <leader>fgB :Telescope git_branches<cr>
+nnoremap <leader>fgc :Telescope git_commits<cr>
 nnoremap <leader>fgs :Telescope git_stashes<cr>

@@ -88,3 +88,6 @@ function! ToggleScrollBind()
     endif
     "exec ":call ToggleHlCurWord()"
 endfunction
+
+" Needed by GBrowse after enabling nvim-tree
+:command! -nargs=1 Browse silent execute '!xdg-open' shellescape(<q-args>,1)

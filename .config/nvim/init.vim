@@ -11,8 +11,6 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'mhinz/vim-startify'
-"Plug 'ap/vim-buftabline'
-Plug 'dosimple/workspace.vim'
 Plug 'kdheepak/tabline.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -28,7 +26,6 @@ Plug 'vim-scripts/MultipleSearch'
 
 Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
 Plug 'nvim-tree/nvim-tree.lua'
-"Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
@@ -58,6 +55,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'shumphrey/fugitive-gitlab.vim'  " vim-rhubarb for gitlab
 Plug 'airblade/vim-gitgutter'
+Plug 'sindrets/diffview.nvim'
 
 Plug 'rhysd/vim-clang-format'
 Plug 'ambv/black', {'for': 'python'}

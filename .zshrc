@@ -11,6 +11,9 @@ export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
+export KUBE_MAP=~/.kube/dsal-host-config-map
+export KUBE_HOSTS=~/.kube/dsal-hostnames
+
 # PATH
 PATH=~/.local/bin:$PATH
 if [[ -d $HOME/.cargo ]]; then

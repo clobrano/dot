@@ -37,3 +37,14 @@ nnoremap <leader>nf <esc>:NvimTreeFindFile<cr>
 nnoremap <leader>nc <esc>:NvimTreeCollapse<cr>
 
 
+" Needed by GX after enabling nvim-tree
+function! HandleURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+    silent exec "!xdg-open '".s:uri."'"
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+nnoremap <leader>gx :call HandleURL()<cr>

@@ -1,3 +1,22 @@
+function switchGoVersion() {
+    GO_MOD_FILE="$(pwd)/go.mod"
+    if [ ! -f $GO_MOD_FILE ]; then
+        return
+    fi
+    GOMOD_VERSION=$(grep -E "go [[:digit:]]\.[[:digit:]][[:digit:]]" $GO_MOD_FILE | awk '{print $2}')
+    [[ -z $GOMOD_VERSION ]] && eval $(gimme stable) && return
+
+    GO_VERSION=`go version | awk '{print $3}'`
+    if [[ "go$GOMOD_VERSION" != $GO_VERSION ]]; then
+        if [[ $GOMOD_VERSION = "1.17" ]]; then
+            echo "[!] Go.mod has version $GOMOD_VERSION, but gimme cannot get it"
+            return
+        fi
+        echo "[+] switching to $GOMOD_VERSION"
+        eval $(gimme $GOMOD_VERSION)
+    fi
+}
+
 function fd() {
   preview="git diff $@ --color=always -- {-1}"
   git diff $@ --name-only | fzf -m --ansi --preview $preview

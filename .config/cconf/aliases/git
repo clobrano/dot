@@ -26,5 +26,3 @@ alias gpll='git pull upstream master'
 alias gbl='git branch -l --sort=committerdate'
 
 alias gunstage='git reset HEAD'
-
-

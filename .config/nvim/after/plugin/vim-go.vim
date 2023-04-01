@@ -31,6 +31,8 @@ au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
 au FileType go nmap <leader>gr <Plug>(go-run)
 au FileType go nmap <leader>gt <Plug>(go-test)
 
+cnoreabbrev <expr> ga getcmdtype() == ":" && getcmdline() == 'ga' ? 'GoAlternate' : 'ga'
+
 " For debugger only
 let g:go_debug_breakpoint_sign_text = 'B'
 au FileType go nmap <C-n> <Plug>(go-debug-next)
@@ -39,4 +41,3 @@ au FileType go nmap <C-s> <Plug>(go-debug-step)
 au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
 au FileType go nmap <C-c> <Plug>(go-debug-continue)
 
-cnoreabbrev <expr> ga getcmdtype() == ":" && getcmdline() == 'ga' ? 'GoAlternate' : 'ga'

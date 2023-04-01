@@ -1,4 +1,5 @@
-nnoremap SS :Startify<cr>
+" nnoremap SS :Startify<cr> this conflicts in nvim-tree
+cnoreabbrev SS Startify
 
 let g:startify_custom_header =
     \ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))

@@ -209,8 +209,8 @@ noremap rep <Esc>:%s/
 
 " resize horizontal window splits (using "=" in place of "+" to avoid
 " combinations)
-nnoremap <silent> h= :exe "vertical resize +2"<CR>
-nnoremap <silent> h- :exe "vertical resize -2"<CR>
+nnoremap <silent> <leader>= :exe "vertical resize +5"<CR>
+nnoremap <silent> <leader>- :exe "vertical resize -5"<CR>
 " resize vertical window splits
 nnoremap <silent> = :exe "resize +2"<CR>
 nnoremap <silent> - :exe "resize -2"<CR>
@@ -283,10 +283,10 @@ nnoremap <leader>tv <C-w>t<C-w>H
 nnoremap <leader>th <C-w>t<C-w>K
 
 " moves between splits
-nnoremap mh <C-w>h
-nnoremap mj <C-w>j
-nnoremap mk <C-w>k
-nnoremap ml <C-w>l
+nnoremap wh <C-w>h
+nnoremap wj <C-w>j
+nnoremap wk <C-w>k
+nnoremap wl <C-w>l
 
 " move selected lines up and down
 vnoremap <A-Down> :m '>+1<CR>gv=gv

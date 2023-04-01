@@ -11,6 +11,9 @@ export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
+export KUBE_MAP=~/.kube/dsal-host-config-map
+export KUBE_HOSTS=~/.kube/dsal-hostnames
+
 # PATH
 PATH=~/.local/bin:$PATH
 if [[ -d $HOME/.cargo ]]; then
@@ -182,9 +185,10 @@ add-zsh-hook precmd () {
         async_register_callback vcs_info _vbe_vcs_info_done
     fi
 }
-add-zsh-hook chwd (){
+add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
+    switchGoVersion
 }
 add-zsh-hook preexec () {
     cmd_start="$SECONDS"

@@ -1,3 +1,23 @@
+function fzf_git_branches() {
+    if ! is_in_git_repo; then
+        echo "[!] not a git repository"
+        return
+    fi
+    if ! command -v fzf 2>/dev/null; then
+        echo "[!] fzf is not installed"
+        return
+    fi
+    if ! command -v git 2>/dev/null; then
+        echo "[!] git is not installed"
+        return
+    fi
+    git checkout $(git branch -a | fzf)
+}
+
+function is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
 function switchGoVersion() {
     GO_MOD_FILE="$(pwd)/go.mod"
     if [ ! -f $GO_MOD_FILE ]; then

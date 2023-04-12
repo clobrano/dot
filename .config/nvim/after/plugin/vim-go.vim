@@ -1,8 +1,8 @@
-let $GOROOT="/usr/local/go"
-let $GOPATH=$HOME."/workspace/golang"
-let $GOBIN=$GOPATH."/bin"
-let $PATH=$PATH.":".$GOROOT."/bin"
-let $PATH=$PATH.":".$GOBIN
+"let $GOROOT="/usr/local/go"
+"let $GOPATH=$HOME."/workspace/golang"
+"let $GOBIN=$GOPATH."/bin"
+"let $PATH=$PATH.":".$GOROOT."/bin"
+"let $PATH=$PATH.":".$GOBIN
 
 let g:go_term_enabled = 1
 let g:go_term_reuse = 1

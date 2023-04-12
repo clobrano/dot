@@ -47,6 +47,9 @@ source ~/.config/cconf/dot/dotfiles.sh
 bindkey -v
 
 bindkey jj vi-cmd-mode
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd m edit-command-line
 #bindkey -s jj '\e'
 
 # Remove mode switching delay.

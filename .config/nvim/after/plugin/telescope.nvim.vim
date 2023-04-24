@@ -34,6 +34,6 @@ nnoremap <leader>fr :Telescope lsp_references<cr>
 nnoremap <leader>fs :Telescope grep_string<cr>
 
 " GIT mappings
-nnoremap <leader>fgB :Telescope git_branches<cr>
+nnoremap <leader>fgb :Telescope git_branches<cr>
 nnoremap <leader>fgc :Telescope git_commits<cr>
 nnoremap <leader>fgs :Telescope git_stashes<cr>

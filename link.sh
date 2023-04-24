@@ -14,6 +14,7 @@ deploy() {
         ".config/cconf"
         ".config/ranger"
         ".config/zathura"
+        ".config/espanso/match/base.yml"
         ".config/nvim/after"
         ".config/nvim/autoload"
         ".config/nvim/ginit.vim"

@@ -46,8 +46,6 @@ Plug 'rafamadriz/friendly-snippets'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
-Plug 'brookhong/cscope.vim',             {'for': ['c', 'cpp']}
-Plug 'chazy/cscope_maps',                {'for': ['c', 'cpp']}
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
@@ -104,7 +102,6 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print ",
     \ fzf#wrap({'dir': expand('%:p:h')}))
 
-set nocscopeverbose
 set completeopt=menu,menuone,noselect
 
 lua require('basic')
@@ -138,3 +135,5 @@ if exists("g:neovide")
     let g:neovide_confirm_quit=v:false
     let g:neovide_scale_factor=1
 endif
+
+let g:pyls_configurationSources = ["~/.pyls_config/"]

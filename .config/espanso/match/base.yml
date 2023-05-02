@@ -26,7 +26,7 @@ matches:
           format: "%Y-%m-%d"
 
   # Print the output of a shell command
-  - trigger: ":shell"
+  - trigger: ";shell"
     replace: "{{output}}"
     vars:
       - name: output
@@ -60,3 +60,9 @@ matches:
         type: shell
         params:
           cmd: "date -d \"{{smart}}\" +%F"
+
+  - trigger: "rwha"
+    replace: "rhwa"
+
+  - trigger: "duedate"
+    replace: "\U0001F4C5"

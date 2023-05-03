@@ -64,5 +64,14 @@ matches:
   - trigger: "rwha"
     replace: "rhwa"
 
-  - trigger: "duedate"
+  # airplane departure (for Obsidian Tasks start/begin date)
+  - trigger: "bdate"
+    replace: "\U0001F6EB"
+
+  # hourglass (for Obsidian Tasks schedule date)
+  - trigger: "sdate"
+    replace: "\U000023F3"
+
+  # calendar (for Obsidian Tasks due date)
+  - trigger: "ddate"
     replace: "\U0001F4C5"

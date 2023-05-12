@@ -1,5 +1,5 @@
 virtual_text = {}
-virtual_text.show = true
+virtual_text.show = false
 virtual_text.toggle = function()
     virtual_text.show = not virtual_text.show
     vim.lsp.diagnostic.show(vim.lsp.diagnostic.get(0, 1), 0, 1, {virtual_text = virtual_text.show})
@@ -20,7 +20,7 @@ vim.api.nvim_set_keymap(
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = true,
+        virtual_text = false,
         underline = false,
         signs = true,
         update_in_insert = true,

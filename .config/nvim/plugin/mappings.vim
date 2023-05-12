@@ -81,8 +81,11 @@ nnoremap <leader>pc    :Papercolor<cr>
 nnoremap <leader>ol    :colorscheme onehalflight<cr>
 nnoremap <leader>od    :colorscheme dracula<cr>
 
-" directory explore
-nnoremap <leader>ex <esc>:Explore<cr>
+"directory explore
+"nnoremap <leader>ex <esc>:Explore<cr>
+nnoremap <leader>ex :!%:p<cr>
+
+
 " directory change here
 nnoremap <leader>here :lcd %:p:h<CR>
 

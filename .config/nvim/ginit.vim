@@ -1,2 +1,2 @@
 GuiTabline 0
-GuiFont Source\ Code\ Pro:h10
+GuiFont Source\ Code\ Pro:h11

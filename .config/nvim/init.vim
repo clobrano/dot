@@ -26,8 +26,8 @@ Plug 'vim-scripts/MultipleSearch'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 
-Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons
-Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons' " optional, for file icons (needed by sindrets/diffview.nvim)
+"Plug 'nvim-tree/nvim-tree.lua'
 Plug 'szw/vim-g' " Quick Google lookup
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 

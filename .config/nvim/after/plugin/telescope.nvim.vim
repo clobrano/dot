@@ -9,7 +9,7 @@ require('telescope').setup{
             vertical = {preview_height = 0.7},
         },
         file_ignore_patterns = {
-            "^.git/", "node_modules"
+            "^.git/", "node_modules/", "^vendor/"
         },
     },
     pickers = {

@@ -4,7 +4,6 @@ cnoreabbrev ss Startify
 let g:startify_custom_header =
     \ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))
 
-let g:startify_bookmarks = systemlist("cut -sd' ' -f 2- ~/.NERDTreeBookmarks")
 let g:startify_change_to_dir=1
 let g:startify_change_to_vcs_root = 1
 let g:startify_commands = [
@@ -19,7 +18,6 @@ let g:startify_session_persistence = 1
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ { 'type': 'dir',       'header': ['   MRU in '. getcwd()] },
-    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ ]
 
 function! StartifyEntryFormat()

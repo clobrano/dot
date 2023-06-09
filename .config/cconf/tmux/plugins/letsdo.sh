@@ -17,7 +17,7 @@ task=${task##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
 task=${task%%+([[:space:]])}   # strip trailing whitespace; no quote expansion!
 
 task_len=${#task}
-if [[ $task_len > 30 ]]; then
+if [[ $task_len > 40 ]]; then
     task=${task:0:27}...
 fi
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")

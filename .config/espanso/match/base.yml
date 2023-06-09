@@ -75,3 +75,22 @@ matches:
   # calendar (for Obsidian Tasks due date)
   - trigger: "ddate"
     replace: "\U0001F4C5"
+
+  # alarm clock (for Obsidian reminder)
+  - trigger: "rdate"
+    replace: "\U000023F0"
+
+  # I had enough of writing kubernetes operator
+  - trigger: "kubeop"
+    replace: "kubernetes operator"
+
+  # Obsidian markers
+  - trigger: "linfo"
+    replace: "- [i] "
+  - trigger: "lbookmark"
+    replace: "- [b] "
+  - trigger: "lstar"
+    replace: "- [*] "
+
+
+

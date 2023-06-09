@@ -136,6 +136,7 @@ if exists("g:neovide")
     let g:neovide_scroll_animation_length = 0.1
     let g:neovide_confirm_quit=v:false
     let g:neovide_scale_factor=1
+    set title
 endif
 
 let g:pyls_configurationSources = ["~/.pyls_config/"]

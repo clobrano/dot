@@ -42,7 +42,7 @@ let g:go_debug_breakpoint_sign_text = '🟥'
 au FileType go nmap <C-n> <Plug>(go-debug-next)
 au FileType go nmap <C-p> <Plug>(go-debug-print)
 au FileType go nmap <C-s> <Plug>(go-debug-step)
-au FileType go nmap <C-o> <Plug>(go-debug-step-out)
+au FileType go nmap <C-x> <Plug>(go-debug-step-out)
 au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
 au FileType go nmap <C-c> <Plug>(go-debug-continue)
 

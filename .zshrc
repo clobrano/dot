@@ -44,6 +44,8 @@ source ~/.config/cconf/dot/dotfiles.sh
 
 # bindings (-e emacs, -v vi)
 bindkey -v
+# Re-enable history search in vi-mode
+bindkey '^R' history-incremental-search-backward
 
 bindkey jj vi-cmd-mode
 autoload edit-command-line

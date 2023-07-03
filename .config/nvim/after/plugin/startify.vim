@@ -1,4 +1,4 @@
-" nnoremap SS :Startify<cr> this conflicts in nvim-tree
+" nnoremap SS :Startify<cr>
 cnoreabbrev ss Startify
 
 let g:startify_custom_header =
@@ -11,6 +11,7 @@ let g:startify_commands = [
     \ ]
 let g:startify_enable_special = 0
 let g:startify_files_number = 3
+
 let g:startify_session_delete_buffers = 1
 let g:startify_session_delete_buffers = 1
 let g:startify_session_persistence = 1
@@ -18,6 +19,7 @@ let g:startify_session_persistence = 1
 let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ { 'type': 'dir',       'header': ['   MRU in '. getcwd()] },
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
     \ ]
 
 function! StartifyEntryFormat()

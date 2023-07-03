@@ -62,7 +62,6 @@ Plug 'sindrets/diffview.nvim'
 
 Plug 'rhysd/vim-clang-format'
 Plug 'ambv/black', {'for': 'python'}
-Plug 'vim-test/vim-test'
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
 
 Plug 'fatih/vim-go', {'do': 'GoInstallBinaries'}

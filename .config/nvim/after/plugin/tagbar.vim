@@ -1,4 +1,2 @@
-nnoremap <leader>to :TagbarToggle<cr>
-nnoremap <leader>tc :TagbarToggle<cr>
-
-
+let g:tagbar_position = 'topleft vertical'
+nnoremap <leader>to :TagbarToggle fj<cr>

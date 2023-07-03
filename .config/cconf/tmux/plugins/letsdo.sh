@@ -23,4 +23,4 @@ fi
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")
 end=$(date +%s)
 # Why I need an 1h offset to get the right value? Is it for the daylight setting?
-echo "$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")"
+echo "$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))") 🕓"

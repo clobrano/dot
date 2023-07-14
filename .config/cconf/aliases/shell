@@ -43,3 +43,13 @@ if command -v vagrant 2>&1 > /dev/null; then
 fi
 
 alias cclip="xclip -sel clipboard"
+alias Mdr="cd ~/workspace/medik8s/upstream/machine-deletion-remediation/"
+alias mdr="cd ~/workspace/medik8s/midstream/machine-deletion-remediation/"
+alias Nhc="cd ~/workspace/medik8s/upstream/node-healthcheck-operator"
+alias nhc="cd ~/workspace/medik8s/midstream/node-healthcheck-operator"
+alias Far="cd ~/workspace/medik8s/upstream/fence-agents-remediation/"
+alias far="cd ~/workspace/medik8s/midstream/fence-agents-remediation/"
+alias Snr="cd ~/workspace/medik8s/upstream/self-node-remediation/"
+alias snr="cd ~/workspace/medik8s/midstream/self-node-remediation/"
+alias Nmo="cd ~/workspace/medik8s/upstream/node-maintenance-operator/"
+alias nmo="cd ~/workspace/medik8s/midstream/node-maintenance-operator/"

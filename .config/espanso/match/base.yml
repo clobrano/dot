@@ -53,7 +53,7 @@ matches:
         params:
           format: "[%H:%M]"
 
-  - regex: ";(?P<smart>.*);"
+  - regex: "@(?P<smart>.*)@"
     replace: "{{output}}"
     vars:
       - name: output
@@ -87,7 +87,7 @@ matches:
   # Obsidian markers
   - trigger: "linfo"
     replace: "\U00002139\U0000FE0F "
-  - trigger: "lbookmark"
+  - trigger: "lbm"
     replace: "\U0001F516 "
   - trigger: "lstar"
     replace: "\U00002B50 "

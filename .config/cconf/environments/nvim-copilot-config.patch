@@ -1,0 +1,20 @@
+diff --git a/.config/nvim/init.vim b/.config/nvim/init.vim
+index 791829c..775bda0 100644
+--- a/.config/nvim/init.vim
++++ b/.config/nvim/init.vim
+@@ -15,6 +15,8 @@ Plug 'kdheepak/tabline.nvim'
+ Plug 'nvim-lualine/lualine.nvim'
+ Plug 'lukas-reineke/indent-blankline.nvim'
+ 
++Plug 'github/copilot.vim'
++
+ Plug 'mileszs/ack.vim'
+ Plug 'phaazon/hop.nvim'
+ Plug 'nvim-lua/plenary.nvim'
+@@ -144,4 +146,5 @@ let g:pyls_configurationSources = ["~/.pyls_config/"]
+ let g:NERDTreeHijackNetrw = 0 " add this line if you use NERDTree
+ let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
+ 
+-
++imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
++let g:copilot_no_tab_map = v:true

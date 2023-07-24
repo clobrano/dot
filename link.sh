@@ -6,6 +6,7 @@
 
 deploy() {
     to_link=(
+        ".gitconfig"
         ".gitignore_global"
         ".inputrc"
         ".tmux.conf"

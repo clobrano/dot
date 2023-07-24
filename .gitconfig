@@ -1,0 +1,45 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[core]
+	excludesfile = /home/clobrano/.gitignore_global
+	editor = nvim
+	sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+[merge]
+	conflictStyle = diff3
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[alias]
+	co = checkout
+	cm = commit
+	sw = switch
+	st = status
+	sh = stash
+	pl = pull
+	l = log --graph --oneline -n
+    l1 = log -1
+    rc = rebase --continue
+    ri = rebase --interactive
+	cfiles = !git diff --name-only $(git merge-base HEAD \"$(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\")
+	stat = !git diff --stat $(git merge-base HEAD \"$(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\")
+	reviewall = !nvim -c \"DiffviewOpen $(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\"
+	reviewthis = !nvim -c \"DiffviewOpen HEAD~1\"
+	review = !nvim -c \"DiffviewOpen ${REF:-main}\"
+	sync = !git pull upstream $(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}') && git push origin $(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')
+	syncthis = !git pull upstream $(git branch | awk '/*/{print $2}') && git push origin $(git branch | awk '/*/{print $2}')
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential "https://gitlab.cee.redhat.com"]
+	helper = 
+	helper = !/usr/bin/glab auth git-credential
+[user]
+	name = Carlo Lobrano
+	email = c.lobrano@gmail.com

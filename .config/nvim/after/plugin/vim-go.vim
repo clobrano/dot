@@ -46,3 +46,5 @@ au FileType go nmap <C-x> <Plug>(go-debug-step-out)
 au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
 au FileType go nmap <C-c> <Plug>(go-debug-continue)
 
+
+cnoreabbrev gocov GoCoverageOverlay cover.out

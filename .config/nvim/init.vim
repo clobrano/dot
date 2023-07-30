@@ -43,6 +43,8 @@ Plug 'hrsh7th/nvim-cmp'
 
 Plug 'folke/trouble.nvim'
 
+Plug 'github/copilot.vim'
+
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'rafamadriz/friendly-snippets'

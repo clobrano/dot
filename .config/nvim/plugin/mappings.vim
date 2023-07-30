@@ -114,7 +114,7 @@ nnoremap <leader>Z :.w !sudo bash<cr>
 " execute external command
 nnoremap ! :!
 " exit vim
-nnoremap qa <esc>:qa
+nnoremap qa <esc>:qa!<cr>
 
 nnoremap <leader>x :15Term<cr>
 nnoremap <leader>vx :VTerm<cr>

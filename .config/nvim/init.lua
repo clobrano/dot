@@ -32,6 +32,11 @@ require('lazy').setup({
   },
   'ryanoasis/vim-devicons',
   {'kdheepak/tabline.nvim', opts = {}},
+  {'majutsushi/tagbar',
+    config = function ()
+      vim.keymap.set('n', '<leader>to', ':TagbarToggle<cr>')
+    end
+  },
   require('plugins.lualine'),
   require('plugins.startify'),
 

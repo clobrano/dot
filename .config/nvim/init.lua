@@ -452,5 +452,17 @@ cmp.setup {
   },
 }
 
+-- Neovide custom settings
+if vim.fn.exists('g:neovide') == 1 then
+  vim.cmd[[
+  set shell=/usr/bin/zsh
+  set title
+  let g:neovide_transparency=1
+  let g:neovide_scroll_anymation_length=0
+  let g:neovide_confirm_quit=v:false
+  let g:neovide_scale_factor=0.9
+  ]]
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

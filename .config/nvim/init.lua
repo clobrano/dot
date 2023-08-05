@@ -31,9 +31,10 @@ require('lazy').setup({
     end,
   },
   'ryanoasis/vim-devicons',
-  {'kdheepak/tabline.nvim', opts = {}},
-  {'majutsushi/tagbar',
-    config = function ()
+  { 'kdheepak/tabline.nvim',  opts = {} },
+  {
+    'majutsushi/tagbar',
+    config = function()
       vim.keymap.set('n', '<leader>to', ':TagbarToggle<cr>')
     end
   },
@@ -44,14 +45,15 @@ require('lazy').setup({
   -- Git related plugins
   require('plugins.vim-fugitive'),
   'tpope/vim-rhubarb',
-  {'junegunn/gv.vim',
+  {
+    'junegunn/gv.vim',
     config = function()
       vim.keymap.set('n', '<leader>gv', ':GV<cr>')
     end
   },
-  'shumphrey/fugitive-gitlab.vim',  -- vim-rhubarb for gitlab
+  'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
   'airblade/vim-gitgutter',
-  {'sindrets/diffview.nvim', dependencies = {'nvim-tree/nvim-web-devicons'} },
+  { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -67,29 +69,32 @@ require('lazy').setup({
   'junegunn/fzf.vim',
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
-  {'francoiscabrol/ranger.vim', dependencies = {'rbgrouleff/bclose.vim'}},
-  {'szw/vim-g',
+  { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
+  {
+    'szw/vim-g',
     opts = {},
-    config = function ()
-      vim.cmd[[
+    config = function()
+      vim.cmd [[
         let g:vim_g_query_url="https://duckduckgo.com/?q="
         let g:vim_g_command="WebSearch"
       ]]
-      vim.keymap.set({'n', 'v'}, '<leader>fw', ':WebSearch<cr>')
+      vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':WebSearch<cr>')
     end
   },
 
   -- terminal and tests
-  {'vimlab/split-term.vim',
+  {
+    'vimlab/split-term.vim',
     opts = {},
-    config = function ()
+    config = function()
       vim.keymap.set('n', '<C-t>', ':15Term<cr>')
     end
   },
-  {'vim-test/vim-test',
-    opts={},
+  {
+    'vim-test/vim-test',
+    opts = {},
     config = function()
-      vim.cmd[[
+      vim.cmd [[
       let test#strategy = 'neovim'
       let test#neovim#start_normal = 1
       let test#neovim#term_position = "hor botright 20"
@@ -114,7 +119,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -124,10 +129,10 @@ require('lazy').setup({
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'L3MON4D3/LuaSnip', -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',     -- Snippet Engine & its associated nvim-cmp source
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp', -- Adds LSP completion capabilities
-      'hrsh7th/cmp-cmdline', -- Source for vim's cmdline
+      'hrsh7th/cmp-cmdline',  -- Source for vim's cmdline
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'rafamadriz/friendly-snippets', -- Adds a number of user-friendly snippets
@@ -135,20 +140,22 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  'lukas-reineke/indent-blankline.nvim',   -- Add indentation guides even on blank lines
-  {'folke/trouble.nvim',
+  { 'folke/which-key.nvim',      opts = {} },
+  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
+  {
+    'folke/trouble.nvim',
     opts = { icons = false, use_diagnostic_signs = true, },
     config = function()
       vim.keymap.set('n', '<leader>tt', ':TroubleToggle<cr>')
     end,
   },
-  require'plugins.telescope',
+  require 'plugins.telescope',
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
   -- requirements installed.
-  { 'nvim-telescope/telescope-fzf-native.nvim',
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
     build = 'make',
@@ -186,11 +193,11 @@ require('mappings')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 
-require('tabline').setup{}
+require('tabline').setup {}
 require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
-    show_current_context_start = false,
+  space_char_blankline = " ",
+  show_current_context = true,
+  show_current_context_start = false,
 }
 
 -- [[ Configure Telescope ]]
@@ -293,7 +300,7 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-vim.cmd[[
+vim.cmd [[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
   autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
 ]]
@@ -454,13 +461,13 @@ cmp.setup {
     { name = 'buffer' },
   },
   experimental = {
-        ghost_text = false
+    ghost_text = false
   },
 }
 
 -- Neovide custom settings
 if vim.fn.exists('g:neovide') == 1 then
-  vim.cmd[[
+  vim.cmd [[
   set shell=/usr/bin/zsh
   set title
   let g:neovide_transparency=1

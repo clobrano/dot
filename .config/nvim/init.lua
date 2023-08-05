@@ -57,13 +57,12 @@ require('lazy').setup({
   'tpope/vim-eunuch',
   'tpope/vim-surround',
   'tpope/vim-sleuth',
-  'rbgrouleff/bclose.vim',
 
   -- Search
   'junegunn/fzf.vim',
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
-  'francoiscabrol/ranger.vim',
+  {'francoiscabrol/ranger.vim', dependencies = {'rbgrouleff/bclose.vim'}},
   {'szw/vim-g',
     opts = {},
     config = function ()

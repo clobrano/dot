@@ -74,6 +74,14 @@ require('lazy').setup({
     end
   },
 
+  -- terminal
+  {'vimlab/split-term.vim',
+    opts = {},
+    config = function ()
+      vim.keymap.set('n', '<C-t>', ':15Term<cr>')
+    end
+  },
+
   -- go
   require('plugins.vim-go'),
 

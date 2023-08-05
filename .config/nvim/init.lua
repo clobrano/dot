@@ -64,6 +64,16 @@ require('lazy').setup({
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
   'francoiscabrol/ranger.vim',
+  {'szw/vim-g',
+    opts = {},
+    config = function ()
+      vim.cmd[[
+        let g:vim_g_query_url="https://duckduckgo.com/?q="
+        let g:vim_g_command="WebSearch"
+      ]]
+      vim.keymap.set({'n', 'v'}, '<leader>fw', ':WebSearch<cr>')
+    end
+  },
 
   -- go
   require('plugins.vim-go'),

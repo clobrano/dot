@@ -47,6 +47,8 @@ Plug 'aduros/ai.vim'
 Plug 'jackMort/ChatGPT.nvim'
 Plug 'MunifTanjim/nui.nvim'
 
+Plug 'github/copilot.vim'
+
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'rafamadriz/friendly-snippets'

@@ -386,3 +386,6 @@ timout/!
 #nkown
 unkown/!
 todo
+finalizer
+DeletionTimestamp
+FenceAgentsRemediation

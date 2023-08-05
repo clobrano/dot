@@ -46,7 +46,7 @@ require('lazy').setup({
   },
   'shumphrey/fugitive-gitlab.vim',  -- vim-rhubarb for gitlab
   'airblade/vim-gitgutter',
-  'sindrets/diffview.nvim',
+  {'sindrets/diffview.nvim', dependencies = {'nvim-tree/nvim-web-devicons'} },
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',

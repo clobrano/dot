@@ -79,11 +79,24 @@ require('lazy').setup({
     end
   },
 
-  -- terminal
+  -- terminal and tests
   {'vimlab/split-term.vim',
     opts = {},
     config = function ()
       vim.keymap.set('n', '<C-t>', ':15Term<cr>')
+    end
+  },
+  {'vim-test/vim-test',
+    opts={},
+    config = function()
+      vim.cmd[[
+      let test#strategy = 'neovim'
+      let test#neovim#start_normal = 1
+      let test#neovim#term_position = "hor botright 20"
+      ]]
+      vim.keymap.set('n', '<leader>ts', ':TestSuite<cr>')
+      vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>')
+      vim.keymap.set('n', '<leader>tl', ':TestLast<cr>')
     end
   },
 
@@ -280,6 +293,10 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.cmd[[
+  autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
+  autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
+]]
 
 -- [[ Configure LSP ]]
 
@@ -431,7 +448,7 @@ cmp.setup {
     { name = 'buffer' },
   },
   experimental = {
-        ghost_text = true
+        ghost_text = false
   },
 }
 

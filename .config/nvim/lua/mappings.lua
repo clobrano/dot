@@ -321,3 +321,7 @@ nmap('<C-]>', 'g<C-]>')
 
 -- yank till the end of the line
 nmap('Y', 'yg_')
+
+-- wrap/unwrap
+nmap('<leader>w', 'set wrap<cr>')
+nmap('<leader>wn', 'set nowrap<cr>')

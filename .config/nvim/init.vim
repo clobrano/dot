@@ -42,6 +42,10 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
 Plug 'folke/trouble.nvim'
+Plug 'github/copilot.vim', { 'tag': 'v1.8.4' }
+Plug 'aduros/ai.vim'
+Plug 'jackMort/ChatGPT.nvim'
+Plug 'MunifTanjim/nui.nvim'
 
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
@@ -63,6 +67,7 @@ Plug 'sindrets/diffview.nvim'
 Plug 'rhysd/vim-clang-format'
 Plug 'ambv/black', {'for': 'python'}
 Plug 'alfredodeza/pytest.vim', {'for': 'python'}
+Plug 'vim-test/vim-test'
 
 Plug 'fatih/vim-go', {'do': 'GoInstallBinaries'}
 Plug 'matze/vim-meson'
@@ -128,14 +133,16 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 
 let test#strategy = 'neovim'
+let test#neovim#start_normal = 1
+let test#neovim#term_position = "hor botright 20"
 
 if exists("g:neovide")
     " Put anything you want to happen only in Neovide here
     set shell=/usr/bin/zsh
-    let g:neovide_transparency=0.99
-    let g:neovide_scroll_animation_length = 0.1
+    let g:neovide_transparency=1
+    let g:neovide_scroll_animation_length = 0
     let g:neovide_confirm_quit=v:false
-    let g:neovide_scale_factor=1
+    let g:neovide_scale_factor=0.95
     set title
 endif
 
@@ -144,4 +151,6 @@ let g:pyls_configurationSources = ["~/.pyls_config/"]
 let g:NERDTreeHijackNetrw = 0 " add this line if you use NERDTree
 let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 
-
+" to move into new mappings.lua
+nnoremap <leader>sw :set wrap<cr>
+nnoremap <leader>snw :set nowrap<cr>

@@ -39,10 +39,10 @@ matches:
     replace: "/lgtm \nGiving others a chance to review as well, feel free to unhold\n/hold"
 
   - trigger: "$creview"
-    replace: "I could use a review on "
+    replace: "I could use a review on\n \nfeedbacks are very much appreciated"
 
   - trigger: "$mreview"
-    replace: "May I have a review for "
+    replace: "May I have a review for\n \nfeedbacks are very much appreciated"
 
 
   - trigger: "$time"

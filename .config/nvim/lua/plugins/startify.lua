@@ -11,7 +11,7 @@ return {
             let g:startify_change_to_dir=1
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
-            \ { 'I': ['Open init.vim', 'e $MYVIMRC | lcd %:p:h'] }
+            \ { 'I': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] }
             \ ]
             let g:startify_enable_special = 0
             let g:startify_files_number = 3

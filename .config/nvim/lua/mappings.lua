@@ -1,15 +1,9 @@
 local function map(m, k, v)
     vim.keymap.set(m, k, v, { silent = true })
 end
-local function nmap(k, v)
-    map('n', k, v)
-end
-local function vmap(k, v)
-    map('v', k, v)
-end
-local function imap(k, v)
-    map('i', k, v)
-end
+local function nmap(k, v) map('n', k, v) end
+local function vmap(k, v) map('v', k, v) end
+local function imap(k, v) map('i', k, v) end
 
 -- toggle background
 nmap('<F4>', ':call ToggleBackground()<cr>')

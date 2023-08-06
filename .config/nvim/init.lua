@@ -55,6 +55,7 @@ require('lazy').setup({
   'airblade/vim-gitgutter',
   { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
+
   -- Code and text helpers
   'jiangmiao/auto-pairs',
   'editorconfig/editorconfig-vim',
@@ -64,6 +65,7 @@ require('lazy').setup({
   'tpope/vim-eunuch',
   'tpope/vim-surround',
   'tpope/vim-sleuth',
+
 
   -- Search
   'junegunn/fzf.vim',

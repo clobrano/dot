@@ -76,11 +76,11 @@ require('lazy').setup({
     config = function()
       vim.cmd [[
         let g:vim_g_query_url="https://duckduckgo.com/?q="
-        let g:vim_g_command="WebSearch"
       ]]
-      vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':WebSearch<cr>')
+      vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':Google<cr>')
     end
   },
+
 
   -- terminal and tests
   {

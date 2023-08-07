@@ -224,8 +224,48 @@ require("indent_blankline").setup {
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require 'plugins.telescope'
+require('telescope').setup{
+    defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {
+            width = 0.95,
+            height = 0.95,
+            horizontal = {preview_width = 0.5},
+            vertical = {preview_height = 0.7},
+        },
+        file_ignore_patterns = {
+            "^.git/", "node_modules/", "^vendor/"
+        },
+    },
+    pickers = {
+        find_files = {
+            no_ignore = true,
+        }
+    },
+    config = function()
+        vim.cmd[[
+            " Mapping
+            nnoremap <leader>fa :Telescope live_grep<cr>
+            nnoremap <leader>fb :Telescope buffers<cr>
+            nnoremap <leader>fd :Telescope lsp_definitions<cr>
+            nnoremap <leader>ff :Telescope find_files hidden=true<cr>
+            nnoremap <leader>fg :Telescope current_buffer_fuzzy_find<cr>
+            nnoremap <leader>fh :Telescope help_tags<cr>
+            nnoremap <leader>fk :Telescope keymaps<cr>
+            nnoremap <leader>fi :Telescope lsp_implementations<cr>
+            nnoremap <leader>fl :Telescope resume<cr>
+            nnoremap <leader>fm :Telescope man_pages<cr>
+            nnoremap <leader>fr :Telescope lsp_references<cr>
+            nnoremap <leader>fs :Telescope grep_string<cr>
+            nnoremap <leader>ft :Telescope tags<cr>
 
+            " GIT mappings
+            nnoremap <leader>fgb :Telescope git_branches<cr>
+            nnoremap <leader>fgc :Telescope git_commits<cr>
+            nnoremap <leader>fgs :Telescope git_stashes<cr>
+        ]]
+    end,
+}
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -239,9 +279,22 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
+vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
+vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[F]ind [G]rep current buffer' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
+vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
+vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
 vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
+vim.keymap.set('n', '<leader>ft', require('telescope.builtin').tags, { desc = '[F]ind [T]ags' })
+
+-- Git telescope
+vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
+vim.keymap.set('n', '<leader>fgc', require('telescope.builtin').git_commits, { desc = '[F]ind [G]it [C]ommits' })
+vim.keymap.set('n', '<leader>fgs', require('telescope.builtin').git_stash, { desc = '[F]ind [G]it [S]tashes' })
+
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -340,10 +393,10 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
+  nmap('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eferences')
+  nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
+  nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -352,7 +405,7 @@ local on_attach = function(_, bufnr)
   nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>wl', function()

@@ -81,14 +81,7 @@ local plugins = {
   },
 
 
-  -- terminal and tests
-  {
-    'vimlab/split-term.vim',
-    opts = {},
-    config = function()
-      vim.keymap.set('n', '<C-t>', ':15Term<cr>')
-    end
-  },
+  -- tests
   {
     'vim-test/vim-test',
     opts = {},

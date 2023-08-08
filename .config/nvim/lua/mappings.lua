@@ -116,8 +116,9 @@ nmap('!', ':!')
 -- exit vim
 nmap('qa', '<esc>:qa!<cr>')
 
-nmap('<leader>x', ':15Term<cr>')
-nmap('<leader>vx', ':VTerm<cr>')
+-- terminal opened below any other vertical split
+nmap('<leader>x', ':botright split | resize 20 | terminal<cr>')
+nmap('<leader>vx', ':vertical split | terminal<cr>')
 
 -- fold: always toggle all fold at current position
 nmap('za', 'zA')

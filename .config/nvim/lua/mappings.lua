@@ -42,7 +42,6 @@ nmap('<leader>e', ':e<cr>')
 nmap('ct', ':checktime<cr>')
 
 -- buffer select ALL
---nmap(C :%y+<cr>
 nmap('C', 'ggvG$')
 
 -- buffer: show full path
@@ -133,7 +132,10 @@ nmap('<leader>wds', ':windo diffthis')
 nmap('<leader>wdo', ':windo diffoff')
 
 -- highlight selected word
-vmap("*", ":let @/='<<C-R>=expand(--<cword>--)<CR>>'<CR>:set hls<CR>")
+vim.cmd[[
+xnoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
+]]
+--vmap("*", ":let @/='<<C-R>=expand(\"<cword>\")<CR>>'<CR>:set hls<CR>")
 -- highlight current word and do not move to next match
 nmap('*', '*``')
 

@@ -197,9 +197,10 @@ local plugins = {
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-}, {})
+}
 
 require('lazy').setup(plugins, {})
+require('autocmds')
 require('settings')
 require('mappings')
 

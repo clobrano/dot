@@ -18,10 +18,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
-
-
+local plugins = {
   -- UI
   { -- dracula customized theme
     'clobrano-forks/vim',
@@ -209,6 +206,7 @@ require('lazy').setup({
   -- { import = 'custom.plugins' },
 }, {})
 
+require('lazy').setup(plugins, {})
 require('settings')
 require('mappings')
 

@@ -42,7 +42,7 @@ matches:
     replace: "I could use a review on "
 
   - trigger: "$mreview"
-    replace: "May I have a review for "
+    replace: "May I have a review for any feedback is much appreciated"
 
 
   - trigger: "$time"

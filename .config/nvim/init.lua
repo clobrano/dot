@@ -401,7 +401,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
     -- Use a sharp border with `FloatBorder` highlights
-    border = "single"
+    border = "single",
+    focusable = false
   }
 )
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(

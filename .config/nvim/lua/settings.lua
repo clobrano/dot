@@ -88,6 +88,8 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tags = 'tags;/'                           -- Makes ctags visible from subdirectories
 
+vim.opt.textwidth = 120 -- use larger text limit, unless required (e.g. commit message)
+
 vim.opt.thesaurus:append('~/.config/nvim/thesaurus/thesaurus.txt')
 
 vim.opt.virtualedit = 'block'                     -- allow cursor to move where there is no text in visual block mode

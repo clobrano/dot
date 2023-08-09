@@ -62,7 +62,11 @@ local plugins = {
   'tpope/vim-eunuch',
   'tpope/vim-surround',
   'tpope/vim-sleuth',
-
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {}
+  },
 
   -- Search
   'junegunn/fzf.vim',

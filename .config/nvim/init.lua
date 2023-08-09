@@ -207,6 +207,7 @@ require('mappings')
 
 require('plugins.fzf-vim')
 require('plugins.ranger')
+require('plugins.copilot')
 
 require('tabline').setup {}
 require("indent_blankline").setup {

@@ -26,9 +26,9 @@ vim.opt.linebreak = true -- wrap long lines at characters in 'breakat'
 
 vim.wo.signcolumn = 'yes:2' -- Keep signcolumn on by default
 vim.o.updatetime = 250 -- Decrease update time
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 500 -- This is also the timeout for which-key
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
-vim.o.termguicolors = true -- NOTE: You should make sure your terminal supports this
+vim.o.termguicolors = true -- You should make sure your terminal supports this
 
 vim.opt.autowrite = true
 vim.opt.backspace = {'indent', 'eol', 'start'} -- fix backspace misbehavior

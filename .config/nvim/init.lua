@@ -37,6 +37,10 @@ local plugins = {
   },
   require('plugins.lualine'),
   require('plugins.startify'),
+  {
+    'SmiteshP/nvim-navic',
+    dependencies = { 'neovim/nvim-lspconfig' }
+  },
 
 
   -- Git related plugins
@@ -66,6 +70,14 @@ local plugins = {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
+  },
+  {
+    'pwntester/octo.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' },
+  },
+  {
+    'ldelossa/gh.nvim',
+      dependencies = {'ldelossa/litee.nvim'},
   },
 
   -- Search
@@ -204,6 +216,7 @@ local plugins = {
   -- { import = 'custom.plugins' },
 }
 
+-- Setups
 require('lazy').setup(plugins, {})
 require('autocmds')
 require('settings')
@@ -212,6 +225,51 @@ require('mappings')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 require('plugins.copilot')
+require('plugins.octo')
+require('litee.lib').setup()
+require('litee.gh').setup({
+  -- deprecated, around for compatability for now.
+  jump_mode   = "invoking",
+  -- remap the arrow keys to resize any litee.nvim windows.
+  map_resize_keys = false,
+  -- do not map any keys inside any gh.nvim buffers.
+  disable_keymaps = false,
+  -- the icon set to use.
+  icon_set = "default",
+  -- any custom icons to use.
+  icon_set_custom = nil,
+  -- whether to register the @username and #issue_number omnifunc completion
+  -- in buffers which start with .git/
+  git_buffer_completion = true,
+  -- defines keymaps in gh.nvim buffers.
+  keymaps = {
+      -- when inside a gh.nvim panel, this key will open a node if it has
+      -- any futher functionality. for example, hitting <CR> on a commit node
+      -- will open the commit's changed files in a new gh.nvim panel.
+      open = "<CR>",
+      -- when inside a gh.nvim panel, expand a collapsed node
+      expand = "zo",
+      -- when inside a gh.nvim panel, collpased and expanded node
+      collapse = "zc",
+      -- when cursor is over a "#1234" formatted issue or PR, open its details
+      -- and comments in a new tab.
+      goto_issue = "gd",
+      -- show any details about a node, typically, this reveals commit messages
+      -- and submitted review bodys.
+      details = "d",
+      -- inside a convo buffer, submit a comment
+      submit_comment = "<C-s>",
+      -- inside a convo buffer, when your cursor is ontop of a comment, open
+      -- up a set of actions that can be performed.
+      actions = "<C-a>",
+      -- inside a thread convo buffer, resolve the thread.
+      resolve_thread = "<C-r>",
+      -- inside a gh.nvim panel, if possible, open the node's web URL in your
+      -- browser. useful particularily for digging into external failed CI
+      -- checks.
+      goto_web = "gx"
+  }
+})
 
 require('tabline').setup {}
 require("indent_blankline").setup {
@@ -351,7 +409,7 @@ vim.cmd [[
 -- [[ Configure LSP ]]
 
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -392,6 +450,10 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -528,7 +590,8 @@ cmp.setup.cmdline(':', {
   })
 })
 
-vim.keymap.set('n', '<leader>ai', ':NeoAIContext<cr>')
+vim.keymap.set('n', '<leader>ai', ':NeoAI<cr>')
+vim.keymap.set('v', '<leader>aic', ':NeoAIContext<cr>')
 
 -- Neovide custom settings
 if vim.fn.exists('g:neovide') == 1 then

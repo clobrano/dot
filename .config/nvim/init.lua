@@ -536,9 +536,9 @@ if vim.fn.exists('g:neovide') == 1 then
   set shell=/usr/bin/zsh
   set title
   let g:neovide_transparency=1
-  let g:neovide_scroll_anymation_length=0
+  let g:neovide_scroll_animation_length=0
   let g:neovide_confirm_quit=v:false
-  let g:neovide_scale_factor=0.9
+  let g:neovide_scale_factor=1.0
   ]]
 end
 

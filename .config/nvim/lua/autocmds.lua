@@ -24,6 +24,8 @@ autocmd FileType man wincmd L
 " open Quickfix window below all splits
 au FileType qf wincmd J
 
+" Enter terminal-mode automatically
+autocmd TermOpen * startinsert
 ]]
 
 --" Hightlight word under cursor (all splits)

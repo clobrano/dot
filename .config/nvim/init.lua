@@ -225,12 +225,12 @@ require("indent_blankline").setup {
 require('telescope').setup {
   defaults = {
     layout_strategy = 'vertical',
-    --layout_config = {
-      --width = 0.95,
-      --height = 0.95,
-      --horizontal = { preview_width = 0.5 },
-      --vertical = { preview_height = 0.7 },
-    --},
+    layout_config = {
+      width = 0.95,
+      height = 0.95,
+      horizontal = { preview_width = 0.9 },
+      vertical = { preview_height = 0.5 },
+    },
     file_ignore_patterns = {
       "^.git/", "node_modules/", "^vendor/"
     },

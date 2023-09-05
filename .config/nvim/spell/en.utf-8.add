@@ -386,6 +386,17 @@ timout/!
 #nkown
 unkown/!
 todo
+updateConditions
+MachineSet
+machineSet
+BareMetal
+providerID
+ProviderID
+baremetal
+SetupWithManager
+MDR
+ProdSec
+EscalatingRemediation
 finalizer
 DeletionTimestamp
 FenceAgentsRemediation

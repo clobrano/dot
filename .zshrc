@@ -236,3 +236,6 @@ setopt PROMPT_SUBST
 export PS1=" \${now_timestamp_}$LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""
+
+export NOTIFY_HANDLE=uxAEiNvHEbjb6ndj
+export OPENAI_API_KEY=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

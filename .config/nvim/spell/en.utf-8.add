@@ -397,3 +397,6 @@ SetupWithManager
 MDR
 ProdSec
 EscalatingRemediation
+finalizer
+DeletionTimestamp
+FenceAgentsRemediation

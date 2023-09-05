@@ -1,7 +1,7 @@
 .clangd
 .dot
-.editorconfig
-build/
+^.editorconfig
+^build/
 compile_commands.json
 compile_flags.txt
 cscope.files

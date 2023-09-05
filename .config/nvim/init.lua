@@ -27,6 +27,7 @@ local plugins = {
       vim.cmd.colorscheme 'dracula'
     end,
   },
+  "NLKNguyen/papercolor-theme", -- light background colorscheme
   'ryanoasis/vim-devicons',
   { 'kdheepak/tabline.nvim',  opts = {} },
   {
@@ -35,12 +36,14 @@ local plugins = {
       vim.keymap.set('n', '<leader>to', ':TagbarToggle<cr>')
     end
   },
+  'mtdl9/vim-log-highlighting', -- Highlight log files
   require('plugins.lualine'),
+  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
   require('plugins.startify'),
-  {
-    'SmiteshP/nvim-navic',
-    dependencies = { 'neovim/nvim-lspconfig' }
-  },
+  --{
+    --'SmiteshP/nvim-navic',
+    --dependencies = { 'neovim/nvim-lspconfig' }
+  --},
 
 
   -- Git related plugins
@@ -81,6 +84,15 @@ local plugins = {
   },
 
   -- Search
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      -- calling `setup` is optional for customization
+      require("fzf-lua").setup({})
+    end
+  },
   'junegunn/fzf.vim',
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
@@ -167,7 +179,6 @@ local plugins = {
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',      opts = {} },
-  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
   {
     'folke/trouble.nvim',
     opts = { icons = false, use_diagnostic_signs = true, },
@@ -270,6 +281,7 @@ require('litee.gh').setup({
       goto_web = "gx"
   }
 })
+vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup {}
 require("indent_blankline").setup {
@@ -306,13 +318,21 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set('n', '<leader>f/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
+  -- configure get_dropdown to expand previewer to full width of screen
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
+    shorten_path = false,
+    layout_config = {
+      width = 0.95,
+      height = 0.95,
+      horizontal = { preview_width = 0.9 },
+      vertical = { preview_height = 0.5 },
+    },
   })
-end, { desc = '[/] Fuzzily search in current buffer' })
+end, { desc = '[F]uzzily [/] search in current buffer' })
 
 vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
 vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
@@ -451,9 +471,9 @@ local on_attach = function(client, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 
-  if client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
+  --if client.server_capabilities.documentSymbolProvider then
+    --navic.attach(client, bufnr)
+  --end
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

@@ -1,3 +1,5 @@
+require 'functions'
+
 local function map(m, k, v)
     vim.keymap.set(m, k, v, { silent = true })
 end
@@ -6,7 +8,7 @@ local function vmap(k, v) map('v', k, v) end
 local function imap(k, v) map('i', k, v) end
 
 -- toggle background
-nmap('<F4>', ':call ToggleBackground()<cr>')
+nmap('<F4>', ":lua require'functions'.toggle_theme()<cr>")
 -- toggle transparent background
 nmap('<F8>', ':hi Normal guibg=none ctermbg=none<cr>')
 -- variable definition in command line
@@ -173,8 +175,8 @@ nmap('j', 'gj')
 
 
 -- move fast
-nmap('<C-l>', 'w')
-nmap('<C-h>', 'b')
+nmap('<C-l>', '10l')
+nmap('<C-h>', '10h')
 nmap('<C-k>', '10k')
 nmap('<C-j>', '10j')
 nmap('E', '$')
@@ -320,5 +322,5 @@ nmap('<C-]>', 'g<C-]>')
 nmap('Y', 'yg_')
 
 -- wrap/unwrap
-nmap('<leader>w', 'set wrap<cr>')
-nmap('<leader>wn', 'set nowrap<cr>')
+nmap('<leader>w', ':set wrap<cr>')
+nmap('<leader>wn', ':set nowrap<cr>')

@@ -85,14 +85,16 @@ matches:
     replace: "kubernetes operator"
 
   # Obsidian markers
-  - trigger: "linfo"
+  - trigger: "!!info"
     replace: "\U00002139\U0000FE0F "
-  - trigger: "lbm"
+  - trigger: "!!bm"
     replace: "\U0001F516 "
-  - trigger: "lstar"
+  - trigger: "!!star"
     replace: "\U00002B50 "
-  - trigger: "lemail"
+  - trigger: "!!email"
     replace: "\U00002709\U0000FE0F"
+  - trigger: "!!chat"
+    replace: "\U0001F4AC"
 
   - trigger: "!!jira"
     replace: "https://issues.redhat.com/browse/"

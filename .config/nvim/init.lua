@@ -131,20 +131,7 @@ local plugins = {
 
 
   -- AI
-  {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("chatgpt").setup()
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-  },
   'github/copilot.vim',
-  require('plugins.neoai'),
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -609,9 +596,6 @@ cmp.setup.cmdline(':', {
     }
   })
 })
-
-vim.keymap.set('n', '<leader>ai', ':NeoAI<cr>')
-vim.keymap.set('v', '<leader>aic', ':NeoAIContext<cr>')
 
 -- Neovide custom settings
 if vim.fn.exists('g:neovide') == 1 then

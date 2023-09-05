@@ -44,7 +44,6 @@ matches:
   - trigger: "!!mreview"
     replace: "May I have a review for any feedback is much appreciated"
 
-
   - trigger: "!!time"
     replace: "{{mytime}}"
     vars:

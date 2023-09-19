@@ -94,6 +94,15 @@ local plugins = {
   'vim-scripts/MultipleSearch',
   { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    }
+  },
+  {
     'szw/vim-g',
     opts = {},
     config = function()
@@ -209,6 +218,10 @@ local plugins = {
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
 }
+
+
+
+vim.keymap.set('n', '<leader>nt', ':Neotree toggle<cr>', { silent = true })
 
 -- Setups
 require('lazy').setup(plugins, {})

@@ -40,10 +40,6 @@ local plugins = {
   require('plugins.lualine'),
   'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
   require('plugins.startify'),
-  --{
-    --'SmiteshP/nvim-navic',
-    --dependencies = { 'neovim/nvim-lspconfig' }
-  --},
 
 
   -- Git related plugins

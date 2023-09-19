@@ -107,4 +107,9 @@ matches:
   - trigger: "!!aicommit"
     replace: "can you write a concise commit message with an outline of most interesting changes"
 
+  # AI prompts
+  - trigger: "!!junior"
+    replace: "explain this to me like I was junior software developer"
 
+  - trigger: "!!summary"
+    replace: "create a summary with up to 7 sections. For each section I want an introduction, a quote and a conclusion. If it is a video, I want also the timestamp and a weblink to the timestamp"

@@ -36,7 +36,7 @@ local plugins = {
       vim.keymap.set('n', '<leader>to', ':TagbarToggle<cr>')
     end
   },
-  'mtdl9/vim-log-highlighting', -- Highlight log files
+  'mtdl9/vim-log-highlighting',          -- Highlight log files
   require('plugins.lualine'),
   'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
   require('plugins.startify'),

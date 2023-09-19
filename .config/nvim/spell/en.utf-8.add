@@ -400,3 +400,6 @@ EscalatingRemediation
 finalizer
 DeletionTimestamp
 FenceAgentsRemediation
+k8s
+CRD
+olm

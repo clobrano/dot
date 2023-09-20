@@ -5,6 +5,13 @@ tmux-try-attach () {
         tmux attach
     fi
 }
-alias t="tmux-try-attach"
+
+tmux-attach-or-create() {
+set -x
+    if ! tmux attach-session -t "$1"  2>&1 >/dev/null; then
+        tmux new -s "$1"
+    fi
+}
+alias tm="tmux-attach-or-create 🞆"
+alias ts="tmux-attach-or-create alt"
 alias ta="tmux attach"
-alias ts="tmux list-sessions"

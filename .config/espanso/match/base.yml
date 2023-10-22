@@ -113,3 +113,9 @@ matches:
 
   - trigger: "!!summary"
     replace: "create a summary with up to 7 sections. For each section I want an introduction, a quote and a conclusion. If it is a video, I want also the timestamp and a weblink to the timestamp"
+
+  - trigger: "!!ok"
+    replace: "\U00002705"
+
+  - trigger: "!!krp"
+    replace: "kube-rbac-proxy"

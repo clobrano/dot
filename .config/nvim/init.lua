@@ -68,8 +68,6 @@ local plugins = {
   'tpope/vim-sleuth',
   'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
-  --'neomake/neomake',  -- to use yamllint
-  --'lmeijvogel/vim-yaml-helper', -- traversing Yaml files
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },

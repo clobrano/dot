@@ -8,8 +8,11 @@
 	excludesfile = /home/clobrano/.gitignore_global
 	editor = nvim
 	sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+[mergetool "nvim"]
+	cmd = nvim -f -c \"DiffviewOpen\" \"$MERGED\"
 [merge]
-	conflictStyle = diff3
+	;conflictStyle = diff3
+	tool = nvim
 [init]
 	defaultBranch = main
 [pull]
@@ -21,7 +24,7 @@
 	st = status
 	sh = stash
 	pl = pull
-	l = log --graph --oneline -n
+	l = log --graph --oneline
     l1 = log -1
     rc = rebase --continue
     ri = rebase --interactive

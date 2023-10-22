@@ -66,6 +66,10 @@ local plugins = {
   'tpope/vim-eunuch',
   'tpope/vim-surround',
   'tpope/vim-sleuth',
+  'mfussenegger/nvim-dap',
+  'tyru/current-func-info.vim',
+  --'neomake/neomake',  -- to use yamllint
+  --'lmeijvogel/vim-yaml-helper', -- traversing Yaml files
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -79,7 +83,11 @@ local plugins = {
     'ldelossa/gh.nvim',
     dependencies = { 'ldelossa/litee.nvim' },
   },
-
+  -- Debugging
+  'leoluz/nvim-dap-go',
+  'rcarriga/nvim-dap-ui',
+  'theHamsta/nvim-dap-virtual-text',
+  'nvim-telescope/telescope-dap.nvim',
   -- Search
   {
     "ibhagwan/fzf-lua",
@@ -621,3 +629,13 @@ end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- DAP (debugging) configuration
+vim.keymap.set("n", "<F6>", ":lua require'dapui'.open()<cr>")
+vim.keymap.set("n", "<F7>", ":lua require'dap'.continue()<cr>")
+vim.keymap.set("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>")
+vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
+vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
+vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
+require('dap-go').setup({ })
+require('dapui').setup({ })

@@ -15,7 +15,7 @@ vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
 
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
-vim.o.smartcase = false
+vim.o.smartcase = true
 vim.o.incsearch = true -- search as characters are entered
 vim.o.inccommand = "split" -- Show the effects of a command incrementally as you type
 vim.o.hlsearch = true -- Set highlight on search

@@ -17,7 +17,7 @@ matches:
   # But matches can also be dynamic:
 
   # Print the current date
-  - trigger: "!!date"
+  - trigger: "!date"
     replace: "{{mydate}}"
     vars:
       - name: mydate
@@ -26,7 +26,7 @@ matches:
           format: "%Y-%m-%d"
 
   # Print the output of a shell command
-  - trigger: "!!shell"
+  - trigger: "!shell"
     replace: "{{output}}"
     vars:
       - name: output
@@ -35,16 +35,16 @@ matches:
           cmd: "echo 'Hello from your shell'"
 
   # And much more! For more information, visit the docs: https://espanso.org/docs/
-  - trigger: "!!lh"
+  - trigger: "!lh"
     replace: "/lgtm \nGiving others a chance to review as well, feel free to unhold\n/hold"
 
-  - trigger: "!!creview"
+  - trigger: "!creview"
     replace: "I could use a review on "
 
-  - trigger: "!!mreview"
+  - trigger: "!mreview"
     replace: "May I have a review for any feedback is much appreciated"
 
-  - trigger: "!!time"
+  - trigger: "!time"
     replace: "{{mytime}}"
     vars:
       - name: mytime
@@ -84,38 +84,41 @@ matches:
     replace: "kubernetes operator"
 
   # Obsidian markers
-  - trigger: "!!info"
+  - trigger: "!info"
     replace: "\U00002139\U0000FE0F "
-  - trigger: "!!bm"
+  - trigger: "!bm"
     replace: "\U0001F516 "
-  - trigger: "!!star"
+  - trigger: "!star"
     replace: "\U00002B50 "
-  - trigger: "!!email"
+  - trigger: "!email"
     replace: "\U00002709\U0000FE0F"
-  - trigger: "!!chat"
+  - trigger: "!chat"
     replace: "\U0001F4AC"
 
   - trigger: "!!jira"
     replace: "https://issues.redhat.com/browse/"
   
-  - trigger: "!!jiraeco"
+  - trigger: "jiraeco"
     replace: "https://issues.redhat.com/browse/ECOPROJECT-"
 
-  - trigger: "!!eco"
+  - trigger: "!eco"
     replace: "ECOPROJECT-"
 
-  - trigger: "!!aicommit"
+  - trigger: "aicommit"
     replace: "can you write a concise commit message with an outline of most interesting changes"
 
   # AI prompts
-  - trigger: "!!junior"
+  - trigger: "!junior"
     replace: "explain this to me like I was junior software developer"
 
-  - trigger: "!!summary"
+  - trigger: "!summary"
     replace: "create a summary with up to 7 sections. For each section I want an introduction, a quote and a conclusion. If it is a video, I want also the timestamp and a weblink to the timestamp"
 
-  - trigger: "!!ok"
+  - trigger: "!ok"
     replace: "\U00002705"
 
-  - trigger: "!!krp"
+  - trigger: "krp"
     replace: "kube-rbac-proxy"
+
+  - trigger: "citest"
+    replace: "/test 4.14-openshift-e2e"

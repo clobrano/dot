@@ -24,6 +24,8 @@ function switchGoVersion() {
         return
     fi
     GOMOD_VERSION=$(grep -E "go [[:digit:]]\.[[:digit:]][[:digit:]]" $GO_MOD_FILE | awk '{print $2}')
+    # go.mod only supports major.minor versions, adding ".x" at the end to instruct Gimme to get the latest patch version
+    GOMOD_VERSION+=".x"
     [[ -z $GOMOD_VERSION ]] && eval $(gimme stable) && return
 
     GO_VERSION=`go version | awk '{print $3}'`
@@ -32,7 +34,7 @@ function switchGoVersion() {
             echo "[!] Go.mod has version $GOMOD_VERSION, but gimme cannot get it"
             return
         fi
-        echo "[+] switching to $GOMOD_VERSION"
+        #echo "[+] switching to $GOMOD_VERSION"   # using starship this is not needed anymore
         eval $(gimme $GOMOD_VERSION)
     fi
 }

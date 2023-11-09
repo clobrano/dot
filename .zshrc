@@ -89,12 +89,12 @@ else
   export EDITOR='nvim'
 fi
 
+
 # For thinkpad pointer (it only works on X11, but it is up to the script to detect it)
 #[[ -e thinkpointer.sh ]] && thinkpointer.sh
 #
 # Completion
 #
-
 # extend change directory
 #setopt auto_cd
 # allow comments on the shell
@@ -151,6 +151,8 @@ for plugin in $(ls $ZSH_CUSTOM/plugins); do
 done
 source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
 
+unsetopt complete_aliases
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -181,7 +183,7 @@ autoload -Uz vcs_info
 # vcs info (for git)
 zstyle ':vcs_info:*' enable git
 () {
-    zstyle ':vcs_info:git*:*' formats 'on %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
+    zstyle ':vcs_info:git*:*' formats '\ue725 %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
     zstyle ':vcs_info:git*:*' actionformats 'on %F{green}(%a)%b|%m%c%u%f' # default ' (%s)-[%b|%a]%c%u-'
     zstyle ':vcs_info:*' stagedstr "%F{green}+%f" # default 'S'
     zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
@@ -229,12 +231,16 @@ add-zsh-hook preexec () {
 
 
 NEWLINE=$'\n'
-LPROMPT_BASE=" %F{yellow}%B%n%b%f in %F{blue}%B%~%b%f"
-#RPROMPT_BASE="\${vcs_info_msg_0_}"
+LPROMPT_BASE="%F{blue}%B%~%b%f"
 setopt PROMPT_SUBST
 
-export PS1=" \${now_timestamp_}$LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
+export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""
 
-export NOTIFY_HANDLE=
+export NOTIFY_HANDLE=xdvkmZ7Va0zHjBNd
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+
+export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
+eval "$(starship init zsh)"

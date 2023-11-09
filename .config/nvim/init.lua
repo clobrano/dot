@@ -28,8 +28,11 @@ local plugins = {
     end,
   },
   "NLKNguyen/papercolor-theme", -- light background colorscheme
+  "navarasu/onedark.nvim",
+  "sonph/onehalf",
   "tanvirtin/monokai.nvim",     -- monokai colorscheme
   'ryanoasis/vim-devicons',
+  "fraso-dev/nvim-listchars",  -- toggle show listchars
   { 'kdheepak/tabline.nvim',  opts = {} },
   {
     'majutsushi/tagbar',
@@ -39,7 +42,7 @@ local plugins = {
   },
   'mtdl9/vim-log-highlighting',          -- Highlight log files
   require('plugins.lualine'),
-  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
+  --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
   require('plugins.startify'),
 
 
@@ -239,7 +242,10 @@ require('mappings')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 require('plugins.copilot')
-require('plugins.octo')
+--require('plugins.octo')
+require('nvim-listchars').setup({
+  save_state = false
+})
 require('litee.lib').setup()
 require('litee.gh').setup({
   -- deprecated, around for compatability for now.
@@ -287,11 +293,11 @@ require('litee.gh').setup({
 vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup {}
-require("indent_blankline").setup {
-  space_char_blankline = " ",
-  show_current_context = true,
-  show_current_context_start = false,
-}
+--require("indent_blankline").setup {
+  --space_char_blankline = " ",
+  --show_current_context = true,
+  --show_current_context_start = false,
+--}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -316,6 +322,9 @@ require('telescope').setup {
   config = function()
   end,
 }
+vim.cmd[[
+  cnoreabbrev ts Telescope
+]]
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -630,10 +639,32 @@ end
 
 -- DAP (debugging) configuration
 vim.keymap.set("n", "<F6>", ":lua require'dapui'.open()<cr>")
-vim.keymap.set("n", "<F7>", ":lua require'dap'.continue()<cr>")
-vim.keymap.set("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>")
-vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
-vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
-vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
+vim.keymap.set('n', '<F7>', function() require('dap').continue() end)
+vim.keymap.set('n', '<C-c>', function() require('dap').continue() end)
+
+vim.keymap.set('n', '<F8>', function() require('dap').step_over() end)
+vim.keymap.set('n', '<C-n>', function() require('dap').step_over() end)
+
+vim.keymap.set('n', '<F9>', function() require('dap').step_into() end)
+vim.keymap.set('n', '<C-s>', function() require('dap').step_into() end)
+
+vim.keymap.set('n', '<F10>', function() require('dap').step_out() end)
+vim.keymap.set('n', '<C-f>', function() require('dap').step_out() end)
+
+vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+vim.keymap.set({'n', 'v'}, '<Leader>dh', function() require('dap.ui.widgets').hover() end)
+vim.keymap.set({'n', 'v'}, '<Leader>dp', function() require('dap.ui.widgets').preview() end)
+vim.keymap.set('n', '<Leader>df', function() local widgets = require('dap.ui.widgets') widgets.centered_float(widgets.frames) end)
+vim.keymap.set('n', '<Leader>dw', function() local widgets = require('dap.ui.widgets') widgets.centered_float(widgets.scopes)
+end)
+--vim.keymap.set("n", "<F7>", ":lua require'dap'.continue()<cr>")
+--vim.keymap.set("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>")
+--vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
+--vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
+--vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
 require('dap-go').setup({ })
 require('dapui').setup({ })

@@ -11,3 +11,4 @@ cscope.po.out
 tags
 tags/tags.temp
 vimrc.local
+*.env

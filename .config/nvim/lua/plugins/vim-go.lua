@@ -25,7 +25,7 @@ return {
         au FileType go nmap <Leader>gi <Plug>(go-install)
         au FileType go nmap <Leader>gk <Plug>(go-doc)
         au FileType go nmap <Leader>gw <Plug>(go-doc-browser)
-        au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
+        au FileType go nmap <leader>gc <Plug>(go-coverage-overlay ./cover.out)
         au FileType go nmap <leader>gr <Plug>(go-run)
         au FileType go nmap <leader>gt <Plug>(go-test)
 
@@ -36,13 +36,13 @@ return {
             \ 'vars':       'rightbelow 60vnew',
             \ 'stack':      'rightbelow 10new',
             \ }
-            let g:go_debug_breakpoint_sign_text = '🟥'
-            au FileType go nmap <C-n> <Plug>(go-debug-next)
-            au FileType go nmap <C-p> <Plug>(go-debug-print)
-            au FileType go nmap <C-s> <Plug>(go-debug-step)
-            au FileType go nmap <C-x> <Plug>(go-debug-step-out)
-            au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
-            au FileType go nmap <C-c> <Plug>(go-debug-continue)
+            let g:go_debug_breakpoint_sign_text = '🔴'
+            " au FileType go nmap <C-n> <Plug>(go-debug-next)
+            " au FileType go nmap <C-p> <Plug>(go-debug-print)
+            " au FileType go nmap <C-s> <Plug>(go-debug-step)
+            " au FileType go nmap <C-x> <Plug>(go-debug-step-out)
+            " au FileType go nmap <C-b> <Plug>(go-debug-breakpoint)
+            " au FileType go nmap <C-c> <Plug>(go-debug-continue)
 
 
             cnoreabbrev gocov GoCoverageOverlay cover.out

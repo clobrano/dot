@@ -303,12 +303,12 @@ require('tabline').setup {}
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
-    layout_strategy = 'vertical',
+    layout_strategy = 'flex',
     layout_config = {
-      width = 0.95,
-      height = 0.95,
-      horizontal = { preview_width = 0.9 },
-      vertical = { preview_height = 0.5 },
+      width = 0.9,
+      height = 0.9,
+      horizontal = { preview_width = 0.7 },
+      vertical = { preview_height = 0.6 },
     },
     file_ignore_patterns = {
       "^.git/", "node_modules/", "^vendor/"
@@ -640,7 +640,6 @@ end
 -- DAP (debugging) configuration
 vim.keymap.set("n", "<F6>", ":lua require'dapui'.open()<cr>")
 vim.keymap.set('n', '<F7>', function() require('dap').continue() end)
-vim.keymap.set('n', '<C-c>', function() require('dap').continue() end)
 
 vim.keymap.set('n', '<F8>', function() require('dap').step_over() end)
 vim.keymap.set('n', '<C-n>', function() require('dap').step_over() end)

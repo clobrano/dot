@@ -324,5 +324,5 @@ nmap('Y', 'yg_')
 -- wrap/unwrap
 nmap('<leader>wh', ':set wrap<cr>') -- wrap _h_ere
 nmap('<leader>wnh', ':set nowrap<cr>')
-nmap('<leader>w', ':windo set wrap<cr>')
+nmap('<leader>w', ':set wrap<cr>')
 nmap('<leader>wn', ':windo set nowrap<cr>')

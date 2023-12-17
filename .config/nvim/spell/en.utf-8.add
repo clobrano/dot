@@ -412,3 +412,14 @@ SPDY
 stdout
 requeue
 ClusterLabs
+yaml
+reprovision
+CRs
+NodeHealthCheck
+uid
+nodehealthcheck
+MachineSetController
+OwnerReference
+MachineDeletionRemediation
+NodeHealthcheck
+ownerReference

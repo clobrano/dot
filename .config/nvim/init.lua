@@ -27,20 +27,28 @@ local plugins = {
       vim.cmd.colorscheme 'dracula'
     end,
   },
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
   "NLKNguyen/papercolor-theme", -- light background colorscheme
   "navarasu/onedark.nvim",
   "sonph/onehalf",
-  "tanvirtin/monokai.nvim",     -- monokai colorscheme
+  "tanvirtin/monokai.nvim", -- monokai colorscheme
+  "shaunsingh/solarized.nvim",
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars",  -- toggle show listchars
-  { 'kdheepak/tabline.nvim',  opts = {} },
+  "fraso-dev/nvim-listchars", -- toggle show listchars
+  { 'kdheepak/tabline.nvim', opts = {} },
   {
     'majutsushi/tagbar',
     config = function()
-      vim.keymap.set('n', '<leader>to', ':TagbarToggle<cr>')
+      vim.keymap.set('n', '<leader>to', ':TagbarToggle fj<cr>')
     end
   },
-  'mtdl9/vim-log-highlighting',          -- Highlight log files
+  'mtdl9/vim-log-highlighting', -- Highlight log files
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
   require('plugins.startify'),
@@ -57,8 +65,16 @@ local plugins = {
   },
   'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
   'airblade/vim-gitgutter',
-  { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
+  { 'sindrets/diffview.nvim',    dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
+  {
+    "jiaoshijie/undotree",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = true,
+    keys = { -- load the plugin only when using it's keybinding:
+      { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+    },
+  },
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -110,7 +126,11 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-    }
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>nt', ':Neotree toggle<cr>', { silent = true, noremap = true })
+      vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
+    end
   },
   {
     'szw/vim-g',
@@ -130,9 +150,11 @@ local plugins = {
     opts = {},
     config = function()
       vim.cmd [[
-      let test#strategy = 'neovim'
-      let test#neovim#start_normal = 1
-      let test#neovim#term_position = "hor botright 20"
+    let test#strategy = {
+      \ 'nearest': 'basic',
+    \}
+      "let g:test#basic#start_normal = 1
+      let g:test#neovim#term_position = "hor botright 5"
       ]]
       vim.keymap.set('n', '<leader>ts', ':TestSuite<cr>')
       vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>')
@@ -180,7 +202,7 @@ local plugins = {
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',      opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   {
     'folke/trouble.nvim',
     opts = { icons = false, use_diagnostic_signs = true, },
@@ -230,9 +252,6 @@ local plugins = {
 }
 
 
-
-vim.keymap.set('n', '<leader>nt', ':Neotree toggle<cr>', { silent = true })
-
 -- Setups
 require('lazy').setup(plugins, {})
 require('autocmds')
@@ -242,6 +261,8 @@ require('mappings')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 require('plugins.copilot')
+
+require('undotree').setup()
 --require('plugins.octo')
 require('nvim-listchars').setup({
   save_state = false
@@ -294,9 +315,9 @@ vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup {}
 --require("indent_blankline").setup {
-  --space_char_blankline = " ",
-  --show_current_context = true,
-  --show_current_context_start = false,
+--space_char_blankline = " ",
+--show_current_context = true,
+--show_current_context_start = false,
 --}
 
 -- [[ Configure Telescope ]]
@@ -307,8 +328,25 @@ require('telescope').setup {
     layout_config = {
       width = 0.9,
       height = 0.9,
-      horizontal = { preview_width = 0.7 },
+      horizontal = { preview_width = 0.6 },
       vertical = { preview_height = 0.6 },
+    },
+    pickers = {
+      lsp_references = { fname_width = 100, },
+      tags = { fname_width = 100, },
+      find_files = {
+        mappings = {
+          n = {
+            ["cd"] = function(prompt_bufnr)
+              local selection = require("telescope.actions.state").get_selected_entry()
+              local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+              require("telescope.actions").close(prompt_bufnr)
+              -- Depending on what you want put `cd`, `lcd`, `tcd`
+              vim.cmd(string.format("silent lcd %s", dir))
+            end
+          }
+        }
+      },
     },
     file_ignore_patterns = {
       "^.git/", "node_modules/", "^vendor/"
@@ -322,8 +360,9 @@ require('telescope').setup {
   config = function()
   end,
 }
-vim.cmd[[
+vim.cmd [[
   cnoreabbrev ts Telescope
+  nnoremap ts :Telescope<cr>
 ]]
 
 -- Enable telescope fzf native, if installed
@@ -652,18 +691,88 @@ vim.keymap.set('n', '<C-f>', function() require('dap').step_out() end)
 
 vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
 vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
-vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>lp',
+  function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
 vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
 vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
-vim.keymap.set({'n', 'v'}, '<Leader>dh', function() require('dap.ui.widgets').hover() end)
-vim.keymap.set({'n', 'v'}, '<Leader>dp', function() require('dap.ui.widgets').preview() end)
-vim.keymap.set('n', '<Leader>df', function() local widgets = require('dap.ui.widgets') widgets.centered_float(widgets.frames) end)
-vim.keymap.set('n', '<Leader>dw', function() local widgets = require('dap.ui.widgets') widgets.centered_float(widgets.scopes)
-end)
+vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function() require('dap.ui.widgets').hover() end)
+vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function() require('dap.ui.widgets').preview() end)
+vim.keymap.set('n', '<Leader>df',
+  function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.frames)
+  end)
+vim.keymap.set('n', '<Leader>dw',
+  function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.scopes)
+  end)
 --vim.keymap.set("n", "<F7>", ":lua require'dap'.continue()<cr>")
 --vim.keymap.set("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>")
 --vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
 --vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
 --vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
-require('dap-go').setup({ })
-require('dapui').setup({ })
+require('dap-go').setup({})
+require('dapui').setup({})
+
+-- Macro to format PR Markdown links
+-- Macro to format MR Gitlab links
+-- Macro to format RH Issue tracker links
+-- Macro to set Wrap in current and next split (for code review with GH.nvim)
+vim.cmd [[
+let @p='lvi]diPRjjf)a jjp:%s/by.*$//'
+let @m='lvi]dEa jjpBaMRjj:% (!.*$€kl€kl€kl€kl€kl€kls/€kr€kr€kr€kr€kr€kr€kr€kr/'
+let @t='%dlBdlf]€ýalvt(€ýadEp:%s/ - Red Hat Issue Tracker/'
+]]
+
+local wk = require("which-key")
+wk.register({
+  g = {
+    name = "+Git",
+    h = {
+      name = "+Github",
+      c = {
+        name = "+Commits",
+        c = { "<cmd>GHCloseCommit<cr>", "Close" },
+        e = { "<cmd>GHExpandCommit<cr>", "Expand" },
+        o = { "<cmd>GHOpenToCommit<cr>", "Open To" },
+        p = { "<cmd>GHPopOutCommit<cr>", "Pop Out" },
+        z = { "<cmd>GHCollapseCommit<cr>", "Collapse" },
+      },
+      i = {
+        name = "+Issues",
+        p = { "<cmd>GHPreviewIssue<cr>", "Preview" },
+      },
+      l = {
+        name = "+Litee",
+        t = { "<cmd>LTPanel<cr>", "Toggle Panel" },
+      },
+      r = {
+        name = "+Review",
+        b = { "<cmd>GHStartReview<cr>", "Begin" },
+        c = { "<cmd>GHCloseReview<cr>", "Close" },
+        d = { "<cmd>GHDeleteReview<cr>", "Delete" },
+        e = { "<cmd>GHExpandReview<cr>", "Expand" },
+        s = { "<cmd>GHSubmitReview<cr>", "Submit" },
+        z = { "<cmd>GHCollapseReview<cr>", "Collapse" },
+      },
+      p = {
+        name = "+Pull Request",
+        c = { "<cmd>GHClosePR<cr>", "Close" },
+        d = { "<cmd>GHPRDetails<cr>", "Details" },
+        e = { "<cmd>GHExpandPR<cr>", "Expand" },
+        o = { "<cmd>GHOpenPR<cr>", "Open" },
+        p = { "<cmd>GHPopOutPR<cr>", "PopOut" },
+        r = { "<cmd>GHRefreshPR<cr>", "Refresh" },
+        t = { "<cmd>GHOpenToPR<cr>", "Open To" },
+        z = { "<cmd>GHCollapsePR<cr>", "Collapse" },
+      },
+      t = {
+        name = "+Threads",
+        c = { "<cmd>GHCreateThread<cr>", "Create" },
+        n = { "<cmd>GHNextThread<cr>", "Next" },
+        t = { "<cmd>GHToggleThread<cr>", "Toggle" },
+      },
+    },
+  },
+}, { prefix = "<leader>" })

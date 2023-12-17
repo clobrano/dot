@@ -10,7 +10,11 @@ shopt -s extglob  # bash only
 DATA_DIRECTORY=$(sed -n 's/DATA_DIRECTORY:\s*\(.*\)/\1/p' "$HOME/.letsdo")
 
 # no running tasks
-[ ! -f  "$DATA_DIRECTORY/letsdo-task" ] && echo "No task running" && exit 0
+if [ ! -f  "$DATA_DIRECTORY/letsdo-task" ]; then
+    echo "No task running"
+    dconf write /org/gnome/shell/extensions/one-thing/thing-value "''"
+    exit 0
+fi
 
 task=$(sed -n 's_"name": "\(.*\)",_\1_p' "$DATA_DIRECTORY/letsdo-task")
 task=${task##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
@@ -22,5 +26,8 @@ if [[ $task_len > 40 ]]; then
 fi
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")
 end=$(date +%s)
+
+dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")'"
 # Why I need an 1h offset to get the right value? Is it for the daylight setting?
 echo "$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))") 🕓"
+

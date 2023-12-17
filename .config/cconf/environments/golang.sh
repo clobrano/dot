@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install golang runtime
-VERSION=1.20.2
+VERSION=1.20.12
 URL=https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz
 
 set -e

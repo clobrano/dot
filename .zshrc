@@ -245,6 +245,10 @@ test command -v atuin 2>&1 >/dev/null; then
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
+# source uncommitable env variables
+if [[ -f ~/Documents/unsharable ]]; then
+    source ~/Documents/unsharable
+fi
 
 NEWLINE=$'\n'
 LPROMPT_BASE="%F{blue}%B%~%b%f"
@@ -253,6 +257,3 @@ setopt PROMPT_SUBST
 export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""
-
-
-

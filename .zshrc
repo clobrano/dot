@@ -229,18 +229,12 @@ add-zsh-hook preexec () {
 }
 
 # kubectl completion
-test command -v kubectl 2>&1 >/dev/null; then
+if command -v kubectl 2>&1 >/dev/null; then
     [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 fi
 
-# init starship if installed
-test command -v starship 2>&1 >/dev/null; then
-    export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
-    eval "$(starship init zsh)"
-fi
-
 # run atuin if installed
-test command -v atuin 2>&1 >/dev/null; then
+if command -v atuin 2>&1 >/dev/null; then
     # Bind ctrl-r but not up arrow
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
@@ -257,3 +251,11 @@ setopt PROMPT_SUBST
 export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""
+
+# init starship if installed
+if command -v starship 2>&1 >/dev/null; then
+    export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
+    eval "$(starship init zsh)"
+fi
+
+

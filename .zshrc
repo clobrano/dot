@@ -239,6 +239,11 @@ test command -v starship 2>&1 >/dev/null; then
     eval "$(starship init zsh)"
 fi
 
+# run atuin if installed
+test command -v atuin 2>&1 >/dev/null; then
+    # Bind ctrl-r but not up arrow
+    eval "$(atuin init zsh --disable-up-arrow)"
+fi
 
 
 NEWLINE=$'\n'
@@ -249,9 +254,5 @@ export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.
 #export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
 export RPROMPT=""
 
-export NOTIFY_HANDLE=xdvkmZ7Va0zHjBNd
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 
-export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
-eval "$(starship init zsh)"

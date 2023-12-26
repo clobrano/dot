@@ -233,6 +233,13 @@ test command -v kubectl 2>&1 >/dev/null; then
     [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 fi
 
+# init starship if installed
+test command -v starship 2>&1 >/dev/null; then
+    export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
+    eval "$(starship init zsh)"
+fi
+
+
 
 NEWLINE=$'\n'
 LPROMPT_BASE="%F{blue}%B%~%b%f"

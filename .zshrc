@@ -228,6 +228,10 @@ add-zsh-hook preexec () {
     cmd_start="$SECONDS"
 }
 
+# kubectl completion
+test command -v kubectl 2>&1 >/dev/null; then
+    [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+fi
 
 
 NEWLINE=$'\n'

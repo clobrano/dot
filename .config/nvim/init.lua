@@ -138,7 +138,7 @@ local plugins = {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      vim.keymap.set('n', '<leader>nt', ':Neotree toggle<cr>', { silent = true, noremap = true })
+      vim.keymap.set('n', '<leader>nt', ':Neotree reveal<cr>', { silent = true, noremap = true })
       vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
     end
   },

@@ -312,6 +312,9 @@ nmap('<silent>', '<leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>')
 -- scrollbind
 nmap('<leader>sb', ':call ToggleScrollBind()<cr>')
 
+-- session
+nmap('<leader>sc', ':SClose<cr>')
+
 -- tag open in split
 nmap('D', '<C-w>}')
 

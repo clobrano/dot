@@ -11,7 +11,7 @@ DATA_DIRECTORY=$(sed -n 's/DATA_DIRECTORY:\s*\(.*\)/\1/p' "$HOME/.letsdo")
 
 # no running tasks
 if [ ! -f  "$DATA_DIRECTORY/letsdo-task" ]; then
-    echo "No task running"
+    echo ""
     dconf write /org/gnome/shell/extensions/one-thing/thing-value "''"
     exit 0
 fi
@@ -29,5 +29,5 @@ end=$(date +%s)
 
 dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")'"
 # Why I need an 1h offset to get the right value? Is it for the daylight setting?
-echo "$task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))") 🕓"
+echo "󰔛 $task$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")"
 

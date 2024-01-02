@@ -76,6 +76,16 @@ local plugins = {
     },
   },
 
+  -- Notes and Markdown
+  require('plugins.vimwiki'),
+  'freitass/todo.txt-vim',
+  'artempyanykh/marksman',
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
   -- Code and text helpers
   'jiangmiao/auto-pairs',
   'editorconfig/editorconfig-vim',
@@ -562,6 +572,7 @@ local servers = {
   gopls = {},
   pyright = {},
   -- rust_analyzer = {},
+  marksman = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -670,6 +681,7 @@ if vim.fn.exists('g:neovide') == 1 then
   let g:neovide_scroll_animation_length=0
   let g:neovide_confirm_quit=v:false
   let g:neovide_scale_factor=1.0
+  set guifont=Source\ Code\ Pro:h13
   ]]
 end
 

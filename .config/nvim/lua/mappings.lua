@@ -21,10 +21,9 @@ nmap('<leader>fi', '[i')
 nmap('<leader>fI', ':TlistShowPrototype<cr>')
 
 -- align block of text.
-vmap('<', '<gv')
-vmap('>', '>gv')
-nmap('>', '>>')
-nmap('<', '<<')
+vmap('<<', '<gv')
+vmap('>>', '>gv')
+imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode
 
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
@@ -68,7 +67,7 @@ nmap('x7', ':m7<cr>:6bn<cr>:bd')
 nmap('x8', ':m8<cr>:7bn<cr>:bd')
 nmap('x9', ':m9<cr>:8bn<cr>:bd')
 -- buffer: close all buffers except the current one
-nmap('<leader>bdo', ':%bd<CR><C-O>:bd#<CR>')
+nmap('<leader>bx', ':%bd<CR><C-O>:bd#<CR>')
 -- end buffer: close
 
 -- buffer: save
@@ -86,6 +85,8 @@ nmap('yp', '"0p')
 vmap('Y', '"+y')
 -- clipboard paste
 nmap('P', '"+p')
+-- do not override default register when pasting in selection
+xmap('p', 'P')
 
 --directory explore
 --nmap(<leader>ex <esc>:Explore<cr>
@@ -208,7 +209,6 @@ nmap('td', ':tabclose<cr>')
 
 -- normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)
 imap('jj', '<Esc>')
-imap('kk', '<Esc>')
 
 -- Notes (see plugin/tasks)
 
@@ -229,6 +229,7 @@ nmap('rep', '<Esc>:%s/')
 -- resize vertical window splits
 nmap('<silent>', '= :exe --resize +2--<CR>')
 nmap('<silent>', '- :exe --resize -2--<CR>')
+nmap('w3', ':vertical resize +50')
 
 -- sudo save
 --cmap w!! w !sudo tee > /dev/null %
@@ -328,11 +329,15 @@ nmap('D', '<C-w>}')
 -- tag jump to occurence if there's only one (use always tselect instead of tag)
 nmap('<C-]>', 'g<C-]>')
 
+
+-- paste a UUID for referencing text content (e.g. in markdown files)
+nmap('<leader>ref', ':r!uuidgen | cut -d"-" -f1<cr>')
+
 -- yank till the end of the line
 nmap('Y', 'yg_')
 
 -- wrap/unwrap
-nmap('<leader>wh', ':set wrap<cr>') -- wrap _h_ere
-nmap('<leader>wnh', ':set nowrap<cr>')
-nmap('<leader>w', ':set wrap<cr>')
-nmap('<leader>wn', ':windo set nowrap<cr>')
+nmap('<leader>swh', ':set wrap<cr>') -- wrap _h_ere
+nmap('<leader>swnh', ':set nowrap<cr>')
+nmap('<leader>sw', ':set wrap<cr>')
+nmap('<leader>swn', ':windo set nowrap<cr>')

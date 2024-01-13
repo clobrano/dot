@@ -751,10 +751,6 @@ vim.keymap.set('n', '<Leader>dw',
 require('dap-go').setup({})
 require('dapui').setup({})
 
--- Macro to format PR Markdown links
--- Macro to format MR Gitlab links
--- Macro to format RH Issue tracker links
--- Macro to set Wrap in current and next split (for code review with GH.nvim)
 
 -- Register some useful macros
 vim.cmd [[
@@ -821,3 +817,8 @@ wk.register({
     },
   },
 }, { prefix = "<leader>" })
+
+
+-- markdown preview configuration
+vim.g.mkdp_images_path = '/home/clobrano/Documents/RedHatVault/attachments'
+

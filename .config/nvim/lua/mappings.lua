@@ -1,11 +1,16 @@
 require 'functions'
 
 local function map(m, k, v)
-    vim.keymap.set(m, k, v, { silent = true })
+    vim.keymap.set(m, k, v, { silent = true, noremap = true })
 end
 local function nmap(k, v) map('n', k, v) end
 local function vmap(k, v) map('v', k, v) end
 local function imap(k, v) map('i', k, v) end
+local function xmap(k, v) map('x', k, v) end
+
+-- journal
+nmap('<leader>jd', ":lua require'functions'.create_note_entry('today')")
+nmap('<leader>jt', ":lua require'functions'.create_note_entry(vim.fn.expand('%:p'))")
 
 -- toggle background
 nmap('<F4>', ":lua require'functions'.toggle_theme()<cr>")
@@ -92,6 +97,8 @@ nmap('<leader>here', ':lcd %:p:h<CR>')
 
 -- vimdiff
 nmap('<leader>do', ':call ToggleDiff()<cr>')
+nmap('<leader>dp', ':diffput<cr>')
+nmap('<leader>dg', ':diffget<cr>')
 
 
 -- edit font (effects on GUI only)

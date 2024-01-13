@@ -755,12 +755,21 @@ require('dapui').setup({})
 -- Macro to format MR Gitlab links
 -- Macro to format RH Issue tracker links
 -- Macro to set Wrap in current and next split (for code review with GH.nvim)
+
+-- Register some useful macros
 vim.cmd [[
+" Macro to format PR Markdown links
 let @p='lvi]diPRjjf)a jjp:%s/by.*$//'
+" Macro to format MR Gitlab links
 let @m='lvi]dEa jjpBaMRjj:% (!.*$€kl€kl€kl€kl€kl€kls/€kr€kr€kr€kr€kr€kr€kr€kr/'
+" Macro to format RH Issue tracker links
 let @t='%dlBdlf]€ýalvt(€ýadEp:%s/ - Red Hat Issue Tracker/'
+" Macro to set Wrap in current and next split (for code review with GH.nvim)
+let @d='vecDONEjj'
 ]]
 
+
+-- Which key configuration
 local wk = require("which-key")
 wk.register({
   g = {

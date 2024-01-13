@@ -27,6 +27,7 @@ local plugins = {
       vim.cmd.colorscheme 'dracula'
     end,
   },
+  "savq/melange-nvim",
   {
     "craftzdog/solarized-osaka.nvim",
     lazy = false,
@@ -86,6 +87,8 @@ local plugins = {
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,
   },
+
+
   -- Code and text helpers
   'jiangmiao/auto-pairs',
   'editorconfig/editorconfig-vim',
@@ -97,6 +100,7 @@ local plugins = {
   'tpope/vim-sleuth',
   'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
+  'inkarkat/vim-ProportionalResize',
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -110,11 +114,13 @@ local plugins = {
     'ldelossa/gh.nvim',
     dependencies = { 'ldelossa/litee.nvim' },
   },
+
   -- Debugging
   'leoluz/nvim-dap-go',
   'rcarriga/nvim-dap-ui',
   'theHamsta/nvim-dap-virtual-text',
   'nvim-telescope/telescope-dap.nvim',
+
   -- Search
   {
     "ibhagwan/fzf-lua",

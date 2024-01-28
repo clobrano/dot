@@ -705,7 +705,7 @@ if vim.fn.exists('g:neovide') == 1 then
   let g:neovide_scroll_animation_length=0
   let g:neovide_confirm_quit=v:false
   let g:neovide_scale_factor=1.0
-  set guifont=Source\ Code\ Pro:h13
+  set guifont=Source\ Code\ Pro:h11
   ]]
 end
 

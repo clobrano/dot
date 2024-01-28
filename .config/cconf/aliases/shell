@@ -43,7 +43,7 @@ if command -v vagrant 2>&1 > /dev/null; then
 fi
 
 alias cclip="xclip -sel clipboard"
-alias nreview="nvim -c \"GHOpenPR\""
+alias nreview="nvim -c \"windo ListcharsDisable\" -c \"GHOpenPR\""
 alias Mdr="cd ~/workspace/medik8s/upstream/machine-deletion-remediation/"
 alias mdr="cd ~/workspace/medik8s/midstream/machine-deletion-remediation/"
 alias Nhc="cd ~/workspace/medik8s/upstream/node-healthcheck-operator"

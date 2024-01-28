@@ -13,7 +13,7 @@ format = 'on [$symbol$branch]($style) '
 tag_disabled = false
 
 [golang]
-symbol = "go "
+symbol = "GO "
 #format = '$symbol[($version )]($style)'
 
 [hostname]

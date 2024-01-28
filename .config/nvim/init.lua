@@ -822,3 +822,25 @@ wk.register({
 -- markdown preview configuration
 vim.g.mkdp_images_path = '/home/clobrano/Documents/RedHatVault/attachments'
 
+-- I want the todo.txt shortcuts, but the ability to work with vimwiki (find references for example)
+-- so I will use a todo file with markdown extension, that should be recognized by vimwiki and
+-- load all its properties for the buffer, and also set the filetype to todo to get todo.txt mappings.
+vim.cmd [[
+  autocmd BufNewFile,BufRead todo.md set filetype=todo
+]]
+
+-- set textwidth to 0 for markdown files
+vim.cmd [[
+  autocmd BufNewFile,BufRead *.md set textwidth=0
+  autocmd BufNewFile,BufRead *.md nnoremap <M-]> wv<C-]>
+]]
+
+-- I will lose color highlighting this way, so I also want to set it manually:
+-- red for (A), orange for (B), cyan for (C), normal for all the other (not working)
+vim.cmd [[
+  autocmd BufNewFile,BufRead todo.md
+    \ syntax match TodoA '^([aA])' |
+    \ highlight TodoA ctermfg=red guifg=red gui=bold |
+    \ highlight TodoB ctermfg=yellow guifg=yellow gui=bold |
+    \ highlight TodoC ctermfg=cyan guifg=cyan gui=bold
+]]

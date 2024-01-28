@@ -844,3 +844,7 @@ vim.cmd [[
     \ highlight TodoB ctermfg=yellow guifg=yellow gui=bold |
     \ highlight TodoC ctermfg=cyan guifg=cyan gui=bold
 ]]
+
+vim.cmd[[
+  cnoreabbrev fontnote set guifont:Source\ Code\ Pro\ Light:h12
+]]

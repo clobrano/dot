@@ -12,6 +12,5 @@ $ENVIRONMENT/fedora-install-media-codecs.sh
 $ENVIRONMENT/flatpak-install-apps.sh
 
 $HOME/.dot/link.sh
-$ENVIRONMENT/vim-plug-install.sh
 popd
 nvim

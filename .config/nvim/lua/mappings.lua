@@ -96,10 +96,14 @@ nmap('<leader>ex', ':!%:p<cr>')
 -- directory change here
 nmap('<leader>here', ':lcd %:p:h<CR>')
 
--- vimdiff
-nmap('<leader>do', ':call ToggleDiff()<cr>')
+-- vimdiff: Diff Start, Diff Off, Diff Put, Diff Get
+nmap('<leader>ds', ':windo diffthis<cr>')
+nmap('<leader>do', ':windo diffoff<cr>')
 nmap('<leader>dp', ':diffput<cr>')
 nmap('<leader>dg', ':diffget<cr>')
+-- enhance diff put and diff obtain moving automatically to the next change
+nmap('dp', 'dp]c')
+nmap('do', 'do]c')
 
 
 -- edit font (effects on GUI only)
@@ -134,12 +138,6 @@ nmap('za', 'zA')
 -- toggle folding
 nmap('<leader>z', 'zA')
 
--- git diff shortcuts: enhance diff put and diff obtain moving automatically to
--- the next change
-nmap('dp', 'dp]c')
-nmap('do', 'do]c')
-nmap('<leader>wds', ':windo diffthis')
-nmap('<leader>wdo', ':windo diffoff')
 
 -- highlight selected word
 vim.cmd[[
@@ -189,8 +187,8 @@ nmap('<C-k>', '10k')
 nmap('<C-j>', '10j')
 nmap('E', '$')
 vmap('E', '$')
-nmap('B', '^')
-vmap('B', '^')
+nmap('B', '0') -- move to begin of the line
+vmap('B', '^') -- selection to first non-blank character
 
 
 -- move to previous buffer
@@ -229,7 +227,7 @@ nmap('rep', '<Esc>:%s/')
 -- resize vertical window splits
 nmap('<silent>', '= :exe --resize +2--<CR>')
 nmap('<silent>', '- :exe --resize -2--<CR>')
-nmap('w3', ':vertical resize +50')
+nmap('w3', ':vertical resize -30')
 
 -- sudo save
 --cmap w!! w !sudo tee > /dev/null %
@@ -337,8 +335,8 @@ nmap('<leader>ref', ":lua require'functions'.executeAndPaste('uuidgen | cut -d\"
 -- yank till the end of the line
 nmap('Y', 'yg_')
 
--- wrap/unwrap
-nmap('<leader>swh', ':set wrap<cr>') -- wrap _h_ere
-nmap('<leader>swnh', ':set nowrap<cr>')
+-- wrap/unwrap locally and in all windows
 nmap('<leader>sw', ':set wrap<cr>')
-nmap('<leader>swn', ':windo set nowrap<cr>')
+nmap('<leader>swn', ':set nowrap<cr>')
+nmap('<leader>swa', ':windo set wrap<cr>')
+nmap('<leader>swna', ':windo set nowrap<cr>')

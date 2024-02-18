@@ -10,7 +10,6 @@ $ENVIRONMENT/dnf-install-base-requirements.sh
 $ENVIRONMENT/fedora-enable-rpm-fusion.sh
 $ENVIRONMENT/fedora-install-media-codecs.sh
 $ENVIRONMENT/flatpak-install-apps.sh
-
-$HOME/.dot/link.sh
+$ENVIRONMENT/starship-install.sh
 popd
 nvim

@@ -442,3 +442,9 @@ PDB
 HealthCheck
 healthcheck
 IPMI
+finalizers
+requeuing
+uncordon
+uncordoned
+kubelet
+ControllerOwner

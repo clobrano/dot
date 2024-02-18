@@ -119,7 +119,7 @@ zstyle ':completion:*:complete:(cd|pushd):*' tag-order 'local-directories named-
 #
 # Functions and aliases
 #
-source ~/.dot/.config/cconf/zsh/functions.zsh
+source ~/.config/cconf/zsh/functions.zsh
 
 #
 # History
@@ -143,7 +143,7 @@ setopt SHARE_HISTORY        # share history across terminals
 # Plugins
 #
 
-ZSH_CUSTOM=~/.dot/.config/cconf/zsh
+ZSH_CUSTOM=~/.config/cconf/zsh
 for plugin in $(ls $ZSH_CUSTOM/plugins); do
     if [[ -f $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh ]]; then
         source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh

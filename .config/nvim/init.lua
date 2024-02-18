@@ -87,7 +87,44 @@ local plugins = {
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,
   },
-
+  {
+    "postfen/clipboard-image.nvim",
+    keys = {
+      { "<leader>i", "<cmd>PasteImg<CR>" },
+    },
+    config = function()
+      require 'clipboard-image'.setup {
+        -- Default configuration for all filetype
+        default = {
+          img_dir = { "%:p:h", "attachments" },         -- Use table for nested dir (New feature form PR #20)
+          img_name = function()
+            vim.fn.inputsave()
+            local name = vim.fn.input('Image name: ')
+            vim.fn.inputrestore()
+            return name
+          end,
+          affix = "<\n  %s\n>"           -- Multi lines affix
+        },
+        -- You can create configuration for ceartain filetype by creating another field (markdown, in this case)
+        -- If you're uncertain what to name your field to, you can run `lua print(vim.bo.filetype)`
+        -- Missing options from `markdown` field will be replaced by options from `default` field
+        markdown = {
+          img_dir = { "%:p:h", "attachments" },         -- Use table for nested dir (New feature form PR #20)
+          img_name = function()
+            vim.fn.inputsave()
+            local name = vim.fn.input('Image name: ')
+            vim.fn.inputrestore()
+            return name
+          end,
+          img_handler = function(img)
+            vim.cmd("normal! f[")                        -- go to [
+            vim.cmd("normal! a" .. img.name)             -- append text with image name
+          end,
+          affix = "![](%s)",
+        }
+      }
+    end
+  },
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -100,7 +137,7 @@ local plugins = {
   'tpope/vim-sleuth',
   'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
-  'inkarkat/vim-ProportionalResize',
+  --'inkarkat/vim-ProportionalResize',
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -192,7 +229,7 @@ local plugins = {
       display_mode = "split", -- The display mode. Can be "float" or "split".
       show_prompt = false,    -- Shows the Prompt submitted to Ollama.
       show_model = true,      -- Displays which model you are using at the beginning of your chat session.
-      no_auto_close = true,  -- Never closes the window automatically.
+      no_auto_close = true,   -- Never closes the window automatically.
       init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
       -- Function to initialize Ollama
       command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
@@ -356,14 +393,14 @@ require('tabline').setup {}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+
 require('telescope').setup {
   defaults = {
-    layout_strategy = 'flex',
+    layout_strategy = 'vertical',
     layout_config = {
-      width = 0.9,
-      height = 0.9,
-      horizontal = { preview_width = 0.6 },
-      vertical = { preview_height = 0.6 },
+      width=0.90,
+      height= 0.99,
+      preview_height = 0.6,
     },
     pickers = {
       lsp_references = { fname_width = 100, },
@@ -407,6 +444,7 @@ vim.keymap.set('n', '<leader>f/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   -- configure get_dropdown to expand previewer to full width of screen
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    layout_strategy = "vertical",
     winblend = 10,
     previewer = false,
     shorten_path = false,
@@ -748,20 +786,49 @@ vim.keymap.set('n', '<Leader>dw',
 --vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
 --vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
 --vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
-require('dap-go').setup({})
+require('dap-go').setup {
+      -- Additional dap configurations can be added.
+      -- dap_configurations accepts a list of tables where each entry
+      -- represents a dap configuration. For more details see:
+      -- |dap-configuration|
+      dap_configurations = {
+        {
+          -- Must be "go" or it will be ignored by the plugin
+          type = "go",
+          name = "Attach remote",
+          mode = "remote",
+          request = "attach",
+        },
+      },
+      -- delve configurations
+      delve = {
+        -- the path to the executable dlv which will be used for debugging.
+        -- by default, this is the "dlv" executable on your PATH.
+        path = "dlv",
+        -- time to wait for delve to initialize the debug session.
+        -- default to 20 seconds
+        initialize_timeout_sec = 20,
+        -- a string that defines the port to start delve debugger.
+        -- default to string "${port}" which instructs nvim-dap
+        -- to start the process in a random available port
+        port = "2345",
+        -- additional args to pass to dlv
+        args = {}
+      },
+    }
 require('dapui').setup({})
 
 
 -- Register some useful macros
 vim.cmd [[
 " Macro to format PR Markdown links
-let @p='lvi]diPRjjf)a jjp:%s/by.*$//'
+let @p='f#€ýavt €ýadBi- jjpbi-PRjjf[€ýai jjvEh:s/ by.*]/]'
 " Macro to format MR Gitlab links
-let @m='lvi]dEa jjpBaMRjj:% (!.*$€kl€kl€kl€kl€kl€kls/€kr€kr€kr€kr€kr€kr€kr€kr/'
+let @m='f!€ýa lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
 " Macro to format RH Issue tracker links
-let @t='%dlBdlf]€ýalvt(€ýadEp:%s/ - Red Hat Issue Tracker/'
+let @t='llvi]dBi- #jjpa jjllvlldrep - Red Hat Issue Tracker/'
 " Macro to set Wrap in current and next split (for code review with GH.nvim)
-let @d='vecDONEjj'
+let @d='BfT€ýacwDONEjj'
 ]]
 
 
@@ -845,6 +912,6 @@ vim.cmd [[
     \ highlight TodoC ctermfg=cyan guifg=cyan gui=bold
 ]]
 
-vim.cmd[[
+vim.cmd [[
   cnoreabbrev fontnote set guifont:Source\ Code\ Pro\ Light:h12
 ]]

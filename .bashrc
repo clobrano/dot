@@ -101,9 +101,10 @@ alias mmake='meson compile -C build'
 alias mconf='meson setup build'
 alias mtest='meson test -C build'
 
-# Local bash configuration I don't want to save upstream
+# Local bash configurations I don't want to save upstream
 [ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc
+[ -f $HOME/Documents/unsharable ] && source $HOME/Documents/unsharable
 
-if [[ -d  $HOME/.cargo ]]; then
-    . "$HOME/.cargo/env"
-fi
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+eval "$(atuin init bash)"

@@ -340,3 +340,14 @@ nmap('<leader>sw', ':set wrap<cr>')
 nmap('<leader>swn', ':set nowrap<cr>')
 nmap('<leader>swa', ':windo set wrap<cr>')
 nmap('<leader>swna', ':windo set nowrap<cr>')
+
+
+-- markdown section
+-- bold
+vmap('<leader>bo', '"adi**<esc>"apa**<esc>')
+-- wikilink
+vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
+-- strikethrough
+vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
+-- PR created
+imap(':prcreated', 'created (#wait review)')

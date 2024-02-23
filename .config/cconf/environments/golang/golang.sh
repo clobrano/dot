@@ -17,3 +17,9 @@ sudo tar -C /usr/local -xzf go${VERSION}.linux-amd64.tar.gz
 
 # Clean the environment
 [[ $? == 0 ]] && rm go${VERSION}.linux-amd64.tar.gz
+
+# Install gimme
+# assumes ~/bin exists and is in $PATH, so adjust accordingly!
+mkdir -p ~/.local/bin
+curl -sL -o ~/.local/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme
+chmod +x ~/.local/bin/gimme

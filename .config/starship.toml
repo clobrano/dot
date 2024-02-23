@@ -22,3 +22,9 @@ format='[$hostname]($style) '
 [time]
 format = '[$time]($style) '
 disabled = false
+
+[container]
+# for toolbox
+style = 'bold green dimmed'
+format = '[$symbol]($style) '
+disabled = false

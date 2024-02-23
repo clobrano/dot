@@ -26,7 +26,7 @@
 	sh = stash
 	pl = pull
 	l = log --graph --oneline
-	wa = "!git worktree add -b ${1} ../${1} main"
+	wa = !git-add-worktree.sh
     l1 = log -1
     rc = rebase --continue
     ri = rebase --interactive

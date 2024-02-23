@@ -65,7 +65,8 @@ local plugins = {
     end
   },
   'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
-  'airblade/vim-gitgutter',
+  --'airblade/vim-gitgutter',
+  'lewis6991/gitsigns.nvim',
   { 'sindrets/diffview.nvim',    dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
   {
@@ -333,8 +334,19 @@ require('plugins.fzf-vim')
 require('plugins.ranger')
 require('plugins.copilot')
 
+require('gitsigns').setup{
+  on_attach = function(bufnr)
+    -- Setup keymaps
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']c', '<cmd>lua require"gitsigns".next_hunk()<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[c', '<cmd>lua require"gitsigns".prev_hunk()<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hp', '<cmd>lua require"gitsigns".preview_hunk()<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hs', '<cmd>lua require"gitsigns".stage_hunk()<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hu', '<cmd>lua require"gitsigns".reset_hunk()<CR>', {})
+  end
+}
+
 require('undotree').setup()
---require('plugins.octo')
+require('plugins.octo')
 require('nvim-listchars').setup({
   save_state = false
 })

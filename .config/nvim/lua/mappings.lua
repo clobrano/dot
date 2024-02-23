@@ -327,10 +327,10 @@ nmap('D', '<C-w>}')
 -- tag jump to occurence if there's only one (use always tselect instead of tag)
 nmap('<C-]>', 'g<C-]>')
 
-
 -- paste a UUID for referencing text content (e.g. in markdown files)
 --nmap('<leader>ref', ':r!uuidgen | cut -d"-" -f1<cr>') 
 nmap('<leader>ref', ":lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>")
+vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
 -- yank till the end of the line
 nmap('Y', 'yg_')

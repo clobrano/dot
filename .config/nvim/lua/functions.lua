@@ -40,6 +40,19 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>mr', "<cmd>lua CreateMarkdownFileWithTitle('Resources')<cr>", { noremap = true, silent = true })
 
+M.makeGmailSearchLink = function ()
+    -- Get selected text
+    local selected_text = vim.fn.getline(vim.fn.visualmode())
+    -- Replace spaces with '+' in the selected text
+    local replaced_text = string.gsub(selected_text, " ", "+")
+    -- Replace the original text with the replaced text
+    local search_link = "https://mail.google.com/mail/u/0/#search/" .. replaced_text
+    local pos = vim.fn.getpos('.')
+    vim.fn.setline(pos[2], search_link)
+    print(search_link)
+end
+
+
 function CreateNoteFromFileName()
     -- if filename starts with a date, then the title is the same date with the format "Mon 12 Jan 2021 Week02"
     -- otherwise, the title is the filename without the extension
@@ -118,4 +131,6 @@ vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = tr
 -- key mapping to show letsdo completed sessions (append a search query to the below command or enter to show today's
 -- sessions)
 vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
+
+
 return M

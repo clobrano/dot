@@ -448,3 +448,13 @@ uncordon
 uncordoned
 kubelet
 ControllerOwner
+kubectl
+xyz
+wikipedia
+kustomize
+envtest
+opm
+goimports
+ReplicaSet
+DaemonSet
+DaemonSets

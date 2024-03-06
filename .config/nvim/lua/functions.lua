@@ -46,10 +46,19 @@ M.makeGmailSearchLink = function ()
     -- Replace spaces with '+' in the selected text
     local replaced_text = string.gsub(selected_text, " ", "+")
     -- Replace the original text with the replaced text
-    local search_link = "https://mail.google.com/mail/u/0/#search/" .. replaced_text
+    local search_link = "#email [".. selected_text .. "]" .. "(https://mail.google.com/mail/u/0/#search/" .. replaced_text ..")"
     local pos = vim.fn.getpos('.')
     vim.fn.setline(pos[2], search_link)
     print(search_link)
+end
+
+
+-- use require('telescope.builtin').live_grep to search currently selected text
+M.searchSelectedText = function ()
+    -- Get selected text
+    local selected_text = vim.fn.getreg(vim.fn.visualmode())
+    -- Replace the original text with the replaced text
+    require('telescope.builtin').live_grep({search = selected_text})
 end
 
 

@@ -27,7 +27,6 @@ local plugins = {
       vim.cmd.colorscheme 'dracula'
     end,
   },
-  "savq/melange-nvim",
   {
     "craftzdog/solarized-osaka.nvim",
     lazy = false,
@@ -37,11 +36,11 @@ local plugins = {
   { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
   "NLKNguyen/papercolor-theme", -- light background colorscheme
   "navarasu/onedark.nvim",
-  "sonph/onehalf",
   "tanvirtin/monokai.nvim", -- monokai colorscheme
   "shaunsingh/solarized.nvim",
   'ryanoasis/vim-devicons',
   "fraso-dev/nvim-listchars", -- toggle show listchars
+  "b0o/incline.nvim",
   { 'kdheepak/tabline.nvim', opts = {} },
   {
     'majutsushi/tagbar',
@@ -285,7 +284,7 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim" },
   },
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -333,6 +332,8 @@ require('mappings')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 require('plugins.copilot')
+require('plugins.incline')
+require('plugins.surrounds')
 
 require('gitsigns').setup{
   on_attach = function(bufnr)
@@ -470,7 +471,9 @@ vim.keymap.set('n', '<leader>f/', function()
 end, { desc = '[F]uzzily [/] search in current buffer' })
 
 vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
+vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
 vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
+vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
 vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
@@ -595,11 +598,11 @@ local on_attach = function(client, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  --nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  --nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  --nmap('<leader>wl', function()
+    --print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  --end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -751,6 +754,7 @@ if vim.fn.exists('g:neovide') == 1 then
   vim.cmd [[
   set shell=/usr/bin/zsh
   set title
+  let g:neovide_theme = 'auto'
   let g:neovide_transparency=1
   let g:neovide_scroll_animation_length=0
   let g:neovide_confirm_quit=v:false

@@ -12,8 +12,8 @@ return {
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
-                \ { 'n': ['Open Notes', 'SLoad RedHatVault'] },
-                \ { 'e': ['Open Espanso', 'SLoad Espanso'] },
+                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-macchiato | set guifont=Source\ Code\ Pro:h11.5'] },
+                \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
                 \ ]
             let g:startify_enable_special = 0
             let g:startify_files_number = 3
@@ -29,10 +29,17 @@ return {
                 return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
             endfunction
 
+            function! s:current_branch()
+                let git = 'git '
+                let branch = system(git . 'branch --show-current | tr -d "\n"')
+                return branch
+            endfunction
+
+            let current_branch = s:current_branch()
             let g:startify_lists = [
                 \ { 'type': 'commands',  'header': ['   Commands']       },
                 \ { 'header': ['   Recent files in this directory'], 'type': 'dir' },
-                \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
+                \ { 'header': ['   Commits in branch ' .. current_branch ],        'type': function('s:list_commits') },
                 \ ]
         ]]
     end,

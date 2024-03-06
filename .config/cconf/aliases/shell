@@ -43,16 +43,23 @@ if command -v vagrant 2>&1 > /dev/null; then
 fi
 
 alias cclip="xclip -sel clipboard"
-alias nreview="nvim -c \"windo ListcharsDisable\" -c \"GHOpenPR\""
-alias Mdr="cd ~/workspace/medik8s/upstream/machine-deletion-remediation/"
+#alias nreview="nvim -c \"windo ListcharsDisable\" -c \"GHOpenPR\""
+alias nreview="nvim -c \"Octo pr list\""
+# This is for gimme. Sometimes the go project folder I'm in doesn't get the right go version. Re-entering the folder
+# fixes it, so :shrug:
+alias rein="cd .. && cd -"
+# I know, an alias for my own script... but bookmark is a meaningful name
+alias bk=~/workspace/script-fu/bookmarks
+
+alias Mdr="cd ~/workspace/medik8s/upstream/mdr/"
 alias mdr="cd ~/workspace/medik8s/midstream/machine-deletion-remediation/"
-alias Nhc="cd ~/workspace/medik8s/upstream/node-healthcheck-operator"
+alias Nhc="cd ~/workspace/medik8s/upstream/nhc"
 alias nhc="cd ~/workspace/medik8s/midstream/node-healthcheck-operator"
-alias Far="cd ~/workspace/medik8s/upstream/fence-agents-remediation/"
+alias Far="cd ~/workspace/medik8s/upstream/far/"
 alias far="cd ~/workspace/medik8s/midstream/fence-agents-remediation/"
-alias Snr="cd ~/workspace/medik8s/upstream/self-node-remediation/"
+alias Snr="cd ~/workspace/medik8s/upstream/snr/"
 alias snr="cd ~/workspace/medik8s/midstream/self-node-remediation/"
-alias Nmo="cd ~/workspace/medik8s/upstream/node-maintenance-operator/"
+alias Nmo="cd ~/workspace/medik8s/upstream/nmo/"
 alias nmo="cd ~/workspace/medik8s/midstream/node-maintenance-operator/"
 alias m3dev="cd ~/mnt/remote-user/metal3-dev-env"
 alias capm3="cd ~/mnt/remote-user/go/src/github.com/metal3-io/cluster-api-provider-metal3"

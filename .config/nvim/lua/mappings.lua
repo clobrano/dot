@@ -207,6 +207,7 @@ nmap('td', ':tabclose<cr>')
 
 -- normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)
 imap('jj', '<Esc>')
+--imap('jj',   '<Esc>:write<CR>')
 
 -- Notes (see plugin/tasks)
 
@@ -327,9 +328,12 @@ nmap('D', '<C-w>}')
 -- tag jump to occurence if there's only one (use always tselect instead of tag)
 nmap('<C-]>', 'g<C-]>')
 
+-- find vim tags with telescope
+nmap('<leader>fv', 'vt: & <leader>fa')
+
 -- paste a UUID for referencing text content (e.g. in markdown files)
 --nmap('<leader>ref', ':r!uuidgen | cut -d"-" -f1<cr>') 
-nmap('<leader>ref', ":lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>")
+imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")
 vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
 -- yank till the end of the line
@@ -350,4 +354,5 @@ vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
 -- strikethrough
 vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
 -- PR created
-imap(':prcreated', 'created (#wait review)')
+nmap('<leader>pn', 'a created (#wait in review)<esc>')
+nmap('<leader>pm', 'a **MERGED**<esc>')

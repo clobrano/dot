@@ -7,10 +7,17 @@
 
 source $HOME/.config/cconf/zsh/functions.zsh
 
-
-time=$(cat $HOME/.productive-time-deadline)
-left=$(date_in_seconds $time)
-echo $left
-if [[ $left -gt 0 ]]; then
-    echo "  $(humanizetime $left)"
+started=$(cat $HOME/.productive-time-started)
+deadline=$(cat $HOME/.productive-time-deadline)
+left=$(time_left_in_seconds $deadline)
+since=$(time_since_in_seconds $started)
+# drop seconds from the output
+s=$(humanizetime $since)
+l=$(humanizetime $left)
+if [[ $left -gt 0 ]] && [[ $since -gt 0 ]]; then
+    echo "   ↑${s%'.'*} ↓${l%'.'*}"
+elif [[ $since -gt 0 ]]; then
+    echo "   ↑${s%'.'*} ↓$deadline"
+elif [[ $left -gt 0 ]]; then
+    echo "   ↓${l%'.'*}"
 fi

@@ -21,6 +21,7 @@ require('telescope').setup{
             " Mapping
             nnoremap <leader>fa :Telescope live_grep<cr>
             nnoremap <leader>fb :Telescope buffers<cr>
+            nnoremap <leader>fc :Telescope colorscheme<cr>
             nnoremap <leader>fd :Telescope lsp_definitions<cr>
             nnoremap <leader>ff :Telescope find_files hidden=true<cr>
             nnoremap <leader>fg :Telescope current_buffer_fuzzy_find<cr>

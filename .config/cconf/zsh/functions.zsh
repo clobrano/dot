@@ -89,7 +89,7 @@ function rm() {
 }
 
 
-function date_in_seconds() {
+function time_left_in_seconds() {
     DEADLINE=$1 # e.g. 17:00 for today's 5pm
 
     deadline_full=$(date -d $DEADLINE +%s)
@@ -97,6 +97,17 @@ function date_in_seconds() {
     time_left=$(($deadline_full - $now))
     if [[ $time_left -gt 0 ]]; then
         echo $time_left
+    fi
+}
+
+function time_since_in_seconds() {
+    TIME_START=$1 # e.g. 17:00 for today's 5pm
+
+    time_start_full=$(date -d $TIME_START +%s)
+    now=$(date +%s)
+    time_since=$(($now - time_start_full))
+    if [[ $time_since -gt 0 ]]; then
+        echo $time_since
     fi
 }
 

@@ -116,9 +116,3 @@ matches:
 
   - trigger: "Micheal"
     replace: "Michael"
-
-  - trigger: "!prnew "
-    replace: " created #wait review"
-
-  - trigger: "!prdone"
-    replace: "**MERGED**"

@@ -7,6 +7,7 @@ set guifont=Source\ Code\ Pro:h11
 set guioptions-=m
 set guioptions-=T]]
 
+vim.cmd.colorscheme 'catppuccin-frappe'
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.mouse = 'a'

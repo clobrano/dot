@@ -207,6 +207,7 @@ nmap('td', ':tabclose<cr>')
 
 -- normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)
 imap('jj', '<Esc>')
+--imap('jj',   '<Esc>:write<CR>')
 
 -- Notes (see plugin/tasks)
 

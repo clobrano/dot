@@ -23,9 +23,9 @@ local plugins = {
   { -- dracula customized theme
     'clobrano-forks/vim',
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'dracula'
-    end,
+    --config = function()
+      --vim.cmd.colorscheme 'dracula'
+    --end,
   },
   {
     "craftzdog/solarized-osaka.nvim",
@@ -430,6 +430,9 @@ require('telescope').setup {
             end
           }
         }
+      },
+      colorscheme = {
+        enable_preview = true
       },
     },
     file_ignore_patterns = {

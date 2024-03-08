@@ -12,7 +12,7 @@ return {
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
-                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-macchiato | set guifont=Source\ Code\ Pro:h11.5'] },
+                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-macchiato | set guifont=Source\ Code\ Pro:h11.5 | set linespace=2'] },
                 \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
                 \ ]
             let g:startify_enable_special = 0

@@ -34,7 +34,6 @@ if command -v exa 2>&1 >/dev/null; then
     alias ls=exa
 fi
 
-alias neovide="neovide --multigrid"
 alias nn='neovide -- -c "set titlestring=$(basename $(pwd))"'
 
 

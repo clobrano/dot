@@ -1,0 +1,32 @@
+-- Pull in the wezterm API
+local wezterm = require 'wezterm'
+
+-- This table will hold the configuration.
+local config = {}
+
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+if wezterm.config_builder then
+  config = wezterm.config_builder()
+end
+
+-- This is where you actually apply your config choices
+config.color_scheme = 'Darcula (base16)'
+config.color_scheme = 'Chalk'
+config.color_scheme = 'Catppuccin Macchiato'
+config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = 'catppuccin-frappe'
+--config.font = wezterm.font 'Fira Code'
+-- You can specify some parameters to influence the font selection;
+-- for example, this selects a Bold, Italic font variant.
+config.font = wezterm.font('Source Code Pro', { italic = false })
+config.font_size = 11.5
+
+-- disable title bar
+config.window_decorations = "NONE"
+-- disable the tab bar with only one tab
+config.hide_tab_bar_if_only_one_tab = true
+config.adjust_window_size_when_changing_font_size = false
+
+-- and finally, return the configuration to wezterm
+return config

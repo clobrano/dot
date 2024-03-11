@@ -222,7 +222,8 @@ add-zsh-hook precmd () {
 add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
-    switchGoVersion
+    switch_go_version
+    auto_venv
 }
 add-zsh-hook preexec () {
     cmd_start="$SECONDS"

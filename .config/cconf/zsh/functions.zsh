@@ -1,3 +1,21 @@
+function auto_venv() {
+    # automatically activate python virtualenv
+
+    if [ -n "$VIRTUAL_ENV" ]; then
+        # already in virtualenv
+        return
+    fi
+
+   declare -a VENV_DIRS
+    VENV_DIRS=(.venv venv env)
+    for d in ${VENV_DIRS[@]}; do
+        if [ -d $d ]; then
+            source $d/bin/activate
+            return
+        fi
+    done
+}
+
 function fzf_git_branches() {
     if ! is_in_git_repo; then
         echo "[!] not a git repository"
@@ -18,7 +36,7 @@ function is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-function switchGoVersion() {
+function switch_go_version() {
     GO_MOD_FILE="$(pwd)/go.mod"
     if [ ! -f $GO_MOD_FILE ]; then
         return

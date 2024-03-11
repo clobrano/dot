@@ -41,7 +41,7 @@ local plugins = {
   'ryanoasis/vim-devicons',
   "fraso-dev/nvim-listchars", -- toggle show listchars
   "b0o/incline.nvim",
-  { 'kdheepak/tabline.nvim', opts = {} },
+  { 'kdheepak/tabline.nvim', opts = {} }, -- needed to show buffer tab
   {
     'majutsushi/tagbar',
     config = function()
@@ -398,6 +398,7 @@ require('litee.gh').setup({
 vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup {}
+--
 --require("indent_blankline").setup {
 --space_char_blankline = " ",
 --show_current_context = true,

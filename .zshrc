@@ -11,6 +11,7 @@ export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
+export KUBE=~/.kube
 export KUBE_MAP=~/.kube/dsal-host-config-map.json
 
 # PATH

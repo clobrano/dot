@@ -2,7 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 [directory]
-truncation_length = 2
+truncation_length = 3
 truncate_to_repo = false
 
 [git_branch]

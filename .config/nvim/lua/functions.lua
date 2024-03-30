@@ -1,4 +1,18 @@
 
+function Toggle_folding_node()
+    -- toggle foldlevel from 1 to 2 and vice versa
+    -- get current foldlevel
+    local foldlevel = vim.o.foldlevel
+    if foldlevel == 1 then
+        vim.cmd('set foldlevel=2')
+    end
+    if foldlevel == 2 then
+        vim.cmd('set foldlevel=1')
+    end
+end
+vim.api.nvim_set_keymap('n', '<leader>z', "<cmd>lua Toggle_folding_node()<cr>", { noremap = true, silent = true })
+
+
 function CreateNoteFromFileName()
     -- if filename starts with a date, then the title is the same date with the format "Mon 12 Jan 2021 Week02"
     -- otherwise, the title is the filename without the extension
@@ -62,6 +76,27 @@ vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = tr
 vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
 
 
+function Markdown_link_from_url()
+    -- Get the URL from the selection
+    local url = vim.fn.getreg(vim.fn.visualmode())
+
+    -- Get the title of the page from the URL
+    -- wget -qO- "$1" | perl -l -0777 -ne 'print $1 if /<title.*?>\s*(.*?)\s*<\/title/si' | recode html..ascii 2>/dev/null
+    local get_page ='wget -qO- ' .. vim.fn.shellescape(url)
+    local extract_title = "perl -l -0777 -ne 'print $1 if /<title.*?>\\s*(.*?)\\s*<\\/title/si'"
+    local escape_title = 'recode html..ascii 2>/dev/null'
+    local command = get_page .. '|' .. extract_title .. '|' .. escape_title
+    local title = vim.fn.system(command)
+
+    print(command)
+    print(title)
+    -- Paste the title after the cursor on the same line
+    local link = '[' .. title .. '](' .. url .. ')'
+    vim.fn.append(0, link)
+end
+
+-- link title
+vim.api.nvim_set_keymap('n', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
 local M = {}
 

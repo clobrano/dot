@@ -121,8 +121,7 @@ imap('<C-c>', '<c-x><c-o>')
 nmap('Q', '<nop>')
 
 -- execute current line as command in bash (ex. zathura path/to/pdf -P 10)
-nmap('<leader>z', ':.w !bash<cr>')
-nmap('<leader>Z', ':.w !sudo bash<cr>')
+nmap('<leader>Z', ':.w !bash<cr>')
 
 -- execute external command
 nmap('!', ':!')
@@ -136,7 +135,7 @@ nmap('<leader>vx', ':vertical split | terminal<cr>')
 -- fold: always toggle all fold at current position
 nmap('za', 'zA')
 -- toggle folding
-nmap('<leader>z', 'zA')
+--nmap('<leader>z', 'zA')
 
 
 -- highlight selected word
@@ -279,6 +278,9 @@ nmap('}', '}zz')
 -- select till the end of the line
 vmap('T', '$h')
 
+-- simplify windows mappings
+vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
+
 --close splits
 nmap('cl', ':close<cr>')
 nmap('xl', '<C-w>l:close<CR>')
@@ -332,9 +334,13 @@ nmap('<C-]>', 'g<C-]>')
 nmap('<leader>fv', 'vt: & <leader>fa')
 
 -- paste a UUID for referencing text content (e.g. in markdown files)
---nmap('<leader>ref', ':r!uuidgen | cut -d"-" -f1<cr>') 
 imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")
+-- zettelkasted UUID (date + time)
+imap('<C-d>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
 vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
+
+-- find todos (needs folke/todo-comments)
+nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')
 
 -- yank till the end of the line
 nmap('Y', 'yg_')
@@ -344,7 +350,6 @@ nmap('<leader>sw', ':set wrap<cr>')
 nmap('<leader>swn', ':set nowrap<cr>')
 nmap('<leader>swa', ':windo set wrap<cr>')
 nmap('<leader>swna', ':windo set nowrap<cr>')
-
 
 -- markdown section
 -- bold
@@ -356,3 +361,5 @@ vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
 -- PR created
 nmap('<leader>pn', 'a created (#wait in review)<esc>')
 nmap('<leader>pm', 'a **MERGED**<esc>')
+-- zenmode
+nmap('<leader>zm', ':ZenMode<cr>')

@@ -3,7 +3,8 @@
 
 -- GUI options: no menubar and no toolbar
 vim.cmd[[
-set guifont=Source\ Code\ Pro:h11
+"set guifont=Source\ Code\ Pro:h11
+set guifont=Hasklig:h11
 set guioptions-=m
 set guioptions-=T]]
 
@@ -14,6 +15,8 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
+vim.o.foldmethod='expr'
+vim.o.foldlevel=4
 
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.smartcase = true

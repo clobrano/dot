@@ -23,23 +23,12 @@ local plugins = {
   { -- dracula customized theme
     'clobrano-forks/vim',
     priority = 1000,
-    --config = function()
-      --vim.cmd.colorscheme 'dracula'
-    --end,
   },
-  {
-    "craftzdog/solarized-osaka.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
+  "savq/melange-nvim",                    -- default light theme
   { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
-  "NLKNguyen/papercolor-theme", -- light background colorscheme
-  "navarasu/onedark.nvim",
-  "tanvirtin/monokai.nvim", -- monokai colorscheme
-  "shaunsingh/solarized.nvim",
+  "tanvirtin/monokai.nvim",               -- monokai colorscheme
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars", -- toggle show listchars
+  "fraso-dev/nvim-listchars",             -- toggle show listchars
   "b0o/incline.nvim",
   { 'kdheepak/tabline.nvim', opts = {} }, -- needed to show buffer tab
   {
@@ -78,9 +67,20 @@ local plugins = {
   },
 
   -- Notes and Markdown
-  require('plugins.vimwiki'),
+  require('plugins.zenmode'),
+  require('plugins.orgmode'),
+  'lervag/wiki.vim',
+  'preservim/vim-markdown',
   'freitass/todo.txt-vim',
   'artempyanykh/marksman',
+  {
+    -- needs plantUML and imv installed
+    'Groveer/plantuml.nvim',
+    config = function()
+      -- calling `setup` is optional for customization
+      require('plantuml').setup({})
+    end
+  },
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -155,6 +155,7 @@ local plugins = {
   -- Debugging
   'leoluz/nvim-dap-go',
   'rcarriga/nvim-dap-ui',
+  'nvim-neotest/nvim-nio',
   'theHamsta/nvim-dap-virtual-text',
   'nvim-telescope/telescope-dap.nvim',
 
@@ -172,19 +173,7 @@ local plugins = {
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
   { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
-    config = function()
-      vim.keymap.set('n', '<leader>nt', ':Neotree reveal<cr>', { silent = true, noremap = true })
-      vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
-    end
-  },
+  require('plugins.neotree'),
   {
     'szw/vim-g',
     opts = {},
@@ -286,6 +275,7 @@ local plugins = {
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim" },
   },
+  'nvim-telescope/telescope-media-files.nvim',
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
   -- requirements installed.

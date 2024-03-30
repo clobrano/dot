@@ -49,8 +49,8 @@ require"octo".setup({
       goto_issue = { lhs = "<space>gi", desc = "navigate to a local repo issue" },
       add_comment = { lhs = "<space>ca", desc = "add comment" },
       delete_comment = { lhs = "<space>cd", desc = "delete comment" },
-      next_comment = { lhs = "]c", desc = "go to next comment" },
-      prev_comment = { lhs = "[c", desc = "go to previous comment" },
+      next_comment = { lhs = "<leader>cn", desc = "go to next comment" },
+      prev_comment = { lhs = "<leader>cp", desc = "go to previous comment" },
       react_hooray = { lhs = "<space>rp", desc = "add/remove 🎉 reaction" },
       react_heart = { lhs = "<space>rh", desc = "add/remove ❤️ reaction" },
       react_eyes = { lhs = "<space>re", desc = "add/remove 👀 reaction" },
@@ -130,7 +130,7 @@ require"octo".setup({
       select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
       select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
       close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
-      --toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
+      toggle_viewed = { lhs = "<leader>vv", desc = "toggle viewer viewed state" },
       goto_file = { lhs = "gf", desc = "go to file" },
     },
     file_panel = {
@@ -143,7 +143,7 @@ require"octo".setup({
       select_next_entry = { lhs = "]q", desc = "move to previous changed file" },
       select_prev_entry = { lhs = "[q", desc = "move to next changed file" },
       close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
-      toggle_viewed = { lhs = "<leader><space>", desc = "toggle viewer viewed state" },
+      toggle_viewed = { lhs = "<leader>vv", desc = "toggle viewer viewed state" },
     }
   }
 })

@@ -96,20 +96,20 @@ local plugins = {
       require 'clipboard-image'.setup {
         -- Default configuration for all filetype
         default = {
-          img_dir = { "%:p:h", "attachments" },         -- Use table for nested dir (New feature form PR #20)
+          img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
           img_name = function()
             vim.fn.inputsave()
             local name = vim.fn.input('Image name: ')
             vim.fn.inputrestore()
             return name
           end,
-          affix = "<\n  %s\n>"           -- Multi lines affix
+          affix = "<\n  %s\n>" -- Multi lines affix
         },
         -- You can create configuration for ceartain filetype by creating another field (markdown, in this case)
         -- If you're uncertain what to name your field to, you can run `lua print(vim.bo.filetype)`
         -- Missing options from `markdown` field will be replaced by options from `default` field
         markdown = {
-          img_dir = { "%:p:h", "attachments" },         -- Use table for nested dir (New feature form PR #20)
+          img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
           img_name = function()
             vim.fn.inputsave()
             local name = vim.fn.input('Image name: ')
@@ -117,8 +117,8 @@ local plugins = {
             return name
           end,
           img_handler = function(img)
-            vim.cmd("normal! f[")                        -- go to [
-            vim.cmd("normal! a" .. img.name)             -- append text with image name
+            vim.cmd("normal! f[")            -- go to [
+            vim.cmd("normal! a" .. img.name) -- append text with image name
           end,
           affix = "![](%s)",
         }
@@ -325,7 +325,14 @@ require('plugins.copilot')
 require('plugins.incline')
 require('plugins.surrounds')
 
-require('gitsigns').setup{
+require('todo-comments').setup {
+  highlight = {
+    comments_only = false,
+    after = "",
+    keyword = "bg",
+  }
+}
+require('gitsigns').setup {
   on_attach = function(bufnr)
     -- Setup keymaps
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']c', '<cmd>lua require"gitsigns".next_hunk()<CR>', {})
@@ -402,8 +409,8 @@ require('telescope').setup {
   defaults = {
     layout_strategy = 'vertical',
     layout_config = {
-      width=0.90,
-      height= 0.99,
+      width = 0.90,
+      height = 0.99,
       preview_height = 0.6,
     },
     pickers = {
@@ -427,7 +434,7 @@ require('telescope').setup {
       },
     },
     file_ignore_patterns = {
-      "^.git/", "node_modules/", "^vendor/"
+      "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"
     },
   },
   pickers = {
@@ -595,7 +602,7 @@ local on_attach = function(client, bufnr)
   --nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   --nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   --nmap('<leader>wl', function()
-    --print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  --print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   --end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
@@ -797,35 +804,35 @@ vim.keymap.set('n', '<Leader>dw',
 --vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
 --vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
 require('dap-go').setup {
-      -- Additional dap configurations can be added.
-      -- dap_configurations accepts a list of tables where each entry
-      -- represents a dap configuration. For more details see:
-      -- |dap-configuration|
-      dap_configurations = {
-        {
-          -- Must be "go" or it will be ignored by the plugin
-          type = "go",
-          name = "Attach remote",
-          mode = "remote",
-          request = "attach",
-        },
-      },
-      -- delve configurations
-      delve = {
-        -- the path to the executable dlv which will be used for debugging.
-        -- by default, this is the "dlv" executable on your PATH.
-        path = "dlv",
-        -- time to wait for delve to initialize the debug session.
-        -- default to 20 seconds
-        initialize_timeout_sec = 20,
-        -- a string that defines the port to start delve debugger.
-        -- default to string "${port}" which instructs nvim-dap
-        -- to start the process in a random available port
-        port = "2345",
-        -- additional args to pass to dlv
-        args = {}
-      },
-    }
+  -- Additional dap configurations can be added.
+  -- dap_configurations accepts a list of tables where each entry
+  -- represents a dap configuration. For more details see:
+  -- |dap-configuration|
+  dap_configurations = {
+    {
+      -- Must be "go" or it will be ignored by the plugin
+      type = "go",
+      name = "Attach remote",
+      mode = "remote",
+      request = "attach",
+    },
+  },
+  -- delve configurations
+  delve = {
+    -- the path to the executable dlv which will be used for debugging.
+    -- by default, this is the "dlv" executable on your PATH.
+    path = "dlv",
+    -- time to wait for delve to initialize the debug session.
+    -- default to 20 seconds
+    initialize_timeout_sec = 20,
+    -- a string that defines the port to start delve debugger.
+    -- default to string "${port}" which instructs nvim-dap
+    -- to start the process in a random available port
+    port = "2345",
+    -- additional args to pass to dlv
+    args = {}
+  },
+}
 require('dapui').setup({})
 
 

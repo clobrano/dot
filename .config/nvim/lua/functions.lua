@@ -3,12 +3,17 @@ function Toggle_folding_node()
     -- toggle foldlevel from 1 to 2 and vice versa
     -- get current foldlevel
     local foldlevel = vim.o.foldlevel
-    if foldlevel == 1 then
+    if foldlevel == 2 then
+        vim.cmd('set foldlevel=0')
+    elseif foldlevel == 1 then
+        vim.cmd('set foldlevel=2')
+    elseif foldlevel == 0 then
+        vim.cmd('set foldlevel=1')
+    else
         vim.cmd('set foldlevel=2')
     end
-    if foldlevel == 2 then
-        vim.cmd('set foldlevel=1')
-    end
+    foldlevel = vim.o.foldlevel
+    print('foldlevel is', foldlevel)
 end
 vim.api.nvim_set_keymap('n', '<leader>z', "<cmd>lua Toggle_folding_node()<cr>", { noremap = true, silent = true })
 
@@ -76,10 +81,9 @@ vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = tr
 vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
 
 
-function Markdown_link_from_url()
+function Get_title_from_url()
     -- Get the URL from the selection
     local url = vim.fn.getreg(vim.fn.visualmode())
-
     -- Get the title of the page from the URL
     -- wget -qO- "$1" | perl -l -0777 -ne 'print $1 if /<title.*?>\s*(.*?)\s*<\/title/si' | recode html..ascii 2>/dev/null
     local get_page ='wget -qO- ' .. vim.fn.shellescape(url)
@@ -87,16 +91,45 @@ function Markdown_link_from_url()
     local escape_title = 'recode html..ascii 2>/dev/null'
     local command = get_page .. '|' .. extract_title .. '|' .. escape_title
     local title = vim.fn.system(command)
+    if title == '' then
+        print("can't get the title", title)
+        return
+    end
+    -- Remove trailing whitespace, including null characters and newline
+    title = title:gsub('%s*$', '')
+    -- Paste the title after the cursor on the same line
+    local pos = vim.fn.getpos('.')
+    vim.fn.append(pos[2], title)
+end
 
-    print(command)
-    print(title)
+vim.api.nvim_set_keymap('v', '<leader>gt', '<cmd>lua Get_title_from_url()<cr>', { noremap = true, silent = true })
+
+function Markdown_link_from_url()
+    -- Get the URL from the selection
+    local url = vim.fn.getreg(vim.fn.visualmode())
+    -- Get the title of the page from the URL
+    -- wget -qO- "$1" | perl -l -0777 -ne 'print $1 if /<title.*?>\s*(.*?)\s*<\/title/si' | recode html..ascii 2>/dev/null
+    local get_page ='wget -qO- ' .. vim.fn.shellescape(url)
+    local extract_title = "perl -l -0777 -ne 'print $1 if /<title.*?>\\s*(.*?)\\s*<\\/title/si'"
+    local escape_title = 'recode html..ascii 2>/dev/null'
+    local command = get_page .. '|' .. extract_title .. '|' .. escape_title
+    local title = vim.fn.system(command)
+    if title == '' then
+        print("can't get the title")
+        return
+    end
+    -- Remove trailing whitespace, including null characters and newline
+    title = title:gsub('%s*$', '')
+    url = url:gsub('%s*$', '')
     -- Paste the title after the cursor on the same line
     local link = '[' .. title .. '](' .. url .. ')'
-    vim.fn.append(0, link)
+    -- replace current selection and replace it with the link
+    local pos = vim.fn.getpos('.')
+    vim.fn.setline(pos[2], link)
 end
 
 -- link title
-vim.api.nvim_set_keymap('n', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
 local M = {}
 

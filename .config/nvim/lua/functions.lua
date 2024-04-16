@@ -35,6 +35,7 @@ function CreateNoteFromFileName()
     -- write the title in current buffer
     vim.fn.append(0, '# ' .. title)
 end
+
 vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
 
 

@@ -1,17 +1,10 @@
-
-function Toggle_folding_node()
-    -- toggle foldlevel from 1 to 2 and vice versa
-    -- get current foldlevel
-    local foldlevel = vim.o.foldlevel
-    if foldlevel == 1 then
-        vim.cmd('set foldlevel=2')
-    end
-    if foldlevel == 2 then
-        vim.cmd('set foldlevel=1')
-    end
+local function get_visual_selection()
+    -- Yank current visual selection into the 'v' register
+    --
+    -- Note that this makes no effort to preserve this register
+    vim.cmd('noau normal! "vy"')
+    return vim.fn.getreg('v')
 end
-vim.api.nvim_set_keymap('n', '<leader>z', "<cmd>lua Toggle_folding_node()<cr>", { noremap = true, silent = true })
-
 
 function CreateNoteFromFileName()
     -- if filename starts with a date, then the title is the same date with the format "Mon 12 Jan 2021 Week02"
@@ -26,7 +19,7 @@ function CreateNoteFromFileName()
         -- change Locale to English only for the following command
         os.setlocale("C")
         -- re-format the date as in "Mon 12 Jan 2021 Week02"
-        title = os.date("%a %d %b %Y W%V", os.time({year=year, month=month, day=day}))
+        title = os.date("%a %d %b %Y W%V", os.time({ year = year, month = month, day = day }))
         -- read the rest of the template from "./Templates/daily-template.md"
         local template = vim.fn.readfile("./Templates/daily-template.md")
         -- write the template in current buffer
@@ -59,15 +52,20 @@ vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_current_line()<CR>',
 
 function Letsdo_visual_selection()
     -- Get the currently selected text
-    local selected_text = vim.fn.getreg(vim.fn.visualmode())
+    local selected_text = get_visual_selection()
+    local task = selected_text
+    local filename = vim.fn.expand("%:t:r")
+    if filename ~= selected_text then
+        task = filename .. ":" .. selected_text
+    end
 
     -- Run the "letsdo" command with the selected text as input
-    local command = 'letsdo ' .. vim.fn.shellescape(selected_text)
+    local command = 'letsdo goto ' .. vim.fn.shellescape(task)
     vim.fn.system(command)
 end
 
 -- key mapping for the above function in visual mode
-vim.api.nvim_set_keymap('v', '<leader>ld', '<cmd>lua Letsdo_visual_selection()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>ld', '<cmd>lua Letsdo_visual_selection()<CR>', { noremap = true, silent = false })
 
 -- key mapping to stop the current running "letsdo" command
 vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })
@@ -82,7 +80,7 @@ function Markdown_link_from_url()
 
     -- Get the title of the page from the URL
     -- wget -qO- "$1" | perl -l -0777 -ne 'print $1 if /<title.*?>\s*(.*?)\s*<\/title/si' | recode html..ascii 2>/dev/null
-    local get_page ='wget -qO- ' .. vim.fn.shellescape(url)
+    local get_page = 'wget -qO- ' .. vim.fn.shellescape(url)
     local extract_title = "perl -l -0777 -ne 'print $1 if /<title.*?>\\s*(.*?)\\s*<\\/title/si'"
     local escape_title = 'recode html..ascii 2>/dev/null'
     local command = get_page .. '|' .. extract_title .. '|' .. escape_title
@@ -122,7 +120,7 @@ M.toggle_theme = function()
 end
 
 -- Function to execute and paste result
-M.executeAndPaste = function (command)
+M.executeAndPaste = function(command)
     -- Save cursor position
     local save_cursor = vim.fn.getpos('.')
 
@@ -138,13 +136,14 @@ M.executeAndPaste = function (command)
     vim.fn.setpos('.', save_cursor)
 end
 
-M.makeGmailSearchLink = function ()
+M.makeGmailSearchLink = function()
     -- Get selected text
-    local selected_text = vim.fn.getline(vim.fn.visualmode())
+    local selected_text = get_visual_selection()
     -- Replace spaces with '+' in the selected text
     local replaced_text = string.gsub(selected_text, " ", "+")
     -- Replace the original text with the replaced text
-    local search_link = "#email [".. selected_text .. "]" .. "(https://mail.google.com/mail/u/0/#search/" .. replaced_text ..")"
+    local search_link = "#email [" ..
+        selected_text .. "]" .. "(https://mail.google.com/mail/u/0/#search/" .. replaced_text .. ")"
     local pos = vim.fn.getpos('.')
     vim.fn.setline(pos[2], search_link)
     print(search_link)
@@ -152,11 +151,11 @@ end
 
 
 -- use require('telescope.builtin').live_grep to search currently selected text
-M.searchSelectedText = function ()
+M.searchSelectedText = function()
     -- Get selected text
     local selected_text = vim.fn.getreg(vim.fn.visualmode())
     -- Replace the original text with the replaced text
-    require('telescope.builtin').live_grep({search = selected_text})
+    require('telescope.builtin').live_grep({ search = selected_text })
 end
 
 

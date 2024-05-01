@@ -20,40 +20,25 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  { -- dracula customized theme
-    'clobrano-forks/vim',
-    priority = 1000,
-  },
   "savq/melange-nvim",                    -- default light theme
   { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
   "tanvirtin/monokai.nvim",               -- monokai colorscheme
   'ryanoasis/vim-devicons',
   "fraso-dev/nvim-listchars",             -- toggle show listchars
-  "b0o/incline.nvim",
+  "b0o/incline.nvim",                     -- for the floating filenames
   { 'kdheepak/tabline.nvim', opts = {} }, -- needed to show buffer tab
-  {
-    'majutsushi/tagbar',
-    config = function()
-      vim.keymap.set('n', '<leader>to', ':TagbarToggle fj<cr>')
-    end
-  },
   'mtdl9/vim-log-highlighting', -- Highlight log files
+  require('plugins.tagbar'),
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
   require('plugins.startify'),
 
-
   -- Git related plugins
   require('plugins.vim-fugitive'),
+  require('plugins.neogit'),
   'tpope/vim-rhubarb',
-  {
-    'junegunn/gv.vim',
-    config = function()
-      vim.keymap.set('n', '<leader>gv', ':GV<cr>')
-    end
-  },
+  require('plugins.gv'),
   'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
-  --'airblade/vim-gitgutter',
   'lewis6991/gitsigns.nvim',
   { 'sindrets/diffview.nvim',    dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
@@ -68,11 +53,14 @@ local plugins = {
 
   -- Notes and Markdown
   require('plugins.zenmode'),
+  --{'dhruvasagar/vim-dotoo'},
   require('plugins.orgmode'),
-  'lervag/wiki.vim',
-  'preservim/vim-markdown',
+  require('plugins.mkdnflow'),
+  require('plugins.vim-markdown'),
   'freitass/todo.txt-vim',
   'artempyanykh/marksman',
+  'kiyoon/telescope-insert-path.nvim',
+  --require('plugins.ufo'),
   {
     -- needs plantUML and imv installed
     'Groveer/plantuml.nvim',
@@ -81,50 +69,10 @@ local plugins = {
       require('plantuml').setup({})
     end
   },
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-  },
-  {
-    "postfen/clipboard-image.nvim",
-    keys = {
-      { "<leader>i", "<cmd>PasteImg<CR>" },
-    },
-    config = function()
-      require 'clipboard-image'.setup {
-        -- Default configuration for all filetype
-        default = {
-          img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
-          img_name = function()
-            vim.fn.inputsave()
-            local name = vim.fn.input('Image name: ')
-            vim.fn.inputrestore()
-            return name
-          end,
-          affix = "<\n  %s\n>" -- Multi lines affix
-        },
-        -- You can create configuration for ceartain filetype by creating another field (markdown, in this case)
-        -- If you're uncertain what to name your field to, you can run `lua print(vim.bo.filetype)`
-        -- Missing options from `markdown` field will be replaced by options from `default` field
-        markdown = {
-          img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
-          img_name = function()
-            vim.fn.inputsave()
-            local name = vim.fn.input('Image name: ')
-            vim.fn.inputrestore()
-            return name
-          end,
-          img_handler = function(img)
-            vim.cmd("normal! f[")            -- go to [
-            vim.cmd("normal! a" .. img.name) -- append text with image name
-          end,
-          affix = "![](%s)",
-        }
-      }
-    end
-  },
+  require('plugins.github-preview'),
+  require('plugins.markdown-preview'),
+  require('plugins.clipboard-image'),
+
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -137,20 +85,11 @@ local plugins = {
   'tpope/vim-sleuth',
   'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
-  --'inkarkat/vim-ProportionalResize',
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {}
-  },
-  {
-    'pwntester/octo.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' },
-  },
-  {
-    'ldelossa/gh.nvim',
-    dependencies = { 'ldelossa/litee.nvim' },
-  },
+  'lmeijvogel/vim-yaml-helper',
+  require('plugins.trailblazer'),
+  { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
+  { 'pwntester/octo.nvim', dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' }, },
+
 
   -- Debugging
   'leoluz/nvim-dap-go',
@@ -160,6 +99,12 @@ local plugins = {
   'nvim-telescope/telescope-dap.nvim',
 
   -- Search
+  'junegunn/fzf.vim',
+  'mileszs/ack.vim',
+  'vim-scripts/MultipleSearch',
+  { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
+  require('plugins.neotree'),
+  require('plugins.vim-g'),
   {
     "ibhagwan/fzf-lua",
     -- optional for icon support
@@ -169,40 +114,10 @@ local plugins = {
       require("fzf-lua").setup({})
     end
   },
-  'junegunn/fzf.vim',
-  'mileszs/ack.vim',
-  'vim-scripts/MultipleSearch',
-  { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
-  require('plugins.neotree'),
-  {
-    'szw/vim-g',
-    opts = {},
-    config = function()
-      vim.cmd [[
-        let g:vim_g_query_url="https://duckduckgo.com/?q="
-      ]]
-      vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':Google<cr>')
-    end
-  },
 
 
   -- tests
-  {
-    'vim-test/vim-test',
-    opts = {},
-    config = function()
-      vim.cmd [[
-    let test#strategy = {
-      \ 'nearest': 'basic',
-    \}
-      "let g:test#basic#start_normal = 1
-      let g:test#neovim#term_position = "hor botright 5"
-      ]]
-      vim.keymap.set('n', '<leader>ts', ':TestSuite<cr>')
-      vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>')
-      vim.keymap.set('n', '<leader>tl', ':TestLast<cr>')
-    end
-  },
+  require('plugins.vim-test'),
 
 
   -- go
@@ -326,10 +241,13 @@ require('plugins.incline')
 require('plugins.surrounds')
 
 require('todo-comments').setup {
+  gui_style = {
+    fg = "BOLD",
+  },
   highlight = {
     comments_only = false,
     after = "",
-    keyword = "bg",
+    keyword = "fg",
   }
 }
 require('gitsigns').setup {
@@ -348,50 +266,50 @@ require('plugins.octo')
 require('nvim-listchars').setup({
   save_state = false
 })
-require('litee.lib').setup()
-require('litee.gh').setup({
-  -- deprecated, around for compatability for now.
-  jump_mode             = "invoking",
-  -- remap the arrow keys to resize any litee.nvim windows.
-  map_resize_keys       = false,
-  -- do not map any keys inside any gh.nvim buffers.
-  disable_keymaps       = false,
-  -- the icon set to use.
-  icon_set              = "default",
-  -- any custom icons to use.
-  icon_set_custom       = nil,
-  -- whether to register the @username and #issue_number omnifunc completion
-  -- in buffers which start with .git/
-  git_buffer_completion = true,
-  -- defines keymaps in gh.nvim buffers.
-  keymaps               = {
-    -- when inside a gh.nvim panel, this key will open a node if it has
-    -- any futher functionality. for example, hitting <CR> on a commit node
-    -- will open the commit's changed files in a new gh.nvim panel.
-    open = "<CR>",
-    -- when inside a gh.nvim panel, expand a collapsed node
-    expand = "zo",
-    -- when inside a gh.nvim panel, collpased and expanded node
-    collapse = "zc",
-    -- when cursor is over a "#1234" formatted issue or PR, open its details
-    -- and comments in a new tab.
-    goto_issue = "gd",
-    -- show any details about a node, typically, this reveals commit messages
-    -- and submitted review bodys.
-    details = "d",
-    -- inside a convo buffer, submit a comment
-    submit_comment = "<C-s>",
-    -- inside a convo buffer, when your cursor is ontop of a comment, open
-    -- up a set of actions that can be performed.
-    actions = "<C-a>",
-    -- inside a thread convo buffer, resolve the thread.
-    resolve_thread = "<C-r>",
-    -- inside a gh.nvim panel, if possible, open the node's web URL in your
-    -- browser. useful particularily for digging into external failed CI
-    -- checks.
-    goto_web = "gx"
-  }
-})
+--require('litee.lib').setup()
+--require('litee.gh').setup({
+---- deprecated, around for compatability for now.
+--jump_mode             = "invoking",
+---- remap the arrow keys to resize any litee.nvim windows.
+--map_resize_keys       = false,
+---- do not map any keys inside any gh.nvim buffers.
+--disable_keymaps       = false,
+---- the icon set to use.
+--icon_set              = "default",
+---- any custom icons to use.
+--icon_set_custom       = nil,
+---- whether to register the @username and #issue_number omnifunc completion
+---- in buffers which start with .git/
+--git_buffer_completion = true,
+---- defines keymaps in gh.nvim buffers.
+--keymaps               = {
+---- when inside a gh.nvim panel, this key will open a node if it has
+---- any futher functionality. for example, hitting <CR> on a commit node
+---- will open the commit's changed files in a new gh.nvim panel.
+--open = "<CR>",
+---- when inside a gh.nvim panel, expand a collapsed node
+--expand = "zo",
+---- when inside a gh.nvim panel, collpased and expanded node
+--collapse = "zc",
+---- when cursor is over a "#1234" formatted issue or PR, open its details
+---- and comments in a new tab.
+--goto_issue = "gd",
+---- show any details about a node, typically, this reveals commit messages
+---- and submitted review bodys.
+--details = "d",
+---- inside a convo buffer, submit a comment
+--submit_comment = "<C-s>",
+---- inside a convo buffer, when your cursor is ontop of a comment, open
+---- up a set of actions that can be performed.
+--actions = "<C-a>",
+---- inside a thread convo buffer, resolve the thread.
+--resolve_thread = "<C-r>",
+---- inside a gh.nvim panel, if possible, open the node's web URL in your
+---- browser. useful particularily for digging into external failed CI
+---- checks.
+--goto_web = "gx"
+--}
+--})
 vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup {}
@@ -407,6 +325,14 @@ require('tabline').setup {}
 
 require('telescope').setup {
   defaults = {
+    mappings = {
+      i = {
+        ["<C-w>"] = require("telescope.actions").send_selected_to_qflist,
+      },
+      n = {
+        ["p"] = require('telescope_insert_path').insert_reltobufpath_insert,
+      },
+    },
     layout_strategy = 'vertical',
     layout_config = {
       width = 0.90,
@@ -915,8 +841,16 @@ vim.cmd [[
 
 -- set textwidth to 0 for markdown files
 vim.cmd [[
-  autocmd BufNewFile,BufRead *.md set textwidth=0
-  autocmd BufNewFile,BufRead *.md nnoremap <M-]> wv<C-]>
+  autocmd BufNewFile,BufRead *.md
+    \ set textwidth=0 |
+    \ set shiftwidth=2 |
+    \ nnoremap <M-]> wv<C-]> |
+    \ highlight Folded guibg=none guifg=#51576d
+]]
+
+-- orgmode configuration
+vim.cmd [[
+  autocmd BufNewFile,BufRead *.org set shiftwidth=2
 ]]
 
 -- I will lose color highlighting this way, so I also want to set it manually:
@@ -931,4 +865,10 @@ vim.cmd [[
 
 vim.cmd [[
   cnoreabbrev fontnote set guifont:Source\ Code\ Pro\ Light:h12
+  set shiftwidth=2
+  highlight Folded guibg=none
+]]
+
+vim.cmd [[
+  let g:dotoo#agenda#files=['~/Documents/RedHatVault/*.dotoo', '~/Dropbox/notes/*.dotoo']
 ]]

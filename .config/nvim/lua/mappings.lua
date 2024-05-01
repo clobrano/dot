@@ -82,12 +82,14 @@ nmap('<C-b>', ':b')
 -- register 0 hold latest Yank, let's map yp to `--0p`
 nmap('yp', '"0p')
 -- clipboard yank till the end of the line
-vmap('Y', '"+y')
+vmap('Y', 'vg_y')
 -- clipboard paste
 nmap('P', '"+p')
 -- do not override default register when pasting in selection
 xmap('p', 'P')
 
+-- completion shorcuts
+imap('<C-f>', '<C-x><C-f>')
 --directory explore
 --nmap(<leader>ex <esc>:Explore<cr>
 nmap('<leader>ex', ':!%:p<cr>')
@@ -110,7 +112,7 @@ nmap('do', 'do]c')
 nmap('<leader>ef', ':set guifont=')
 
 -- edit: remove trailing space
-nmap('<leader>ss', ':TrimTrailingSpaces<cr>')
+nmap('<leader>ss', ':let _s=@/<Bar>:%s/\\s\\+$//e<Bar>:let @/=_s<Bar><CR>')
 
 -- enter command mode
 nmap(';', ':')
@@ -133,9 +135,15 @@ nmap('<leader>x', ':botright split | resize 20 | terminal<cr>')
 nmap('<leader>vx', ':vertical split | terminal<cr>')
 
 -- fold: always toggle all fold at current position
-nmap('za', 'zA')
+--nmap('za', 'zA')
 -- toggle folding
 --nmap('<leader>z', 'zA')
+nmap('zn', 'zr')
+-- Fold all except current section
+nmap('<leader>zh', 'zM | zo | zo | zo | zo')
+
+-- GBrowse selection
+xmap('<leader>gy', ":GBrowse!")
 
 
 -- highlight selected word
@@ -209,7 +217,8 @@ imap('jj', '<Esc>')
 --imap('jj',   '<Esc>:write<CR>')
 
 -- Notes (see plugin/tasks)
-
+-- get title from url (get url from clipboard)
+nmap('<leader>gt', ':r!~/workspace/script-fu/get-url-title.sh')
 -- open file with xdg-open (e.g. images in markdown files)
 nmap('<leader>gx', ':!xdg-open %:p:h/<cfile>')
 
@@ -337,11 +346,15 @@ nmap('<leader>fv', 'vt: & <leader>fa')
 imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")
 -- zettelkasted UUID (date + time)
 imap('<C-d>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
+nmap('<leader>zk', "<esc>:lua require'functions'.zettelkastenID()<cr>")
 vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
--- find todos (needs folke/todo-comments)
+-- find todos in all files (needs folke/todo-comments)
 nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')
+-- find todos in current buffer (local) (needs folke/todo-comments)
+--nmap('<leader>tdl', ':TodoTelescope keywords=TODO cwd=%<cr>')
 
+--vim.keymap.set('n', '<leader>tdl', ':exe ":TodoQuickFix cwd=" .. fnameescape(expand("%:p"))', {desc = "search TODOs in current file"})
 -- yank till the end of the line
 nmap('Y', 'yg_')
 

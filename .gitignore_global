@@ -12,3 +12,6 @@ tags
 tags/tags.temp
 vimrc.local
 *.env
+.goreleaser.yaml
+rh-community-release.sh
+.github_token.env

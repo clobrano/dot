@@ -15,8 +15,11 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
-vim.o.foldmethod='expr'
-vim.o.foldlevel=4
+--vim.o.foldmethod='expr'
+vim.o.foldcolumn= '0'
+vim.o.foldlevelstart=99
+vim.o.foldlevel=99
+vim.o.foldenable = false
 
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.smartcase = true

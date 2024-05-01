@@ -112,7 +112,7 @@ matches:
     replace: "/test 4.15-openshift-e2e"
 
   - trigger: "!aws "
-    replace: "launch 4.14 aws,no-spot"
+    replace: "launch 4.15 aws"
 
   - trigger: "Micheal"
     replace: "Michael"

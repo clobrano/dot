@@ -87,7 +87,7 @@ local plugins = {
   'tyru/current-func-info.vim',
   'lmeijvogel/vim-yaml-helper',
   require('plugins.trailblazer'),
-  { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
+  require('plugins.todo-comments'),
   { 'pwntester/octo.nvim', dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' }, },
 
 
@@ -233,16 +233,6 @@ require('plugins.copilot')
 require('plugins.incline')
 require('plugins.surrounds')
 
-require('todo-comments').setup {
-  gui_style = {
-    fg = "BOLD",
-  },
-  highlight = {
-    comments_only = false,
-    after = "",
-    keyword = "fg",
-  }
-}
 require('gitsigns').setup {
   on_attach = function(bufnr)
     -- Setup keymaps

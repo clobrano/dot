@@ -41,6 +41,8 @@ if command -v vagrant 2>&1 > /dev/null; then
     alias v=vagrant
 fi
 
+alias cdkube="cd ~/.kube"
+
 # this is for rem (reminder with linux jobs and notify.sh)
 alias in="at now + "
 alias cclip="xclip -sel clipboard"

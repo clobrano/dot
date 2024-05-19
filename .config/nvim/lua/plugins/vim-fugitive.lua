@@ -3,6 +3,7 @@ return {
     config = function()
         vim.cmd[[
         cnoreabbrev <expr> gg getcmdtype() == ":" && getcmdline() == 'gg' ? 'G ' : 'gg'
+        cnoreabbrev <expr> gb getcmdtype() == ":'<,'>" && getcmdline() == 'gb' ? 'GBrowse! ' : 'gb'
         ]]
         vim.keymap.set('n', '<leader>ga', '<esc>:Gwrite')
         vim.keymap.set('n','<leader>gb', '<esc>:G blame<cr>')

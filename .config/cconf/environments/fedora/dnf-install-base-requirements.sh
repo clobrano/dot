@@ -10,6 +10,7 @@ sudo dnf install -y \
     figlet \
     fzf \
     git \
+    gh \
     neovim \
     recode \
     python3-pip \

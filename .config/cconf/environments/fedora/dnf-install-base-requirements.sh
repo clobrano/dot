@@ -11,6 +11,7 @@ sudo dnf install -y \
     fzf \
     git \
     gh \
+    golang \
     neovim \
     recode \
     python3-pip \

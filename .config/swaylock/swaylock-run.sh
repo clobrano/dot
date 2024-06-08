@@ -6,4 +6,4 @@ swaylock \
   --indicator-caps-lock \
   --ignore-empty-password \
   --show-failed-attempts \
-  --image ~/Pictures/mountains-lock.jpg
+  --image ~/Pictures/default-wallpaper-lock-link

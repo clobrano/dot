@@ -10,7 +10,7 @@ color=000000dd
 #effect-greyscale
 #effect-scale=0.3
 
-indicator
+# indicator
 indicator-radius=80
 indicator-thickness=10
 indicator-caps-lock

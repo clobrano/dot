@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    //"height": 22, // Waybar height (to be removed for auto height)
+    "height": 24, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -78,9 +78,10 @@
         "spacing": 10
     },
     "clock": {
-        // "timezone": "America/New_York",
+        "format": "{:%Y-%m-%d %H:%M}",
         "tooltip-format": "<big>{:%Y/%m/%d}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d %H:%m}"
+        // "timezone": "America/New_York",
+        //"format-alt": "{:%Y-%m-%d %H:%m}"
     },
     "cpu": {
         "format": "{usage}% ",

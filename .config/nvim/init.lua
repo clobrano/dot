@@ -53,14 +53,12 @@ local plugins = {
 
   -- Notes and Markdown
   require('plugins.zenmode'),
-  --{'dhruvasagar/vim-dotoo'},
   require('plugins.orgmode'),
   require('plugins.mkdnflow'),
   require('plugins.vim-markdown'),
   'freitass/todo.txt-vim',
   'artempyanykh/marksman',
   'kiyoon/telescope-insert-path.nvim',
-  --require('plugins.ufo'),
   {
     -- needs plantUML and imv installed
     'Groveer/plantuml.nvim',
@@ -89,7 +87,6 @@ local plugins = {
   require('plugins.trailblazer'),
   { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
   { 'pwntester/octo.nvim', dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' }, },
-
 
   -- Debugging
   'leoluz/nvim-dap-go',
@@ -778,16 +775,6 @@ vim.cmd [[
 -- orgmode configuration
 vim.cmd [[
   autocmd BufNewFile,BufRead *.org set shiftwidth=2
-]]
-
--- I will lose color highlighting this way, so I also want to set it manually:
--- red for (A), orange for (B), cyan for (C), normal for all the other (not working)
-vim.cmd [[
-  autocmd BufNewFile,BufRead todo.md
-    \ syntax match TodoA '^([aA])' |
-    \ highlight TodoA ctermfg=red guifg=red gui=bold |
-    \ highlight TodoB ctermfg=yellow guifg=yellow gui=bold |
-    \ highlight TodoC ctermfg=cyan guifg=cyan gui=bold
 ]]
 
 vim.cmd [[

@@ -4,7 +4,7 @@
 -- GUI options: no menubar and no toolbar
 vim.cmd[[
 "set guifont=Source\ Code\ Pro:h11
-set guifont=Hasklig:h11
+"set guifont=Hasklig:h11
 set guioptions-=m
 set guioptions-=T]]
 

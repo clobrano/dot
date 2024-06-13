@@ -1,10 +1,20 @@
-local function get_visual_selection()
-    -- Yank current visual selection into the 'v' register
-    --
-    -- Note that this makes no effort to preserve this register
-    vim.cmd('noau normal! "vy"')
-    return vim.fn.getreg('v')
+local function get_clipboard()
+    return vim.fn.getreg('+')
 end
+
+
+function ReplaceSpacesWithHypens()
+  local clipboard = get_clipboard()
+  local replaced_text = string.gsub(clipboard, " ", "-")
+  local pos = vim.fn.getpos('.')
+  vim.fn.setline(pos[2], replaced_text)
+  print(replaced_text)
+end
+
+-- key mapping for the above function in normal mode
+vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>lua ReplaceSpacesWithHypens()<CR>', { noremap = true, silent = true, desc = 'Replace space with Hyphens in the clipboard text' })
+
+
 
 function CreateNoteFromFileName()
     -- if filename starts with a date, then the title is the same date with the format "Mon 12 Jan 2021 Week02"
@@ -20,14 +30,14 @@ function CreateNoteFromFileName()
         os.setlocale("C")
         -- re-format the date as in "Mon 12 Jan 2021 Week02"
         title = os.date("%a %d %b %Y W%V", os.time({ year = year, month = month, day = day }))
-        -- read the rest of the template from "./Templates/daily-template.md"
-        local template = vim.fn.readfile("./Templates/daily-template.md")
+        -- read the rest of the template from the journaling template
+        local template = vim.fn.readfile("./Templates/weekly-template.md")
         -- write the template in current buffer
         vim.fn.append(1, template)
     end
     -- template for files in Task folder
     if string.match(vim.fn.expand("%:p:h"), "T") then
-        -- read the template from "./Templates/task-template.md"
+        -- read the template from the task template
         local template = vim.fn.readfile("./Templates/task-template.md")
         -- write the template in current buffer
         vim.fn.append(1, template)
@@ -53,12 +63,8 @@ vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_current_line()<CR>',
 
 function Letsdo_visual_selection()
     -- Get the currently selected text
-    local selected_text = get_visual_selection()
+    local selected_text = get_clipboard()
     local task = selected_text
-    local filename = vim.fn.expand("%:t:r")
-    if filename ~= selected_text then
-        task = filename .. ":" .. selected_text
-    end
 
     -- Run the "letsdo" command with the selected text as input
     local command = 'letsdo goto ' .. vim.fn.shellescape(task)
@@ -167,7 +173,7 @@ end
 
 M.makeGmailSearchLink = function()
     -- Get selected text
-    local selected_text = get_visual_selection()
+    local selected_text = get_clipboard()
     -- Replace spaces with '+' in the selected text
     local replaced_text = string.gsub(selected_text, " ", "+")
     -- Replace the original text with the replaced text

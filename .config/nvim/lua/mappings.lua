@@ -12,18 +12,21 @@ local function xmap(k, v) map('x', k, v) end
 nmap('<leader>jd', ":lua require'functions'.create_note_entry('today')")
 nmap('<leader>jt', ":lua require'functions'.create_note_entry(vim.fn.expand('%:p'))")
 
--- toggle background
+-- background toggle
 nmap('<F4>', ":lua require'functions'.toggle_theme()<cr>")
--- toggle transparent background
+-- background transparent toggle
 nmap('<F8>', ':hi Normal guibg=none ctermbg=none<cr>')
 -- variable definition in command line
 nmap('<leader>fi', '[i')
-nmap('<leader>fI', ':TlistShowPrototype<cr>')
 
 -- align block of text.
 vmap('<<', '<gv')
 vmap('>>', '>gv')
-imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode
+imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode (does not work in some shell)
+
+-- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
+nmap('<leader>ap', 'gq}')
+
 
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
@@ -84,9 +87,11 @@ nmap('yp', '"0p')
 -- clipboard yank till the end of the line
 vmap('Y', 'vg_y')
 -- clipboard paste
-nmap('P', '"+p')
+--nmap('P', '"+p')
+-- paste below current line (introduced for Orgmode capture new link)
+nmap('<C-p>', ':put<cr>')
 -- do not override default register when pasting in selection
-xmap('p', 'P')
+--xmap('p', 'P')
 
 -- completion shorcuts
 imap('<C-f>', '<C-x><C-f>')
@@ -192,9 +197,9 @@ nmap('<C-l>', '10l')
 nmap('<C-h>', '10h')
 nmap('<C-k>', '10k')
 nmap('<C-j>', '10j')
-nmap('E', '$')
-vmap('E', '$')
-nmap('B', '0') -- move to begin of the line
+nmap('E', 'g_')
+vmap('E', 'g_')
+nmap('B', '^') -- move to first non-blank character (use '0' to move to the beginning of the line)
 vmap('B', '^') -- selection to first non-blank character
 
 
@@ -211,6 +216,9 @@ nmap('<M-h>', 'gT')
 nmap('tc', ':tabnew<cr>')
 nmap('td', ':tabclose<cr>')
 
+-- navigation
+-- move to parent folder (until I prevent changing cwd in Notes)
+nmap('<leader>cd', ':cd ..<cr>')
 
 -- normal mode enter (map both jj and kk so that I can type j and `Esc` with kk)
 imap('jj', '<Esc>')
@@ -342,10 +350,13 @@ nmap('<C-]>', 'g<C-]>')
 -- find vim tags with telescope
 nmap('<leader>fv', 'vt: & <leader>fa')
 
+-- lsp servers mappings
+nmap('<leader>lr', ':LspRestart<cr>')
+
 -- paste a UUID for referencing text content (e.g. in markdown files)
-imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")
+--imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")
 -- zettelkasted UUID (date + time)
-imap('<C-d>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
+imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
 nmap('<leader>zk', "<esc>:lua require'functions'.zettelkastenID()<cr>")
 vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
@@ -376,3 +387,6 @@ nmap('<leader>pn', 'a created (#wait in review)<esc>')
 nmap('<leader>pm', 'a **MERGED**<esc>')
 -- zenmode
 nmap('<leader>zm', ':ZenMode<cr>')
+
+-- neogit
+nmap('<leader>gs', ':Neogit<cr>')

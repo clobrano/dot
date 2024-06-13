@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',     -- latest stable release
     lazypath,
   }
 end
@@ -20,14 +20,14 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  "savq/melange-nvim",                    -- default light theme
+  "savq/melange-nvim",                      -- default light theme
   { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
-  "tanvirtin/monokai.nvim",               -- monokai colorscheme
+  "tanvirtin/monokai.nvim",                 -- monokai colorscheme
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars",             -- toggle show listchars
-  "b0o/incline.nvim",                     -- for the floating filenames
-  { 'kdheepak/tabline.nvim', opts = {} }, -- needed to show buffer tab
-  'mtdl9/vim-log-highlighting', -- Highlight log files
+  "fraso-dev/nvim-listchars",               -- toggle show listchars
+  "b0o/incline.nvim",                       -- for the floating filenames
+  { 'kdheepak/tabline.nvim', opts = {} },   -- needed to show buffer tab
+  'mtdl9/vim-log-highlighting',             -- Highlight log files
   require('plugins.tagbar'),
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
@@ -38,29 +38,30 @@ local plugins = {
   require('plugins.neogit'),
   'tpope/vim-rhubarb',
   require('plugins.gv'),
-  'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
-  'lewis6991/gitsigns.nvim',
+  'shumphrey/fugitive-gitlab.vim',   -- vim-rhubarb for gitlab
+  require('plugins.gitsigns'),
   { 'sindrets/diffview.nvim',    dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
   {
     "jiaoshijie/undotree",
     dependencies = "nvim-lua/plenary.nvim",
     config = true,
-    keys = { -- load the plugin only when using it's keybinding:
+    keys = {     -- load the plugin only when using it's keybinding:
       { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
 
   -- Notes and Markdown
   require('plugins.zenmode'),
-  --{'dhruvasagar/vim-dotoo'},
   require('plugins.orgmode'),
-  require('plugins.mkdnflow'),
+  --require('plugins.mkdnflow'),
+  require('plugins.vimwiki'),
   require('plugins.vim-markdown'),
-  'freitass/todo.txt-vim',
-  'artempyanykh/marksman',
+  require('plugins.taskwiki'),
+  --require('plugins.mkdnflow'),
+  --'samgriesemer/vim-roam-task', -- taskwiki without the dependency from vimwiki
+  --'freitass/todo.txt-vim',
   'kiyoon/telescope-insert-path.nvim',
-  --require('plugins.ufo'),
   {
     -- needs plantUML and imv installed
     'Groveer/plantuml.nvim',
@@ -82,13 +83,17 @@ local plugins = {
   'tpope/vim-dispatch',
   'tpope/vim-eunuch',
   'tpope/vim-surround',
-  'tpope/vim-sleuth',
+  --'tpope/vim-sleuth',
   'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
   'lmeijvogel/vim-yaml-helper',
   require('plugins.trailblazer'),
   require('plugins.todo-comments'),
-  { 'pwntester/octo.nvim', dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' }, },
+  {
+    'pwntester/octo.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons' },
+  },
 
 
   -- Debugging
@@ -125,15 +130,15 @@ local plugins = {
 
 
   -- AI
-  'github/copilot.vim',
+  --'github/copilot.vim',
   {
     "David-Kunz/gen.nvim",
     opts = {
-      model = "mistral",      -- The default model to use.
-      display_mode = "split", -- The display mode. Can be "float" or "split".
-      show_prompt = false,    -- Shows the Prompt submitted to Ollama.
-      show_model = true,      -- Displays which model you are using at the beginning of your chat session.
-      no_auto_close = true,   -- Never closes the window automatically.
+      model = "mistral",            -- The default model to use.
+      display_mode = "split",       -- The display mode. Can be "float" or "split".
+      show_prompt = false,          -- Shows the Prompt submitted to Ollama.
+      show_model = true,            -- Displays which model you are using at the beginning of your chat session.
+      no_auto_close = true,         -- Never closes the window automatically.
       init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
       -- Function to initialize Ollama
       command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
@@ -141,13 +146,13 @@ local plugins = {
       -- This can also be a lua function returning a command string, with options as the input parameter.
       -- The executed command must return a JSON object with { response, context }
       -- (context property is optional).
-      list_models = '<omitted lua function>', -- Retrieves a list of model names
-      debug = false                           -- Prints errors and the command which is run.
+      list_models = '<omitted lua function>',       -- Retrieves a list of model names
+      debug = false                                 -- Prints errors and the command which is run.
     }
   },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
+  {   -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -163,16 +168,16 @@ local plugins = {
     },
   },
 
-  { -- Autocompletion
+  {   -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'L3MON4D3/LuaSnip',     -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',           -- Snippet Engine & its associated nvim-cmp source
       'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp', -- Adds LSP completion capabilities
-      'hrsh7th/cmp-cmdline',  -- Source for vim's cmdline
+      'hrsh7th/cmp-nvim-lsp',       -- Adds LSP completion capabilities
+      'hrsh7th/cmp-cmdline',        -- Source for vim's cmdline
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      'rafamadriz/friendly-snippets', -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets',       -- Adds a number of user-friendly snippets
     },
   },
 
@@ -232,18 +237,6 @@ require('plugins.ranger')
 require('plugins.copilot')
 require('plugins.incline')
 require('plugins.surrounds')
-
-require('gitsigns').setup {
-  on_attach = function(bufnr)
-    -- Setup keymaps
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']c', '<cmd>lua require"gitsigns".next_hunk()<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[c', '<cmd>lua require"gitsigns".prev_hunk()<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hp', '<cmd>lua require"gitsigns".preview_hunk()<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hs', '<cmd>lua require"gitsigns".stage_hunk()<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hu', '<cmd>lua require"gitsigns".reset_hunk()<CR>', {})
-  end
-}
-
 require('undotree').setup()
 require('plugins.octo')
 require('nvim-listchars').setup({
@@ -305,55 +298,56 @@ require('tabline').setup {}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+require('plugins.telescope')
 
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-w>"] = require("telescope.actions").send_selected_to_qflist,
-      },
-      n = {
-        ["p"] = require('telescope_insert_path').insert_reltobufpath_insert,
-      },
-    },
-    layout_strategy = 'vertical',
-    layout_config = {
-      width = 0.90,
-      height = 0.99,
-      preview_height = 0.6,
-    },
-    pickers = {
-      lsp_references = { fname_width = 100, },
-      tags = { fname_width = 100, },
-      find_files = {
-        mappings = {
-          n = {
-            ["cd"] = function(prompt_bufnr)
-              local selection = require("telescope.actions.state").get_selected_entry()
-              local dir = vim.fn.fnamemodify(selection.path, ":p:h")
-              require("telescope.actions").close(prompt_bufnr)
-              -- Depending on what you want put `cd`, `lcd`, `tcd`
-              vim.cmd(string.format("silent lcd %s", dir))
-            end
-          }
-        }
-      },
-      colorscheme = {
-        enable_preview = true
-      },
-    },
-    file_ignore_patterns = {
-      "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"
-    },
-  },
-  pickers = {
-    find_files = {
-      no_ignore = true,
-    }
-  },
-  config = function()
-  end,
-}
+--[[require('telescope').setup {]]
+  --[[defaults = {]]
+    --[[mappings = {]]
+      --[[i = {]]
+        --[[["<C-w>"] = require("telescope.actions").send_selected_to_qflist,]]
+      --[[},]]
+      --[[n = {]]
+        --[[["p"] = require('telescope_insert_path').insert_reltobufpath_insert,]]
+      --[[},]]
+    --[[},]]
+    --[[layout_strategy = 'vertical',]]
+    --[[layout_config = {]]
+      --[[width = 0.90,]]
+      --[[height = 0.99,]]
+      --[[preview_height = 0.6,]]
+    --[[},]]
+    --[[pickers = {]]
+      --[[lsp_references = { fname_width = 100, },]]
+      --[[tags = { fname_width = 100, },]]
+      --[[find_files = {]]
+        --[[mappings = {]]
+          --[[n = {]]
+            --[[["cd"] = function(prompt_bufnr)]]
+              --[[local selection = require("telescope.actions.state").get_selected_entry()]]
+              --[[local dir = vim.fn.fnamemodify(selection.path, ":p:h")]]
+              --[[require("telescope.actions").close(prompt_bufnr)]]
+              --[[-- Depending on what you want put `cd`, `lcd`, `tcd`]]
+              --[[vim.cmd(string.format("silent lcd %s", dir))]]
+            --[[end]]
+          --[[}]]
+        --[[}]]
+      --[[},]]
+      --[[colorscheme = {]]
+        --[[enable_preview = true]]
+      --[[},]]
+    --[[},]]
+    --[[file_ignore_patterns = {]]
+      --[["^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"]]
+    --[[},]]
+  --[[},]]
+  --[[pickers = {]]
+    --[[find_files = {]]
+      --[[no_ignore = true,]]
+    --[[}]]
+  --[[},]]
+  --[[config = function()]]
+  --[[end,]]
+--[[}]]
 vim.cmd [[
   cnoreabbrev ts Telescope
   nnoremap ts :Telescope<cr>
@@ -361,6 +355,8 @@ vim.cmd [[
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+-- Enable media-file preview in telescope
+require('telescope').load_extension('media_files')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>f/', function()
@@ -405,7 +401,7 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 vim.cmd [[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
-  autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
+  "autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
 ]]
 
 -- [[ Configure LSP ]]
@@ -492,8 +488,9 @@ local servers = {
   -- clangd = {},
   gopls = {},
   pyright = {},
+  markdown_oxide = {},
+  --marksman = {},
   -- rust_analyzer = {},
-  marksman = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -530,6 +527,13 @@ mason_lspconfig.setup_handlers {
   end
 }
 
+require("lspconfig").markdown_oxide.setup({
+  capabilities = capabilities,   -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  on_attach = on_attach,         -- configure your on attach config
+})
+
+
+
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
@@ -564,7 +568,14 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp' },
+    --{ name = 'nvim_lsp' },  pre markdown_oxide
+    { name = 'nvim_lsp',
+      option = {
+        markdown_oxide = {
+          keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+        }
+      }
+    },
     { name = 'luasnip' },
   },
   experimental = {
@@ -691,7 +702,6 @@ let @t='llvi]dBi- #jjpa jjllvlldrep - Red Hat Issue Tracker/'
 let @d='BfT€ýacwDONEjj'
 ]]
 
-
 -- Which key configuration
 local wk = require("which-key")
 wk.register({
@@ -749,20 +759,17 @@ wk.register({
 -- markdown preview configuration
 vim.g.mkdp_images_path = '/home/clobrano/Documents/RedHatVault/attachments'
 
--- I want the todo.txt shortcuts, but the ability to work with vimwiki (find references for example)
--- so I will use a todo file with markdown extension, that should be recognized by vimwiki and
--- load all its properties for the buffer, and also set the filetype to todo to get todo.txt mappings.
-vim.cmd [[
-  autocmd BufNewFile,BufRead todo.md set filetype=todo
-]]
-
--- set textwidth to 0 for markdown files
+-- configuration for for markdown files
 vim.cmd [[
   autocmd BufNewFile,BufRead *.md
-    \ set textwidth=0 |
-    \ set shiftwidth=2 |
-    \ nnoremap <M-]> wv<C-]> |
-    \ highlight Folded guibg=none guifg=#51576d
+    \ nnoremap <M-]> :VimWikiVSplitLink<cr>
+    "\ highlight Folded guibg=none guifg=#51576d
+]]
+
+-- configuration for for lua files
+vim.cmd [[
+  autocmd BufNewFile,BufRead *.lua
+    \ set shiftwidth=2
 ]]
 
 -- orgmode configuration
@@ -782,10 +789,12 @@ vim.cmd [[
 
 vim.cmd [[
   cnoreabbrev fontnote set guifont:Source\ Code\ Pro\ Light:h12
-  set shiftwidth=2
-  highlight Folded guibg=none
+  "highlight Folded guibg=none
+  set foldlevel=10
 ]]
 
-vim.cmd [[
-  let g:dotoo#agenda#files=['~/Documents/RedHatVault/*.dotoo', '~/Dropbox/notes/*.dotoo']
-]]
+-- lsp debug log
+--vim.lsp.set_log_level 'debug'
+--if vim.fn.has 'nvim-0.5.1' == 1 then
+--require('vim.lsp.log').set_format_func(vim.inspect)
+--end

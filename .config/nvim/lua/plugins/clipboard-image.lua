@@ -7,7 +7,7 @@ return {
         require 'clipboard-image'.setup {
             -- Default configuration for all filetype
             default = {
-                img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
+                img_dir = { "attachments" }, -- Use table for nested dir (New feature form PR #20)
                 img_name = function()
                     vim.fn.inputsave()
                     local name = vim.fn.input('Image name: ')
@@ -20,7 +20,7 @@ return {
             -- If you're uncertain what to name your field to, you can run `lua print(vim.bo.filetype)`
             -- Missing options from `markdown` field will be replaced by options from `default` field
             markdown = {
-                img_dir = { "%:p:h", "attachments" }, -- Use table for nested dir (New feature form PR #20)
+                img_dir = { "attachments" }, -- Use table for nested dir (New feature form PR #20)
                 img_name = function()
                     vim.fn.inputsave()
                     local name = vim.fn.input('Image name: ')

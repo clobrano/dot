@@ -10,10 +10,14 @@ sudo dnf install -y \
     figlet \
     fzf \
     git \
+    gh \
+    golang \
     neovim \
+    recode \
     python3-pip \
     ripgrep \
     the_silver_searcher \
     tmux \
     xclip \
+    stow \
     zsh

@@ -37,6 +37,6 @@ return {
       },
       org_startup_folded = 'overview', -- 'showeverything',
       org_tags_column = -100,
-    })
+   })
   end,
 }

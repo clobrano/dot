@@ -6,7 +6,7 @@ source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/environments/pyenv-init.sh
 
 export CDPATH=$HOME/workspace
-export GOROOT=/usr/local/go/
+#export GOROOT=/usr/local/go/
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1

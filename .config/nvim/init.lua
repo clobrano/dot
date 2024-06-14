@@ -56,7 +56,7 @@ local plugins = {
   require('plugins.orgmode'),
   --require('plugins.mkdnflow'),
   require('plugins.vimwiki'),
-  require('plugins.vim-markdown'),
+  --require('plugins.vim-markdown'),
   require('plugins.taskwiki'),
   --require('plugins.mkdnflow'),
   --'samgriesemer/vim-roam-task', -- taskwiki without the dependency from vimwiki

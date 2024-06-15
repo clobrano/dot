@@ -6,12 +6,12 @@ return {
             mappings = { -- rename this to "force_mappings" to completely override default mappings and not merge with them
                 nv = {  -- Mode union: normal & visual mode. Can be extended by adding i, x, ...
                     motions = {
-                        new_trail_mark = '<leader>km',
-                        track_back = '<leader>kb',
-                        peek_move_next_down = '<leader>kj',
-                        peek_move_previous_up = '<leader>kk',
-                        move_to_nearest = '<leader>kn',
-                        toggle_trail_mark_list = '<leader>kl',
+                        new_trail_mark = '<leader>mm',
+                        track_back = '<leader>mb',
+                        peek_move_next_down = '<leader>mj',
+                        peek_move_previous_up = '<leader>mk',
+                        move_to_nearest = '<leader>mc',
+                        toggle_trail_mark_list = '<leader>ml',
                     },
                 },
                 -- You can also add/move any motion or action to mode specific mappings i.e.:
@@ -24,5 +24,8 @@ return {
                 -- },
             },
         })
+        vim.keymap.set('n', '<leader>mL', ':TrailBlazerLoadSession marks/marks.tbsv')
+        vim.keymap.set('n', '<leader>mS', ':TrailBlazerSaveSession marks')
+        vim.keymap.set('n', '<leader>mD', ':TrailBlazerDeleteAllTrailMarks')
     end,
 }

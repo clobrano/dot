@@ -1,2 +1,7 @@
-set shiftwidth=2
-set foldexpr=vim.treesitter.foldexpr()
+set shiftwidth=4
+"set foldexpr=vim.treesitter.foldexpr()
+set foldlevel=99
+set concealcursor=c
+set colorcolumn=101
+set textwidth=100
+set noexpandtab

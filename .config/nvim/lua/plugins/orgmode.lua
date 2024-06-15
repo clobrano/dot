@@ -17,7 +17,6 @@ return {
   end,
   config = function()
     -- Load treesitter grammar for org
-    require('orgmode').setup_ts_grammar()
 
     -- Setup treesitter
     require('nvim-treesitter.configs').setup({
@@ -31,9 +30,6 @@ return {
     require('orgmode').setup({
       org_agenda_files = { '~/Dropbox/notes/**/*', '~/Documents/RedHatVault/**/*' },
       org_default_notes_file = '~/Dropbox/notes/Planner.org',
-      mappings = {
-        org_return_uses_meta_return = true
-      },
       org_capture_templates = {
         t = { description = 'Task', template = '* TODO %?\n  %u' },
         w = { description = 'Work', target = '~/Documents/RedHatVault/Work.org', template = '* TODO %?\n' },

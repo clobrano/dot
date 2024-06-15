@@ -17,9 +17,11 @@ vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
 vim.opt.foldmethod='expr'
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.foldcolumn= '0'
+--vim.o.foldcolumn= '0'
 vim.o.foldlevelstart=99
+vim.opt.foldlevelstart=99
 vim.o.foldlevel=99
+vim.opt.foldlevel=99
 vim.o.foldenable = false
 
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
@@ -68,7 +70,7 @@ vim.opt.joinspaces = false -- do not add space when joining lines
 
 vim.opt.scrolloff = 8
 vim.opt.shiftround = true                            -- always indent by multiple of shiftwidth
-vim.shiftwidth = 2                          -- spaces per tab (when shifting)
+vim.shiftwidth = 4                          -- spaces per tab (when shifting)
 vim.opt.shortmess:append('A')                          -- ignore annoying swapfile messages
 vim.opt.shortmess:append('I')                          -- no splash screen
 vim.opt.shortmess:append('W')  --set shortmess+=W   -- don't echo --[w]--/--[written]-- when writing
@@ -96,7 +98,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tags = 'tags;/'                           -- Makes ctags visible from subdirectories
 
-vim.opt.textwidth = 120 -- use larger text limit, unless required (e.g. commit message)
+vim.opt.textwidth = 100 -- use larger text limit, unless required (e.g. commit message)
 
 vim.opt.thesaurus:append('~/.config/nvim/thesaurus/thesaurus.txt')
 

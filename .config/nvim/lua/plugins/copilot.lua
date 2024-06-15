@@ -6,5 +6,6 @@ vim.cmd [[
         \ '*': v:false,
         \ 'go': v:true,
         \ 'python': v:true,
+        \ 'text': v:true,
         \ }
 ]]

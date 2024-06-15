@@ -13,7 +13,7 @@ return {
         vim.keymap.set('n','<leader>gl', '<esc>:botright G log<cr>')
         vim.keymap.set('n','<leader>gps', '<esc>:G push<cr>')
         vim.keymap.set('n','<leader>gpl', '<esc>:G pull<cr>')
-        vim.keymap.set('n','<leader>gs', '<esc>:vertical G<cr>')
+        --vim.keymap.set('n','<leader>gs', '<esc>:vertical G<cr>')
         vim.keymap.set('n','<leader>gv', '<esc>:GV<cr>')
 
         -- Fugitive vertical diff

@@ -3,7 +3,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
         vim.cmd [[
-            cnoreabbrev ss Startify
+            cnoreabbrev SS Startify
 
             let g:startify_custom_header =
             \ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))
@@ -12,7 +12,7 @@ return {
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
-                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-frappe | set guifont=Hasklig:h11 | set linespace=3 | highlight Folded guibg=none guifg=#51576d' ] },
+                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-frappe | set guifont=Hasklig:h11 | set linespace=3 '] },
                 \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
                 \ { 'o': ['Open Orgmode', 'SLoad Orgmode | highlight Folded guibg=none guifg=fg'] },
                 \ { 'w': ['Open Work org', 'SLoad Worgmode | highlight Folded guibg=none guifg=fg'] },

@@ -51,7 +51,7 @@ alias nreview="nvim -c \"Octo pr list\""
 # fixes it, so :shrug:
 alias rein="cd .. && cd -"
 # I know, an alias for my own script... but bookmark is a meaningful name
-alias bk=~/workspace/script-fu/bookmarks
+alias bb=~/workspace/script-fu/bookmarks
 
 alias mao="cd ~/workspace/mao/machine-api-operator/"
 alias Mdr="cd ~/workspace/medik8s/upstream/mdr/machine-deletion-operator/"
@@ -64,6 +64,5 @@ alias Snr="cd ~/workspace/medik8s/upstream/snr/self-node-remediation/"
 alias snr="cd ~/workspace/medik8s/midstream/self-node-remediation/"
 alias Nmo="cd ~/workspace/medik8s/upstream/nmo/node-maintenance-operator/"
 alias nmo="cd ~/workspace/medik8s/midstream/node-maintenance-operator/"
-alias m3dev="cd ~/mnt/remote-user/metal3-dev-env"
-alias capm3="cd ~/mnt/remote-user/go/src/github.com/metal3-io/cluster-api-provider-metal3"
+alias capm3="cd ~/workspace/metal3-io/cluster-api-provider-metal3"
 alias yaml="cd ~/workspace/under-backup/YAMLs"

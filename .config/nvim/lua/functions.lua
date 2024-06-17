@@ -21,7 +21,7 @@ function CreateNoteFromFileName()
     -- otherwise, the title is the filename without the extension
     local filename = vim.fn.expand("%:t:r")
     local title = filename
-    -- template for daily notes
+    -- template for weekly notes
     if string.match(filename, "^%d%d%d%d%-%d%d%-%d%d") then
         local year = string.sub(filename, 1, 4)
         local month = string.sub(filename, 6, 7)
@@ -29,7 +29,7 @@ function CreateNoteFromFileName()
         -- change Locale to English only for the following command
         os.setlocale("C")
         -- re-format the date as in "Mon 12 Jan 2021 Week02"
-        title = os.date("%a %d %b %Y W%V", os.time({ year = year, month = month, day = day }))
+        title = os.date("Week %V", os.time({ year = year, month = month, day = day }))
         -- read the rest of the template from the journaling template
         local template = vim.fn.readfile("./Templates/weekly-template.md")
         -- write the template in current buffer

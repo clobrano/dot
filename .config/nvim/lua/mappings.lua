@@ -6,6 +6,7 @@ end
 local function nmap(k, v) map('n', k, v) end
 local function vmap(k, v) map('v', k, v) end
 local function imap(k, v) map('i', k, v) end
+local function tmap(k, v) map('t', k, v) end
 local function xmap(k, v) map('x', k, v) end
 
 -- journal
@@ -138,6 +139,7 @@ nmap('qa', '<esc>:qa!<cr>')
 -- terminal opened below any other vertical split
 nmap('<leader>x', ':botright split | resize 20 | terminal<cr>')
 nmap('<leader>vx', ':vertical split | terminal<cr>')
+tmap('<Esc>', '<c-\\><c-n>')
 
 -- fold: always toggle all fold at current position
 --nmap('za', 'zA')
@@ -382,11 +384,10 @@ vmap('<leader>bo', '"adi**<esc>"apa**<esc>')
 vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
 -- strikethrough
 vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
--- PR created
-nmap('<leader>pn', 'a created (#wait in review)<esc>')
-nmap('<leader>pm', 'a **MERGED**<esc>')
--- zenmode
+
+-- Some plugins things
+-- TODO: move it to zenmode
 nmap('<leader>zm', ':ZenMode<cr>')
 
--- neogit
+-- TODO: move it to neogit configuration file
 nmap('<leader>gs', ':Neogit<cr>')

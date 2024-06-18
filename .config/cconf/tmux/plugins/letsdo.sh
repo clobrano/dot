@@ -48,7 +48,8 @@ if [[ $task_len > 40 ]]; then
 fi
 end=$(date +%s)
 
-dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$name $(date +"%kh:%Mm.%Ss" --date="@$(($end - $begin - 3600))")'"
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
-echo "󰔛 $name$(date +"%kh:%Mm.%S" --date="@$(($end - $begin - 3600))")"
+elapsed_time=$(date +"%H:%M.%S" --date="@$(($end - $begin - 3600))")
+dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$name $elapsed_time'"
+echo "󰔛 $name $elapsed_time"
 

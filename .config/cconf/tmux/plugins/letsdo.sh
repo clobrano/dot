@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
-## Read current Letsdo task title from tmux
+## Read current Letsdo task title and time, and show it in TMUX status bar.
+## Notify when working on the same task for more than 45 minutes straight.
 
 shopt -s extglob  # bash only
 
@@ -21,6 +22,24 @@ name=$(sed -n 's_"name": "\(.*\)",_\1_p' "$DATA_DIRECTORY/letsdo-task")
 name=${name##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
 name=${name%%+([[:space:]])}   # strip trailing whitespace; no quote expansion!
 
+# Warn if speding "too much time" on the same task
+if [[ ! -f $HOME/.letsdo-warning-sent ]]; then
+    set -x
+    warn_time_minutes=45  # 45 minutes limit
+    work_time_seconds=$(($end - $begin))
+    work_time_minutes=$(($work_time_seconds / 60))
+    if [[ $(($work_time_minutes % $warn_time_minutes)) -eq 0 ]]; then
+        notify-send "working on the same task for some time already"
+        paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+        echo $name > $HOME/.letsdo-warning-sent
+    fi
+else
+    task_warned=$(cat $HOME/.letsdo-warning-sent)
+    if [[ "$task_warned" != "$name" ]]; then
+        rm $HOME/.letsdo-warning-sent
+    fi
+fi
+
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")
 
 task_len=${#name}
@@ -29,7 +48,7 @@ if [[ $task_len > 40 ]]; then
 fi
 end=$(date +%s)
 
-dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$name $(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")'"
-# Why I need an 1h offset to get the right value? Is it for the daylight setting?
-echo "󰔛 $name$(date +"%kh:%Mm" --date="@$(($end - $begin - 3600))")"
+dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$name $(date +"%kh:%Mm.%Ss" --date="@$(($end - $begin - 3600))")'"
+# TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
+echo "󰔛 $name$(date +"%kh:%Mm.%S" --date="@$(($end - $begin - 3600))")"
 

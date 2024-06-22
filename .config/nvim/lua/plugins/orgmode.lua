@@ -28,14 +28,13 @@ return {
 
     -- Setup orgmode
     require('orgmode').setup({
-      org_agenda_files = { '~/Dropbox/notes/**/*', '~/Documents/RedHatVault/**/*' },
-      org_default_notes_file = '~/Dropbox/notes/Planner.org',
+      org_agenda_files = { '~/Dropbox/Orgmode/**/*' },
+      org_default_notes_file = '~/Dropbox/Orgmode/Orgmode.org',
       org_capture_templates = {
         t = { description = 'Task', template = '* TODO %?\n  %u' },
-        w = { description = 'Work', target = '~/Documents/RedHatVault/Work.org', template = '* TODO %?\n' },
         n = { description = 'Note', template = '* %?\n  %u' },
       },
-      org_startup_folded = 'overview', -- 'showeverything',
+      --org_startup_folded = 'overview', -- 'showeverything',
       org_tags_column = -100,
    })
   end,

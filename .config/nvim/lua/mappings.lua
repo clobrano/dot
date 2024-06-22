@@ -23,7 +23,7 @@ nmap('<leader>fi', '[i')
 -- align block of text.
 vmap('<<', '<gv')
 vmap('>>', '>gv')
-imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode (does not work in some shell)
+-- imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode : use C-t instead
 
 -- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')
@@ -48,7 +48,7 @@ nmap('m7',       ':bfirst<cr>:6bn<cr>')
 nmap('m8',       ':bfirst<cr>:7bn<cr>')
 nmap('m9',       ':bfirst<cr>:8bn<cr>')
 -- buffer: reload
-nmap('<leader>e', ':e<cr>')
+nmap('<leader>e', ':e!<cr>')
 nmap('ct', ':checktime<cr>')
 
 -- buffer select ALL
@@ -140,6 +140,7 @@ nmap('qa', '<esc>:qa!<cr>')
 nmap('<leader>x', ':botright split | resize 20 | terminal<cr>')
 nmap('<leader>vx', ':vertical split | terminal<cr>')
 tmap('<Esc>', '<c-\\><c-n>')
+tmap('jj', '<c-\\><c-n>')
 
 -- fold: always toggle all fold at current position
 --nmap('za', 'zA')
@@ -169,7 +170,7 @@ nmap('*', '*``')
 --nmap(<expr> <cr> empty(&buftype) ? '@@' : '<cr>'
 
 -- make
-nmap('<F3>', ':make<cr>')
+--nmap('<F3>', ':make<cr>')
 
 -- move: fix weird chars in terminal using arrow keys in insert mode {{{
 imap('[1;5A', '<esc>ki')
@@ -230,7 +231,7 @@ imap('jj', '<Esc>')
 -- get title from url (get url from clipboard)
 nmap('<leader>gt', ':r!~/workspace/script-fu/get-url-title.sh')
 -- open file with xdg-open (e.g. images in markdown files)
-nmap('<leader>gx', ':!xdg-open %:p:h/<cfile>')
+nmap('<leader>xo', ':!xdg-open %:p:h/<cfile>')
 
 -- replace current word with confirmation and magic \v
 nmap('<leader>c*', '<esc>:%s///gc<left><left><left><left><C-r><C-w><right>')

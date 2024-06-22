@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   -- UI
   "savq/melange-nvim",                      -- default light theme
-  { "catppuccin/nvim",       name = "catppuccin", priority = 1000 },
+  require('plugins.catpuccin'),
   "tanvirtin/monokai.nvim",                 -- monokai colorscheme
   'ryanoasis/vim-devicons',
   "fraso-dev/nvim-listchars",               -- toggle show listchars
@@ -52,28 +52,16 @@ local plugins = {
   },
 
   -- Notes and Markdown
-  require('plugins.zenmode'),
-  require('plugins.orgmode'),
-  --require('plugins.mkdnflow'),
-  require('plugins.vimwiki'),
-  --require('plugins.vim-markdown'),
-  require('plugins.taskwiki'),
-  --require('plugins.mkdnflow'),
-  --'samgriesemer/vim-roam-task', -- taskwiki without the dependency from vimwiki
-  --'freitass/todo.txt-vim',
-  'kiyoon/telescope-insert-path.nvim',
-  {
-    -- needs plantUML and imv installed
-    'Groveer/plantuml.nvim',
-    config = function()
-      -- calling `setup` is optional for customization
-      require('plantuml').setup({})
-    end
-  },
-  require('plugins.github-preview'),
-  require('plugins.markdown-preview'),
   require('plugins.clipboard-image'),
-
+  require('plugins.github-preview'),
+  require('plugins.icon-picker'),
+  require('plugins.markdown-preview'),
+  require('plugins.marvim'), -- macro recorder
+  require('plugins.orgmode'),
+  require('plugins.plantuml'),
+  require('plugins.taskwiki'),
+  require('plugins.vimwiki'),
+  require('plugins.zenmode'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -195,6 +183,7 @@ local plugins = {
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim" },
   },
+  'kiyoon/telescope-insert-path.nvim',
   'nvim-telescope/telescope-media-files.nvim',
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -783,8 +772,21 @@ vim.cmd [[
   set foldlevel=10
 ]]
 
+vim.cmd [[
+"highlight the entire block quote
+syn match Comment "^> .*"
+  ]]
+
+vim.cmd [[
+nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+]]
+
+
 -- lsp debug log
 --vim.lsp.set_log_level 'debug'
 --if vim.fn.has 'nvim-0.5.1' == 1 then
 --require('vim.lsp.log').set_format_func(vim.inspect)
 --end
+--

@@ -19,6 +19,7 @@ return {
       vim.g.vimwiki_markdown_link_ext = 1
       vim.g.vimwiki_hl_headers = 1
       vim.opt.concealcursor = 'c'
+      vim.g.vimwiki_folding = 'list'
     end,
   },
 }

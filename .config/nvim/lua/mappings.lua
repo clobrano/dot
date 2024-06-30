@@ -23,7 +23,7 @@ nmap('<leader>fi', '[i')
 -- align block of text.
 vmap('<<', '<gv')
 vmap('>>', '>gv')
--- imap('<C-cr>', '<esc>>>A') -- Ctrl+Enter indent current line in insert mode : use C-t instead
+imap('<C-i>', '<C-t>') -- remap indent from C-t to C-i (i for indent, and closer to the rx hand)
 
 -- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')

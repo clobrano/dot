@@ -23,18 +23,17 @@ configuration {
 }
 
 listview {
-    columns: 3;
+    columns: 1;
     lines: 7;
     fixed-height: true;
     fixed-columns: true;
-    cycle: false;
+    cycle: true;
     scrollbar: false;
     border: 0px solid;
 }
 
 window {
     transparency: "real";
-    //width: 450px;
     border-radius: @b-radius;
     background-color: @wbg-color;
     border: @w-border;

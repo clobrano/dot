@@ -28,13 +28,12 @@ imap('<C-i>', '<C-t>') -- remap indent from C-t to C-i (i for indent, and closer
 -- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')
 
-
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
 
 -- buffer: motion
-nmap('<A-Left>',  '<Esc>:bprevious<CR>')
-nmap('<A-Right>', '<Esc>:bnext<CR>')
+--nmap('<A-Left>',  '<Esc>:bprevious<CR>')
+--nmap('<A-Right>', '<Esc>:bnext<CR>')
 nmap('H',         '<Esc>:bprevious<CR>')
 nmap('L',         '<Esc>:bnext<CR>')
 nmap('<c-b>',    '<esc>:b<space>')
@@ -213,8 +212,7 @@ nmap('<leader>p', '<C-^>')
 -- move between tabs
 nmap('tn', 'gt')
 nmap('tb', 'gT')
-nmap('<M-l>', 'gt')
-nmap('<M-h>', 'gT')
+
 -- also create and delete tabs
 nmap('tc', ':tabnew<cr>')
 nmap('td', ':tabclose<cr>')
@@ -240,14 +238,20 @@ vmap('<leader>c*', 'y<esc>:%s///gc<left><left><left><left><C-r>--<right>')
 -- replace in all buffer
 nmap('rep', '<Esc>:%s/')
 
--- resize horizontal window splits (using --=-- in place of --+-- to avoid
--- combinations)
+-- resize horizontal window splits (using = in place of + to avoid combinations)
 --nmap(<silent> <leader>= :exe --vertical resize +5--<CR>
 --nmap(<silent> <leader>- :exe --vertical resize -5--<CR>
 -- resize vertical window splits
-nmap('<silent>', '= :exe --resize +2--<CR>')
+-- mnemonics: H -> High (increase window width)
+-- mnemonics: L -> Low (decrease window width)
+nmap('wH', '30<C-w>>')
+nmap('wL', '30<C-w><')
+nmap('wJ', '10<C-w>-')
+nmap('wK', '10<C-w>+')
 nmap('<silent>', '- :exe --resize -2--<CR>')
-nmap('w3', ':vertical resize -30')
+nmap('w3', ':vertical resize -30<cr>')
+-- zoom current window
+nmap('<leader>zz', '<C-w>|<C-w>_')
 
 -- sudo save
 --cmap w!! w !sudo tee > /dev/null %
@@ -392,3 +396,4 @@ nmap('<leader>zm', ':ZenMode<cr>')
 
 -- TODO: move it to neogit configuration file
 nmap('<leader>gs', ':Neogit<cr>')
+

@@ -335,7 +335,7 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 vim.cmd [[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
-  autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
+  autocmd CursorHoldI *.go silent! lua vim.lsp.buf.hover({focusable = false})
 ]]
 
 -- [[ Configure LSP ]]

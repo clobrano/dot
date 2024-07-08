@@ -281,60 +281,11 @@ require('tabline').setup {}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('plugins.telescope')
-
---[[require('telescope').setup {]]
-  --[[defaults = {]]
-    --[[mappings = {]]
-      --[[i = {]]
-        --[[["<C-w>"] = require("telescope.actions").send_selected_to_qflist,]]
-      --[[},]]
-      --[[n = {]]
-        --[[["p"] = require('telescope_insert_path').insert_reltobufpath_insert,]]
-      --[[},]]
-    --[[},]]
-    --[[layout_strategy = 'vertical',]]
-    --[[layout_config = {]]
-      --[[width = 0.90,]]
-      --[[height = 0.99,]]
-      --[[preview_height = 0.6,]]
-    --[[},]]
-    --[[pickers = {]]
-      --[[lsp_references = { fname_width = 100, },]]
-      --[[tags = { fname_width = 100, },]]
-      --[[find_files = {]]
-        --[[mappings = {]]
-          --[[n = {]]
-            --[[["cd"] = function(prompt_bufnr)]]
-              --[[local selection = require("telescope.actions.state").get_selected_entry()]]
-              --[[local dir = vim.fn.fnamemodify(selection.path, ":p:h")]]
-              --[[require("telescope.actions").close(prompt_bufnr)]]
-              --[[-- Depending on what you want put `cd`, `lcd`, `tcd`]]
-              --[[vim.cmd(string.format("silent lcd %s", dir))]]
-            --[[end]]
-          --[[}]]
-        --[[}]]
-      --[[},]]
-      --[[colorscheme = {]]
-        --[[enable_preview = true]]
-      --[[},]]
-    --[[},]]
-    --[[file_ignore_patterns = {]]
-      --[["^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"]]
-    --[[},]]
-  --[[},]]
-  --[[pickers = {]]
-    --[[find_files = {]]
-      --[[no_ignore = true,]]
-    --[[}]]
-  --[[},]]
-  --[[config = function()]]
-  --[[end,]]
---[[}]]
-vim.cmd [[
-  cnoreabbrev ts Telescope
-  nnoremap ts :Telescope<cr>
-]]
+--require('plugins.telescope')
+--vim.cmd [[
+  --cnoreabbrev ts Telescope
+  --nnoremap ts :Telescope<cr>
+--]]
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')

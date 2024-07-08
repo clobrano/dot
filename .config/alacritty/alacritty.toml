@@ -1,0 +1,21 @@
+live_config_reload = true
+shell = "/home/clobrano/workspace/script-fu/neovim-note-popup.sh"
+
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Source Code Pro"
+
+[scrolling]
+history = 0
+
+[window]
+decorations = "none"
+dynamic_padding = true
+opacity = 0.95
+
+[window.padding]
+x = 15
+y = 10

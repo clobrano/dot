@@ -44,6 +44,10 @@ require('telescope').setup {
             nnoremap <leader>fgb :Telescope git_branches<cr>
             nnoremap <leader>fgc :Telescope git_commits<cr>
             nnoremap <leader>fgs :Telescope git_stashes<cr>
+
+            " Abbreviations
+            cnoreabbrev ts Telescope
+            nnoremap ts :Telescope<cr>
         ]]
   end,
   defaults = {

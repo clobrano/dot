@@ -96,6 +96,7 @@ local plugins = {
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
   { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
+  require('plugins.oil'),
   require('plugins.neotree'),
   require('plugins.vim-g'),
   {

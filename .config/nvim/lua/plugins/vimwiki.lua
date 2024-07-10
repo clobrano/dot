@@ -25,7 +25,7 @@ return {
     end,
 	config = function()
 	  -- taskwarrior abbreviation to append to each tasks that does not belong to a Todo viewport
-	  vim.cmd('abb twtw -- pro: #W:')
+	  vim.cmd('abb ttw -- pro: #W:')
 	end
   },
   --config = function()

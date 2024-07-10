@@ -365,7 +365,7 @@ nmap('<leader>lr', ':LspRestart<cr>')
 -- zettelkasted UUID (date + time)
 imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
 nmap('<leader>zk', "<esc>:lua require'functions'.zettelkastenID()<cr>")
-vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
+nmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
 -- find todos in all files (needs folke/todo-comments)
 nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')

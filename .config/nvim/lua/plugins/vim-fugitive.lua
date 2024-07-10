@@ -10,7 +10,7 @@ return {
         vim.keymap.set('n','<leader>gco', '<esc>:G commit -s<cr>')
         vim.keymap.set('n','<leader>gca', '<esc>:G commit --amend<cr>')
         vim.keymap.set('n','<leader>gcan', '<esc>:G commit --amend --no-edit<cr>')
-        vim.keymap.set('n','<leader>gl', '<esc>:botright G log<cr>')
+        --vim.keymap.set('n','<leader>gl', '<esc>:botright G log<cr>')
         vim.keymap.set('n','<leader>gps', '<esc>:G push<cr>')
         vim.keymap.set('n','<leader>gpl', '<esc>:G pull<cr>')
         --vim.keymap.set('n','<leader>gs', '<esc>:vertical G<cr>')

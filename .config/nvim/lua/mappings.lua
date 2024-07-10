@@ -227,7 +227,7 @@ imap('jj', '<Esc>')
 
 -- Notes (see plugin/tasks)
 -- get title from url (get url from clipboard)
-nmap('<leader>gt', ':r!~/workspace/script-fu/get-url-title.sh')
+nmap('<leader>gt', ':r ! ~/workspace/script-fu/get-url-title.sh<cr>')
 -- open file with xdg-open (e.g. images in markdown files)
 nmap('<leader>xo', ':!xdg-open %:p:h/<cfile>')
 

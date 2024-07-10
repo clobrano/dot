@@ -244,10 +244,10 @@ nmap('rep', '<Esc>:%s/')
 -- resize vertical window splits
 -- mnemonics: H -> High (increase window width)
 -- mnemonics: L -> Low (decrease window width)
-nmap('wH', '30<C-w>>')
-nmap('wL', '30<C-w><')
-nmap('wJ', '10<C-w>-')
-nmap('wK', '10<C-w>+')
+nmap('w.', '2<C-w>>') -- use . in place of > to avoid typing shift
+nmap('w,', '2<C-w><') -- use , in place of < to avoid typing shift
+nmap('w-', '<C-w>-')
+nmap('w=', '<C-w>+') -- use = in place of + to avoid typing shift
 nmap('<silent>', '- :exe --resize -2--<CR>')
 nmap('w3', ':vertical resize -30<cr>')
 -- zoom current window

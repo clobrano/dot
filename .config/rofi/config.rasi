@@ -19,7 +19,7 @@
 configuration {
     modi: "drun,window,run,windowcd,filebrowser";
     show-icons: true;
-    display-drun: "";
+    display-drun: "Applications:";
 }
 
 listview {

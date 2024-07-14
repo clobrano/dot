@@ -7,7 +7,7 @@ active_address=$(hyprctl -j activewindow | jq -r '.address')
 selected=$(echo $windows | \
     jq -r '.[] | "\(.initialTitle) (\(.title)) |\(.address)"' | \
     sed "s|$active_address|focused|" | \
-    rofi -dmenu -p "" -i -normal-window)
+    rofi -dmenu -p "Windows:" -i -normal-window)
 
 addr="$(echo "$selected" | awk -F '|' '{print $2}')"
 

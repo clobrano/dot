@@ -20,6 +20,14 @@ return {
       vim.g.vimwiki_hl_headers = 1
       vim.opt.concealcursor = 'c'
       vim.g.vimwiki_folding = 'list'
+
+	  vim.keymap.set('n', '<C-space>', ':VimwikiToggleListItem<cr>')
     end,
+	config = function()
+	  -- taskwarrior abbreviation to append to each tasks that does not belong to a Todo viewport
+	  vim.cmd('abb ttw -- pro: #W:')
+	end
   },
+  --config = function()
+  --end
 }

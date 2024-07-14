@@ -72,7 +72,6 @@ local plugins = {
   'tpope/vim-eunuch',
   'tpope/vim-surround',
   --'tpope/vim-sleuth',
-  'mfussenegger/nvim-dap',
   'tyru/current-func-info.vim',
   'lmeijvogel/vim-yaml-helper',
   require('plugins.nvim-highlight-colors'),
@@ -85,8 +84,9 @@ local plugins = {
   },
 
   -- Debugging
-  'leoluz/nvim-dap-go',
-  'rcarriga/nvim-dap-ui',
+  require('plugins.dap-ui'),
+  require('plugins.dap'),
+  require('plugins.dap-go'),
   'nvim-neotest/nvim-nio',
   'theHamsta/nvim-dap-virtual-text',
   'nvim-telescope/telescope-dap.nvim',
@@ -96,6 +96,7 @@ local plugins = {
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
   { 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
+  require('plugins.oil'),
   require('plugins.neotree'),
   require('plugins.vim-g'),
   {
@@ -171,13 +172,7 @@ local plugins = {
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
-  {
-    'folke/trouble.nvim',
-    opts = { icons = false, use_diagnostic_signs = true, },
-    config = function()
-      vim.keymap.set('n', '<leader>tt', ':TroubleToggle<cr>')
-    end,
-  },
+  require('plugins.trouble'),
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -287,60 +282,11 @@ require('tabline').setup {}
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('plugins.telescope')
-
---[[require('telescope').setup {]]
-  --[[defaults = {]]
-    --[[mappings = {]]
-      --[[i = {]]
-        --[[["<C-w>"] = require("telescope.actions").send_selected_to_qflist,]]
-      --[[},]]
-      --[[n = {]]
-        --[[["p"] = require('telescope_insert_path').insert_reltobufpath_insert,]]
-      --[[},]]
-    --[[},]]
-    --[[layout_strategy = 'vertical',]]
-    --[[layout_config = {]]
-      --[[width = 0.90,]]
-      --[[height = 0.99,]]
-      --[[preview_height = 0.6,]]
-    --[[},]]
-    --[[pickers = {]]
-      --[[lsp_references = { fname_width = 100, },]]
-      --[[tags = { fname_width = 100, },]]
-      --[[find_files = {]]
-        --[[mappings = {]]
-          --[[n = {]]
-            --[[["cd"] = function(prompt_bufnr)]]
-              --[[local selection = require("telescope.actions.state").get_selected_entry()]]
-              --[[local dir = vim.fn.fnamemodify(selection.path, ":p:h")]]
-              --[[require("telescope.actions").close(prompt_bufnr)]]
-              --[[-- Depending on what you want put `cd`, `lcd`, `tcd`]]
-              --[[vim.cmd(string.format("silent lcd %s", dir))]]
-            --[[end]]
-          --[[}]]
-        --[[}]]
-      --[[},]]
-      --[[colorscheme = {]]
-        --[[enable_preview = true]]
-      --[[},]]
-    --[[},]]
-    --[[file_ignore_patterns = {]]
-      --[["^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"]]
-    --[[},]]
-  --[[},]]
-  --[[pickers = {]]
-    --[[find_files = {]]
-      --[[no_ignore = true,]]
-    --[[}]]
-  --[[},]]
-  --[[config = function()]]
-  --[[end,]]
---[[}]]
-vim.cmd [[
-  cnoreabbrev ts Telescope
-  nnoremap ts :Telescope<cr>
-]]
+--require('plugins.telescope')
+--vim.cmd [[
+  --cnoreabbrev ts Telescope
+  --nnoremap ts :Telescope<cr>
+--]]
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -390,7 +336,7 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 vim.cmd [[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
-  "autocmd CursorHoldI * silent! lua vim.lsp.buf.hover({focusable = false})
+  autocmd CursorHoldI *.go silent! lua vim.lsp.buf.hover({focusable = false})
 ]]
 
 -- [[ Configure LSP ]]
@@ -606,78 +552,6 @@ if vim.fn.exists('g:neovide') == 1 then
   set guifont=Source\ Code\ Pro:h11
   ]]
 end
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-
--- DAP (debugging) configuration
-vim.keymap.set("n", "<F6>", ":lua require'dapui'.open()<cr>")
-vim.keymap.set('n', '<F7>', function() require('dap').continue() end)
-
-vim.keymap.set('n', '<F8>', function() require('dap').step_over() end)
-vim.keymap.set('n', '<C-n>', function() require('dap').step_over() end)
-
-vim.keymap.set('n', '<F9>', function() require('dap').step_into() end)
-vim.keymap.set('n', '<C-s>', function() require('dap').step_into() end)
-
-vim.keymap.set('n', '<F10>', function() require('dap').step_out() end)
-vim.keymap.set('n', '<C-f>', function() require('dap').step_out() end)
-
-vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
-vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
-vim.keymap.set('n', '<Leader>lp',
-  function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
-vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
-vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
-vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function() require('dap.ui.widgets').hover() end)
---vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function() require('dap.ui.widgets').preview() end) Conflicts with `diffput` which I use more often
-vim.keymap.set('n', '<Leader>df',
-  function()
-    local widgets = require('dap.ui.widgets')
-    widgets.centered_float(widgets.frames)
-  end)
-vim.keymap.set('n', '<Leader>dw',
-  function()
-    local widgets = require('dap.ui.widgets')
-    widgets.centered_float(widgets.scopes)
-  end)
---vim.keymap.set("n", "<F7>", ":lua require'dap'.continue()<cr>")
---vim.keymap.set("n", "<F8>", ":lua require'dap'.toggle_breakpoint()<cr>")
---vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<cr>")
---vim.keymap.set("n", "<F11>", ":lua require'dap'.step_into()<cr>")
---vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<cr>")
-require('dap-go').setup {
-  -- Additional dap configurations can be added.
-  -- dap_configurations accepts a list of tables where each entry
-  -- represents a dap configuration. For more details see:
-  -- |dap-configuration|
-  dap_configurations = {
-    {
-      -- Must be "go" or it will be ignored by the plugin
-      type = "go",
-      name = "Attach remote",
-      mode = "remote",
-      request = "attach",
-    },
-  },
-  -- delve configurations
-  delve = {
-    -- the path to the executable dlv which will be used for debugging.
-    -- by default, this is the "dlv" executable on your PATH.
-    path = "dlv",
-    -- time to wait for delve to initialize the debug session.
-    -- default to 20 seconds
-    initialize_timeout_sec = 20,
-    -- a string that defines the port to start delve debugger.
-    -- default to string "${port}" which instructs nvim-dap
-    -- to start the process in a random available port
-    port = "2345",
-    -- additional args to pass to dlv
-    args = {}
-  },
-}
-require('dapui').setup({})
-
 
 -- Register some useful macros
 vim.cmd [[

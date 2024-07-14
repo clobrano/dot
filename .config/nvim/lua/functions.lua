@@ -64,8 +64,7 @@ vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_current_line()<CR>',
 
 function Letsdo_visual_selection()
   -- Get the currently selected text
-  local selected_text = get_clipboard()
-  local task = selected_text
+  local task = get_clipboard()
 
   -- Run the "letsdo" command with the selected text as input
   local command = 'letsdo goto ' .. vim.fn.shellescape(task)
@@ -73,7 +72,7 @@ function Letsdo_visual_selection()
 end
 
 -- key mapping for the above function in visual mode
-vim.api.nvim_set_keymap('v', '<leader>ld', '<cmd>lua Letsdo_visual_selection()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_visual_selection()<CR>', { noremap = true, silent = false })
 
 -- key mapping to stop the current running "letsdo" command
 vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })

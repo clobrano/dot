@@ -28,13 +28,12 @@ imap('<C-i>', '<C-t>') -- remap indent from C-t to C-i (i for indent, and closer
 -- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')
 
-
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
 
 -- buffer: motion
-nmap('<A-Left>',  '<Esc>:bprevious<CR>')
-nmap('<A-Right>', '<Esc>:bnext<CR>')
+--nmap('<A-Left>',  '<Esc>:bprevious<CR>')
+--nmap('<A-Right>', '<Esc>:bnext<CR>')
 nmap('H',         '<Esc>:bprevious<CR>')
 nmap('L',         '<Esc>:bnext<CR>')
 nmap('<c-b>',    '<esc>:b<space>')
@@ -213,8 +212,7 @@ nmap('<leader>p', '<C-^>')
 -- move between tabs
 nmap('tn', 'gt')
 nmap('tb', 'gT')
-nmap('<M-l>', 'gt')
-nmap('<M-h>', 'gT')
+
 -- also create and delete tabs
 nmap('tc', ':tabnew<cr>')
 nmap('td', ':tabclose<cr>')
@@ -229,7 +227,7 @@ imap('jj', '<Esc>')
 
 -- Notes (see plugin/tasks)
 -- get title from url (get url from clipboard)
-nmap('<leader>gt', ':r!~/workspace/script-fu/get-url-title.sh')
+nmap('<leader>gt', ':r ! ~/workspace/script-fu/get-url-title.sh<cr>')
 -- open file with xdg-open (e.g. images in markdown files)
 nmap('<leader>xo', ':!xdg-open %:p:h/<cfile>')
 
@@ -240,14 +238,20 @@ vmap('<leader>c*', 'y<esc>:%s///gc<left><left><left><left><C-r>--<right>')
 -- replace in all buffer
 nmap('rep', '<Esc>:%s/')
 
--- resize horizontal window splits (using --=-- in place of --+-- to avoid
--- combinations)
+-- resize horizontal window splits (using = in place of + to avoid combinations)
 --nmap(<silent> <leader>= :exe --vertical resize +5--<CR>
 --nmap(<silent> <leader>- :exe --vertical resize -5--<CR>
 -- resize vertical window splits
-nmap('<silent>', '= :exe --resize +2--<CR>')
+-- mnemonics: H -> High (increase window width)
+-- mnemonics: L -> Low (decrease window width)
+nmap('w.', '2<C-w>>') -- use . in place of > to avoid typing shift
+nmap('w,', '2<C-w><') -- use , in place of < to avoid typing shift
+nmap('w-', '<C-w>-')
+nmap('w=', '<C-w>+') -- use = in place of + to avoid typing shift
 nmap('<silent>', '- :exe --resize -2--<CR>')
-nmap('w3', ':vertical resize -30')
+nmap('w3', ':vertical resize -30<cr>')
+-- zoom current window
+nmap('<leader>zz', '<C-w>|<C-w>_')
 
 -- sudo save
 --cmap w!! w !sudo tee > /dev/null %
@@ -361,7 +365,7 @@ nmap('<leader>lr', ':LspRestart<cr>')
 -- zettelkasted UUID (date + time)
 imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('date +%Y%m%d%H%M%S')<cr>ea")
 nmap('<leader>zk', "<esc>:lua require'functions'.zettelkastenID()<cr>")
-vmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
+nmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
 -- find todos in all files (needs folke/todo-comments)
 nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')
@@ -392,3 +396,4 @@ nmap('<leader>zm', ':ZenMode<cr>')
 
 -- TODO: move it to neogit configuration file
 nmap('<leader>gs', ':Neogit<cr>')
+

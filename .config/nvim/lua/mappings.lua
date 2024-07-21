@@ -93,6 +93,10 @@ nmap('<C-p>', ':put<cr>')
 -- do not override default register when pasting in selection
 --xmap('p', 'P')
 
+-- alternate register "k"
+vim.keymap.set('v', '<leader>y', '"ky')
+vim.keymap.set('n', '<leader>p', '"kP')
+
 -- completion shorcuts
 imap('<C-f>', '<C-x><C-f>')
 --directory explore
@@ -206,7 +210,7 @@ vmap('B', '^') -- selection to first non-blank character
 
 
 -- move to previous buffer
-nmap('<leader>p', '<C-^>')
+--nmap('<leader>p', '<C-^>')
 
 
 -- move between tabs

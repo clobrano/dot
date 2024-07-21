@@ -5,8 +5,8 @@ return {
         vim.cmd [[
             cnoreabbrev SS Startify
 
-            let g:startify_custom_header =
-            \ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))
+            "let g:startify_custom_header =
+            "\ startify#pad(split(system('date +"%a %d %b %Y" | figlet -w 100'), '\n'))
 
             let g:startify_change_to_dir=1
             let g:startify_change_to_vcs_root = 1

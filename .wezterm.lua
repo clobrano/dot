@@ -41,11 +41,11 @@ config.font = wezterm.font('Source Code Pro Medium', { italic = false, weight = 
 config.font_size = 11
 
 -- disable title bar
-config.window_decorations = "INTEGRATED_BUTTONS | NONE"
---config.window_decorations = "NONE"
+--config.window_decorations = "INTEGRATED_BUTTONS | NONE"
+config.window_decorations = "NONE"
 
 -- disable the tab bar with only one tab
-config.hide_tab_bar_if_only_one_tab = false
+config.hide_tab_bar_if_only_one_tab = true
 config.adjust_window_size_when_changing_font_size = false
 config.hide_mouse_cursor_when_typing = false
 

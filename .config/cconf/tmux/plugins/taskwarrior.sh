@@ -8,4 +8,4 @@ ACTIVE=$(task +ACTIVE count)
 # `count` command doesn't seem to work with `completed` items
 DONE_THIS_WEEK=$(task completed end.after=sow end.before=eow | grep -E "^ -" -c)
 
-echo 󰻌 ${OVERDUE} 󱄻 ${DUE_TODAY} 󰫚 ${ACTIVE} ﮹ ${DUE_THIS_WEEK} 󰕥 ${DONE_THIS_WEEK}
+echo 󰻌 ${OVERDUE} 󱄻 ${DUE_TODAY} 󰫚 ${ACTIVE} 󰚻 ${DUE_THIS_WEEK} 󰕥 ${DONE_THIS_WEEK}

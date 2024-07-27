@@ -73,7 +73,7 @@ local plugins = {
   'tpope/vim-surround',
   --'tpope/vim-sleuth',
   'tyru/current-func-info.vim',
-  'lmeijvogel/vim-yaml-helper',
+  require('plugins.yaml-helper'),
   require('plugins.nvim-highlight-colors'),
   require('plugins.trailblazer'),
   require('plugins.todo-comments'),

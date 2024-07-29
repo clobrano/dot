@@ -6,14 +6,17 @@
 shopt -s extglob  # bash only
 
 # No Letsdo configuration
-[ ! -f $HOME/.letsdo ] && exit 0
+[ ! -f $HOME/.letsdo.yaml ] && exit 0
 
+DATA_DIRECTORY=$(yq -r .data_directory $HOME/.letsdo.yaml)
 
-DATA_DIRECTORY=$(sed -n 's/DATA_DIRECTORY:\s*\(.*\)/\1/p' "$HOME/.letsdo")
+if [[ ! -d ${DATA_DIRECTORY} ]]; then
+    echo "no data directory ${DATA_DIRECTORY}"
+    exit 1
+fi
 
 # no running tasks
-if [ ! -f  "$DATA_DIRECTORY/letsdo-task" ]; then
-    echo ""
+if [ ! -f  "${DATA_DIRECTORY}/letsdo-task" ]; then
     dconf write /org/gnome/shell/extensions/one-thing/thing-value "''"
     exit 0
 fi

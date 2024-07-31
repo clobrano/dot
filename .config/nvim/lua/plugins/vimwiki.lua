@@ -12,6 +12,16 @@ return {
           auto_tags = 1,
           auto_generate = 1,
           auto_generate_links = 1,
+        },
+        { path = '~/Dropbox/notes/',
+          syntax = 'markdown',
+          ext = '.md',
+          diary_rel_path =  'Journal/',
+          diary_frequency = 'daily',
+          auto_diary_index = 1,
+          auto_tags = 1,
+          auto_generate = 1,
+          auto_generate_links = 1,
         }
       }
       vim.g.vimwiki_ext2syntax = { ['.md'] = 'markdown', ['.markdown'] = 'markdown', ['.mdown'] = 'markdown' }

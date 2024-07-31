@@ -2,6 +2,51 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
+function Goto_pr()
+  -- Get the PR ID from clipboard
+  local clipboard = get_clipboard()
+
+  -- PR ID is expected to be "<Project-ShortName>-PR<number>"
+  local github = {
+    MDR = "https://github.com/medik8s/machine-deletion-remediation",
+    SNR = "https://github.com/medik8s/self-node-remediation",
+    NHC = "https://github.com/medik8s/node-healthcheck-operator",
+    NMO = "https://github.com/medik8s/node-maintenance-operator",
+    FAR = "https://github.com/medik8s/fence-agents-remediation",
+  }
+
+  local gitlab = {
+    MDR = "https://gitlab.cee.redhat.com/dragonfly/machine-deletion-remediation",
+    SNR = "https://gitlab.cee.redhat.com/dragonfly/self-node-remediation",
+    NHC = "https://gitlab.cee.redhat.com/dragonfly/node-healthcheck-operator",
+    NMO = "https://gitlab.cee.redhat.com/dragonfly/node-maintenance-operator",
+    FAR = "https://gitlab.cee.redhat.com/dragonfly/fence-agents-remediation",
+  }
+
+  local tokens = vim.split(clipboard, "-")
+  print(vim.inspect(tokens))   -- Use vim.inspect for better output
+
+  local short_name = tokens[1] -- Lua lists are 1-based
+  local number = ""
+  local base_url = ""
+  if string.match(tokens[2], "PR") then
+    number = tokens[2]:gsub("PR", "")
+    base_url = github[short_name] .. "/pull/" .. number
+  elseif string.match(tokens[2], "MR") then
+    number = tokens[2]:gsub("MR", "")
+    base_url = gitlab[short_name] .. "/-/merge_requests/" .. number
+  else
+    print("No PR, nor MR, maybe a Jira ticket?")
+    base_url = "https://issues.redhat.com/browse/" .. clipboard
+  end
+  local command = "xdg-open " .. base_url
+
+  print(command)
+  vim.fn.system(command)
+end
+
+vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Goto_pr()<CR>', { noremap = true, silent = false })
+
 -- Function to find and extract the project name from the current buffer
 local function get_project_name_from_buffer()
   -- Get the current buffer
@@ -22,7 +67,7 @@ local function get_project_name_from_buffer()
     end
   end
 
-    -- If no project tag is found, get the filename if from Tasks folder
+  -- If no project tag is found, get the filename if from Tasks folder
   local filename = vim.api.nvim_buf_get_name(bufnr)
   if string.match(vim.fn.expand("%:p:h"), "Tasks") then
     filename = vim.fn.fnamemodify(filename, ":t:r") -- Get the base name of the file
@@ -81,28 +126,6 @@ end
 vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
 
 
-function Letsdo_current_line()
-  -- Get the current line content from cursor to end
-  local line_content = vim.fn.trim(vim.fn.getline('.'):sub(vim.fn.col('.')))
-
-  -- Run the "letsdo" command with the line content as input
-  local command = 'lets goto ' .. vim.fn.shellescape(line_content)
-  vim.fn.system(command)
-end
-
--- key mapping for the above function in normal mode
-vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_current_line()<CR>', { noremap = true, silent = true })
-
-function Letsdo_visual_selection()
-  -- Get the currently selected text
-  local task = get_clipboard()
-
-  -- Run the "letsdo" command with the selected text as input
-  local command = 'letsdo goto ' .. vim.fn.shellescape(task)
-  vim.fn.system(command)
-end
-
-
 function Letsdo_goto()
   local project = get_project_name_from_buffer()
   local task_description = get_clipboard()
@@ -111,11 +134,10 @@ function Letsdo_goto()
     task_description = task_description .. ' ' .. '@' .. project
   end
 
-  local command = 'letsdo goto ' .. vim.fn.shellescape(task_description)
-  vim.fn.system(command)
+  local command = 'lets goto ' .. vim.fn.shellescape(task_description)
+  print(command, vim.inspect(vim.fn.system(command)))
 end
 
--- key mapping for the above function in visual mode
 vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })
 
 -- key mapping to stop the current running "letsdo" command

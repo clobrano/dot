@@ -272,7 +272,7 @@ require('nvim-listchars').setup({
 --})
 vim.cmd("FzfLua register_ui_select")
 
-require('tabline').setup {}
+require('tabline').setup { enable=false }
 --
 --require("indent_blankline").setup {
 --space_char_blankline = " ",
@@ -321,7 +321,7 @@ vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc =
 vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
 vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
 vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-vim.keymap.set('n', '<leader>ft', require('telescope.builtin').tags, { desc = '[F]ind [T]ags' })
+vim.keymap.set('n', '<leader>ft', function ()require('telescope.builtin').tags({fname_width=70}) end, { desc = '[F]ind [T]ags' })
 
 -- Git telescope
 vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
@@ -361,10 +361,10 @@ local on_attach = function(client, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
-  nmap('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eferences')
+  nmap('<leader>fr', function() require('telescope.builtin').lsp_references({fname_width=70}) end, '[F]ind [R]eferences')
   nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
   nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({symbol_width=70}) end, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
@@ -545,10 +545,10 @@ if vim.fn.exists('g:neovide') == 1 then
   set shell=/usr/bin/zsh
   set title
   let g:neovide_theme = 'auto'
-  let g:neovide_transparency=1
+  let g:neovide_transparency=0.98
   let g:neovide_scroll_animation_length=0
   let g:neovide_confirm_quit=v:false
-  let g:neovide_scale_factor=1.0
+  let g:neovide_scale_factor=1.05
   set guifont=Source\ Code\ Pro:h11
   ]]
 end

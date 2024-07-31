@@ -91,7 +91,7 @@ vmap('Y', 'vg_y')
 -- paste below current line (introduced for Orgmode capture new link)
 nmap('<C-p>', ':put<cr>')
 -- do not override default register when pasting in selection
---xmap('p', 'P')
+xmap('p', 'P')
 
 -- alternate register "k"
 vim.keymap.set('v', '<leader>y', '"ky')

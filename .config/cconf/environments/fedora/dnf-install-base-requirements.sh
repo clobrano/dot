@@ -5,9 +5,8 @@ sudo dnf install -y \
     conserver-client \
     cscope \
     ctags \
-    ctags \
     curl \
-    figlet \
+    exa \
     fzf \
     git \
     gh \

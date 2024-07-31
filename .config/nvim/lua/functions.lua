@@ -2,6 +2,37 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
+-- Function to find and extract the project name from the current buffer
+local function get_project_name_from_buffer()
+  -- Get the current buffer
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  -- Get all lines in the buffer
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  -- Iterate through each line
+  for _, line in ipairs(lines) do
+    -- Check if the line starts with "project:"
+    local project_prefix = "project:"
+    if line:sub(1, #project_prefix) == project_prefix then
+      -- Extract the name following "project:"
+      local name = line:sub(#project_prefix + 1):match("^%s*(.-)%s*$")
+      -- Return the trimmed name
+      return name
+    end
+  end
+
+    -- If no project tag is found, get the filename if from Tasks folder
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  if string.match(vim.fn.expand("%:p:h"), "Tasks") then
+    filename = vim.fn.fnamemodify(filename, ":t:r") -- Get the base name of the file
+
+    -- Return the filename
+    return filename
+  end
+
+  return ""
+end
 
 function ReplaceSpacesWithHypens()
   local clipboard = get_clipboard()
@@ -37,7 +68,7 @@ function CreateNoteFromFileName()
     vim.fn.append(1, template)
   end
   -- template for files in Task folder
-  if string.match(vim.fn.expand("%:p:h"), "T") then
+  if string.match(vim.fn.expand("%:p:h"), "Tasks") then
     -- read the template from the task template
     local template = vim.fn.readfile("./Templates/task-template.md")
     -- write the template in current buffer
@@ -71,8 +102,21 @@ function Letsdo_visual_selection()
   vim.fn.system(command)
 end
 
+
+function Letsdo_goto()
+  local project = get_project_name_from_buffer()
+  local task_description = get_clipboard()
+
+  if project ~= '' then
+    task_description = task_description .. ' ' .. '@' .. project
+  end
+
+  local command = 'letsdo goto ' .. vim.fn.shellescape(task_description)
+  vim.fn.system(command)
+end
+
 -- key mapping for the above function in visual mode
-vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_visual_selection()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })
 
 -- key mapping to stop the current running "letsdo" command
 vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })

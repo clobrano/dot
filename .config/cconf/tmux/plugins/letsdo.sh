@@ -18,18 +18,15 @@ if [ ! -f  "$DATA_DIRECTORY/letsdo-task" ]; then
     exit 0
 fi
 
-name=$(sed -n 's_"name": "\(.*\)",_\1_p' "$DATA_DIRECTORY/letsdo-task")
-name=${name##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
-name=${name%%+([[:space:]])}   # strip trailing whitespace; no quote expansion!
+full_name=$(sed -n 's_"name": "\(.*\)",_\1_p' "$DATA_DIRECTORY/letsdo-task")
+full_name=${full_name##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
+full_name=${full_name%%+([[:space:]])}   # strip trailing whitespace; no quote expansion!
 # Sanitize task name
-name=$(echo "$name" | tr -d '"'\''')
+full_name=$(echo "$full_name" | tr -d '"'\''')
 
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")
 
-task_len=${#name}
-if [[ $task_len > 40 ]]; then
-    name=${name:0:27}...
-fi
+
 end=$(date +%s)
 
 # Warn if speding "too much time" on the same task
@@ -48,7 +45,7 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
     if [[ -f $HOME/.letsdo-warning-sent ]]; then
         # if it is not the same task, delete the file
         task_warned=$(cat $HOME/.letsdo-warning-sent)
-        if [[ "$task_warned" != "$name" ]]; then
+        if [[ "$task_warned" != "$full_name" ]]; then
             echo "[+] the warning comes from another task"
             rm $HOME/.letsdo-warning-sent
         else
@@ -64,7 +61,7 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
     fi
 
     # all checks passed, we can send the notification
-    echo $name > $HOME/.letsdo-warning-sent
+    echo $full_name > $HOME/.letsdo-warning-sent
     notify-send "working on the same task for some time already"
     paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 else
@@ -73,6 +70,13 @@ fi
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
 elapsed_time=$(date +"%H:%M.%S" --date="@$(($end - $begin - 3600))")
-dconf write /org/gnome/shell/extensions/one-thing/thing-value "'$name $elapsed_time'"
-echo "󰔛 $name $elapsed_time"
+echo "  $full_name $elapsed_time"
+
+# Short name for OneThing Gnome extention
+name=$full_name
+task_len=${#full_name}
+if [[ $task_len > 40 ]]; then
+    name=${full_name:0:27}...
+fi
+dconf write /org/gnome/shell/extensions/one-thing/thing-value "'  $name $elapsed_time'"
 

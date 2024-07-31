@@ -9,6 +9,7 @@ shopt -s extglob  # bash only
 [ ! -f $HOME/.letsdo.yaml ] && exit 0
 
 DATA_DIRECTORY=$(yq -r .data_directory $HOME/.letsdo.yaml)
+WARNING_FILE=${HOME}/.letsdo-warning-file
 
 if [[ ! -d ${DATA_DIRECTORY} ]]; then
     echo "no data directory ${DATA_DIRECTORY}"
@@ -33,7 +34,6 @@ begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo
 end=$(date +%s)
 
 # Warn if speding "too much time" on the same task
-set -x
 warn_time_minutes=45  # 45 minutes limit
 work_time_seconds=$(($end - $begin))
 work_time_minutes=$(($work_time_seconds / 60))
@@ -45,12 +45,12 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
     # - if the task name in the file is different, ignore it and delete
     # - if the file is older than 60 seconds, ignore it and delete it (this might only
     #   happen in "the next" occurrence of the condition above. Yeah I know it's tricky.)
-    if [[ -f $HOME/.letsdo-warning-sent ]]; then
+    if [[ -f ${WARNING_FILE} ]]; then
         # if it is not the same task, delete the file
-        task_warned=$(cat $HOME/.letsdo-warning-sent)
-        if [[ "$task_warned" != "$full_name" ]]; then
+        task_warned=$(cat ${WARNING_FILE})
+        if [[ "${task_warned}" != "${full_name}" ]]; then
             echo "[+] the warning comes from another task"
-            rm $HOME/.letsdo-warning-sent
+            rm ${WARNING_FILE}
         else
             # if it is older than 60 seconds, delete the file
             now_seconds_since_epoc=$(date +%s)
@@ -58,7 +58,7 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
             t=$(($now_seconds_since_epoc - $file_birth_date_seconds_since_epoc))
             if [[ "$t" -gt 60 ]]; then
                 echo "[+] the warning is old"
-                rm $HOME/.letsdo-warning-sent
+                rm ${WARNING_FILE}
             fi
         fi 
     fi

@@ -1,0 +1,66 @@
+[
+  {
+    "address": "0x55dd3eef7b80",
+    "mapped": true,
+    "hidden": false,
+    "at": [
+      9,
+      9
+    ],
+    "size": [
+      1581,
+      841
+    ],
+    "workspace": {
+      "id": 1,
+      "name": "1"
+    },
+    "floating": false,
+    "monitor": 0,
+    "class": "com.raggesilver.BlackBox",
+    "title": "blackbox-terminal",
+    "initialClass": "com.raggesilver.BlackBox",
+    "initialTitle": "blackbox-terminal",
+    "pid": 3010,
+    "xwayland": false,
+    "pinned": false,
+    "fullscreen": false,
+    "fullscreenMode": 0,
+    "fakeFullscreen": false,
+    "grouped": [],
+    "swallowing": "0x0",
+    "focusHistoryID": 0
+  },
+  {
+    "address": "0x55dd3ef1b120",
+    "mapped": true,
+    "hidden": false,
+    "at": [
+      9,
+      9
+    ],
+    "size": [
+      1581,
+      841
+    ],
+    "workspace": {
+      "id": 2,
+      "name": "2"
+    },
+    "floating": false,
+    "monitor": 0,
+    "class": "org.mozilla.firefox",
+    "title": "Get open windows list · hyprwm/Hyprland · Discussion #830 — Mozilla Firefox",
+    "initialClass": "org.mozilla.firefox",
+    "initialTitle": "Mozilla Firefox",
+    "pid": 53632,
+    "xwayland": false,
+    "pinned": false,
+    "fullscreen": false,
+    "fullscreenMode": 0,
+    "fakeFullscreen": false,
+    "grouped": [],
+    "swallowing": "0x0",
+    "focusHistoryID": 1
+  }
+]

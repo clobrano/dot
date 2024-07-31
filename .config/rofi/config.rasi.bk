@@ -17,9 +17,9 @@
 }
 
 configuration {
-    modi: "drun";
+    modi: "drun,window,run,windowcd,filebrowser";
     show-icons: true;
-    display-drun: "";
+    display-drun: "Applications:";
 }
 
 listview {
@@ -27,14 +27,13 @@ listview {
     lines: 7;
     fixed-height: true;
     fixed-columns: true;
-    cycle: false;
+    cycle: true;
     scrollbar: false;
     border: 0px solid;
 }
 
 window {
     transparency: "real";
-    width: 450px;
     border-radius: @b-radius;
     background-color: @wbg-color;
     border: @w-border;
@@ -52,7 +51,7 @@ inputbar {
 }
 
 entry {
-    placeholder: "Search Apps";
+    placeholder: "Search";
     text-color: @fg-color;
     placeholder-color: @fgp-color;
 }

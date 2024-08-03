@@ -15,8 +15,8 @@ selection=(
     com.google.Chrome
     com.raggesilver.BlackBox
     md.obsidian.Obsidian
-    org.gnome.gitlab.somas.Apostrophe 
     org.telegram.desktop
+    me.kozec.synchthingtk
 )
 
 

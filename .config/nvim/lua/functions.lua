@@ -13,6 +13,7 @@ function Goto_pr()
     NHC = "https://github.com/medik8s/node-healthcheck-operator",
     NMO = "https://github.com/medik8s/node-maintenance-operator",
     FAR = "https://github.com/medik8s/fence-agents-remediation",
+	DOT_GITHUB = "https://github.com/medik8s/.github",
   }
 
   local gitlab = {
@@ -32,6 +33,9 @@ function Goto_pr()
   if string.match(tokens[2], "PR") then
     number = tokens[2]:gsub("PR", "")
     base_url = github[short_name] .. "/pull/" .. number
+  elseif string.match(tokens[2], "I") then
+    number = tokens[2]:gsub("I", "")
+    base_url = github[short_name] .. "/issues/" .. number
   elseif string.match(tokens[2], "MR") then
     number = tokens[2]:gsub("MR", "")
     base_url = gitlab[short_name] .. "/-/merge_requests/" .. number

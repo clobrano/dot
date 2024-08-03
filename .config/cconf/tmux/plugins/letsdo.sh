@@ -5,6 +5,10 @@
 
 shopt -s extglob  # bash only
 
+clean_warning_file() {
+    echo rm ${WARNING_FILE}
+}
+
 # No Letsdo configuration
 [ ! -f $HOME/.letsdo.yaml ] && exit 0
 
@@ -50,7 +54,7 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
         task_warned=$(cat ${WARNING_FILE})
         if [[ "${task_warned}" != "${full_name}" ]]; then
             echo "[+] the warning comes from another task"
-            rm ${WARNING_FILE}
+            clean_warning_file
         else
             # if it is older than 60 seconds, delete the file
             now_seconds_since_epoc=$(date +%s)
@@ -58,17 +62,17 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
             t=$(($now_seconds_since_epoc - $file_birth_date_seconds_since_epoc))
             if [[ "$t" -gt 60 ]]; then
                 echo "[+] the warning is old"
-                rm ${WARNING_FILE}
+                clean_warning_file
             fi
         fi 
     fi
 
     # all checks passed, we can send the notification
-    echo $full_name > $HOME/.letsdo-warning-sent
+    echo $full_name > ${WARNING_FILE}
     notify-send "working on the same task for some time already"
     paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 else
-    rm $HOME/.letsdo-warning-sent
+    clean_warning_file
 fi
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?

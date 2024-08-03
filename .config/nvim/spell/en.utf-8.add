@@ -512,3 +512,5 @@ OpenImage
 skopeo
 vm
 MachineConfig
+XSS
+Authn

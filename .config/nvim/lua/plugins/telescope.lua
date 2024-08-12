@@ -17,13 +17,17 @@ return {
     })
 
     function Filename_first_path_display(_, path)
+
+      local tail = require("telescope.utils").path_tail(path)
       local tail = vim.fs.basename(path)
       local parent = vim.fs.dirname(path)
       if parent == "." then
         return tail
       else
-        return string.format("%s\t\t%s", tail, parent)
+        return string.format("%s\t(/%s)", tail, parent)
       end
+
+      --return string.format("%s %s", tail, path)
     end
 
     -- See `:help telescope.builtin`
@@ -89,6 +93,7 @@ return {
           tags = { fname_width = 100, },
           find_files = {
             no_ignore = true,
+            no_ignore_parent = true,
             mappings = {
               n = {
                 ["cd"] = function(prompt_bufnr)

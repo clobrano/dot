@@ -2,8 +2,22 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
-function Goto_pr()
+function Yank_inbracket()
+  vim.api.nvim_feedkeys('vi]y', 'n', true)
+end
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Yank_inbracket()<CR>', { noremap = true, silent = false })
+
+function Select_outbracket()
+  vim.api.nvim_feedkeys('va]', 'n', true)
+end
+vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
+
+
+
+function Goto_Weblink()
   -- Get the PR ID from clipboard
+  -- yank text inside square brakets (to get substrings like [MDR-PR123])
+  Yank_inbracket()
   local clipboard = get_clipboard()
 
   -- PR ID is expected to be "<Project-ShortName>-PR<number>"
@@ -13,7 +27,7 @@ function Goto_pr()
     NHC = "https://github.com/medik8s/node-healthcheck-operator",
     NMO = "https://github.com/medik8s/node-maintenance-operator",
     FAR = "https://github.com/medik8s/fence-agents-remediation",
-	DOT_GITHUB = "https://github.com/medik8s/.github",
+    DOT_GITHUB = "https://github.com/medik8s/.github",
   }
 
   local gitlab = {
@@ -49,7 +63,7 @@ function Goto_pr()
   vim.fn.system(command)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Goto_pr()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
 
 -- Function to find and extract the project name from the current buffer
 local function get_project_name_from_buffer()

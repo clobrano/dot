@@ -92,6 +92,7 @@ local plugins = {
   'nvim-telescope/telescope-dap.nvim',
 
   -- Search
+  require('plugins.telescope'),
   'junegunn/fzf.vim',
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
@@ -424,6 +425,7 @@ local servers = {
   gopls = {},
   pyright = {},
   markdown_oxide = {},
+  clangd = {},
   --marksman = {},
   -- rust_analyzer = {},
   -- tsserver = {},

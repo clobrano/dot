@@ -7,8 +7,7 @@ if grep max_parallel_downloads $DNF_CONF >/dev/null; then
     exit 0
 fi
 
-exit 1
-cat <<EOF >> 
+sudo cat <<EOF >> ${DNF_CONF}
 max_parallel_downloads=10
 fastestmirror=true
 EOF

@@ -2,13 +2,14 @@ sudo dnf install -y \
     bat \
     bear \
     clang \
-    clangd \
+    clang-tools-extra \
     conserver-client \
     cscope \
     ctags \
     curl \
+    deja-dup \
     exa \
-    fd \
+    fd-find \
     fzf \
     git \
     gh \

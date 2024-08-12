@@ -7,16 +7,16 @@ if !command -v flatpak 2>/dev/null; then
 fi
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#flatpak install flathub com.nextcloud.desktopclient.nextcloud
 
 selection=(
-    com.dropbox.Client
     com.github.tchx84.Flatseal
+    org.wezfurlong.wezterm
     com.google.Chrome
-    com.raggesilver.BlackBox
+    com.dropbox.Client
+    me.kozec.syncthingtk
     md.obsidian.Obsidian
     org.telegram.desktop
-    me.kozec.synchthingtk
+    com.slack.Slack
 )
 
 

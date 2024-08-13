@@ -2,7 +2,10 @@
 #alias t='task rc:~/.config/task/taskrc'
 
 # work
-alias t='task rc:~/.taskworkrc'
-alias tday='t end.after=yesterday complete'
-alias tweek='t myweek end.after=$(date -d "last sunday" +%F)'
+alias t='task'
+alias tactive='t +ACTIVE'
+alias ttoday='t end.before=eod'
+alias tweek='t end.before=eow'
+alias donetoday='t end.after=yesterday complete'
+alias doneweek='t myweek end.after=$(date -d "last sunday" +%F)'
 alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'

@@ -65,6 +65,7 @@ export GIT_TERMINAL_PROMPT=1
 # PATH
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
+PATH=$PATH:$HOME/.atuin/bin
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH

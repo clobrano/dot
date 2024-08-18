@@ -23,6 +23,7 @@ fi
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
+PATH=$PATH:$HOME/.atuin/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
@@ -261,3 +262,5 @@ if command -v starship 2>&1 >/dev/null; then
 fi
 
 
+
+. "$HOME/.atuin/bin/env"

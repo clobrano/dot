@@ -1,8 +1,8 @@
 # personal
-#alias t='task rc:~/.config/task/taskrc'
+alias tp='task rc:~/.config/task/taskrc'
 
 # work
-alias t='task'
+alias t='task rc:~/.taskworkrc'
 alias tactive='t +ACTIVE'
 alias ttoday='t end.before=eod'
 alias tweek='t end.before=eow'

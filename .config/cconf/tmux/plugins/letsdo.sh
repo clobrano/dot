@@ -11,7 +11,6 @@ clean_warning_file() {
 
 YAML_CONFIG=$HOME/.letsdo.yaml
 if [[ ! -f ${YAML_CONFIG} ]]; then
-    echo "config error: no letsdo config at ${YAML_CONFIG}}"
     exit 0
 fi
 

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
 
+command -v task >/dev/null
+if [[ $? -ne 0 ]]; then
+    exit 0
+fi
+
 # Use default taskwarrior binary if not set externally
 : ${TASK:="task rc:~/.taskworkrc"}
 DUE_TODAY=$(${TASK} +PENDING +TODAY count)

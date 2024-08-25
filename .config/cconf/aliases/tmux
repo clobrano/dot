@@ -1,16 +1,8 @@
-tmux-try-attach () {
-    if ! tmux list-sessions 2>&1 >/dev/null; then
-        tmux new -s "󰟒"
-    else
-        tmux attach
-    fi
-}
-
 tmux-attach-or-create() {
 set -x
     if ! tmux attach-session -t "$1"  2>&1 >/dev/null; then
         tmux new -s "$1"
     fi
 }
-alias tm="tmux-attach-or-create 󰟒"
-alias ts="tmux-attach-or-create "
+alias tm="tmux-attach-or-create 1st"
+alias ts="tmux-attach-or-create 2nd"

@@ -8,9 +8,7 @@ import = [
 
 [font]
 size = 11.0
-
-[font.normal]
-family = "Source Code Pro"
+normal = { family = "Source Code Pro Medium", style = "Regular" }
 
 [scrolling]
 history = 0

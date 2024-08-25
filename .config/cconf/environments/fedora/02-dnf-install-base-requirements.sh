@@ -12,15 +12,16 @@ sudo dnf install -y \
     exa \
     fd-find \
     fzf \
-    git \
     gh \
+    git \
     golang \
     neovim \
-    recode \
     python3-pip \
+    recode \
     ripgrep \
+    stow \
     the_silver_searcher \
     tmux \
     xclip \
-    stow \
+    yq \
     zsh

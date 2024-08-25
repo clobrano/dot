@@ -35,6 +35,7 @@ if command -v exa 2>&1 >/dev/null; then
 fi
 
 alias nn='neovide -- -c "set titlestring=$(basename $(pwd))"'
+alias np='neovim-note-popup.sh'
 
 
 if command -v vagrant 2>&1 > /dev/null; then

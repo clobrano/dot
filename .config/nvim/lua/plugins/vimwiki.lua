@@ -13,7 +13,7 @@ return {
           auto_generate = 1,
           auto_generate_links = 1,
         },
-        { path = '~/Dropbox/notes/',
+        { path = '~/Dropbox/notes',
           syntax = 'markdown',
           ext = '.md',
           diary_rel_path =  'Journal/',

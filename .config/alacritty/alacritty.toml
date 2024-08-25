@@ -1,5 +1,6 @@
 live_config_reload = true
 #shell = "/home/clobrano/workspace/script-fu/neovim-note-popup.sh"
+shell = "/home/clobrano/workspace/script-fu/tmux-session-attach-or-new-2nd.sh"
 
 import = [
   # uncomment the flavour you want below:
@@ -14,7 +15,7 @@ normal = { family = "Source Code Pro Medium", style = "Regular" }
 history = 0
 
 [window]
-decorations = "none"
+decorations = "full"
 dynamic_padding = true
 opacity = 0.95
 

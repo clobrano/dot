@@ -1,4 +1,5 @@
 sudo dnf install -y \
+    alacritty \
     bat \
     bear \
     clang \

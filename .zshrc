@@ -260,7 +260,3 @@ if command -v starship 2>&1 >/dev/null; then
     export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
     eval "$(starship init zsh)"
 fi
-
-
-
-. "$HOME/.atuin/bin/env"

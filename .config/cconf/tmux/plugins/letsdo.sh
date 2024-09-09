@@ -14,7 +14,7 @@ if [[ ! -f ${YAML_CONFIG} ]]; then
     exit 0
 fi
 
-YQ=$HOME/workspace/golang/bin/yq
+YQ=`which yq`
 if ! command -v $YQ >/dev/null; then
     echo "config error: yq is missing. Please install it."
     exit 1

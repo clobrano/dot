@@ -7,6 +7,13 @@ alias ll='ls -l'
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
+alias today='date +"%F %H:%M"'
+alias yesterday='date --date="yesterday" +"%F %H:%M"'
+alias lastweek='date --date="last week" +"%F %H:%M"'
+alias friday='date --date="Friday" +"%F %H:%M"'
+alias eow='date --date="next Sunday" +"%F %H:%M"'
+alias sow='date --date="last Monday" +"%F %H:%M"'
+
 if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias cat=batcat
 else if [[ $(which bat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
@@ -30,8 +37,8 @@ alias d=docker
 
 alias duf="duf -theme dark"
 
-if command -v exa 2>&1 >/dev/null; then
-    alias ls=exa
+if command -v eza 2>&1 >/dev/null; then
+    alias ls=eza
 fi
 
 alias nn='neovide -- -c "set titlestring=$(basename $(pwd))"'

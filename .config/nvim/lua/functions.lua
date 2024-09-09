@@ -5,7 +5,11 @@ end
 function Yank_inbracket()
   vim.api.nvim_feedkeys('vi]y', 'n', true)
 end
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Yank_inbracket()<CR>', { noremap = true, silent = false })
+
+function Select_inbracket()
+  vim.api.nvim_feedkeys('vi]', 'n', true)
+end
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
 
 function Select_outbracket()
   vim.api.nvim_feedkeys('va]', 'n', true)

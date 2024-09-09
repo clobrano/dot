@@ -1,2 +1,5 @@
 .gitmodules
 .git
+README.md
+.bashrc
+.gitconfig

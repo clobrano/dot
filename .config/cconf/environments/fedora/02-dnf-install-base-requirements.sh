@@ -9,7 +9,7 @@ sudo dnf install -y \
     ctags \
     curl \
     deja-dup \
-    exa \
+    eza \
     fd-find \
     fzf \
     gh \

@@ -12,8 +12,9 @@ return {
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
-                \ { 'n': ['Open Notes', 'SLoad RedHatVault | colorscheme catppuccin-frappe | set guifont=Hasklig:h11 | set linespace=3 '] },
-                \ { 'N': ['Open NewOrgmode', 'cd ~/Dropbox/Orgmode/ | edit Orgmode.org'] },
+                \ { 'r': ['Open RHNotes', 'SLoad RHNotes'] },
+                \ { 'n': ['Open Notes', 'cd ~/Me/Notes/ | edit index.md '] },
+                \ { 'o': ['Open Orgmode', 'cd ~/Me/Orgmode/ | edit Orgmode.org'] },
                 \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
                 \ ]
             let g:startify_enable_special = 0

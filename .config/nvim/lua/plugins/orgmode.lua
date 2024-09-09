@@ -28,8 +28,8 @@ return {
 
     -- Setup orgmode
     require('orgmode').setup({
-      org_agenda_files = { '~/Dropbox/Orgmode/**/*' },
-      org_default_notes_file = '~/Dropbox/Orgmode/Orgmode.org',
+      org_agenda_files = { '~/Me/Orgmode/**/*' },
+      org_default_notes_file = '~/Me/Orgmode/Orgmode.org',
       org_capture_templates = {
         t = { description = 'Task', template = '* TODO %?\n' },
         n = { description = 'Note', template = '* %?\n' },

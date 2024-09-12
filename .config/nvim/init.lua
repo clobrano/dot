@@ -20,14 +20,10 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  "savq/melange-nvim",                    -- default light theme
+  "savq/melange-nvim",                                       -- default light theme
   require('plugins.catpuccin'),
-  "tanvirtin/monokai.nvim",               -- monokai colorscheme
+  "tanvirtin/monokai.nvim",                                  -- monokai colorscheme
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars",             -- toggle show listchars
-  "b0o/incline.nvim",                     -- for the floating filenames
-  { 'kdheepak/tabline.nvim',  opts = {} }, -- needed to show buffer tab
-  'mtdl9/vim-log-highlighting',           -- Highlight log files
   require('plugins.tagbar'),
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines

@@ -76,7 +76,7 @@ nmap('<leader>bx', ':%bd<CR><C-O>:bd#<CR>')
 -- buffer: save
 imap('<C-s>',  '<Esc>:write<CR>')
 nmap('<C-s>',   '<Esc>:write<CR>')
-nmap('ss',   '<Esc>:write<CR>')
+nmap('ss',   '<Esc>:silent write<CR>')
 --
 
 -- buffer: show list

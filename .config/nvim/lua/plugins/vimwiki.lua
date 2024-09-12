@@ -38,6 +38,4 @@ return {
 	  vim.cmd('abb ttw -- pro: #W:')
 	end
   },
-  --config = function()
-  --end
 }

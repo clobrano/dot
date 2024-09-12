@@ -59,7 +59,7 @@ alias nreview="nvim -c \"Octo pr list\""
 # fixes it, so :shrug:
 alias rein="cd .. && cd -"
 # I know, an alias for my own script... but bookmark is a meaningful name
-alias bb=~/workspace/script-fu/bookmarks
+alias bb=~/workspace/script-fu/BookMarkIt
 
 alias mao="cd ~/workspace/mao/machine-api-operator/"
 alias Mdr="cd ~/workspace/medik8s/upstream/mdr/machine-deletion-remediation/"

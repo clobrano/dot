@@ -30,7 +30,7 @@ vim.o.incsearch = true -- search as characters are entered
 vim.o.inccommand = "split" -- Show the effects of a command incrementally as you type
 vim.o.hlsearch = true -- Set highlight on search
 vim.opt.hidden = true
-vim.opt.lazyredraw = true -- no screen refresh during macro replay
+vim.opt.lazyredraw = false -- no screen refresh during macro replay
 vim.opt.laststatus = 3 -- always show status
 vim.opt.linebreak = true -- wrap long lines at characters in 'breakat'
 

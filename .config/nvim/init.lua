@@ -24,10 +24,15 @@ local plugins = {
   require('plugins.catpuccin'),
   "tanvirtin/monokai.nvim",                                  -- monokai colorscheme
   'ryanoasis/vim-devicons',
+  "fraso-dev/nvim-listchars",                                -- toggle show listchars
+  "b0o/incline.nvim",                                        -- for the floating filenames
+  { 'kdheepak/tabline.nvim',  opts = { show_bufnr = true } }, -- needed to show buffer tab
+  'mtdl9/vim-log-highlighting',                              -- Highlight log files
   require('plugins.tagbar'),
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
   require('plugins.startify'),
+  require('plugins.noice'),
 
   -- Git related plugins
   require('plugins.vim-fugitive'),

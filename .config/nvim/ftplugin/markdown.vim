@@ -5,3 +5,6 @@ set concealcursor=c
 "set colorcolumn=101
 set textwidth=100
 set noexpandtab
+set nonumber
+set norelativenumber
+set signcolumn=yes:1

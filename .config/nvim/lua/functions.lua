@@ -21,7 +21,7 @@ vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { 
 function Goto_Weblink()
   -- Get the PR ID from clipboard
   -- yank text inside square brakets (to get substrings like [MDR-PR123])
-  Yank_inbracket()
+  --Yank_inbracket()
   local clipboard = get_clipboard()
 
   -- PR ID is expected to be "<Project-ShortName>-PR<number>"
@@ -58,7 +58,7 @@ function Goto_Weblink()
     number = tokens[2]:gsub("MR", "")
     base_url = gitlab[short_name] .. "/-/merge_requests/" .. number
   else
-    print("No PR, nor MR, maybe a Jira ticket?")
+    --print("No PR, nor MR, maybe a Jira ticket?")
     base_url = "https://issues.redhat.com/browse/" .. clipboard
   end
   local command = "xdg-open " .. base_url

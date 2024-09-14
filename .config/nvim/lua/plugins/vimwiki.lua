@@ -3,17 +3,7 @@ return {
     "vimwiki/vimwiki",
     init = function()
       vim.g.vimwiki_list = {
-        { path = '~/Documents/RedHatVault',
-          syntax = 'markdown',
-          ext = '.md',
-          diary_rel_path =  'journal/',
-          diary_frequency = 'weekly',
-          auto_diary_index = 1,
-          auto_tags = 1,
-          auto_generate = 1,
-          auto_generate_links = 1,
-        },
-        { path = '~/Me/Notes',
+        { path = '~/storage/documents/Notes/',
           syntax = 'markdown',
           ext = '.md',
           diary_rel_path =  'Journal/',

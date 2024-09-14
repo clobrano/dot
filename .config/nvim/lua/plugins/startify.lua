@@ -12,10 +12,9 @@ return {
             let g:startify_change_to_vcs_root = 1
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
-                \ { 'r': ['Open RHNotes', 'SLoad RHNotes'] },
-                \ { 'n': ['Open Notes', 'cd ~/Me/Notes/ | edit index.md '] },
-                \ { 'o': ['Open Orgmode', 'cd ~/Me/Orgmode/ | edit ReadItLater.org'] },
-                \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
+                \ { 'n': ['Open Notes', 'cd ~/storage/documents/Notes/ | edit index.md '] },
+                \ { 'o': ['Open Orgmode', 'cd ~/storage/documents/Orgmode | edit ReadItLater.org'] },
+
                 \ ]
             let g:startify_enable_special = 0
             let g:startify_files_number = 3

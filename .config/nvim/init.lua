@@ -383,21 +383,21 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  gopls = {},
-  pyright = {},
-  markdown_oxide = {},
-  clangd = {},
+  --gopls = {},
+  --pyright = {},
+  --markdown_oxide = {},
+  --clangd = {},
   --marksman = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+  --lua_ls = {
+    --Lua = {
+      --workspace = { checkThirdParty = false },
+      --telemetry = { enable = false },
+    --},
+  --},
 }
 
 -- Setup neovim lua configuration

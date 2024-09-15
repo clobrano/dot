@@ -41,7 +41,7 @@ if command -v eza 2>&1 >/dev/null; then
     alias ls=eza
 fi
 
-alias nn='neovide -- -c "set titlestring=$(basename $(pwd))"'
+alias nn='cd $ME/Notes && nvim index.md'
 alias np='neovim-note-popup.sh'
 
 

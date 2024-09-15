@@ -427,10 +427,10 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  gopls = {},
-  pyright = {},
-  markdown_oxide = {},
-  clangd = {},
+  --gopls = {},
+  --pyright = {},
+  --markdown_oxide = {},
+  --clangd = {},
   --marksman = {},
   -- rust_analyzer = {},
   -- tsserver = {},

@@ -6,22 +6,29 @@
 shopt -s extglob  # bash only
 
 clean_warning_file() {
-    echo rm ${WARNING_FILE}
+    rm ${WARNING_FILE}
 }
 
-# No Letsdo configuration
-[ ! -f $HOME/.letsdo.yaml ] && exit 0
+YAML_CONFIG=$HOME/.letsdo.yaml
+if [[ ! -f ${YAML_CONFIG} ]]; then
+    exit 0
+fi
 
-DATA_DIRECTORY=$(yq -r .data_directory $HOME/.letsdo.yaml)
-WARNING_FILE=${HOME}/.letsdo-warning-file
-
-if [[ ! -d ${DATA_DIRECTORY} ]]; then
-    echo "no data directory ${DATA_DIRECTORY}"
+YQ=`which yq`
+if ! command -v $YQ >/dev/null; then
+    echo "config error: yq is missing. Please install it."
     exit 1
 fi
 
-# no running tasks
+DATA_DIRECTORY=$($YQ -r ".data_directory" ${YAML_CONFIG})
+if [[ -z ${DATA_DIRECTORY} ]]; then
+    echo "config error: could not find data_directory from ${YAML_CONFIG}"
+    exit 1
+fi
+
+WARNING_FILE=${HOME}/.letsdo-warning-file
 if [ ! -f  "${DATA_DIRECTORY}/letsdo-task" ]; then
+    # no running tasks
     dconf write /org/gnome/shell/extensions/one-thing/thing-value "''"
     exit 0
 fi
@@ -38,7 +45,7 @@ begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo
 end=$(date +%s)
 
 # Warn if speding "too much time" on the same task
-warn_time_minutes=45  # 45 minutes limit
+warn_time_minutes=1000  # time limit
 work_time_seconds=$(($end - $begin))
 work_time_minutes=$(($work_time_seconds / 60))
 if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minutes)) -eq 0 ]]; then

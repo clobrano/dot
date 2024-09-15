@@ -108,4 +108,8 @@ alias mtest='meson test -C build'
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 
-eval "$(atuin init bash)"
+# run atuin if installed
+if command -v atuin 2>&1 >/dev/null; then
+    # Bind ctrl-r but not up arrow
+    eval "$(atuin init bash --disable-up-arrow)"
+fi

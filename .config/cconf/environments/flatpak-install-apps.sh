@@ -13,7 +13,7 @@ selection=(
     org.wezfurlong.wezterm
     com.google.Chrome
     com.dropbox.Client
-    me.kozec.syncthingtk
+    com.github.zocker_160.SyncThingy
     md.obsidian.Obsidian
     org.telegram.desktop
     com.slack.Slack

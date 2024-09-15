@@ -1,4 +1,5 @@
 sudo dnf install -y \
+    alacritty \
     bat \
     bear \
     clang \
@@ -8,18 +9,19 @@ sudo dnf install -y \
     ctags \
     curl \
     deja-dup \
-    exa \
+    eza \
     fd-find \
     fzf \
-    git \
     gh \
+    git \
     golang \
     neovim \
-    recode \
     python3-pip \
+    recode \
     ripgrep \
+    stow \
     the_silver_searcher \
     tmux \
     xclip \
-    stow \
+    yq \
     zsh

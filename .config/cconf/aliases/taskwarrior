@@ -2,10 +2,23 @@
 alias tp='task rc:~/.config/task/taskrc'
 
 # work
-alias t='task rc:~/.taskworkrc'
-alias tactive='t +ACTIVE'
-alias ttoday='t end.before=eod'
-alias tweek='t end.before=eow'
-alias donetoday='t end.after=yesterday complete'
-alias doneweek='t myweek end.after=$(date -d "last sunday" +%F)'
+alias t='task.sh'
+alias donetoday='t end.after:yesterday complete'
 alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'
+
+# ME
+alias next="task \"(+OVERDUE +TODAY) or priority:H\""
+alias n7="task due.before:7d"
+alias active="task +ACTIVE"
+alias week="task due.before:eow"
+alias month="task due.after=7d due.before:30d"
+alias prio="task \"priority:H or priority:M or priority:L\""
+
+# WORK
+alias wnext="task.sh \"(+OVERDUE +TODAY) or priority:H\""
+alias wn7="task due.before:7d"
+alias wactive="task.sh +ACTIVE"
+alias wweek="task.sh due.before:eow"
+alias wmonth="task.sh due.after=7d due.before:30d"
+alias wprio="task.sh \"priority:H or priority:M or priority:L\""
+alias wvit="TASKRC=~/.taskworkrc vit"

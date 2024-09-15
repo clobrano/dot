@@ -31,7 +31,7 @@ local plugins = {
   require('plugins.tagbar'),
   require('plugins.lualine'),
   require('plugins.startify'),
-  require('plugins.noice'),
+  --require('plugins.noice'),
 
   -- Git related plugins
   require('plugins.vim-fugitive'),
@@ -62,7 +62,7 @@ local plugins = {
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
   require('plugins.zenmode'),
-  require('plugins.render-markdown'),
+  --require('plugins.render-markdown'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',

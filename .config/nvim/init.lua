@@ -383,21 +383,21 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  --gopls = {},
-  --pyright = {},
-  --markdown_oxide = {},
-  --clangd = {},
+  gopls = {},
+  pyright = {},
+  markdown_oxide = {},
+  clangd = {},
   --marksman = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-  --lua_ls = {
-    --Lua = {
-      --workspace = { checkThirdParty = false },
-      --telemetry = { enable = false },
-    --},
-  --},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
 }
 
 -- Setup neovim lua configuration
@@ -426,8 +426,8 @@ mason_lspconfig.setup_handlers {
 }
 
 --require("lspconfig").markdown_oxide.setup({
-  --capabilities = capabilities,   -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  --on_attach = on_attach,         -- configure your on attach config
+--  capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+--  on_attach = on_attach,       -- configure your on attach config
 --})
 
 
@@ -519,13 +519,13 @@ end
 -- Register some useful macros
 vim.cmd [[
 " Macro to format PR Markdown links
-let @p='f#€ýavt €ýadBi- jjpbi-PRjjf[€ýai jjvEh:s/ by.*]/]'
+let @p='f#ï¿½ï¿½avt ï¿½ï¿½adBi- jjpbi-PRjjf[ï¿½ï¿½ai jjvEh:s/ by.*]/]'
 " Macro to format MR Gitlab links
-let @m='f!€ýa lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
+let @m='f!ï¿½ï¿½a lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
 " Macro to format RH Issue tracker links
 let @t='llvi]dBi- #jjpa jjllvlldrep - Red Hat Issue Tracker/'
 " Macro to set Wrap in current and next split (for code review with GH.nvim)
-let @d='BfT€ýacwDONEjj'
+let @d='BfTï¿½ï¿½acwDONEjj'
 ]]
 
 -- Which key configuration

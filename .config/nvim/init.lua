@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable',     -- latest stable release
+    '--branch=stable', -- latest stable release
     lazypath,
   }
 end
@@ -20,33 +20,34 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  "savq/melange-nvim",                      -- default light theme
+  "savq/melange-nvim",                                       -- default light theme
   require('plugins.catpuccin'),
-  "tanvirtin/monokai.nvim",                 -- monokai colorscheme
+  "tanvirtin/monokai.nvim",                                  -- monokai colorscheme
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars",               -- toggle show listchars
-  "b0o/incline.nvim",                       -- for the floating filenames
-  { 'kdheepak/tabline.nvim', opts = {} },   -- needed to show buffer tab
-  'mtdl9/vim-log-highlighting',             -- Highlight log files
+  "fraso-dev/nvim-listchars",                                -- toggle show listchars
+  "b0o/incline.nvim",                                        -- for the floating filenames
+  { 'kdheepak/tabline.nvim',  opts = { show_bufnr = true } }, -- needed to show buffer tab
+  'mtdl9/vim-log-highlighting',                              -- Highlight log files
   require('plugins.tagbar'),
   require('plugins.lualine'),
   --{'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {}}, -- Add indentation guides even on blank lines
   require('plugins.startify'),
+  require('plugins.noice'),
 
   -- Git related plugins
   require('plugins.vim-fugitive'),
   require('plugins.neogit'),
   'tpope/vim-rhubarb',
   require('plugins.gv'),
-  'shumphrey/fugitive-gitlab.vim',   -- vim-rhubarb for gitlab
+  'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
   require('plugins.gitsigns'),
-  { 'sindrets/diffview.nvim',    dependencies = { 'nvim-tree/nvim-web-devicons' } },
+  { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
 
   {
     "jiaoshijie/undotree",
     dependencies = "nvim-lua/plenary.nvim",
     config = true,
-    keys = {     -- load the plugin only when using it's keybinding:
+    keys = { -- load the plugin only when using it's keybinding:
       { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
@@ -62,6 +63,7 @@ local plugins = {
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
   require('plugins.zenmode'),
+  require('plugins.render-markdown'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -124,11 +126,11 @@ local plugins = {
   {
     "David-Kunz/gen.nvim",
     opts = {
-      model = "mistral",            -- The default model to use.
-      display_mode = "split",       -- The display mode. Can be "float" or "split".
-      show_prompt = false,          -- Shows the Prompt submitted to Ollama.
-      show_model = true,            -- Displays which model you are using at the beginning of your chat session.
-      no_auto_close = true,         -- Never closes the window automatically.
+      model = "mistral",      -- The default model to use.
+      display_mode = "split", -- The display mode. Can be "float" or "split".
+      show_prompt = false,    -- Shows the Prompt submitted to Ollama.
+      show_model = true,      -- Displays which model you are using at the beginning of your chat session.
+      no_auto_close = true,   -- Never closes the window automatically.
       init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
       -- Function to initialize Ollama
       command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
@@ -136,13 +138,13 @@ local plugins = {
       -- This can also be a lua function returning a command string, with options as the input parameter.
       -- The executed command must return a JSON object with { response, context }
       -- (context property is optional).
-      list_models = '<omitted lua function>',       -- Retrieves a list of model names
-      debug = false                                 -- Prints errors and the command which is run.
+      list_models = '<omitted lua function>', -- Retrieves a list of model names
+      debug = false                           -- Prints errors and the command which is run.
     }
   },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  {   -- LSP Configuration & Plugins
+  { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -158,21 +160,21 @@ local plugins = {
     },
   },
 
-  {   -- Autocompletion
+  { -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'L3MON4D3/LuaSnip',           -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',     -- Snippet Engine & its associated nvim-cmp source
       'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp',       -- Adds LSP completion capabilities
-      'hrsh7th/cmp-cmdline',        -- Source for vim's cmdline
+      'hrsh7th/cmp-nvim-lsp', -- Adds LSP completion capabilities
+      'hrsh7th/cmp-cmdline',  -- Source for vim's cmdline
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      'rafamadriz/friendly-snippets',       -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets', -- Adds a number of user-friendly snippets
     },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',      opts = {} },
   require('plugins.trouble'),
   {
     'nvim-telescope/telescope.nvim',
@@ -273,7 +275,7 @@ require('nvim-listchars').setup({
 --})
 vim.cmd("FzfLua register_ui_select")
 
-require('tabline').setup { enable=false }
+require('tabline').setup { enable = false }
 --
 --require("indent_blankline").setup {
 --space_char_blankline = " ",
@@ -285,8 +287,8 @@ require('tabline').setup { enable=false }
 -- See `:help telescope` and `:help telescope.setup()`
 --require('plugins.telescope')
 --vim.cmd [[
-  --cnoreabbrev ts Telescope
-  --nnoremap ts :Telescope<cr>
+--cnoreabbrev ts Telescope
+--nnoremap ts :Telescope<cr>
 --]]
 
 -- Enable telescope fzf native, if installed
@@ -322,7 +324,8 @@ vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc =
 vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
 vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
 vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-vim.keymap.set('n', '<leader>ft', function ()require('telescope.builtin').tags({fname_width=70}) end, { desc = '[F]ind [T]ags' })
+vim.keymap.set('n', '<leader>ft', function() require('telescope.builtin').tags({ fname_width = 70 }) end,
+  { desc = '[F]ind [T]ags' })
 
 -- Git telescope
 vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
@@ -362,10 +365,12 @@ local on_attach = function(client, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
-  nmap('<leader>fr', function() require('telescope.builtin').lsp_references({fname_width=70}) end, '[F]ind [R]eferences')
+  nmap('<leader>fr', function() require('telescope.builtin').lsp_references({ fname_width = 70 }) end,
+    '[F]ind [R]eferences')
   nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
   nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
-  nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({symbol_width=70}) end, '[D]ocument [S]ymbols')
+  nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({ symbol_width = 70 }) end,
+    '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
@@ -422,21 +427,21 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  --gopls = {},
-  --pyright = {},
-  --markdown_oxide = {},
-  --clangd = {},
+  gopls = {},
+  pyright = {},
+  markdown_oxide = {},
+  clangd = {},
   --marksman = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-  --lua_ls = {
-    --Lua = {
-      --workspace = { checkThirdParty = false },
-      --telemetry = { enable = false },
-    --},
-  --},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
 }
 
 -- Setup neovim lua configuration
@@ -465,8 +470,8 @@ mason_lspconfig.setup_handlers {
 }
 
 --require("lspconfig").markdown_oxide.setup({
-  --capabilities = capabilities,   -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  --on_attach = on_attach,         -- configure your on attach config
+--  capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+--  on_attach = on_attach,       -- configure your on attach config
 --})
 
 
@@ -558,13 +563,13 @@ end
 -- Register some useful macros
 vim.cmd [[
 " Macro to format PR Markdown links
-let @p='f#€ýavt €ýadBi- jjpbi-PRjjf[€ýai jjvEh:s/ by.*]/]'
+let @p='f#ï¿½ï¿½avt ï¿½ï¿½adBi- jjpbi-PRjjf[ï¿½ï¿½ai jjvEh:s/ by.*]/]'
 " Macro to format MR Gitlab links
-let @m='f!€ýa lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
+let @m='f!ï¿½ï¿½a lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
 " Macro to format RH Issue tracker links
 let @t='llvi]dBi- #jjpa jjllvlldrep - Red Hat Issue Tracker/'
 " Macro to set Wrap in current and next split (for code review with GH.nvim)
-let @d='BfT€ýacwDONEjj'
+let @d='BfTï¿½ï¿½acwDONEjj'
 ]]
 
 -- Which key configuration

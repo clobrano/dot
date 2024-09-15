@@ -464,10 +464,10 @@ mason_lspconfig.setup_handlers {
   end
 }
 
-require("lspconfig").markdown_oxide.setup({
-  capabilities = capabilities,   -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-  on_attach = on_attach,         -- configure your on attach config
-})
+--require("lspconfig").markdown_oxide.setup({
+  --capabilities = capabilities,   -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+  --on_attach = on_attach,         -- configure your on attach config
+--})
 
 
 

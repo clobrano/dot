@@ -21,6 +21,8 @@ git clone https://github.com/clobrano/dot .dot
 ```sh
 cd ~/.dot
 stow .
+# do not override bashrc, just source my customization
+echo "source ~/.dot/mybashrc >> ~/.bashr"
 ```
 
 (Thanks to https://www.youtube.com/watch?v=y6XCebnB9gs for the introduction to Stow)

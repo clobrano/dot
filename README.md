@@ -7,13 +7,15 @@ This is my dotfiles repository.
 ### dependencies
 
 ```sh
-dnf install git stow
+dnf install git stow [gh]
 ```
 
 ## Clone the repo
 
 ```sh
 git clone https://github.com/clobrano/dot .dot
+or
+gh repo clone clobrano/dot .dot
 ```
 
 ## Linking

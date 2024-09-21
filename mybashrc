@@ -62,7 +62,7 @@ export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
 
-export ME=$HOME/Me
+export ME=$HOME/storage/documents
 
 # PATH
 PATH=$PATH:$HOME/workspace/script-fu

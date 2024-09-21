@@ -7,18 +7,18 @@ alias donetoday='t end.after:yesterday complete'
 alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'
 
 # ME
-alias next="task \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\""
-alias n7="task due.before:7d"
-alias active="task +ACTIVE"
-alias week="task due.before:eow"
-alias month="task due.after=7d due.before:30d"
-alias prio="task \"priority:H or priority:M or priority:L\""
+alias next="task \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" list"
+alias n7="task due.before:7d list"
+alias active="task +ACTIVE list"
+alias week="task due.before:eow list"
+alias month="task due.before:eom list"
+alias prio="task \"priority:H or priority:M or priority:L\" list"
 
 # WORK
-alias wnext="task.sh \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\""
-alias wn7="task.sh due.before:7d"
-alias wactive="task.sh +ACTIVE"
-alias wweek="task.sh due.before:eow"
-alias wmonth="task.sh due.after=7d due.before:30d"
-alias wprio="task.sh \"priority:H or priority:M or priority:L\""
+alias wnext="task.sh \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" list"
+alias wn7="task.sh due.before:7d list"
+alias wactive="task.sh +ACTIVE list"
+alias wweek="task.sh due.before:eow list"
+alias wmonth="task.sh due.before:30d list"
+alias wprio="task.sh \"priority:H or priority:M or priority:L\" list"
 alias wvit="TASKRC=~/.taskworkrc vit"

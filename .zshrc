@@ -5,6 +5,8 @@ setopt autocd     # cd into folder without typing 'cd'
 source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/environments/pyenv-init.sh
 
+export ME=$HOME/Me
+
 export CDPATH=$HOME/workspace
 #export GOROOT=/usr/local/go/
 export GOPATH=$HOME/workspace/golang

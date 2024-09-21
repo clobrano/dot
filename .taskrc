@@ -1,8 +1,6 @@
-# [Created by task 3.1.0 8/26/2024 17:36:52]
-#news.version=3.1.0
-data.location=/home/clobrano/Documents/taskwarriorRH
-
-verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
+# [Created by task 3.1.0 8/26/2024 17:40:34]
+news.version=3.1.0
+data.location=/home/clobrano/Me/Taskwarrior
 
 # To use the default location of the XDG directories,
 # move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
@@ -26,6 +24,8 @@ verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
 #include solarized-light-256.theme
 #include no-color.theme
 
+color=off
+
 uda.reviewed.type=date
 uda.reviewed.label=Reviewed
 report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
@@ -40,11 +40,11 @@ report.list_full.filter=status:pending -WAITING
 report.list_full.labels=ID,Active,Age,D,P,Project,Tags,R,Sch,Due,Until,Description,Urg
 report.list_full.sort=start-,due+,project+,urgency-
 
-report.list.columns=id,project,tags,priority,recur.indicator,scheduled.countdown,due,until.remaining,description.count,depends
+report.list.columns=id,start.active,project,tags,priority,recur.indicator,scheduled,scheduled.countdown,due.countdown,due,until.remaining,description.count
 report.list.context=1
 report.list.description=Most details of tasks
 report.list.filter=status:pending -WAITING
-report.list.labels=ID,Pro,Tags,Pri,R,Sch,Due,Until,Description,Deps
-report.list.sort=start-,due+,project+,urgency-
+report.list.labels=ID,A,Pro,Tags,Pri,R,Sch,Sch,Due,Due,Until,Description
+report.list.sort=due+,start-,urgency-,project+
 
 

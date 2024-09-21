@@ -2,6 +2,7 @@ return {
     'mhinz/vim-startify',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
+        ME = os.getenv("ME")
         vim.cmd [[
             cnoreabbrev SS Startify
 
@@ -13,8 +14,8 @@ return {
             let g:startify_commands = [
                 \ { 'i': ['Open init.lua', 'e ~/.dot/.config/nvim/init.lua| lcd %:p:h'] },
                 \ { 'r': ['Open RHNotes', 'SLoad RHNotes'] },
-                \ { 'n': ['Open Notes', 'cd ~/Me/Notes/ | edit index.md '] },
-                \ { 'o': ['Open Orgmode', 'cd ~/Me/Orgmode/ | edit ReadItLater.org'] },
+                \ { 'n': ['Open Notes', 'cd '.. $ME .. '/Notes/ | edit index.md '] },
+                \ { 'o': ['Open Orgmode', 'cd '.. $ME .. '/Orgmode/ | edit ReadItLater.org'] },
                 \ { 'E': ['Open Espanso', 'SLoad Espanso'] },
                 \ ]
             let g:startify_enable_special = 0

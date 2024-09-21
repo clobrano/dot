@@ -9,6 +9,7 @@ local function imap(k, v) map('i', k, v) end
 local function tmap(k, v) map('t', k, v) end
 local function xmap(k, v) map('x', k, v) end
 
+
 -- journal
 nmap('<leader>jd', ":lua require'functions'.create_note_entry('today')")
 nmap('<leader>jt', ":lua require'functions'.create_note_entry(vim.fn.expand('%:p'))")
@@ -23,11 +24,15 @@ nmap('<leader>fi', '[i')
 -- align block of text.
 vmap('<<', '<gv')
 vmap('>>', '>gv')
-imap('<C-i>', '<C-t>') -- remap indent from C-t to C-i (i for indent, and closer to the rx hand)
+
+vim.keymap.set('i', '<A-i>', '<C-t>', { desc='Indent the line from the start' })
+vim.keymap.set('i', '<A-d>', '<C-d>', { desc='De-indent the line from the start' })
 
 -- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')
 
+-- buffer: reload
+nmap('<leader>rl', ':e!<cr>')
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
 
@@ -74,7 +79,7 @@ nmap('<leader>bx', ':%bd<CR><C-O>:bd#<CR>')
 -- end buffer: close
 
 -- buffer: save
-imap('<C-s>',  '<Esc>:write<CR>')
+imap('<C-s>',  '<Esc>:silent write<CR>')
 nmap('<C-s>',   '<Esc>:write<CR>')
 nmap('ss',   '<Esc>:silent write<CR>')
 --
@@ -240,7 +245,7 @@ nmap('<leader>c*', '<esc>:%s///gc<left><left><left><left><C-r><C-w><right>')
 vmap('<leader>c*', 'y<esc>:%s///gc<left><left><left><left><C-r>--<right>')
 
 -- replace in all buffer
-nmap('rep', '<Esc>:%s/')
+nmap('<leader>rep', '<Esc>:%s/')
 
 -- resize horizontal window splits (using = in place of + to avoid combinations)
 --nmap(<silent> <leader>= :exe --vertical resize +5--<CR>

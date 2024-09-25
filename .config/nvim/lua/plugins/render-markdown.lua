@@ -63,6 +63,25 @@ return {
           'RenderMarkdownH6',
         },
       },
+      checkbox = {
+        enabled = true,
+        position = 'inline',
+        unchecked = {
+            icon = '󰄱 ',
+            highlight = 'RenderMarkdownUnchecked',
+        },
+        checked = {
+            icon = '󰱒 ',
+            highlight = 'RenderMarkdownChecked',
+        },
+        custom = {
+            waiting = { raw = '[W]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '󰫚 ', highlight = 'RenderMarkdownTodo' },
+            prog25 = { raw = '[.]', rendered = '󰦘 ', highlight = 'RenderMarkdownTodo' },
+            prog50 = { raw = '[o]', rendered = '󰦘 ', highlight = 'RenderMarkdownTodo' },
+            prog75 = { raw = '[O]', rendered = '󰦘 ', highlight = 'RenderMarkdownTodo' },
+        },
+    },
     })
   end
 }

@@ -1,6 +1,6 @@
 # [Created by task 3.1.0 8/26/2024 17:40:34]
 news.version=3.1.0
-data.location=/home/clobrano/Me/Taskwarrior
+#data.location=/home/clobrano/Me/Taskwarrior
 
 # To use the default location of the XDG directories,
 # move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:

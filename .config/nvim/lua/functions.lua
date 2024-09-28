@@ -1,3 +1,20 @@
+-- Function to insert the date in the format 'yyyy-mm-dd DDD'
+local function insert_date()
+  -- Get the current date
+  local date = os.date("%Y-%m-%d") -- yyyy-mm-dd format
+  local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
+
+  -- Concatenate the date and the weekday
+  local formatted_date = date .. " " .. weekday
+
+  -- Insert the formatted date at the current cursor position
+  vim.api.nvim_put({formatted_date}, "c", false, true)
+end
+
+-- Bind the function to a command (Optional)
+vim.api.nvim_create_user_command('InsertDate', insert_date, {})
+
+
 local function get_clipboard()
   return vim.fn.getreg('+')
 end
@@ -32,6 +49,8 @@ function Goto_Weblink()
     NMO = "https://github.com/medik8s/node-maintenance-operator",
     FAR = "https://github.com/medik8s/fence-agents-remediation",
     DOT_GITHUB = "https://github.com/medik8s/.github",
+    M8S_GITHUB = "https://github.com/medik8s/.github",
+    M8S_TOOLS = "https://github.com/medik8s/tools",
   }
 
   local gitlab = {

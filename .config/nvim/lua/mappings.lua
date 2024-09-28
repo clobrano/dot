@@ -147,8 +147,8 @@ nmap('qa', '<esc>:qa!<cr>')
 -- terminal opened below any other vertical split
 nmap('<leader>x', ':botright split | resize 20 | terminal<cr>')
 nmap('<leader>vx', ':vertical split | terminal<cr>')
-tmap('<Esc>', '<c-\\><c-n>')
-tmap('jj', '<c-\\><c-n>')
+--tmap('<Esc>', '<c-\\><c-n>')
+--tmap('jj', '<c-\\><c-n>')
 
 -- fold: always toggle all fold at current position
 --nmap('za', 'zA')

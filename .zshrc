@@ -266,5 +266,5 @@ fi
 # use zshz in place of "cd", but only if installed
 command -v zshz >/dev/null
 if [ $? -eq 0 ]; then
-    alias cd=z
+    eval "$(zoxide init zsh --cmd cd)"
 fi

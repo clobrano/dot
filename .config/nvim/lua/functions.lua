@@ -1,14 +1,28 @@
+local function refile_done()
+  local ME = os.getenv("ME")
+  local src = string.format("%s/Orgmode/ReadItLater.org", ME)
+  local dst = string.format("%s/Orgmode/ReadItLater_archive.org", ME)
+  local command = string.format("python ~/workspace/script-fu/refile_done.py %s %s", src, dst)
+  local result = vim.fn.system(command)
+  if vim.v.shell_error ~= 0 then
+    print("Error: " .. result)
+  else
+    print(result)
+  end
+end
+vim.api.nvim_create_user_command('RefileDone', refile_done, {})
+
 -- Function to insert the date in the format 'yyyy-mm-dd DDD'
 local function insert_date()
   -- Get the current date
-  local date = os.date("%Y-%m-%d") -- yyyy-mm-dd format
+  local date = os.date("%Y-%m-%d")      -- yyyy-mm-dd format
   local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
 
   -- Concatenate the date and the weekday
   local formatted_date = date .. " " .. weekday
 
   -- Insert the formatted date at the current cursor position
-  vim.api.nvim_put({formatted_date}, "c", false, true)
+  vim.api.nvim_put({ formatted_date }, "c", false, true)
 end
 
 -- Bind the function to a command (Optional)
@@ -26,11 +40,13 @@ end
 function Select_inbracket()
   vim.api.nvim_feedkeys('vi]', 'n', true)
 end
+
 vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
 
 function Select_outbracket()
   vim.api.nvim_feedkeys('va]', 'n', true)
 end
+
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 
 

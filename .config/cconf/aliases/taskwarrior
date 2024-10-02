@@ -1,11 +1,10 @@
-alias t="task.sh"
-
-alias w='task.sh'
+alias t='task rc:~/.taskworkrc'
 alias donetoday='taskwarrior end.after:yesterday complete'
 alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'
 
-alias work="TASK='task rc:~/.taskworkrc'"
-alias me="TASK=task"
+alias work="export TASK='task rc:~/.taskworkrc'; export TASKDATA=~/Documents/taskwarriorRH"
+alias me="export TASK=task; export TASKDATA=~/Me/Taskwarrior"
+
 alias next="taskwarrior \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\""
 alias n7="taskwarrior due.before:7d"
 alias active="taskwarrior +ACTIVE"

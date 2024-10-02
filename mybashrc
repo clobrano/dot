@@ -96,19 +96,32 @@ alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -l'
 alias la='ls -alF'
 alias grep='grep --color=auto'
-alias node='nodejs'  # in ubuntu binary is called wrong
 alias itsmine="sudo chown $USER"
-alias sendat='sudo $GOBIN/sendat'
-## Meson aliases
-alias mmake='meson compile -C build'
-alias mconf='meson setup build'
-alias mtest='meson test -C build'
+
+#command -v task >/dev/null
+#if [[ $? -eq 0 ]]; then
+    #complete -F _mybinary myscript
+#fi
 
 # Local bash configurations I don't want to save upstream
 [ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc
 [ -f $HOME/Documents/unsharable ] && source $HOME/Documents/unsharable
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+# let script-fu/tsk use taskwarrior autocomplete
+command -v task>/dev/null
+if [[ $? -eq 0 ]] && [[ -f ~/workspace/script-fu/tsk ]]; then
+    TASK="task"
+    TASKDATA="~/Me/Taskwarrior"
+    complete -F _task tsk
+fi
+
+# use zshz in place of "cd", but only if installed
+command -v zoxide >/dev/null
+if [ $? -eq 0 ]; then
+    eval "$(zoxide init bash --cmd cd)"
+fi
 
 # run atuin if installed
 if command -v atuin 2>&1 >/dev/null; then

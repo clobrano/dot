@@ -1,3 +1,18 @@
+local function taskwarrior_task(project)
+  -- Get the current line number and the line content
+  local line_number = vim.fn.line('.')
+  local line_content = vim.fn.getline(line_number)
+
+  -- Append the string to the current line
+  local new_line = line_content .. " -- pro:" .. project .. " #W"
+  vim.fn.setline(line_number, new_line)
+end
+
+vim.api.nvim_create_user_command('TaskWarriorTask', function(opts)
+  taskwarrior_task(opts.args)
+end, { nargs = 1 })
+
+
 local function refile_done()
   local ME = os.getenv("ME")
   local src = string.format("%s/Orgmode/ReadItLater.org", ME)

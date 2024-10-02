@@ -1,6 +1,6 @@
 # [Created by task 3.1.0 8/26/2024 17:36:52]
 #news.version=3.1.0
-data.location=/home/clobrano/Documents/taskwarriorRH
+#data.location=/home/clobrano/Documents/taskwarriorRH
 
 verbose=blank,footnote,label,new-id,affected,edit,special,project,sync,unwait
 

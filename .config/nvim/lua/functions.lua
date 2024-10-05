@@ -1,3 +1,42 @@
+local function get_clipboard()
+  return vim.fn.getreg('+')
+end
+
+
+function Add_reference_link()
+  -- Step 1: Get the description from the 'k' register and the URL from the default register
+  local description = vim.fn.getreg('k')
+  local url = get_clipboard()
+
+  -- Step 2: Validate that both the description and the URL are not empty
+  if description == "" or url == "" then
+    print("Both the 'k' register and the default register must contain content.")
+    return
+  end
+
+  -- Step 3: Save the current cursor position
+  local original_cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+  -- Step 4: Format the reference link
+  local reference_link = description .. ": " .. url
+
+  -- Step 5: Append the reference link to the bottom of the buffer
+  local bufnr = vim.api.nvim_get_current_buf()
+  local line_count = vim.api.nvim_buf_line_count(bufnr)
+
+  vim.api.nvim_buf_set_lines(bufnr, line_count, line_count, false, { reference_link })
+
+  -- Step 6: Return the cursor to the original position
+  vim.api.nvim_win_set_cursor(0, original_cursor_pos)
+
+  -- Step 7: Notify the user
+  print("Reference link saved: " .. reference_link)
+end
+
+-- Optional: Map the function to a key
+vim.api.nvim_set_keymap('n', '<leader>ra', '<cmd>lua Add_reference_link()<CR>', { noremap = true, silent = true })
+
+
 local function taskwarrior_task(project)
   -- Get the current line number and the line content
   local line_number = vim.fn.line('.')
@@ -42,11 +81,8 @@ end
 
 -- Bind the function to a command (Optional)
 vim.api.nvim_create_user_command('InsertDate', insert_date, {})
+vim.api.nvim_set_keymap('n', '<leader>id', '<cmd>lua insert_date()<CR>', { noremap = true, silent = false })
 
-
-local function get_clipboard()
-  return vim.fn.getreg('+')
-end
 
 function Yank_inbracket()
   vim.api.nvim_feedkeys('vi]y', 'n', true)
@@ -56,7 +92,7 @@ function Select_inbracket()
   vim.api.nvim_feedkeys('vi]', 'n', true)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
 
 function Select_outbracket()
   vim.api.nvim_feedkeys('va]', 'n', true)
@@ -64,6 +100,61 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 
+function Open_url_from_selected_text()
+  -- Step 1: Capture the clipboard
+  local selected_text = get_clipboard()
+
+  -- Step 2: Search for matches in the current working directory
+  local search_command = "rg --vimgrep '^" .. vim.fn.escape(selected_text, "[]") .. ": https://.*$' ."
+  local handle = io.popen(search_command)
+  if handle == nil then
+    print("command returned nil handle: " .. search_command)
+	return
+  end
+  local result = handle:read("*a")
+  handle:close()
+
+  -- Step 3: Parse the result, find URLs
+  local matches = {}
+  for line in result:gmatch("[^\r\n]+") do
+    local url = line:match("https://%S+")
+    if url then
+      table.insert(matches, {line = line, url = url})
+    end
+  end
+
+  if #matches == 0 then
+    print("No matching URLs found for '".. selected_text .. "'")
+    return
+  end
+
+  -- Step 4: If there are multiple matches, let the user choose
+  local chosen_url
+  if #matches == 1 then
+    chosen_url = matches[1].url
+  else
+    print("Multiple matches found:")
+    for i, match in ipairs(matches) do
+      print(i .. ": " .. match.line)
+    end
+    local choice = tonumber(vim.fn.input("Choose a match number: "))
+    if choice and matches[choice] then
+      chosen_url = matches[choice].url
+    else
+      print("Invalid choice.")
+      return
+    end
+  end
+
+  -- Step 5: Open the chosen URL in the browser
+  if chosen_url then
+    local open_command = "xdg-open " .. chosen_url
+    os.execute(open_command)
+  end
+end
+
+-- Map the function to a key in visual mode
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_url_from_selected_text()<CR>', { noremap = true, silent = true })
 
 
 function Goto_Weblink()

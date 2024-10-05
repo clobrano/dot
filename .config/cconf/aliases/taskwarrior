@@ -1,4 +1,4 @@
-alias t='task rc:~/.taskworkrc'
+alias t='task'
 alias donetoday='taskwarrior end.after:yesterday complete'
 alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'
 

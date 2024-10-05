@@ -48,8 +48,8 @@ report.list.filter=status:pending -WAITING
 report.list.labels=ID,A,Description,Pro,Tags,Pri,R,Sch,Sch,Due,Due,Until
 report.list.sort=due+,start-,urgency-,project+
 
-# List short (e.g. termux)
-report.list_short.columns=id,start.active,description.count,due
+# List short
+report.list_short.columns=id,start.active,description.count,due.remaining
 report.list_short.context=1
 report.list_short.description=Most details of tasks
 report.list_short.filter=status:pending -WAITING

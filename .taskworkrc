@@ -33,18 +33,4 @@ report._reviewed.columns=uuid
 report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
-report.list_full.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due,until.remaining,description.count,urgency
-report.list_full.context=1
-report.list_full.description=Most details of tasks
-report.list_full.filter=status:pending -WAITING
-report.list_full.labels=ID,Active,Age,D,P,Project,Tags,R,Sch,Due,Until,Description,Urg
-report.list_full.sort=start-,due+,project+,urgency-
-
-report.list.columns=id,project,tags,priority,recur.indicator,scheduled.countdown,due,until.remaining,description.count,depends
-report.list.context=1
-report.list.description=Most details of tasks
-report.list.filter=status:pending -WAITING
-report.list.labels=ID,Pro,Tags,Pri,R,Sch,Due,Until,Description,Deps
-report.list.sort=start-,due+,project+,urgency-
-
-
+include ~/.dot/taskwarrior-customization

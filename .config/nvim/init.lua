@@ -20,14 +20,14 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  "savq/melange-nvim",                                       -- default light theme
+  "savq/melange-nvim",                                        -- default light theme
   require('plugins.catpuccin'),
-  "tanvirtin/monokai.nvim",                                  -- monokai colorscheme
+  "tanvirtin/monokai.nvim",                                   -- monokai colorscheme
   'ryanoasis/vim-devicons',
-  "fraso-dev/nvim-listchars",                                -- toggle show listchars
-  "b0o/incline.nvim",                                        -- for the floating filenames
+  "fraso-dev/nvim-listchars",                                 -- toggle show listchars
+  "b0o/incline.nvim",                                         -- for the floating filenames
   { 'kdheepak/tabline.nvim',  opts = { show_bufnr = true } }, -- needed to show buffer tab
-  'mtdl9/vim-log-highlighting',                              -- Highlight log files
+  'mtdl9/vim-log-highlighting',                               -- Highlight log files
   require('plugins.tagbar'),
   require('plugins.lualine'),
   require('plugins.startify'),
@@ -173,7 +173,7 @@ local plugins = {
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',      opts = {} },
+  require('plugins.which-key'),
   require('plugins.trouble'),
   {
     'nvim-telescope/telescope.nvim',
@@ -251,6 +251,7 @@ require('tabline').setup { enable = false }
 pcall(require('telescope').load_extension, 'fzf')
 -- Enable media-file preview in telescope
 require('telescope').load_extension('media_files')
+--require('telescope').load_extension('noice')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>f/', function()
@@ -514,71 +515,6 @@ if vim.fn.exists('g:neovide') == 1 then
   set guifont=Source\ Code\ Pro:h11
   ]]
 end
-
--- Register some useful macros
-vim.cmd [[
-" Macro to format PR Markdown links
-let @p='f#��avt ��adBi- jjpbi-PRjjf[��ai jjvEh:s/ by.*]/]'
-" Macro to format MR Gitlab links
-let @m='f!��a lvedBi#-MRjjpa jjlvEh:s/ (!.*]/]'
-" Macro to format RH Issue tracker links
-let @t='llvi]dBi- #jjpa jjllvlldrep - Red Hat Issue Tracker/'
-" Macro to set Wrap in current and next split (for code review with GH.nvim)
-let @d='BfT��acwDONEjj'
-]]
-
--- Which key configuration
-local wk = require("which-key")
-wk.register({
-  g = {
-    name = "+Git",
-    h = {
-      name = "+Github",
-      c = {
-        name = "+Commits",
-        c = { "<cmd>GHCloseCommit<cr>", "Close" },
-        e = { "<cmd>GHExpandCommit<cr>", "Expand" },
-        o = { "<cmd>GHOpenToCommit<cr>", "Open To" },
-        p = { "<cmd>GHPopOutCommit<cr>", "Pop Out" },
-        z = { "<cmd>GHCollapseCommit<cr>", "Collapse" },
-      },
-      i = {
-        name = "+Issues",
-        p = { "<cmd>GHPreviewIssue<cr>", "Preview" },
-      },
-      l = {
-        name = "+Litee",
-        t = { "<cmd>LTPanel<cr>", "Toggle Panel" },
-      },
-      r = {
-        name = "+Review",
-        b = { "<cmd>GHStartReview<cr>", "Begin" },
-        c = { "<cmd>GHCloseReview<cr>", "Close" },
-        d = { "<cmd>GHDeleteReview<cr>", "Delete" },
-        e = { "<cmd>GHExpandReview<cr>", "Expand" },
-        s = { "<cmd>GHSubmitReview<cr>", "Submit" },
-        z = { "<cmd>GHCollapseReview<cr>", "Collapse" },
-      },
-      p = {
-        name = "+Pull Request",
-        c = { "<cmd>GHClosePR<cr>", "Close" },
-        d = { "<cmd>GHPRDetails<cr>", "Details" },
-        e = { "<cmd>GHExpandPR<cr>", "Expand" },
-        o = { "<cmd>GHOpenPR<cr>", "Open" },
-        p = { "<cmd>GHPopOutPR<cr>", "PopOut" },
-        r = { "<cmd>GHRefreshPR<cr>", "Refresh" },
-        t = { "<cmd>GHOpenToPR<cr>", "Open To" },
-        z = { "<cmd>GHCollapsePR<cr>", "Collapse" },
-      },
-      t = {
-        name = "+Threads",
-        c = { "<cmd>GHCreateThread<cr>", "Create" },
-        n = { "<cmd>GHNextThread<cr>", "Next" },
-        t = { "<cmd>GHToggleThread<cr>", "Toggle" },
-      },
-    },
-  },
-}, { prefix = "<leader>" })
 
 
 -- markdown preview configuration

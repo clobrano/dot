@@ -11,7 +11,7 @@ return {
         vim.keymap.set('n','<leader>gca', '<esc>:G commit --amend<cr>')
         vim.keymap.set('n','<leader>gcan', '<esc>:G commit --amend --no-edit<cr>')
         --vim.keymap.set('n','<leader>gl', '<esc>:botright G log<cr>')
-        vim.keymap.set('n','<leader>gps', '<esc>:Dispatch! git push<cr>')
+		--vim.keymap.set('n','<leader>gps', '<esc>:Dispatch! git push<cr>')
         vim.keymap.set('n','<leader>gpl', '<esc>:Dispatch! git pull<cr>')
         --vim.keymap.set('n','<leader>gs', '<esc>:vertical G<cr>')
         vim.keymap.set('n','<leader>gv', '<esc>:GV<cr>')

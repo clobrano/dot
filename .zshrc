@@ -16,9 +16,6 @@ export GIT_TERMINAL_PROMPT=1
 export KUBE=~/.kube
 export KUBE_MAP=~/.kube/dsal-host-config-map.json
 
-export TASK="task rc:~/.taskworkrc"
-export TASKDATA="~/Documents/taskwarriorRH/"
-
 # PATH
 PATH=~/.local/bin:$PATH
 if [[ -d $HOME/.cargo ]]; then

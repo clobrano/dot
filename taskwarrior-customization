@@ -1,0 +1,31 @@
+color=off
+
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+report.list_full.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due,until.remaining,description.count,urgency
+report.list_full.context=1
+report.list_full.description=Most details of tasks
+report.list_full.filter=status:pending -WAITING
+report.list_full.labels=ID,Active,Age,D,P,Project,Tags,R,Sch,Due,Until,Description,Urg
+report.list_full.sort=start-,due+,project+,urgency-
+
+# List wide
+report.list.columns=id,start.active,description.count,project,tags,priority,recur.indicator,scheduled,scheduled.countdown,due.countdown,due,until.remaining
+report.list.context=1
+report.list.description=Most details of tasks
+report.list.filter=status:pending -WAITING
+report.list.labels=ID,A,Description,Pro,Tags,Pri,R,Sch,Sch,Due,Due,Until
+report.list.sort=due+,start-,urgency-,project+
+
+# List short
+report.sl.columns=id,start.active,description.count,due.remaining
+report.sl.context=1
+report.sl.description=Most details of tasks
+report.sl.filter=status:pending -WAITING
+report.sl.labels=ID,A,Description,Due
+report.sl.sort=due+,start-,urgency-,project+

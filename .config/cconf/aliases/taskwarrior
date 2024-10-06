@@ -1,15 +1,18 @@
-alias t='task'
-alias donetoday='taskwarrior end.after:yesterday complete'
-alias twui='docker run -d -p 9091:80 --name taskwarrior-webui -v /home/clobrano/.taskworkrc:/.taskrc -v /home/clobrano/Documents/taskwarriorRH:/.task dcsunset/taskwarrior-webui'
+alias wk='export TASKRC=~/.taskworkrc; task'
+alias me='export TASKRC=~/.taskrc; task'
 
-alias work="export TASK='task rc:~/.taskworkrc'; export TASKDATA=~/Documents/taskwarriorRH"
-alias me="export TASK=task; export TASKDATA=~/Me/Taskwarrior"
+alias donetoday='wk end.after:yesterday complete sl'
 
-alias next="taskwarrior \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\""
-alias n7="taskwarrior due.before:7d"
-alias active="taskwarrior +ACTIVE"
-alias week="taskwarrior due.before:eow"
-alias month="taskwarrior due.before:eom"
+alias wknext="wk \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" sl"
+alias next="me \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" sl"
 
-# WORK
-alias wvit="TASKRC=~/.taskworkrc vit"
+alias wkactive="wk +ACTIVE sl"
+alias active="me +ACTIVE sl"
+
+alias wkweek="wk due.before:eow sl"
+alias week="me due.before:eow sl"
+
+alias wkmonth="wk due.before:eom sl"
+alias month="me due.before:eom sl"
+
+alias vit='export TASKRC=~/.taskrc  TASKDATA=$ME/Taskwarrior; vit'

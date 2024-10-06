@@ -112,9 +112,8 @@ alias itsmine="sudo chown $USER"
 # let script-fu/tsk use taskwarrior autocomplete
 command -v task>/dev/null
 if [[ $? -eq 0 ]] && [[ -f ~/workspace/script-fu/tsk ]]; then
-    TASK="task"
-    TASKDATA="~/Me/Taskwarrior"
-    complete -F _task tsk
+    complete -F _task wk
+    complete -F _task me
 fi
 
 # use zshz in place of "cd", but only if installed

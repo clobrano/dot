@@ -517,10 +517,6 @@ if vim.fn.exists('g:neovide') == 1 then
   ]]
 end
 
--- Which key configuration
-local wk = require("which-key")
-
-
 
 -- markdown preview configuration
 vim.g.mkdp_images_path = '/home/clobrano/Documents/RedHatVault/attachments'

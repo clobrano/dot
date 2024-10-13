@@ -114,6 +114,8 @@ command -v task>/dev/null
 if [[ $? -eq 0 ]] && [[ -f ~/workspace/script-fu/tsk ]]; then
     complete -F _task wk
     complete -F _task me
+    complete -F _task next
+    complete -F _task wknext
 fi
 
 # use zshz in place of "cd", but only if installed

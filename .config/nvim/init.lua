@@ -33,7 +33,7 @@ local plugins = {
   require('plugins.startify'),
   require('plugins.noice'),
 
-  -- Git related plugins
+  -- Git/Revision related plugins
   require('plugins.vim-fugitive'),
   require('plugins.neogit'),
   'tpope/vim-rhubarb',
@@ -41,7 +41,6 @@ local plugins = {
   'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
   require('plugins.gitsigns'),
   { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
-
   {
     "jiaoshijie/undotree",
     dependencies = "nvim-lua/plenary.nvim",
@@ -50,6 +49,7 @@ local plugins = {
       { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
+  { "Gelio/cmp-natdat", config = true },
 
   -- Notes and Markdown
   require('plugins.clipboard-image'),
@@ -467,7 +467,6 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    --{ name = 'nvim_lsp' },  pre markdown_oxide
     { name = 'nvim_lsp',
       option = {
         markdown_oxide = {
@@ -476,6 +475,7 @@ cmp.setup {
       }
     },
     { name = 'luasnip' },
+    { name = 'natdat' },
   },
   experimental = {
     ghost_text = false

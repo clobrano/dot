@@ -30,7 +30,7 @@ function Add_reference_link()
   vim.api.nvim_win_set_cursor(0, original_cursor_pos)
 
   -- Step 7: Notify the user
-  print("Reference link saved: " .. reference_link)
+  print("Reference link saved")
 end
 
 -- Optional: Map the function to a key
@@ -282,10 +282,16 @@ function CreateNoteFromFileName()
     -- write the template in current buffer
     vim.fn.append(1, template)
   end
+
+  if string.match(vim.fn.expand("%:p:h"), "Resources") then
+    vim.fn.append(10, '<!-- references -->')
+  end
   -- write the title in current buffer
   vim.fn.append(0, '# ' .. title)
+
 end
 
+vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })
 vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
 
 
@@ -410,7 +416,6 @@ M.makeGmailSearchLink = function()
       selected_text .. "]" .. "(https://mail.google.com/mail/u/0/#search/" .. replaced_text .. ")"
   local pos = vim.fn.getpos('.')
   vim.fn.setline(pos[2], search_link)
-  print(search_link)
 end
 
 

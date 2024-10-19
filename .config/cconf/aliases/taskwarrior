@@ -1,5 +1,5 @@
-alias wk='export TASKRC=~/.taskworkrc; task'
-alias me='export TASKRC=~/.taskrc; task'
+alias wk='task rc:~/.taskworkrc'
+alias me='task'
 
 alias donetoday='wk end.after:yesterday complete sl'
 

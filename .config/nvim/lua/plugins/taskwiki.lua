@@ -1,10 +1,17 @@
 return {
-	'tools-life/taskwiki',
-	config = function()
-		vim.cmd [[
-		let g:taskwiki_extra_warriors={ 'W': {'data_location': '/home/clobrano/Documents/taskwarriorRH/', 'taskrc_location': '/home/clobrano/.taskworkrc'}, 'P': {'data_location': '/home/clobrano/Me/Taskwarrior/', 'taskrc_location': '/home/clobrano/.taskrc'}}
-        let g:taskwiki_disable_concealcursor="yes"
-    ]]
+  'tools-life/taskwiki',
+  config = function()
+	vim.cmd [[
+	  let g:taskwiki_disable_concealcursor="yes"
+	]]
 	vim.keymap.set('n', '<leader>tr', ':TaskWikiBufferLoad<cr>')
-	end
+
+	local cwd = vim.fn.getcwd()
+    if cwd:find('^/home/clobrano')  then
+      print('clobrano dir exists')
+      vim.cmd [[
+        let g:taskwiki_extra_warriors={ 'W': {'data_location': '/home/clobrano/Documents/taskwarriorRH/', 'taskrc_location': '/home/clobrano/.taskworkrc'}}
+      ]]
+    end
+  end
 }

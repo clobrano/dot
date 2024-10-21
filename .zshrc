@@ -156,6 +156,7 @@ done
 source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
 
 unsetopt complete_aliases
+unsetopt completealiases
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 

@@ -109,9 +109,8 @@ alias itsmine="sudo chown $USER"
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 
-# let script-fu/tsk use taskwarrior autocomplete
 command -v task>/dev/null
-if [[ $? -eq 0 ]] && [[ -f ~/workspace/script-fu/tsk ]]; then
+if [[ $? -eq 0 ]]; then
     complete -F _task wk
     complete -F _task me
     complete -F _task next

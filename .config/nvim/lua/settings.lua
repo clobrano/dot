@@ -53,7 +53,7 @@ vim.opt.cursorlineopt = 'number'
 vim.cmd[[highlight CursorLineNr ctermfg=yellow guifg=yellow]]
 
 vim.opt.expandtab = true
-vim.opt.formatoptions = 'jncroql' -- smart auto-indenting in numbered list
+vim.opt.formatoptions = 'jncroqltw2bp' -- smart auto-indenting in numbered list
 
 vim.opt.list = true -- show whitespace
 

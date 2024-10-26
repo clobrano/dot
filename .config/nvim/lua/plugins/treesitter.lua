@@ -11,7 +11,12 @@ return { -- Highlight, edit, and navigate code
       auto_install = false,
 
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = {
+		enable = true,
+		disable = {
+		  "markdown", -- indentation bullet point is worse
+	  },
+      },
       incremental_selection = {
         enable = true,
         keymaps = {

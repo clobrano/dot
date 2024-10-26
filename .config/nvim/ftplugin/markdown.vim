@@ -1,10 +1,8 @@
-set shiftwidth=4
-"set foldexpr=vim.treesitter.foldexpr()
-set foldlevel=99
 set concealcursor=c
-"set colorcolumn=101
-set textwidth=100
+set foldlevel=99
 set noexpandtab
 set nonumber
 set norelativenumber
-set signcolumn=yes:1
+set shiftwidth=2
+set signcolumn=yes:2
+set textwidth=10000

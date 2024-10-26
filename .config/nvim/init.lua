@@ -33,7 +33,7 @@ local plugins = {
   require('plugins.startify'),
   --require('plugins.noice'),
 
-  -- Git related plugins
+  -- Git/Revision related plugins
   require('plugins.vim-fugitive'),
   require('plugins.neogit'),
   'tpope/vim-rhubarb',
@@ -41,7 +41,6 @@ local plugins = {
   'shumphrey/fugitive-gitlab.vim', -- vim-rhubarb for gitlab
   require('plugins.gitsigns'),
   { 'sindrets/diffview.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
-
   {
     "jiaoshijie/undotree",
     dependencies = "nvim-lua/plenary.nvim",
@@ -50,6 +49,7 @@ local plugins = {
       { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
+  { "Gelio/cmp-natdat", config = true },
 
   -- Notes and Markdown
   require('plugins.clipboard-image'),
@@ -65,12 +65,12 @@ local plugins = {
   --require('plugins.render-markdown'),
 
   -- Code and text helpers
-  'jiangmiao/auto-pairs',
+  --'jiangmiao/auto-pairs',
   'editorconfig/editorconfig-vim',
   'scrooloose/nerdcommenter',
   'skywind3000/asyncrun.vim',
   'tpope/vim-dispatch',
-  'tpope/vim-eunuch',
+  --'tpope/vim-eunuch',
   'tpope/vim-surround',
   --'tpope/vim-sleuth',
   'tyru/current-func-info.vim',
@@ -475,6 +475,7 @@ cmp.setup {
       }
     },
     { name = 'luasnip' },
+    { name = 'natdat' },
   },
   experimental = {
     ghost_text = false

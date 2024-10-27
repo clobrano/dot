@@ -80,7 +80,7 @@ vim.opt.shortmess:append('t')                          -- truncate file messages
 
 -- ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS (U+2937, UTF-8: E2 A4 B7)
 if vim.fn.has('linebreak') then
-  vim.cmd[[let &showbreak='↳ ']]
+  vim.cmd[[let &showbreak='  ']]
 end
 
 vim.opt.showcmd = true                              -- show last command in the very bottom right of VI

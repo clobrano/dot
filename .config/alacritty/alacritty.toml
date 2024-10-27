@@ -1,5 +1,5 @@
 live_config_reload = true
-shell = "/home/carlo/workspace/script-fu/tmux-session-attach-or-new-1st.sh"
+#shell = "/home/clobrano/.config/alacritty/tmux-session-attach-or-new-1st.sh"
 
 import = [
   # uncomment the flavour you want below:
@@ -17,6 +17,8 @@ history = 0
 decorations = "full"
 dynamic_padding = true
 opacity = 1.00
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
 
 [window.padding]
 x = 10

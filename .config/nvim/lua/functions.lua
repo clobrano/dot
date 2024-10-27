@@ -43,7 +43,7 @@ local function taskwarrior_task(project)
   local line_content = vim.fn.getline(line_number)
 
   -- Append the string to the current line
-  local new_line = line_content .. " -- pro:" .. project .. " #W"
+  local new_line = line_content .. " -- pro:" .. project .. " #W:"
   vim.fn.setline(line_number, new_line)
 end
 
@@ -283,11 +283,9 @@ function CreateNoteFromFileName()
     vim.fn.append(1, template)
   end
 
-  if string.match(vim.fn.expand("%:p:h"), "Resources") then
-    vim.fn.append(10, '<!-- references -->')
-  end
-  -- write the title in current buffer
+  -- write the title and reference in current buffer
   vim.fn.append(0, '# ' .. title)
+  vim.api.nvim_buf_set_lines(0, -1, -1, false, {'<!-- references -->'})
 
 end
 

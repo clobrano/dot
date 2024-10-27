@@ -52,15 +52,15 @@ fi
 
 alias cdkube="cd ~/.kube"
 
-# this is for rem (reminder with linux jobs and notify.sh)
-alias in="at now + "
-alias cclip="xclip -sel clipboard"
+alias cclip="wl-copy"
 alias nreview="nvim -c \"Octo pr list\""
+
 # This is for gimme. Sometimes the go project folder I'm in doesn't get the right go version. Re-entering the folder
 # fixes it, so :shrug:
 alias rein="cd .. && cd -"
+
 # I know, an alias for my own script... but bookmark is a meaningful name
-alias bb="~/workspace/script-fu/BookMarkIt find"
+alias bb="~/workspace/script-fu/BookMarkIt"
 
 alias mao="cd ~/workspace/mao/machine-api-operator/"
 alias Mdr="cd ~/workspace/medik8s/upstream/mdr/machine-deletion-remediation/"

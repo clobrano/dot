@@ -57,7 +57,7 @@ source $HOME/.config/cconf/dot/dotfiles.sh
 source $HOME/.config/cconf/environments/pyenv-init.sh
 
 export CDPATH=$HOME/workspace
-export GOROOT=/usr/local/go
+#export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
@@ -68,9 +68,10 @@ export ME=$HOME/Me
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/.atuin/bin
-PATH=$PATH:${GOROOT}/bin
-PATH=$PATH:${GOBIN}
+#PATH=$PATH:${GOROOT}/bin
+#PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH
+PATH=$PATH:/usr/local/go/bin
 if [[ -d $HOME/.cargo ]]; then
     PATH=$HOME/.cargo/bin:$PATH
 fi

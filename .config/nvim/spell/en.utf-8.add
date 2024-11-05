@@ -519,3 +519,7 @@ systemd
 podman
 ImageLayer
 Containerfile
+corosync
+pcsd
+hacluster
+pcs

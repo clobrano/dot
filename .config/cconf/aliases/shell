@@ -7,12 +7,12 @@ alias ll='ls -l'
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
-alias today='date +"%F %H:%M"'
-alias yesterday='date --date="yesterday" +"%F %H:%M"'
-alias lastweek='date --date="last week" +"%F %H:%M"'
-alias friday='date --date="Friday" +"%F %H:%M"'
-alias eow='date --date="next Sunday" +"%F %H:%M"'
-alias sow='date --date="last Monday" +"%F %H:%M"'
+alias today='date +"%F"'
+alias yesterday='date --date="yesterday" +"%F"'
+alias lastweek='date --date="last week" +"%F"'
+alias friday='date --date="Friday" +"%F"'
+alias eow='date --date="next Sunday" +"%F"'
+alias sow='date --date="last Monday" +"%F"'
 
 if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias cat=batcat

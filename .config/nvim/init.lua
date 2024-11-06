@@ -58,7 +58,8 @@ local plugins = {
   require('plugins.markdown-preview'),
   require('plugins.marvim'), -- macro recorder
   require('plugins.orgmode'),
-  require('plugins.plantuml'),
+  { "weirongxu/plantuml-previewer.vim" , dependencies = {'tyru/open-browser.vim', 'aklt/plantuml-syntax'}},
+  --require('plugins.plantuml'),
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
   require('plugins.zenmode'),

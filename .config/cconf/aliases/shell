@@ -43,7 +43,8 @@ fi
 
 alias nn='cd $ME/Notes && nvim index.md'
 alias no='cd $ME/Orgmode && nvim ReadItLater.org'
-alias np='neovim-note-popup.sh'
+alias q='neovim-note-popup.sh'
+alias t='neovim-inbox-tag.sh'
 
 
 if command -v vagrant 2>&1 > /dev/null; then

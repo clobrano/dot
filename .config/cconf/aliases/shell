@@ -43,7 +43,8 @@ fi
 
 alias nn='cd $ME/Notes && nvim index.md'
 alias no='cd $ME/Orgmode && nvim ReadItLater.org'
-alias np='neovim-note-popup.sh'
+alias q='neovim-note-popup.sh'
+alias t='neovim-inbox-task.sh'
 
 
 if command -v vagrant 2>&1 > /dev/null; then
@@ -61,6 +62,9 @@ alias rein="cd .. && cd -"
 
 # I know, an alias for my own script... but bookmark is a meaningful name
 alias bb="~/workspace/script-fu/BookMarkIt"
+
+# ntfy.sh. To be used with
+alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
 alias mao="cd ~/workspace/mao/machine-api-operator/"
 alias Mdr="cd ~/workspace/medik8s/upstream/mdr/machine-deletion-remediation/"

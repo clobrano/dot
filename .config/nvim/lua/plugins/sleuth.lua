@@ -1,0 +1,7 @@
+return {
+  'tpope/vim-sleuth',
+}
+
+
+
+

@@ -5,4 +5,4 @@ set nonumber
 set norelativenumber
 set shiftwidth=2
 set signcolumn=yes:2
-set textwidth=10000
+set textwidth=0

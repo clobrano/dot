@@ -26,8 +26,9 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
 PATH=$PATH:$HOME/.atuin/bin
-PATH=$PATH:${GOBIN}
-PATH=$PATH:${GOROOT}/bin
+#PATH=$PATH:${GOBIN}
+#PATH=$PATH:${GOROOT}/bin
+PATH=$PATH:/usr/local/go/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
     PATH=$PATH:${HOME}/workspace/me/flutter/bin
 fi
@@ -100,7 +101,7 @@ fi
 # Completion
 #
 # extend change directory
-#setopt auto_cd
+setopt auto_cd
 # allow comments on the shell
 setopt interactivecomments
 cdpath=($HOME $HOME/workspace)
@@ -244,6 +245,7 @@ if command -v atuin 2>&1 >/dev/null; then
     # Bind ctrl-r but not up arrow
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
+. "$HOME/.atuin/bin/env"
 
 # source uncommitable env variables
 if [[ -f ~/Documents/unsharable ]]; then
@@ -262,4 +264,10 @@ export RPROMPT=""
 if command -v starship 2>&1 >/dev/null; then
     export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
     eval "$(starship init zsh)"
+fi
+
+# use zshz in place of "cd", but only if installed
+command -v zshz >/dev/null
+if [ $? -eq 0 ]; then
+    eval "$(zoxide init zsh --cmd cd)"
 fi

@@ -15,9 +15,9 @@ since=$(time_since_in_seconds $started)
 s=$(humanizetime $since)
 l=$(humanizetime $left)
 if [[ $left -gt 0 ]] && [[ $since -gt 0 ]]; then
-    echo "   ▲${s%'.'*} ▼${l%'.'*}"
+    echo "  ▲${s%'.'*} ▼${l%'.'*}"
 elif [[ $since -gt 0 ]]; then
-    echo "   ▲${s%'.'*} ◆$deadline"
+    echo "  ▲${s%'.'*} ◆$deadline"
 elif [[ $left -gt 0 ]]; then
-    echo "   ▼${l%'.'*}"
+    echo "  ▼${l%'.'*}"
 fi

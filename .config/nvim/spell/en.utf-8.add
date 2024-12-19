@@ -518,3 +518,10 @@ HoneyBadger
 systemd
 podman
 ImageLayer
+Containerfile
+corosync
+pcsd
+hacluster
+pcs
+zettelkasten
+taskwarrior

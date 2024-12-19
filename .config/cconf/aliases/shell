@@ -7,12 +7,12 @@ alias ll='ls -l'
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 
-alias today='date +"%F %H:%M"'
-alias yesterday='date --date="yesterday" +"%F %H:%M"'
-alias lastweek='date --date="last week" +"%F %H:%M"'
-alias friday='date --date="Friday" +"%F %H:%M"'
-alias eow='date --date="next Sunday" +"%F %H:%M"'
-alias sow='date --date="last Monday" +"%F %H:%M"'
+alias today='date +"%F"'
+alias yesterday='date --date="yesterday" +"%F"'
+alias lastweek='date --date="last week" +"%F"'
+alias friday='date --date="Friday" +"%F"'
+alias eow='date --date="next Sunday" +"%F"'
+alias sow='date --date="last Monday" +"%F"'
 
 if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias cat=batcat
@@ -53,15 +53,18 @@ fi
 
 alias cdkube="cd ~/.kube"
 
-# this is for rem (reminder with linux jobs and notify.sh)
-alias in="at now + "
-alias cclip="xclip -sel clipboard"
+alias cclip="wl-copy"
 alias nreview="nvim -c \"Octo pr list\""
+
 # This is for gimme. Sometimes the go project folder I'm in doesn't get the right go version. Re-entering the folder
 # fixes it, so :shrug:
 alias rein="cd .. && cd -"
+
 # I know, an alias for my own script... but bookmark is a meaningful name
-alias bb="~/workspace/script-fu/BookMarkIt find"
+alias bb="~/workspace/script-fu/BookMarkIt"
+
+# ntfy.sh. To be used with
+alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
 alias mao="cd ~/workspace/mao/machine-api-operator/"
 alias Mdr="cd ~/workspace/medik8s/upstream/mdr/machine-deletion-remediation/"

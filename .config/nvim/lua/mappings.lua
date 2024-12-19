@@ -406,3 +406,6 @@ nmap('<leader>zm', ':ZenMode<cr>')
 -- TODO: move it to neogit configuration file
 nmap('<leader>gs', ':Neogit<cr>')
 
+-- add space below cursor (_p_ush)
+nmap('<leader>k', ":call append(line('.'), '')<CR>")
+

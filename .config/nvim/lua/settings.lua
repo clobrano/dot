@@ -53,7 +53,7 @@ vim.opt.cursorlineopt = 'number'
 vim.cmd[[highlight CursorLineNr ctermfg=yellow guifg=yellow]]
 
 vim.opt.expandtab = true
-vim.opt.formatoptions = 'jncroqltw2bp' -- smart auto-indenting in numbered list
+vim.opt.formatoptions = 'tcroqn2bljp' -- smart auto-indenting in numbered list
 
 vim.opt.list = true -- show whitespace
 
@@ -80,7 +80,7 @@ vim.opt.shortmess:append('t')                          -- truncate file messages
 
 -- ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS (U+2937, UTF-8: E2 A4 B7)
 if vim.fn.has('linebreak') then
-  vim.cmd[[let &showbreak='↳ ']]
+  vim.cmd[[let &showbreak='  ']]
 end
 
 vim.opt.showcmd = true                              -- show last command in the very bottom right of VI
@@ -98,7 +98,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tags = 'tags;/'                           -- Makes ctags visible from subdirectories
 
-vim.opt.textwidth = 100 -- use larger text limit, unless required (e.g. commit message)
+vim.opt.textwidth = 10000 -- use larger text limit, unless required (e.g. commit message)
 
 vim.opt.thesaurus:append('~/.config/nvim/thesaurus/thesaurus.txt')
 

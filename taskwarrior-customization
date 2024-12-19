@@ -23,9 +23,9 @@ report.list.labels=ID,A,Description,Pro,Tags,Pri,R,Sch,Sch,Due,Due,Until
 report.list.sort=due+,start-,urgency-,project+
 
 # List short
-report.sl.columns=id,start.active,description.count,due.remaining,priority
+report.sl.columns=id,priority,due.remaining,start.active,description.count
 report.sl.context=1
 report.sl.description=Most details of tasks
 report.sl.filter=status:pending -WAITING
-report.sl.labels=ID,A,Description,Due,!
+report.sl.labels=ID,!,Due,A,Description
 report.sl.sort=due+,start-,urgency-,project+

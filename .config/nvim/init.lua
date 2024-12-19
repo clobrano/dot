@@ -382,16 +382,13 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
   gopls = {},
   pyright = {},
   markdown_oxide = {},
   clangd = {},
-  --marksman = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  bashls = {
+    filetypes = { "sh", "zsh" },
+  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },

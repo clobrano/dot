@@ -523,3 +523,5 @@ corosync
 pcsd
 hacluster
 pcs
+zettelkasten
+taskwarrior

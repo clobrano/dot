@@ -30,26 +30,32 @@ function Add_reference_link()
   vim.api.nvim_win_set_cursor(0, original_cursor_pos)
 
   -- Step 7: Notify the user
-  print("Reference link saved")
+  print("+" .. reference_link)
 end
 
 -- Optional: Map the function to a key
 vim.api.nvim_set_keymap('n', '<leader>ra', '<cmd>lua Add_reference_link()<CR>', { noremap = true, silent = true })
 
+local function add_square_brackets(line)
+  return line:gsub("^%s*([*-])%s*(.*)$", "%1 [ ] %2")
+end
 
 local function taskwarrior_task(project)
   -- Get the current line number and the line content
   local line_number = vim.fn.line('.')
   local line_content = vim.fn.getline(line_number)
+  local task_content = add_square_brackets(line_content)
 
   -- Append the string to the current line
-  local new_line = line_content .. " -- pro:" .. project .. " #W:"
+  local new_line = task_content .. " -- pro:" .. project .. " #W:"
   vim.fn.setline(line_number, new_line)
 end
 
 vim.api.nvim_create_user_command('TaskWarriorTask', function(opts)
   taskwarrior_task(opts.args)
 end, { nargs = 1 })
+
+vim.api.nvim_set_keymap('n', '<leader>tw', ':TaskWarriorTask ', { noremap = true, silent = true })
 
 
 local function refile_done()
@@ -82,6 +88,22 @@ end
 -- Bind the function to a command (Optional)
 vim.api.nvim_create_user_command('InsertDate', insert_date, {})
 vim.api.nvim_set_keymap('n', '<leader>id', '<cmd>lua insert_date()<CR>', { noremap = true, silent = false })
+
+local function insert_date_header()
+  -- Get the current date
+  local date = os.date("## %Y-%m-%d")      -- yyyy-mm-dd format
+  local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
+
+  -- Concatenate the date and the weekday
+  local formatted_date = date .. " " .. weekday
+
+  -- Insert the formatted date at the current cursor position
+  vim.api.nvim_put({ formatted_date }, "c", false, true)
+end
+
+-- Bind the function to a command (Optional)
+vim.api.nvim_create_user_command('InsertDateHeader', insert_date_header, {})
+
 
 
 function Yank_inbracket()
@@ -294,15 +316,11 @@ vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr
 
 
 function Letsdo_goto()
-  local project = get_project_name_from_buffer()
+  --local project = get_project_name_from_buffer()
   local task_description = get_clipboard()
+  local command = 'letsdo-taskwarrior-task.sh wk "' .. task_description .. '"'
 
-  if project ~= '' then
-    task_description = task_description .. ' ' .. '@' .. project
-  end
-
-  local command = 'lets goto ' .. vim.fn.shellescape(task_description)
-  print(command, vim.inspect(vim.fn.system(command)))
+  print(vim.inspect(vim.fn.system(command)))
 end
 
 vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })

@@ -5,7 +5,13 @@ return {
 	  let g:taskwiki_disable_concealcursor="yes"
 	]]
 	vim.keymap.set('n', '<leader>tr', ':TaskWikiBufferLoad<cr>')
-
+    vim.api.nvim_create_autocmd("BufEnter", {
+      pattern = "*.md",  -- Match only markdown buffers
+      callback = function()
+        vim.cmd("TaskWikiBufferLoad")
+        vim.cmd("echo 'Tasks reloaded'")
+      end,
+    })
 	local cwd = vim.fn.getcwd()
     if cwd:find('^/home/clobrano')  then
       print('clobrano dir exists')

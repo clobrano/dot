@@ -28,6 +28,7 @@ local plugins = {
   "b0o/incline.nvim",                                         -- for the floating filenames
   { 'kdheepak/tabline.nvim',  opts = { show_bufnr = true } }, -- needed to show buffer tab
   'mtdl9/vim-log-highlighting',                               -- Highlight log files
+  'xiyaowong/transparent.nvim',
   require('plugins.tagbar'),
   require('plugins.lualine'),
   require('plugins.startify'),

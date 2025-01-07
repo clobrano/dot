@@ -44,8 +44,20 @@ begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo
 
 end=$(date +%s)
 
-# Warn if speding "too much time" on the same task
-warn_time_minutes=1000  # time limit
+# TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
+elapsed_time=$(date +"%H:%M.%S" --date="@$(($end - $begin - 3600))")
+echo " $full_name $elapsed_time"
+
+# Short name for OneThing Gnome extention
+#name=$full_name
+#task_len=${#full_name}
+#if [[ $task_len > 40 ]]; then
+    #name=${full_name:0:27}...
+#fi
+#dconf write /org/gnome/shell/extensions/one-thing/thing-value "'  $name $elapsed_time'"
+
+# Reminder of time spent on the same task
+warn_time_minutes=15
 work_time_seconds=$(($end - $begin))
 work_time_minutes=$(($work_time_seconds / 60))
 if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minutes)) -eq 0 ]]; then
@@ -76,21 +88,11 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
 
     # all checks passed, we can send the notification
     echo $full_name > ${WARNING_FILE}
-    notify-send "working on the same task for some time already"
+    notify-send "$elapsed_time on - $full_name -"
     paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 else
     clean_warning_file
 fi
 
-# TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
-elapsed_time=$(date +"%H:%M.%S" --date="@$(($end - $begin - 3600))")
-echo " $full_name $elapsed_time"
 
-# Short name for OneThing Gnome extention
-name=$full_name
-task_len=${#full_name}
-if [[ $task_len > 40 ]]; then
-    name=${full_name:0:27}...
-fi
-dconf write /org/gnome/shell/extensions/one-thing/thing-value "'  $name $elapsed_time'"
 

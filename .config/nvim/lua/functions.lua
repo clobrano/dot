@@ -307,6 +307,7 @@ function CreateNoteFromFileName()
 
   -- write the title and reference in current buffer
   vim.fn.append(0, '# ' .. title)
+  vim.fn.append(1, os.date('created: %Y-%m-%d'))
   vim.api.nvim_buf_set_lines(0, -1, -1, false, {'<!-- references -->'})
 
 end
@@ -318,12 +319,29 @@ vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr
 function Letsdo_goto()
   --local project = get_project_name_from_buffer()
   local task_description = get_clipboard()
-  local command = 'letsdo-taskwarrior-task.sh wk "' .. task_description .. '"'
+  local command = 'letsdo-taskwarrior-task.sh "' .. task_description .. '"'
 
   print(vim.inspect(vim.fn.system(command)))
 end
+vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { noremap = true, silent = false })
 
-vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })
+function QuickNote(description)
+  local command = 'neovim-quick-note.sh'
+  print(vim.inspect(vim.fn.system(command)))
+end
+vim.api.nvim_set_keymap('n', '<leader>qn', "<cmd>lua QuickNote()<cr>", { noremap = true, silent = true })
+
+function QuickTask()
+  local command = 'taskwarrior-quick-task.sh'
+  print(vim.inspect(vim.fn.system(command)))
+end
+vim.api.nvim_set_keymap('n', '<leader>qt', "<cmd>lua QuickTask()<cr>", { noremap = true, silent = true })
+
+
+
+
 
 -- key mapping to stop the current running "letsdo" command
 vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })
@@ -381,6 +399,36 @@ end
 
 -- link title
 vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
+
+
+function SurroundWithMarkdownLink()
+  -- Get the visual selection
+  local line1, col1 = unpack(vim.fn.getpos("'<"), 2, 3)
+  local line2, col2 = unpack(vim.fn.getpos("'>"), 2, 3)
+  local lines = vim.fn.getline(line1, line2)
+  if #lines == 1 then
+    lines[1] = lines[1]:sub(col1, col2)
+  else
+    lines[1] = lines[1]:sub(col1)
+    lines[#lines] = lines[#lines]:sub(1, col2)
+  end
+  local selected_text = table.concat(lines, "\n")
+
+  -- Replace the selected text with `[[selected_text]]`
+  local modified_text = "[[" .. selected_text .. "]]"
+  vim.fn.setline(line1, vim.fn.getline(line1):sub(1, col1 - 1) .. modified_text .. vim.fn.getline(line2):sub(col2 + 1))
+
+  -- Create a Markdown file in the Resources directory
+  local filepath = "Resources/" .. selected_text .. ".md"
+  local file = io.open(filepath, "w")
+  if file then
+    file:close()
+    print("Created Markdown file: " .. filepath)
+  else
+    print("Failed to create file: " .. filepath)
+  end
+end
+
 
 local M = {}
 

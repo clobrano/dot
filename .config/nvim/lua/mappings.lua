@@ -395,7 +395,8 @@ nmap('<leader>swna', ':windo set nowrap<cr>')
 -- bold
 vmap('<leader>bo', '"adi**<esc>"apa**<esc>')
 -- wikilink
-vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
+--vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
+vmap('<leader>ml', ':<C-u>lua SurroundWithMarkdownLink()<CR>')
 -- strikethrough
 vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
 

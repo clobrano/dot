@@ -23,5 +23,6 @@ return {
       }
     }
     vim.keymap.set('n', '<leader>nt', ':Neotree reveal<cr>', { silent = true, noremap = true })
+    vim.keymap.set('n', '<leader>nb', ':Neotree buffers<cr>', { desc = '[F]ind [B]uffers' })
   end
 }

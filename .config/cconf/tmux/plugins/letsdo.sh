@@ -88,7 +88,7 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
 
     # all checks passed, we can send the notification
     echo $full_name > ${WARNING_FILE}
-    notify-send "$elapsed_time on - $full_name -"
+    notify-send --app-name "Tmux|Letsdo" "$elapsed_time on - $full_name -"
     paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 else
     clean_warning_file

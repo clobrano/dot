@@ -28,3 +28,10 @@ disabled = false
 style = 'bold green dimmed'
 format = '[$symbol]($style) '
 disabled = false
+
+[custom.git_user]
+when = "git rev-parse --is-inside-work-tree"
+require_repo = true
+command = "if git config user.email | grep redhat >/dev/null; then echo \" \"; else if git config user.email | grep gmail >/dev/null; then echo \" \"; else echo \" \"; fi; fi"
+style = "bold yellow"
+ignore_timeout = true

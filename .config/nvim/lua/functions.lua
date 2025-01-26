@@ -418,14 +418,28 @@ function SurroundWithMarkdownLink()
   local modified_text = "[[" .. selected_text .. "]]"
   vim.fn.setline(line1, vim.fn.getline(line1):sub(1, col1 - 1) .. modified_text .. vim.fn.getline(line2):sub(col2 + 1))
 
-  -- Create a Markdown file in the Resources directory
-  local filepath = "Resources/" .. selected_text .. ".md"
-  local file = io.open(filepath, "w")
-  if file then
-    file:close()
-    print("Created Markdown file: " .. filepath)
+  -- Check if the file exists already
+  local filename = selected_text .. '.md'
+  local command = { "find", ".", "-type", "f", "-name", filename, "grep", filename }
+  local result = vim.system(command, { text = true } ):wait()
+  if result.code == 0 then
+    print("File " .. filename .. " exists already")
   else
-    print("Failed to create file: " .. filepath)
+    print("File " .. filename .. " does not exist (" .. result.code .. ")")
+    -- Create a Markdown file in the Resources directory
+    local filepath = "Resources/" .. selected_text .. ".md"
+    if vim.fn.isdirectory('Resources') == 0 then
+      -- Personal notes have a different destination name
+      filepath = "3-Resources/" .. selected_text .. ".md"
+    end
+
+    local file = io.open(filepath, "w")
+    if file then
+      file:close()
+      print("Created Markdown file: " .. filepath)
+    else
+      print("Failed to create file: " .. filepath)
+    end
   end
 end
 

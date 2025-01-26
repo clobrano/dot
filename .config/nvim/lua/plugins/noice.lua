@@ -15,6 +15,9 @@ return {
     "tree-sitter/tree-sitter-regex",
   },
   config = function()
+    require("notify").setup({
+      background_colour = "#000000",
+    })
     require("noice").setup({
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**

@@ -22,8 +22,10 @@ nmap('<F8>', ':hi Normal guibg=none ctermbg=none<cr>')
 nmap('<leader>fi', '[i')
 
 -- align block of text.
-vmap('<<', '<gv')
-vmap('>>', '>gv')
+nmap('<', '<<')
+nmap('>', '>>')
+vmap('<', '<gv')
+vmap('>', '>gv')
 
 vim.keymap.set('i', '<A-i>', '<C-t>', { desc='Indent the line from the start' })
 vim.keymap.set('i', '<A-d>', '<C-d>', { desc='De-indent the line from the start' })
@@ -257,7 +259,7 @@ nmap('w.', '2<C-w>>') -- use . in place of > to avoid typing shift
 nmap('w,', '2<C-w><') -- use , in place of < to avoid typing shift
 nmap('w-', '<C-w>-')
 nmap('w=', '<C-w>+') -- use = in place of + to avoid typing shift
-nmap('<silent>', '- :exe --resize -2--<CR>')
+nmap('-', ':exe --resize -2--<CR>')
 nmap('w3', ':vertical resize -30<cr>')
 -- zoom current window
 nmap('<leader>zz', '<C-w>|<C-w>_')
@@ -312,7 +314,7 @@ nmap('}', '}zz')
 vmap('T', '$h')
 
 -- simplify windows mappings
-vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
+vim.keymap.set('n', '<M-w>', '<C-w>', { silent = true, noremap = true })
 
 --close splits
 nmap('cl', ':close<cr>')
@@ -347,9 +349,9 @@ nmap('<leader>co', ':Copen<cr>')
 nmap('<leader>lo', ':botright lwindow<cr>')
 
 -- reload vimrc
-nmap('<silent>', '<leader>vr :source $MYVIMRC<CR>')
+nmap('<leader>vr', ':source $MYVIMRC<CR>')
 -- reload vim and install plugins
-nmap('<silent>', '<leader>V  :source $MYVIMRC<CR>:PlugInstall<CR>')
+nmap('<leader>V',  ':source $MYVIMRC<CR>:PlugInstall<CR>')
 
 -- scrollbind
 nmap('<leader>sb', ':call ToggleScrollBind()<cr>')

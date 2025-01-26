@@ -4,7 +4,7 @@ return {
 	vim.cmd [[
 	  let g:taskwiki_disable_concealcursor="yes"
 	]]
-	vim.keymap.set('n', '<leader>tr', ':TaskWikiBufferLoad<cr>')
+	vim.keymap.set('n', '<leader>rr', ':TaskWikiBufferLoad<cr>')
     vim.api.nvim_create_autocmd("BufEnter", {
       pattern = "*.md",  -- Match only markdown buffers
       callback = function()

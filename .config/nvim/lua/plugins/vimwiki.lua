@@ -18,7 +18,7 @@ return {
           ext = '.md',
           diary_rel_path =  'Journal/',
           diary_frequency = 'daily',
-          auto_diary_index = 0,
+          auto_diary_index = 1,
           auto_tags = 1,
           auto_generate = 1,
           auto_generate_links = 1,

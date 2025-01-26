@@ -86,6 +86,11 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
         fi 
     fi
 
+    if echo "$full_name" | grep "#meeting" >/dev/null; then
+        # skip notifications during meetings
+        exit 0
+    fi
+
     # all checks passed, we can send the notification
     echo $full_name > ${WARNING_FILE}
     notify-send --app-name "Tmux|Letsdo" "$elapsed_time on - $full_name -"

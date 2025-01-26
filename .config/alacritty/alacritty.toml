@@ -1,3 +1,5 @@
+[terminal]
+shell = { program = "/usr/bin/zsh" }
 
 [font]
 size = 10.0
@@ -8,9 +10,9 @@ history = 0
 
 [window]
 decorations = "None"
-#dynamic_padding = true
+dynamic_padding = true
 opacity = 1.00
-startup_mode = "Maximized"
+#startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
 
 [window.padding]
@@ -19,9 +21,8 @@ y = 5
 
 [general]
 live_config_reload = true
-#shell = "/home/clobrano/.config/alacritty/tmux-session-attach-or-new-1st.sh"
 
 import = [
   # uncomment the flavour you want below:
-  "~/.config/alacritty/catppuccin-frappe.toml"
+  "~/.config/alacritty/catppuccin-mocha.toml"
 ]

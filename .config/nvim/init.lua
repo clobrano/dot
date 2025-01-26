@@ -119,7 +119,7 @@ local plugins = {
 
 
   -- go
-  require('plugins.vim-go'),
+  --require('plugins.vim-go'),
 
 
   -- AI
@@ -388,7 +388,7 @@ local servers = {
   markdown_oxide = {},
   clangd = {},
   bashls = {
-    filetypes = { "sh", "zsh" },
+    filetypes = { "sh", "zsh", "bash" },
   },
   lua_ls = {
     Lua = {

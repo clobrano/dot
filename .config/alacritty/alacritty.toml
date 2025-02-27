@@ -1,5 +1,6 @@
 [terminal]
-shell = { program = "/usr/bin/zsh" }
+shell = { program = "/usr/bin/tmux" }
+
 
 [font]
 size = 10.0
@@ -14,6 +15,10 @@ dynamic_padding = true
 opacity = 1.00
 #startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
+
+[window.dimensions]
+columns = 130
+lines = 40
 
 [window.padding]
 x = 10

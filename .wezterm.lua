@@ -28,14 +28,19 @@ config.window_frame = {
 }
 
 config.window_padding = { left = 20, right = 5, top = 15, bottom = 5, }
+config.initial_cols = 234
+config.initial_rows = 55
 
-config.background = {
-  {
-    source = {
-      File = '/home/clobrano/Me/Notes/Resources/Wallpaper/christmas-tree-forest-winter-northern-lights-santa-claus-sleigh-hd-wallpaper-uhdpaper.com-78@5@a.jpg'
-    },
-    hsb = { brightness = 0.05 }
-  }
-}
+--config.background = {
+  --{
+    --source = {
+      --File = '/home/clobrano/Me/Notes/3-Resources/Wallpaper/WallpaperDog-6865.jpg'
+    --},
+    --hsb = { brightness = 0.02 }
+  --}
+--}
+
+-- skip close confirmation
+skip_close_confirmation_for_processes_named = { 'flatpak-spawn' }
 
 return config

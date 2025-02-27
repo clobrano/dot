@@ -30,10 +30,18 @@ report.sl.filter=status:pending -WAITING
 report.sl.labels=ID,!,Due,Sch,A,Description
 report.sl.sort=due+,start-,urgency-,project+
 
+# Custom report to show tasks todo in the current week grouped by project
+report.weekly_goals.description=Goal for this week grouped by project
+report.weekly_goals.labels=Done, Project,Description,due,sched
+report.weekly_goals.columns=end,project,description.count,due,scheduled
+report.weekly_goals.filter=((due.after:sow and due.before:eow) or (end.after:sow and end.before:eow) or (scheduled.after:sow and scheduled.before:eow))
+report.weekly_goals.sort=project
+report.weekly_goals.column.width=5000
+
 # Custom report to show tasks completed in the current week grouped by project
 report.weekly_completed.description=Tasks completed this week grouped by project
-report.weekly_completed.labels=Project,Description
-report.weekly_completed.columns=project,description
+report.weekly_completed.labels=Project,Description,Done
+report.weekly_completed.columns=project,description,end
 report.weekly_completed.filter=(status:completed and end.after:sow)
 report.weekly_completed.sort=project
 

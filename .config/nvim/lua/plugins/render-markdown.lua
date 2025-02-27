@@ -67,19 +67,19 @@ return {
         enabled = true,
         position = 'inline',
         unchecked = {
-            icon = '󰄱 ',
+            icon = '* [ ]',
             highlight = 'RenderMarkdownUnchecked',
         },
         checked = {
-            icon = '󰱒 ',
+            icon = '* [X]',
             highlight = 'RenderMarkdownChecked',
         },
         custom = {
-            waiting = { raw = '[W]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '󰄱 ', highlight = 'RenderMarkdownTodo' },
-            prog25 = { raw = '[.]', rendered = '󰄱 ', highlight = 'RenderMarkdownTodo' },
-            prog50 = { raw = '[o]', rendered = '󰄱 ', highlight = 'RenderMarkdownTodo' },
-            prog75 = { raw = '[O]', rendered = '󰄱 ', highlight = 'RenderMarkdownTodo' },
+            waiting = { raw = '[W]', rendered = '* [W]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [S]', highlight = 'RenderMarkdownTodo' },
+            prog25 = { raw = '[.]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
+            prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
+            prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },
         },
     },
     code = {

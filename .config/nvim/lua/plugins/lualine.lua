@@ -19,7 +19,7 @@ return {
             lualine_a = {'branch'},
             lualine_b = { {'filename', path = 1} },
             lualine_c = {},
-            lualine_x = {'diff', 'diagnostics', spell, 'filetype', 'fileformat', 'encoding'},
+            lualine_x = {'diff', 'diagnostics', spell},
             lualine_y = {'progress', 'searchcount'},
             lualine_z = {'location'}
         },

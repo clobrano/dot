@@ -33,6 +33,7 @@ local plugins = {
   require('plugins.lualine'),
   require('plugins.startify'),
   require('plugins.noice'),
+  { 'dhruvasagar/vim-table-mode' },
 
   -- Git/Revision related plugins
   require('plugins.vim-fugitive'),
@@ -65,6 +66,8 @@ local plugins = {
   require('plugins.vimwiki'),
   require('plugins.zenmode'),
   require('plugins.render-markdown'),
+  require('plugins.peek'),
+  require('plugins.snacks'),
 
   -- Code and text helpers
   --'jiangmiao/auto-pairs',
@@ -72,7 +75,7 @@ local plugins = {
   'scrooloose/nerdcommenter',
   'skywind3000/asyncrun.vim',
   'tpope/vim-dispatch',
-  --'tpope/vim-eunuch',
+  'tpope/vim-eunuch',
   'tpope/vim-surround',
   --require('plugins.sleuth'),
   'tyru/current-func-info.vim',
@@ -80,6 +83,7 @@ local plugins = {
   --require('plugins.nvim-highlight-colors'),
   require('plugins.trailblazer'),
   require('plugins.todo-comments'),
+  require('plugins.gh'),
   {
     'pwntester/octo.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
@@ -124,25 +128,25 @@ local plugins = {
 
   -- AI
   --'github/copilot.vim',
-  {
-    "David-Kunz/gen.nvim",
-    opts = {
-      model = "mistral",      -- The default model to use.
-      display_mode = "split", -- The display mode. Can be "float" or "split".
-      show_prompt = false,    -- Shows the Prompt submitted to Ollama.
-      show_model = true,      -- Displays which model you are using at the beginning of your chat session.
-      no_auto_close = true,   -- Never closes the window automatically.
-      init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
-      -- Function to initialize Ollama
-      command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
-      -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
-      -- This can also be a lua function returning a command string, with options as the input parameter.
-      -- The executed command must return a JSON object with { response, context }
-      -- (context property is optional).
-      list_models = '<omitted lua function>', -- Retrieves a list of model names
-      debug = false                           -- Prints errors and the command which is run.
-    }
-  },
+  --{
+    --"David-Kunz/gen.nvim",
+    --opts = {
+      --model = "mistral",      -- The default model to use.
+      --display_mode = "split", -- The display mode. Can be "float" or "split".
+      --show_prompt = false,    -- Shows the Prompt submitted to Ollama.
+      --show_model = true,      -- Displays which model you are using at the beginning of your chat session.
+      --no_auto_close = true,   -- Never closes the window automatically.
+      --init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
+      ---- Function to initialize Ollama
+      --command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
+      ---- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
+      ---- This can also be a lua function returning a command string, with options as the input parameter.
+      ---- The executed command must return a JSON object with { response, context }
+      ---- (context property is optional).
+      --list_models = '<omitted lua function>', -- Retrieves a list of model names
+      --debug = false                           -- Prints errors and the command which is run.
+    --}
+  --},
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   { -- LSP Configuration & Plugins
@@ -232,12 +236,7 @@ require('nvim-listchars').setup({
 vim.cmd("FzfLua register_ui_select")
 
 require('tabline').setup { enable = false }
---
---require("indent_blankline").setup {
---space_char_blankline = " ",
---show_current_context = true,
---show_current_context_start = false,
---}
+--require("ibl").setup()
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -273,7 +272,7 @@ end, { desc = '[F]uzzily [/] search in current buffer' })
 
 vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
 vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
-vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
+--vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
 vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
@@ -364,7 +363,7 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
     -- Use a sharp border with `FloatBorder` highlights
     border = "single",
-    focusable = false
+    focusable = false,
   }
 )
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
@@ -553,6 +552,9 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 ]]
 
+vim.cmd [[
+au FileType plantuml let g:plantuml_previewer#plantuml_jar_path="/home/clobrano/Downloads/plantuml-1.2025.0.jar"
+]]
 
 -- lsp debug log
 --vim.lsp.set_log_level 'debug'

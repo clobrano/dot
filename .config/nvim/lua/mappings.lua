@@ -30,8 +30,14 @@ vmap('>', '>gv')
 vim.keymap.set('i', '<A-i>', '<C-t>', { desc='Indent the line from the start' })
 vim.keymap.set('i', '<A-d>', '<C-d>', { desc='De-indent the line from the start' })
 
--- align the paragraph to textwidh (the last <C-o> is to move the cursor back to the initial position)
+-- format: align the paragraph to textwidth (the last <C-o> is to move the cursor back to the initial position)
 nmap('<leader>ap', 'gq}')
+
+-- buffer: find
+nmap('<leader>fb', ':b')
+-- buffer: find before
+nmap('<leader>fbb', ':b#')
+
 
 -- buffer: reload
 nmap('<leader>rl', ':e!<cr>')
@@ -53,6 +59,9 @@ nmap('m6',       ':bfirst<cr>:5bn<cr>')
 nmap('m7',       ':bfirst<cr>:6bn<cr>')
 nmap('m8',       ':bfirst<cr>:7bn<cr>')
 nmap('m9',       ':bfirst<cr>:8bn<cr>')
+-- move to previous buffer
+vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = 'Toggle to the last buffer' })
+
 -- buffer: reload
 nmap('<leader>e', ':e!<cr>')
 nmap('ct', ':checktime<cr>')
@@ -314,7 +323,7 @@ nmap('}', '}zz')
 vmap('T', '$h')
 
 -- simplify windows mappings
-vim.keymap.set('n', '<M-w>', '<C-w>', { silent = true, noremap = true })
+vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
 
 --close splits
 nmap('cl', ':close<cr>')
@@ -412,3 +421,9 @@ nmap('<leader>gs', ':Neogit<cr>')
 -- add space below cursor (_p_ush)
 nmap('<leader>k', ":call append(line('.'), '')<CR>")
 
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>scp',
+  [[:execute '!scp % helios:/root/2no-lab/' . expand('%:h:t') . '/' . expand('%:t')<CR>]],
+  { noremap = true, silent = true }
+)

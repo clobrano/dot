@@ -1,33 +1,32 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
 
-which dpkg >/dev/null
-if [[ $? != 0 ]]; then
-    echo "[!] Not debian based system. Skipping dependencies check"
-else
-    OK=$(dpkg -s python3-pip >/dev/null 2>&1)
-    [[ "$OK" -eq 1 ]] && (echo "installing pip..."; sudo apt install -y python3-pip)
+echo "installing tasklib..."
+pip3 install --user tasklib
 
-    OK=$(pip3 search tasklib)
-    [[ ! $OK =~ "INSTALLED" ]] && (echo "installing tasklib..."; pip3 install --user tasklib)
+echo "installing letsdo..."
+pip3 install --user letsdo
 
-    OK=$(pip3 search letsdo)
-    [[ ! $OK =~ "INSTALLED" ]] && (echo "installing letsdo..."; pip3 install --user letsdo)
-    echo [+] check dependencies OK
+set -x
+if [ ! -f task-3.3.0.tar.gz ]; then
+    if ! wget https://github.com/GothenburgBitFactory/taskwarrior/releases/download/v3.3.0/task-3.3.0.tar.gz; then
+        echo "[!] could not curl taskwarrior"
+        exit 1
+    fi
 fi
 
-HOOKS=~/MyBox/work/taskwarrior/hooks
-[ ! -d ${HOOKS} ] && echo [!] could not find hook dir ${HOOKS} && exit 1
-echo [+] check taskwarrior hook directory OK
+sudo dnf install -y cmake libuuid-devel
+../rust-install-and-setup.sh
 
-PLUGINS="letsdo redtimer"
-for PLUGIN in ${PLUGINS}; do
-    ACTION=~/workspace/script-fu/${PLUGIN}-taskwarrior-hook.py
-    [ ! -f ${ACTION} ] && echo [!] could not find action ${ACTION} && exit 1
-    echo [+] check hook and action file for ${PLUGIN} OK
+mkdir -p ~/Apps
+mv task-3.3.0.tar.gz ~/Apps
 
-    ln -sf ${ACTION} ${HOOKS}/on-modify.${PLUGIN}
-    echo [+] link hook and action file for ${PLUGIN} OK
-done
+pushd ~/Apps || exit 1
+tar xvf task-3.3.0.tar.gz
+cd task-3.3.0
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+sudo cmake --install build
+popd || exit 1
 
 echo [+] done.

@@ -1,21 +1,17 @@
 return {
 	'mfussenegger/nvim-dap',
 	config = function()
-		vim.keymap.set("n", "<F6>", ":lua require'dapui'.open()<cr>")
-		vim.keymap.set('n', '<F7>', function() require('dap').continue() end)
-
-		vim.keymap.set('n', '<F8>', function() require('dap').step_over() end)
-		vim.keymap.set('n', '<C-n>', function() require('dap').step_over() end)
-
-		vim.keymap.set('n', '<F9>', function() require('dap').step_into() end)
-		vim.keymap.set('n', '<C-s>', function() require('dap').step_into() end)
-
-		vim.keymap.set('n', '<F10>', function() require('dap').step_out() end)
-		vim.keymap.set('n', '<C-f>', function() require('dap').step_out() end)
-
-		vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
-		vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
-		vim.keymap.set('n', '<Leader>lp',
+		vim.keymap.set("n", '<leader>du', function() require('dapui').toggle() end)
+		vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end)
+		vim.keymap.set('n', '<leader>do', function() require('dap').step_over() end)
+		vim.keymap.set('n', '<leader>dO', function() require('dap').step_out() end)
+		vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end)
+		vim.keymap.set('n', '<Leader>db', function() require('dap').toggle_breakpoint() end)
+    vim.keymap.set("n", "<leader>dB", function()
+      local condition = vim.fn.input("Breakpoint condition: ")
+      require("dap").toggle_breakpoint(condition)
+    end, { noremap = true, silent = true })
+		vim.keymap.set('n', '<Leader>dlp',
 			function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
 		vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
 		vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)

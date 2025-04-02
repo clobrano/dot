@@ -225,6 +225,7 @@ add-zsh-hook precmd () {
         async_register_callback vcs_info _vbe_vcs_info_done
     fi
 }
+
 add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
@@ -241,11 +242,10 @@ if command -v kubectl 2>&1 >/dev/null; then
 fi
 
 # run atuin if installed
-if command -v atuin 2>&1 >/dev/null; then
+if command -v atuin >/dev/null; then
     # Bind ctrl-r but not up arrow
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
-. "$HOME/.atuin/bin/env"
 
 # source uncommitable env variables
 if [[ -f ~/Documents/unsharable ]]; then

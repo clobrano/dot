@@ -71,7 +71,7 @@ return {
     require('telescope').setup({
       defaults = {
         file_ignore_patterns = {
-          "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/"
+          "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/", "^tags$"
         },
         path_display = Filename_first_path_display,
         mappings = {

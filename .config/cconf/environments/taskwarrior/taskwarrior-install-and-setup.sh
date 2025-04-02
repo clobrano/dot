@@ -3,6 +3,7 @@
 
 echo "installing tasklib..."
 pip3 install --user tasklib
+pip3 install --user pynvim
 
 echo "installing letsdo..."
 pip3 install --user letsdo

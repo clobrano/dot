@@ -4,5 +4,5 @@ set -x
         tmux new -s "$1"
     fi
 }
-alias tm="tmux-attach-or-create 1st"
-alias ts="tmux-attach-or-create 2nd"
+alias tm="tmux-attach-or-create lab"
+alias ts="tmux-attach-or-create note"

@@ -36,7 +36,7 @@ nmap('<leader>ap', 'gq}')
 -- buffer: find
 nmap('<leader>fb', ':b')
 -- buffer: find before
-nmap('<leader>fbb', ':b#')
+nmap('<leader>fp', ':b#<cr>')
 
 
 -- buffer: reload
@@ -72,7 +72,7 @@ nmap('C', 'ggvG$')
 -- buffer: show full path
 nmap('<leader>g', ":echo expand('%')<cr>")
 -- buffer: copy full path
-nmap('<leader>G', ':!echo % | xclip -sel clipboard<cr>')
+nmap('<leader>G', ':!echo % | wl-copy<cr>')
 
 -- buffer: close
 nmap('xx', ':bd<CR>')
@@ -124,8 +124,8 @@ nmap('<leader>ex', ':!%:p<cr>')
 nmap('<leader>here', ':lcd %:p:h<CR>')
 
 -- vimdiff: Diff Start, Diff Off, Diff Put, Diff Get
-nmap('<leader>ds', ':windo diffthis<cr>')
-nmap('<leader>do', ':windo diffoff<cr>')
+--nmap('<leader>ds', ':windo diffthis<cr>')
+--nmap('<leader>do', ':windo diffoff<cr>')
 nmap('<leader>dp', ':diffput<cr>')
 nmap('<leader>dg', ':diffget<cr>')
 -- enhance diff put and diff obtain moving automatically to the next change
@@ -258,18 +258,20 @@ vmap('<leader>c*', 'y<esc>:%s///gc<left><left><left><left><C-r>--<right>')
 -- replace in all buffer
 nmap('<leader>rep', '<Esc>:%s/')
 
+-- 2025-03-09 Comment out these resize mapping as I never use them
 -- resize horizontal window splits (using = in place of + to avoid combinations)
 --nmap(<silent> <leader>= :exe --vertical resize +5--<CR>
 --nmap(<silent> <leader>- :exe --vertical resize -5--<CR>
 -- resize vertical window splits
 -- mnemonics: H -> High (increase window width)
 -- mnemonics: L -> Low (decrease window width)
-nmap('w.', '2<C-w>>') -- use . in place of > to avoid typing shift
-nmap('w,', '2<C-w><') -- use , in place of < to avoid typing shift
-nmap('w-', '<C-w>-')
-nmap('w=', '<C-w>+') -- use = in place of + to avoid typing shift
-nmap('-', ':exe --resize -2--<CR>')
-nmap('w3', ':vertical resize -30<cr>')
+--nmap('w.', '2<C-w>>') -- use . in place of > to avoid typing shift
+--nmap('w,', '2<C-w><') -- use , in place of < to avoid typing shift
+--nmap('w-', '<C-w>-')
+--nmap('w=', '<C-w>+') -- use = in place of + to avoid typing shift
+--nmap('-', ':exe --resize -2--<CR>')
+--nmap('w3', ':vertical resize -30<cr>')
+
 -- zoom current window
 nmap('<leader>zz', '<C-w>|<C-w>_')
 
@@ -322,8 +324,9 @@ nmap('}', '}zz')
 -- select till the end of the line
 vmap('T', '$h')
 
--- simplify windows mappings
-vim.keymap.set('n', 'w', '<C-w>', { silent = true, noremap = true })
+-- simplify windows-command mappings (first remap move-to-next-word)
+--vim.keymap.set('n', 'mm', 'w', { silent = true, noremap = true })
+vim.keymap.set('n', '<M-w>', '<C-w>', { silent = true, noremap = true })
 
 --close splits
 nmap('cl', ':close<cr>')
@@ -344,10 +347,10 @@ nmap('<leader>tv', '<C-w>t<C-w>H')
 nmap('<leader>th', '<C-w>t<C-w>K')
 
 -- moves between splits
-nmap('wh', '<C-w>h')
-nmap('wj', '<C-w>j')
-nmap('wk', '<C-w>k')
-nmap('wl', '<C-w>l')
+--nmap('wh', '<C-w>h')
+--nmap('wj', '<C-w>j')
+--nmap('wk', '<C-w>k')
+--nmap('wl', '<C-w>l')
 
 -- move selected lines up and down
 vmap('<A-Down>', ":m '>+1<CR>gv=gv")

@@ -1,5 +1,6 @@
 sudo dnf install -y \
     alacritty \
+    atuin \
     bat \
     bear \
     clang \
@@ -21,6 +22,7 @@ sudo dnf install -y \
     ripgrep \
     stow \
     the_silver_searcher \
+    task \
     tmux \
     xclip \
     yq \

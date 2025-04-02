@@ -1,4 +1,128 @@
+local function get_clipboard()
+  return vim.fn.getreg('+')
+end
 
+
+function get_text_inside_brackets()
+    local line = vim.fn.getline(".")  -- Get the current line
+    local col = vim.fn.col(".")       -- Get the current column position
+
+    -- Find the closest opening bracket before the cursor
+    local left_bracket_pos = nil
+    local left_bracket_type = nil
+    for i = col - 1, 1, -1 do
+        local char = line:sub(i, i)
+        if char == "(" or char == "[" or char == "{" then
+            left_bracket_pos = i
+            left_bracket_type = char
+            break
+        end
+    end
+
+    -- Find the closest closing bracket after the cursor
+    local right_bracket_pos = nil
+    local right_bracket_type = nil
+    for i = col, #line do
+        local char = line:sub(i, i)
+        if char == ")" or char == "]" or char == "}" then
+            right_bracket_pos = i
+            right_bracket_type = char
+            break
+        end
+    end
+
+    -- If both positions are found, check if the brackets match and extract the text inside
+    if left_bracket_pos and right_bracket_pos then
+        -- Ensure the brackets match
+        if (left_bracket_type == "(" and right_bracket_type == ")") or
+           (left_bracket_type == "[" and right_bracket_type == "]") or
+           (left_bracket_type == "{" and right_bracket_type == "}") then
+            -- Extract text inside the brackets
+            local text_inside = line:sub(left_bracket_pos + 1, right_bracket_pos - 1)
+            return text_inside
+        end
+    end
+
+    return nil  -- Return nil if no matching brackets are found
+end
+
+
+
+-- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
+-- the function will get the uuid and jump to the file(s) where the corresponding
+-- Taskwarrior task object is defined
+function SearchTaskDefinition()
+    --local uuid = get_clipboard()
+    local uuid = vim.fn.expand('<cword>')
+    if uuid == "" then return end
+
+    local cmd = "rg --glob '!**/Overview.md' -l -e '\\[.\\] .*" .. uuid .. "' ."
+    local result = vim.fn.systemlist(cmd)
+
+    if #result == 1 then
+        vim.cmd("edit " .. result[1])
+        vim.cmd("silent! /" .. uuid)
+    elseif #result > 1 then
+        vim.ui.select(result, { prompt = "Multiple matches found. Choose a file:" }, function(choice)
+            if choice then
+                vim.cmd("edit " .. choice)
+                vim.cmd("silent! /" .. uuid)
+            else
+              print("cannot open choice: " .. choice)
+            end
+        end)
+    else
+        print("No match found: ".. result[1])
+    end
+end
+
+vim.api.nvim_set_keymap("n", "<leader>fT", ":lua SearchTaskDefinition()<CR>", { noremap = true, silent = true })
+
+
+-- Add one hashtag '#' at the beginning of the current line
+function AddMarkdownHeader()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
+  local line = vim.api.nvim_get_current_line() -- Get current line content
+  vim.api.nvim_set_current_line('#' .. line) -- Prepend #
+  vim.api.nvim_win_set_cursor(0, { row, col + 1 }) -- Adjust cursor position
+end
+
+-- Remove one hashtag '#' from the beginning of the current line
+function RemoveMarkdownHeader()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
+  local line = vim.api.nvim_get_current_line() -- Get current line content
+
+  -- Remove leading "#" only if it exists
+  if line:sub(1, 1) == '#' then
+    vim.api.nvim_set_current_line(line:sub(2)) -- Remove first character
+    vim.api.nvim_win_set_cursor(0, { row, math.max(0, col - 1) }) -- Adjust cursor position
+  end
+end
+
+-- Key mappings in insert mode
+vim.api.nvim_set_keymap('n', '<C-i>', '<Cmd>lua AddMarkdownHeader()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-u>', '<Cmd>lua RemoveMarkdownHeader()<CR>', { noremap = true, silent = true })
+
+
+-- Wrap the selected text in tryple backtics with the option to add the quote type (e.g. go, bash, ...)
+function wrap_with_triple_backticks()
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+
+  local start_line = start_pos[2]
+  local end_line = end_pos[2]
+
+  vim.ui.input({ prompt = "Enter code language: " }, function(lang)
+    local opening_backticks = lang and lang ~= "" and "```" .. lang or "```"
+    vim.api.nvim_buf_set_lines(0, end_line, end_line, false, {'```'})
+    vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, {opening_backticks})
+  end)
+end
+
+vim.api.nvim_set_keymap('v', '<leader>`', ":lua wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+
+
+-- Move the cursor in a Mermaid section, the function will create the SVG
 vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -31,15 +155,17 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
     local mermaid_code = vim.api.nvim_buf_get_lines(0, start_line-1, end_line, false)
 
     -- Create a temporary file and write the Mermaid code into it
-    local tmp_file = "/tmp/mermaid.md"
+    local tmp_file = "/tmp/render-mermaid.md"
     local file = io.open(tmp_file, "w")
     for _, line in ipairs(mermaid_code) do
       file:write(line .. "\n")
     end
     file:close()
 
+    local output = vim.fn.input("Enter full output path: ")
+
     -- Run the mermaid-cli command
-    local command = string.format("~/Apps/node_modules/.bin/mmdc -i %s -o ~/mermaid.svg", tmp_file)
+    local command = string.format("~/Apps/node_modules/.bin/mmdc -i %s -o %s", tmp_file, output)
     os.execute(command)
 
     -- Optionally, print a message
@@ -51,10 +177,7 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
 end, {})
 
 
-local function get_clipboard()
-  return vim.fn.getreg('+')
-end
-
+-- Closes a list of buffers. Separate the buffers name by a comma
 vim.api.nvim_create_user_command("Bdelete", function(opts)
   local buffers = vim.split(opts.args, ", ")  -- Split buffer list
   for _, buf in ipairs(buffers) do
@@ -79,6 +202,11 @@ local function ToggleVirtualText()
 end
 vim.api.nvim_create_user_command('ToggleVirtualText', ToggleVirtualText, {})
 
+
+-- Uses the clipboard and the register 'k' to create a Markdown reference link at
+-- the bottom of the buffer
+-- e.g.
+-- [<content of register k>]: <content of the clipboard>
 function Add_reference_link()
   -- Step 1: Get the description from the 'k' register and the URL from the default register
   local description = vim.fn.getreg('k')
@@ -112,10 +240,12 @@ end
 -- Optional: Map the function to a key
 vim.api.nvim_set_keymap('n', '<leader>ra', '<cmd>lua Add_reference_link()<CR>', { noremap = true, silent = true })
 
+
 local function add_square_brackets(line)
   return line:gsub("^%s*([*-])%s*(.*)$", "%1 [ ] %2")
 end
 
+-- Create a taskwarrior task from the current line content
 local function taskwarrior_task(project)
   -- Get the current line number and the line content
   local line_number = vim.fn.line('.')
@@ -198,16 +328,22 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 
-function Open_url_from_selected_text()
-  -- Step 1: Capture the clipboard
-  local selected_text = get_clipboard()
 
-  -- Step 2: Search for matches in the current working directory
-  local search_command = "rg --vimgrep '^" .. vim.fn.escape(selected_text, "[]") .. ": https://.*$' ."
+-- Open_url_from_selected_text searches for lines matching the format:
+-- [<selected text>]: <url>
+-- If it can find it, it opens the link in the browser
+function Open_url_from_markdown_reference()
+  -- Step 1: Capture the text inside square brackets
+  local selected_text = get_text_inside_brackets()
+
+  -- Ensure the text is properly quoted for Ripgrep
+  local search_pattern = vim.fn.shellescape("^\\[" .. selected_text .. "\\]: https://.*$")
+  local search_command = "rg -e " .. search_pattern .. " ."
+
   local handle = io.popen(search_command)
   if handle == nil then
     print("command returned nil handle: " .. search_command)
-	return
+    return
   end
   local result = handle:read("*a")
   handle:close()
@@ -222,7 +358,7 @@ function Open_url_from_selected_text()
   end
 
   if #matches == 0 then
-    print("No matching URLs found for '".. selected_text .. "'")
+    print("No matching URLs found for '" .. selected_text .. "'")
     return
   end
 
@@ -231,7 +367,6 @@ function Open_url_from_selected_text()
   if #matches == 1 then
     chosen_url = matches[1].url
   else
-    print("Multiple matches found:")
     for i, match in ipairs(matches) do
       print(i .. ": " .. match.line)
     end
@@ -246,23 +381,23 @@ function Open_url_from_selected_text()
 
   -- Step 5: Open the chosen URL in the browser
   if chosen_url then
-    local open_command = "xdg-open " .. chosen_url
+    local open_command = "xdg-open " .. vim.fn.shellescape(chosen_url)
+    print("opening " .. chosen_url)
     os.execute(open_command)
   end
 end
 
+
 -- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_url_from_selected_text()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_url_from_markdown_reference()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 
+function Get_Smart_Weblink()
+  local clipboard = get_text_inside_brackets()
+  print(clipboard)
 
-function Goto_Weblink()
-  -- Get the PR ID from clipboard
-  -- yank text inside square brakets (to get substrings like [MDR-PR123])
-  --Yank_inbracket()
-  local clipboard = get_clipboard()
-
-  -- PR ID is expected to be "<Project-ShortName>-PR<number>"
+  -- PR ID is expected to be "<Project-ShortName> PR<number>"
   local github = {
+    OCP_RELEASE = "https://github.com/openshift/release",
     MDR = "https://github.com/medik8s/machine-deletion-remediation",
     SNR = "https://github.com/medik8s/self-node-remediation",
     NHC = "https://github.com/medik8s/node-healthcheck-operator",
@@ -271,6 +406,7 @@ function Goto_Weblink()
     DOT_GITHUB = "https://github.com/medik8s/.github",
     M8S_GITHUB = "https://github.com/medik8s/.github",
     M8S_TOOLS = "https://github.com/medik8s/tools",
+    CEO = "https://github.com/openshift/cluster-etcd-operator"
   }
 
   local gitlab = {
@@ -279,27 +415,40 @@ function Goto_Weblink()
     NHC = "https://gitlab.cee.redhat.com/dragonfly/node-healthcheck-operator",
     NMO = "https://gitlab.cee.redhat.com/dragonfly/node-maintenance-operator",
     FAR = "https://gitlab.cee.redhat.com/dragonfly/fence-agents-remediation",
+    TnoOperator = "https://gitlab.cee.redhat.com/msluiter/tno-operator"
   }
 
-  local tokens = vim.split(clipboard, "-")
+  local tokens = vim.split(clipboard, " ")
   print(vim.inspect(tokens))   -- Use vim.inspect for better output
 
   local short_name = tokens[1] -- Lua lists are 1-based
   local number = ""
   local base_url = ""
-  if string.match(tokens[2], "PR") then
-    number = tokens[2]:gsub("PR", "")
-    base_url = github[short_name] .. "/pull/" .. number
-  elseif string.match(tokens[2], "I") then
-    number = tokens[2]:gsub("I", "")
-    base_url = github[short_name] .. "/issues/" .. number
-  elseif string.match(tokens[2], "MR") then
-    number = tokens[2]:gsub("MR", "")
-    base_url = gitlab[short_name] .. "/-/merge_requests/" .. number
-  else
-    --print("No PR, nor MR, maybe a Jira ticket?")
+  if #(tokens) == 2 then
+    if string.match(tokens[2], "PR") then
+      number = tokens[2]:gsub("PR", "")
+      base_url = github[short_name] .. "/pull/" .. number
+    elseif string.match(tokens[2], "I") then
+      number = tokens[2]:gsub("I", "")
+      base_url = github[short_name] .. "/issues/" .. number
+    elseif string.match(tokens[2], "MR") then
+      number = tokens[2]:gsub("MR", "")
+      base_url = gitlab[short_name] .. "/-/merge_requests/" .. number
+    end
+  end
+
+  if base_url == "" then
+    -- No PR, nor MR, maybe a Jira ticket?
     base_url = "https://issues.redhat.com/browse/" .. clipboard
   end
+  vim.fn.system('echo "' .. base_url .. '" | wl-copy')
+  return base_url
+end
+
+vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
+
+function Goto_Weblink()
+  local base_url = Get_Smart_Weblink()
   local command = "xdg-open " .. base_url
 
   print(command)
@@ -476,7 +625,7 @@ end
 -- link title
 vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
-
+-- SurroundWithMarkdownLink add [[]] around the selected text AND creates the file if it doesn't exist
 function SurroundWithMarkdownLink()
   -- Get the visual selection
   local line1, col1 = unpack(vim.fn.getpos("'<"), 2, 3)

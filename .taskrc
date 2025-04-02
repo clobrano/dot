@@ -1,5 +1,5 @@
 # [Created by task 3.1.0 8/26/2024 17:40:34]
-news.version=3.1.0
+news.version=3.3.0
 data.location=$ME/Taskwarrior
 
 # To use the default location of the XDG directories,

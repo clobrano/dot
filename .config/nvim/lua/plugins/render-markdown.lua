@@ -8,7 +8,7 @@ return {
     require('render-markdown').setup({
       heading = {
         -- Turn on / off heading icon & background rendering
-        enabled = true,
+        enabled = false,
         -- Turn on / off any sign column related rendering
         sign = true,
         -- Determines how icons fill the available space:
@@ -76,7 +76,7 @@ return {
         },
         custom = {
             waiting = { raw = '[W]', rendered = '* [W]', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '* [S]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [+]', highlight = 'RenderMarkdownTodo' },
             prog25 = { raw = '[.]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
             prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },
@@ -84,7 +84,7 @@ return {
     },
     code = {
         -- Turn on / off code block & inline code rendering
-        enabled = true,
+        enabled = false,
         -- Turn on / off any sign column related rendering
         sign = true,
         -- Determines how code blocks & inline code are rendered:

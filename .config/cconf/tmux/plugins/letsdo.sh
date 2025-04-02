@@ -2,11 +2,11 @@
 # -*- coding: UTF-8 -*-
 ## Read current Letsdo task title and time, and show it in TMUX status bar.
 ## Notify when working on the same task for more than 45 minutes straight.
-
+#set -x
 shopt -s extglob  # bash only
 
 clean_warning_file() {
-    rm ${WARNING_FILE}
+    rm -f "$WARNING_FILE"
 }
 
 YAML_CONFIG=$HOME/.letsdo.yaml
@@ -14,8 +14,8 @@ if [[ ! -f ${YAML_CONFIG} ]]; then
     exit 0
 fi
 
-YQ=`which yq`
-if ! command -v $YQ >/dev/null; then
+YQ=$(which yq)
+if ! command -v "$YQ" >/dev/null; then
     echo "config error: yq is missing. Please install it."
     exit 1
 fi
@@ -45,7 +45,7 @@ begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo
 end=$(date +%s)
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
-elapsed_time=$(date +"%H:%M.%S" --date="@$(($end - $begin - 3600))")
+elapsed_time=$(date +"%H:%M.%S" --date="@$((end - begin - 3600))")
 echo " $full_name $elapsed_time"
 
 # Short name for OneThing Gnome extention
@@ -58,9 +58,12 @@ echo " $full_name $elapsed_time"
 
 # Reminder of time spent on the same task
 warn_time_minutes=15
-work_time_seconds=$(($end - $begin))
-work_time_minutes=$(($work_time_seconds / 60))
-if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minutes)) -eq 0 ]]; then
+work_time_seconds=$((end - begin))
+work_time_minutes=$((work_time_seconds / 60))
+if [ "$work_time_minutes" -lt 0 ] || [ ! $((work_time_minutes % warn_time_minutes)) -eq 0 ]; then
+    # it is not time to notify
+    clean_warning_file
+else
     # do not repeat the same notification twice.
     # This might happen during 60 seconds after the condition above holds true.
     # To keep into account all conditions, we use a file containing the name of the
@@ -68,22 +71,27 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
     # - if the task name in the file is different, ignore it and delete
     # - if the file is older than 60 seconds, ignore it and delete it (this might only
     #   happen in "the next" occurrence of the condition above. Yeah I know it's tricky.)
-    if [[ -f ${WARNING_FILE} ]]; then
+    if [ -f "$WARNING_FILE" ]; then
         # if it is not the same task, delete the file
-        task_warned=$(cat ${WARNING_FILE})
-        if [[ "${task_warned}" != "${full_name}" ]]; then
-            echo "[+] the warning comes from another task"
+        task_warned=$(cat "$WARNING_FILE")
+
+        task_warned_cmp=$(echo "$task_warned" | tr -d '[:space:]' | iconv -f utf-8 -t ascii//TRANSLIT)
+        full_name_cmp=$(echo "$full_name" | tr -d '[:space:]' | iconv -f utf-8 -t ascii//TRANSLIT)
+        if [[ "$task_warned_cmp" != "$full_name_cmp" ]]; then
+            # the warning comes from another task
             clean_warning_file
         else
+            # the warning comes from the same task
             # if it is older than 60 seconds, delete the file
             now_seconds_since_epoc=$(date +%s)
-            file_birth_date_seconds_since_epoc=$(stat $HISTORY --printf=%W)
-            t=$(($now_seconds_since_epoc - $file_birth_date_seconds_since_epoc))
-            if [[ "$t" -gt 60 ]]; then
-                echo "[+] the warning is old"
-                clean_warning_file
+            file_birth_date_seconds_since_epoc=$(stat "$WARNING_FILE" --printf=%W)
+            t=$((now_seconds_since_epoc - file_birth_date_seconds_since_epoc))
+            if [[ "$t" -lt 60 ]]; then
+                exit 0
             fi
-        fi 
+            # the warning is old
+            clean_warning_file
+        fi
     fi
 
     if echo "$full_name" | grep "#meeting" >/dev/null; then
@@ -92,11 +100,9 @@ if [[ $work_time_minutes -gt 0 ]] && [[ $(($work_time_minutes % $warn_time_minut
     fi
 
     # all checks passed, we can send the notification
-    echo $full_name > ${WARNING_FILE}
+    echo "$full_name" > "$WARNING_FILE"
     notify-send --app-name "Tmux|Letsdo" "$elapsed_time on - $full_name -"
     paplay /usr/share/sounds/freedesktop/stereo/complete.oga
-else
-    clean_warning_file
 fi
 
 

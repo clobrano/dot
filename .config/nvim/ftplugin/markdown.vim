@@ -4,5 +4,6 @@ set noexpandtab
 set nonumber
 set norelativenumber
 set shiftwidth=2
+set tabstop=2
 set signcolumn=yes:2
 set textwidth=0

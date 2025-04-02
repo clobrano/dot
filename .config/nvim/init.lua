@@ -26,10 +26,10 @@ local plugins = {
   'ryanoasis/vim-devicons',
   "fraso-dev/nvim-listchars",                                 -- toggle show listchars
   "b0o/incline.nvim",                                         -- for the floating filenames
-  { 'kdheepak/tabline.nvim',  opts = { show_bufnr = true } }, -- needed to show buffer tab
   'mtdl9/vim-log-highlighting',                               -- Highlight log files
   'xiyaowong/transparent.nvim',
   require('plugins.tagbar'),
+  require('plugins.tabline'), -- needed to show buffers names on top
   require('plugins.lualine'),
   require('plugins.startify'),
   require('plugins.noice'),
@@ -66,18 +66,18 @@ local plugins = {
   require('plugins.vimwiki'),
   require('plugins.zenmode'),
   require('plugins.render-markdown'),
-  require('plugins.peek'),
+  --require('plugins.peek'),
   require('plugins.snacks'),
 
   -- Code and text helpers
-  --'jiangmiao/auto-pairs',
+  'jiangmiao/auto-pairs',
   'editorconfig/editorconfig-vim',
   'scrooloose/nerdcommenter',
   'skywind3000/asyncrun.vim',
   'tpope/vim-dispatch',
   'tpope/vim-eunuch',
   'tpope/vim-surround',
-  --require('plugins.sleuth'),
+  require('plugins.sleuth'),
   'tyru/current-func-info.vim',
   require('plugins.yaml-helper'),
   --require('plugins.nvim-highlight-colors'),
@@ -89,6 +89,7 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons' },
   },
+  require('plugins.other'),
 
   -- Debugging
   require('plugins.dap-ui'),
@@ -123,7 +124,7 @@ local plugins = {
 
 
   -- go
-  --require('plugins.vim-go'),
+  require('plugins.vim-go'),
 
 
   -- AI
@@ -234,8 +235,6 @@ require('nvim-listchars').setup({
 })
 
 vim.cmd("FzfLua register_ui_select")
-
-require('tabline').setup { enable = false }
 --require("ibl").setup()
 
 -- [[ Configure Telescope ]]
@@ -553,7 +552,7 @@ nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
 ]]
 
 vim.cmd [[
-au FileType plantuml let g:plantuml_previewer#plantuml_jar_path="/home/clobrano/Downloads/plantuml-1.2025.0.jar"
+au FileType plantuml let g:plantuml_previewer#plantuml_jar_path="/home/clobrano/Apps/plantuml-gplv2-1.2025.1.jar"
 ]]
 
 -- lsp debug log

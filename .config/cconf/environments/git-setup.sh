@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
+
+tools=( git-delta )
+for tool in "${tools[@]}"; do
+    sudo dnf install "$tool" -y
+done
+
+echo "Configuring aliases"
 git config --global alias.cfiles "!git diff --name-only \$(git merge-base HEAD \"\${MAIN_BRANCH:-main}\")"
 git config --global alias.stat "!git diff --stat \$(git merge-base HEAD \"\${MAIN_BRANCH:-main}\")"
 git config --global alias.reviewall "!nvim -c \"DiffviewOpen \${MAIN_BRANCH:-main}\""

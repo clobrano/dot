@@ -51,7 +51,7 @@ end
 -- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
 -- the function will get the uuid and jump to the file(s) where the corresponding
 -- Taskwarrior task object is defined
-function SearchTaskDefinition()
+function find_taskwarrior_from_uuid()
     --local uuid = get_clipboard()
     local uuid = vim.fn.expand('<cword>')
     if uuid == "" then return end
@@ -76,7 +76,7 @@ function SearchTaskDefinition()
     end
 end
 
-vim.api.nvim_set_keymap("n", "<leader>fT", ":lua SearchTaskDefinition()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fT", ":lua find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 -- Add one hashtag '#' at the beginning of the current line
@@ -275,6 +275,7 @@ local function refile_done()
   else
     print(result)
   end
+  vim.api.nvim_command('edit!')  -- Reload the buffer
 end
 vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
@@ -332,68 +333,42 @@ vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { 
 -- Open_url_from_selected_text searches for lines matching the format:
 -- [<selected text>]: <url>
 -- If it can find it, it opens the link in the browser
-function Open_url_from_markdown_reference()
+function open_markdown_reference_url()
   -- Step 1: Capture the text inside square brackets
   local selected_text = get_text_inside_brackets()
 
   -- Ensure the text is properly quoted for Ripgrep
   local search_pattern = vim.fn.shellescape("^\\[" .. selected_text .. "\\]: https://.*$")
   local search_command = "rg -e " .. search_pattern .. " ."
+  print(search_command)
 
-  local handle = io.popen(search_command)
-  if handle == nil then
-    print("command returned nil handle: " .. search_command)
+  local result = vim.fn.systemlist(search_command)
+  if #result == 0 then
+    print("No matches")
     return
   end
-  local result = handle:read("*a")
-  handle:close()
-
-  -- Step 3: Parse the result, find URLs
-  local matches = {}
-  for line in result:gmatch("[^\r\n]+") do
-    local url = line:match("https://%S+")
-    if url then
-      table.insert(matches, {line = line, url = url})
-    end
-  end
-
-  if #matches == 0 then
-    print("No matching URLs found for '" .. selected_text .. "'")
-    return
-  end
-
-  -- Step 4: If there are multiple matches, let the user choose
-  local chosen_url
-  if #matches == 1 then
-    chosen_url = matches[1].url
-  else
-    for i, match in ipairs(matches) do
-      print(i .. ": " .. match.line)
-    end
-    local choice = tonumber(vim.fn.input("Choose a match number: "))
-    if choice and matches[choice] then
-      chosen_url = matches[choice].url
+  vim.ui.select(result, {prompt = "Choose one:"}, function(choice)
+    if choice then
+      local url = choice:match("https://%S+")
+      if url then
+        local open_command = "xdg-open " .. vim.fn.shellescape(url)
+        print("opening " .. url)
+        os.execute(open_command)
+      end
     else
-      print("Invalid choice.")
+      print("cannot open choice: " .. choice[1])
       return
     end
-  end
-
-  -- Step 5: Open the chosen URL in the browser
-  if chosen_url then
-    local open_command = "xdg-open " .. vim.fn.shellescape(chosen_url)
-    print("opening " .. chosen_url)
-    os.execute(open_command)
-  end
+  end)
 end
 
 
 -- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_url_from_markdown_reference()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 
 function Get_Smart_Weblink()
-  local clipboard = get_text_inside_brackets()
-  print(clipboard)
+  local target_text = get_text_inside_brackets()
+  print(target_text)
 
   -- PR ID is expected to be "<Project-ShortName> PR<number>"
   local github = {
@@ -406,7 +381,8 @@ function Get_Smart_Weblink()
     DOT_GITHUB = "https://github.com/medik8s/.github",
     M8S_GITHUB = "https://github.com/medik8s/.github",
     M8S_TOOLS = "https://github.com/medik8s/tools",
-    CEO = "https://github.com/openshift/cluster-etcd-operator"
+    CEO = "https://github.com/openshift/cluster-etcd-operator",
+    OCP_INSTALLER = "https://github.com/openshift/installer"
   }
 
   local gitlab = {
@@ -418,7 +394,7 @@ function Get_Smart_Weblink()
     TnoOperator = "https://gitlab.cee.redhat.com/msluiter/tno-operator"
   }
 
-  local tokens = vim.split(clipboard, " ")
+  local tokens = vim.split(target_text, " ")
   print(vim.inspect(tokens))   -- Use vim.inspect for better output
 
   local short_name = tokens[1] -- Lua lists are 1-based
@@ -439,7 +415,7 @@ function Get_Smart_Weblink()
 
   if base_url == "" then
     -- No PR, nor MR, maybe a Jira ticket?
-    base_url = "https://issues.redhat.com/browse/" .. clipboard
+    base_url = "https://issues.redhat.com/browse/" .. target_text
   end
   vim.fn.system('echo "' .. base_url .. '" | wl-copy')
   return base_url

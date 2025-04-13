@@ -100,8 +100,9 @@ function RemoveMarkdownHeader()
 end
 
 -- Key mappings in insert mode
-vim.api.nvim_set_keymap('n', '<C-i>', '<Cmd>lua AddMarkdownHeader()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-u>', '<Cmd>lua RemoveMarkdownHeader()<CR>', { noremap = true, silent = true })
+-- Unnecessary. Add markdown with TAB and <C-u> is the default for move upward by a page, I don't want to override it
+--vim.api.nvim_set_keymap('n', '<C-i>', '<Cmd>lua AddMarkdownHeader()<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<C-u>', '<Cmd>lua RemoveMarkdownHeader()<CR>', { noremap = true, silent = true })
 
 
 -- Wrap the selected text in tryple backtics with the option to add the quote type (e.g. go, bash, ...)
@@ -122,8 +123,7 @@ end
 vim.api.nvim_set_keymap('v', '<leader>`', ":lua wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 
 
--- Move the cursor in a Mermaid section, the function will create the SVG
-vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
+local function copy_code_block_to_file(block_type, filepath)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
@@ -135,13 +135,71 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
 
   -- Find start of the Mermaid code block
   for i = line_num, 1, -1 do
-    if lines[i]:match("```mermaid") then
+    if lines[i]:match("```" .. block_type) then
       start_line = i
       break
     end
   end
 
   -- Find end of the Mermaid code block
+  for i = line_num, #lines do
+    if lines[i]:match("```") then
+      end_line = i
+      break
+    end
+  end
+
+  -- If we found a valid range, proceed with copying
+  if start_line and end_line then
+    -- Get the lines of Mermaid code
+    local code_block = vim.api.nvim_buf_get_lines(0, start_line-1, end_line, false)
+
+    -- Create a temporary file and write the Mermaid code into it
+    local file = io.open(filepath, "w")
+    for _, line in ipairs(code_block) do
+      file:write(line .. "\n")
+    end
+    file:close()
+  end
+end
+
+vim.api.nvim_create_user_command(
+  "PlantUMLCreateASCII",
+    function()
+      copy_code_block_to_file("plantuml", "/tmp/plantuml.puml")
+      local handle = io.popen('cat /tmp/plantuml.puml | plantuml -pipe -utxt | tee /tmp/plantuml.txt | wl-copy')
+      if not handle then
+        print("failed to run plantuml command")
+        return
+      end
+      handle:close()
+      print("plantUML ASCII in clipboard")
+  end,
+  {}
+)
+
+vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
+
+-- Move the cursor in a Mermaid section, the function will create the SVG
+vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
+  -- Get the current cursor position
+  local current_pos = vim.api.nvim_win_get_cursor(0)
+  local line_num = current_pos[1]
+  local col_num = current_pos[2]
+
+  -- Find the start and end of the code block
+  local start_line, end_line = nil, nil
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Find start of the code block
+  for i = line_num, 1, -1 do
+    if lines[i]:match("```mermaid") then
+      start_line = i
+      break
+    end
+  end
+
+  -- Find end of the code block
   for i = line_num, #lines do
     if lines[i]:match("```") then
       end_line = i
@@ -189,7 +247,7 @@ vim.api.nvim_set_keymap('n', '<leader>bdl', 'Bdelete ', { noremap = true, silent
 
 
 
-local function ToggleVirtualText()
+function ToggleVirtualText()
   local current_vt_config = vim.diagnostic.config().virtual_text
   vim.diagnostic.config({
     virtual_text = not current_vt_config
@@ -200,7 +258,7 @@ local function ToggleVirtualText()
     print("Virtual text ON")
   end
 end
-vim.api.nvim_create_user_command('ToggleVirtualText', ToggleVirtualText, {})
+vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd> lua ToggleVirtualText()<cr>', {desc='Toggle Virtual Text', noremap = true, silent = true })
 
 
 -- Uses the clipboard and the register 'k' to create a Markdown reference link at

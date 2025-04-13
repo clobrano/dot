@@ -19,7 +19,7 @@ return {
     require('neo-tree').setup {
       filesystem = {
         bind_to_cwd = false,
-        hijack_netrw_behavior = "disabled",
+        --hijack_netrw_behavior = "disabled",
       }
     }
     vim.keymap.set('n', '<leader>nt', ':Neotree reveal<cr>', { silent = true, noremap = true })

@@ -7,6 +7,13 @@ local config = wezterm.config_builder()
 -- Spawn the right tmux shell in login mode
 config.default_prog = { '/usr/bin/zsh' }
 
+-- Specify additional patterns to match when in quick select mode
+config.quick_select_patterns = {
+  -- match files and directory names
+  '[^ ]+(?:\\s*)$',
+  '[^\\s()]\\w+\\.[\\w]+',
+}
+
 -- This is where you actually apply your config choices
 config.color_scheme = 'catppuccin-frappe'
 

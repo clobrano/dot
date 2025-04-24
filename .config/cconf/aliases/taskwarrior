@@ -16,3 +16,5 @@ alias wkmonth="wk due.before:eom sl"
 alias month="me due.before:eom sl"
 
 alias vit='export TASKRC=~/.taskrc  TASKDATA=$ME/Taskwarrior; vit'
+alias wtui='taskwarrior-tui --taskrc ~/.taskworkrc'
+alias ptui='taskwarrior-tui'

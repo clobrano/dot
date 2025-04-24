@@ -122,6 +122,51 @@ end
 
 vim.api.nvim_set_keymap('v', '<leader>`', ":lua wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 
+function Yank_code_block()
+  -- Get the current cursor position
+  local current_pos = vim.api.nvim_win_get_cursor(0)
+  local line_num = current_pos[1]
+  local col_num = current_pos[2]
+
+  -- Find the start and end of the code block
+  local start_line, end_line = nil, nil
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Find start of the code block
+  for i = line_num, 1, -1 do
+    if lines[i]:match("```") then
+      start_line = i
+      break
+    end
+  end
+
+  -- Find end of the code block
+  for i = line_num, #lines do
+    if lines[i]:match("```") then
+      end_line = i
+      break
+    end
+  end
+
+  -- If we found a valid range, proceed with yanking
+  if start_line and end_line then
+    vim.api.nvim_win_set_cursor(0, {start_line,0})
+    vim.cmd('normal! v')
+    vim.api.nvim_win_set_cursor(0, {end_line,1000})
+    vim.cmd('normal! y')
+
+    -- Restore original cursor position
+    vim.api.nvim_win_set_cursor(0, current_pos)
+  end
+end
+
+vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', {
+  desc = 'Yank code block',
+  noremap = true,
+  silent = true
+})
+
+
 
 local function copy_code_block_to_file(block_type, filepath)
   -- Get the current cursor position
@@ -141,7 +186,7 @@ local function copy_code_block_to_file(block_type, filepath)
     end
   end
 
-  -- Find end of the Mermaid code block
+  -- Find end of the code block
   for i = line_num, #lines do
     if lines[i]:match("```") then
       end_line = i
@@ -582,9 +627,9 @@ function Letsdo_goto()
 
   print(vim.inspect(vim.fn.system(command)))
 end
-vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>', { desc="Lets do begin", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc="Lets stop", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc="Lets cancel", noremap = true, silent = false })
 
 function QuickNote(description)
   local command = 'neovim-quick-note.sh'

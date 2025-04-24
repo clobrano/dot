@@ -430,3 +430,12 @@ vim.api.nvim_set_keymap(
   [[:execute '!scp % helios:/root/2no-lab/' . expand('%:h:t') . '/' . expand('%:t')<CR>]],
   { noremap = true, silent = true }
 )
+
+-- Highlight yanked text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Quickly highlight yanked text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})

@@ -192,7 +192,7 @@ local plugins = {
 
   -- Useful plugin to show you pending keybinds.
   require('plugins.which-key'),
-  require('plugins.trouble'),
+  --require('plugins.trouble'),
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',

@@ -76,7 +76,7 @@ function find_taskwarrior_from_uuid()
     end
 end
 
-vim.api.nvim_set_keymap("n", "<leader>fT", ":lua find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fo", ":lua find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 -- Add one hashtag '#' at the beginning of the current line
@@ -172,7 +172,6 @@ local function copy_code_block_to_file(block_type, filepath)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
-  local col_num = current_pos[2]
 
   -- Find the start and end of the Mermaid code block
   local start_line, end_line = nil, nil
@@ -196,10 +195,10 @@ local function copy_code_block_to_file(block_type, filepath)
 
   -- If we found a valid range, proceed with copying
   if start_line and end_line then
-    -- Get the lines of Mermaid code
+    -- Get the lines of code block
     local code_block = vim.api.nvim_buf_get_lines(0, start_line-1, end_line, false)
 
-    -- Create a temporary file and write the Mermaid code into it
+    -- Create a temporary file and write the code block into it
     local file = io.open(filepath, "w")
     for _, line in ipairs(code_block) do
       file:write(line .. "\n")
@@ -536,37 +535,6 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
 
--- Function to find and extract the project name from the current buffer
-local function get_project_name_from_buffer()
-  -- Get the current buffer
-  local bufnr = vim.api.nvim_get_current_buf()
-
-  -- Get all lines in the buffer
-  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-
-  -- Iterate through each line
-  for _, line in ipairs(lines) do
-    -- Check if the line starts with "project:"
-    local project_prefix = "project:"
-    if line:sub(1, #project_prefix) == project_prefix then
-      -- Extract the name following "project:"
-      local name = line:sub(#project_prefix + 1):match("^%s*(.-)%s*$")
-      -- Return the trimmed name
-      return name
-    end
-  end
-
-  -- If no project tag is found, get the filename if from Tasks folder
-  local filename = vim.api.nvim_buf_get_name(bufnr)
-  if string.match(vim.fn.expand("%:p:h"), "Tasks") then
-    filename = vim.fn.fnamemodify(filename, ":t:r") -- Get the base name of the file
-
-    -- Return the filename
-    return filename
-  end
-
-  return ""
-end
 
 function ReplaceSpacesWithHypens()
   local clipboard = get_clipboard()
@@ -621,7 +589,6 @@ vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr
 
 
 function Letsdo_goto()
-  --local project = get_project_name_from_buffer()
   local task_description = get_clipboard()
   local command = 'letsdo-taskwarrior-task.sh "' .. task_description .. '"'
 
@@ -705,7 +672,7 @@ end
 vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
 -- SurroundWithMarkdownLink add [[]] around the selected text AND creates the file if it doesn't exist
-function SurroundWithMarkdownLink()
+function CreateFileAndWikiLink()
   -- Get the visual selection
   local line1, col1 = unpack(vim.fn.getpos("'<"), 2, 3)
   local line2, col2 = unpack(vim.fn.getpos("'>"), 2, 3)
@@ -724,17 +691,16 @@ function SurroundWithMarkdownLink()
 
   -- Check if the file exists already
   local filename = selected_text .. '.md'
-  local command = { "find", ".", "-type", "f", "-name", filename, "grep", filename }
-  local result = vim.system(command, { text = true } ):wait()
-  if result.code == 0 then
+  local result = vim.fs.find(filename, {type = 'file', limit = 1})
+  if #result ~= 0 then
     print("File " .. filename .. " exists already")
   else
-    print("File " .. filename .. " does not exist (" .. result.code .. ")")
+    print("File " .. filename .. " does not exist")
     -- Create a Markdown file in the Resources directory
-    local filepath = "Resources/" .. selected_text .. ".md"
+    local filepath = "Resources/" .. filename
     if vim.fn.isdirectory('Resources') == 0 then
       -- Personal notes have a different destination name
-      filepath = "3-Resources/" .. selected_text .. ".md"
+      filepath = "3-Resources/" .. filename
     end
 
     local file = io.open(filepath, "w")

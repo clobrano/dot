@@ -4,8 +4,8 @@ local on_attach = function(_, bufnr)
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
   --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
+  -- In this case, we create a function that let us define more easily mappings specific
+  -- for LSP related items. It sets the mode, buffer, and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -32,47 +32,38 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
-  --nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  --nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  --nmap('<leader>wl', function()
-  --print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  --end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
-
-  --if client.server_capabilities.documentSymbolProvider then
-  --navic.attach(client, bufnr)
-  --end
 end
 
 if false then
--- already configured in lua/diagnostic.lua
--- keeping it for documentation
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    underline = false,
-    signs = true,
-    update_in_insert = true,
-  }
-)
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    virtual_text = false,
-    -- Use a sharp border with `FloatBorder` highlights
-    border = "single",
-    focusable = false,
-  }
-)
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    -- Use a sharp border with `FloatBorder` highlights
-    border = "single"
-  }
-)
+  -- already configured in lua/diagnostic.lua
+  -- keeping it for documentation
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+      underline = false,
+      signs = true,
+      update_in_insert = true,
+    }
+  )
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+      virtual_text = false,
+      -- Use a sharp border with `FloatBorder` highlights
+      border = "single",
+      focusable = false,
+    }
+  )
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.hover, {
+      -- Use a sharp border with `FloatBorder` highlights
+      border = "single"
+    }
+  )
 end
 
 -- Enable the following language servers
@@ -97,6 +88,24 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+  --harper_ls = {
+    --filetypes = { "markdown", "gitcommit" },
+    --settings = {
+      --["harper-ls"] = {
+        --userDictPath = "~/.config/nvim/spell/en.utf-8.add",
+        --linters = {
+          --Spaces = false,
+          --SentenceCapitalization = false,
+          --SpelledNumbers = false,
+          --SpellCheck = false,
+          --ToDoHyphen = false,
+        --},
+        --markdown = {
+          --IgnoreLinkTitle = true,
+        --},
+      --},
+    --}
+  --},
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -105,12 +114,10 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
-
 mason_lspconfig.setup {
   automatic_installation = true,
   ensure_installed = vim.tbl_keys(servers),
 }
-
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
@@ -196,5 +203,3 @@ cmp.setup.cmdline(':', {
     }
   })
 })
-
-

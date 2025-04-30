@@ -28,6 +28,7 @@ PATH=$PATH:$HOME/workspace/toolbelt
 PATH=$PATH:$HOME/.atuin/bin
 #PATH=$PATH:${GOBIN}
 #PATH=$PATH:${GOROOT}/bin
+PATH=$PATH:$(go env GOPATH)/bin
 PATH=$PATH:/usr/local/go/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
     PATH=$PATH:${HOME}/workspace/me/flutter/bin

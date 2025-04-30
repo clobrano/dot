@@ -44,7 +44,7 @@ return {
             width = 0.95,
             height = 0.95,
             horizontal = { preview_width = 0.9 },
-            vertical = { preview_height = 0.5 },
+            --vertical = { preview_height = 0.5 },
           },
         })
       end,
@@ -86,7 +86,7 @@ return {
         layout_config = {
           width = 0.90,
           height = 0.99,
-          preview_height = 0.6,
+          --preview_height = 0.6,
         },
         pickers = {
           lsp_references = { fname_width = 100, },

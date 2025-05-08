@@ -3,7 +3,7 @@ set foldlevel=99
 set noexpandtab
 set nonumber
 set norelativenumber
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
 set signcolumn=yes:2
 set textwidth=0

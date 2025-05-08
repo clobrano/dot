@@ -122,6 +122,26 @@ end
 
 vim.api.nvim_set_keymap('v', '<leader>`', ":lua wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 
+
+function Yank_text_and_gbrowse_link()
+  -- yank current selection in z register
+  vim.cmd('normal! `<v`>"ay')
+  local saved_selection = vim.fn.getreg('a')
+
+  -- get Remote link of the selection
+  vim.cmd("'<,'>GBrowse!")
+  local link = vim.fn.getreg('+')
+
+  -- yank composed selection + link
+  -- NOTE: do not use markdown around the link, or it won't be clickable in Neovim
+  local output = '`' .. saved_selection .. '` - ' .. link
+  vim.fn.setreg('+', output)
+  print('clipboard: ' .. output)
+end
+vim.api.nvim_set_keymap('v', '<leader>yb', ":lua Yank_text_and_gbrowse_link()<CR>",
+  { desc = 'Yank selected text + its remote link (for code)', noremap = true, silent = true })
+
+
 function Yank_code_block()
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -381,22 +401,6 @@ local function refile_done()
 end
 vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
--- Function to insert the date in the format 'yyyy-mm-dd DDD'
-local function insert_date()
-  -- Get the current date
-  local date = os.date("%Y-%m-%d")      -- yyyy-mm-dd format
-  local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
-
-  -- Concatenate the date and the weekday
-  local formatted_date = date .. " " .. weekday
-
-  -- Insert the formatted date at the current cursor position
-  vim.api.nvim_put({ formatted_date }, "c", false, true)
-end
-
--- Bind the function to a command (Optional)
-vim.api.nvim_create_user_command('InsertDate', insert_date, {})
-vim.api.nvim_set_keymap('n', '<leader>id', '<cmd>lua insert_date()<CR>', { noremap = true, silent = false })
 
 local function insert_date_header()
   -- Get the current date
@@ -579,7 +583,10 @@ function CreateNoteFromFileName()
 
   -- write the title and reference in current buffer
   vim.fn.append(0, '# ' .. title)
-  vim.fn.append(1, os.date('created: %Y-%m-%d'))
+  vim.fn.append(1, '```')
+  vim.fn.append(2, os.date('Created: %Y-%m-%d'))
+  vim.fn.append(3, '```')
+  vim.fn.append(4, '')
   vim.api.nvim_buf_set_lines(0, -1, -1, false, {'<!-- references -->'})
 
 end

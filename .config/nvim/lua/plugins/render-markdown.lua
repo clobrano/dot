@@ -8,7 +8,7 @@ return {
     require('render-markdown').setup({
       heading = {
         -- Turn on / off heading icon & background rendering
-        enabled = false,
+        enabled = true,
         -- Turn on / off any sign column related rendering
         sign = true,
         -- Determines how icons fill the available space:

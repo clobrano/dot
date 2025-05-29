@@ -6,7 +6,7 @@ return {
         { path = '~/Documents/RedHatNotes',
           syntax = 'markdown',
           ext = '.md',
-          diary_rel_path =  'journal/',
+          diary_rel_path =  'Journal/',
           diary_frequency = 'weekly',
           auto_diary_index = 1,
           auto_tags = 1,

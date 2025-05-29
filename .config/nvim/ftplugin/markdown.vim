@@ -1,9 +1,10 @@
 set concealcursor=c
 set foldlevel=99
-set noexpandtab
+set expandtab
 set nonumber
 set norelativenumber
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 set signcolumn=yes:2
 set textwidth=0

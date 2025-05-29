@@ -38,6 +38,13 @@ local function get_icon_for_user()
   end
 end
 
+-- in this lualine configuration file, I want a function
+-- that returns the currently configured LLM. This
+-- information is available in require('gen').GetLLMModel
+-- custom function, but we don't know if when executing this
+-- lualine configuration file, the `gen.nvim` configuration 
+-- from GetLLMModel comes, was already loaded
+
 return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },

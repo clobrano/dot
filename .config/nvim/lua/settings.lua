@@ -8,7 +8,7 @@ vim.cmd[[
 set guioptions-=m
 set guioptions-=T]]
 
-vim.cmd.colorscheme 'catppuccin-frappe'
+vim.cmd.colorscheme 'catppuccin'
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.mouse = 'a'

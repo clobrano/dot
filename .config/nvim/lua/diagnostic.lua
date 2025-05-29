@@ -31,8 +31,8 @@ vim.diagnostic.config({
   },
   severity_sort = true,
   float = {
-     --source = "if_many",   -- Use "if_many" to show source when multiple diagnostics
-    source = false,          -- Use false to never show the source
+     source = "if_many",   -- Use "if_many" to show source when multiple diagnostics
+    --source = false,          -- Use false to never show the source
      --source = true,           -- Use true to always show the source (might be verbose)
   },
 })

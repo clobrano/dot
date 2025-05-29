@@ -6,7 +6,6 @@ end
 local function nmap(k, v) map('n', k, v) end
 local function vmap(k, v) map('v', k, v) end
 local function imap(k, v) map('i', k, v) end
-local function tmap(k, v) map('t', k, v) end
 local function xmap(k, v) map('x', k, v) end
 
 
@@ -31,12 +30,12 @@ vim.keymap.set('i', '<A-i>', '<C-t>', { desc='Indent the line from the start' })
 vim.keymap.set('i', '<A-d>', '<C-d>', { desc='De-indent the line from the start' })
 
 -- format: align the paragraph to textwidth (the last <C-o> is to move the cursor back to the initial position)
-nmap('<leader>ap', 'gq}')
+vim.keymap.set('n', '<leader>ap', 'gq}', { desc = "[A]lign [P]aragraph (alias for 'gq')" })
 
 -- buffer: find
-nmap('<leader>fb', ':b')
--- buffer: find before
-nmap('<leader>fp', ':b#<cr>')
+vim.keymap.set('n', '<leader>bb', ':b', { desc = "[F]ind [B]uffer (among opened)" })
+-- buffer: move to last visited buffer
+vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = "[F]ind [L]ast buffer" })
 
 
 -- buffer: reload
@@ -59,8 +58,7 @@ nmap('m6',       ':bfirst<cr>:5bn<cr>')
 nmap('m7',       ':bfirst<cr>:6bn<cr>')
 nmap('m8',       ':bfirst<cr>:7bn<cr>')
 nmap('m9',       ':bfirst<cr>:8bn<cr>')
--- move to previous buffer
-vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = 'Toggle to the last buffer' })
+
 
 -- buffer: reload
 nmap('<leader>e', ':e!<cr>')
@@ -119,6 +117,9 @@ imap('<C-f>', '<C-x><C-f>')
 --nmap(<leader>ex <esc>:Explore<cr>
 nmap('<leader>ex', ':!%:p<cr>')
 
+
+-- ctags create
+vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create Ctags", noremap = true, silent = true })
 
 -- directory change here
 nmap('<leader>here', ':lcd %:p:h<CR>')

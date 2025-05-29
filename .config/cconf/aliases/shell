@@ -67,4 +67,4 @@ alias bb="~/workspace/script-fu/BookMarkIt find"
 # ntfy.sh. To be used with
 alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
-alias fwork="source ~/workspace/script-fu/fworkspace.sh"
+alias cdf="source ~/workspace/script-fu/fzf-cd.sh"

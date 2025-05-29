@@ -272,3 +272,10 @@ command -v zshz >/dev/null
 if [ $? -eq 0 ]; then
     eval "$(zoxide init zsh --cmd cd)"
 fi
+
+# bun completions
+[ -s "/home/clobrano/.bun/_bun" ] && source "/home/clobrano/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

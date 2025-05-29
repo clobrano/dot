@@ -22,6 +22,9 @@ local plugins = {
   -- UI
   "savq/melange-nvim",                                        -- default light theme
   require('plugins.catpuccin'),
+  require('plugins.tokyonight'),
+  require('plugins.dracula'),
+  { 'projekt0n/github-nvim-theme', name = 'github-theme' },
   "tanvirtin/monokai.nvim",                                   -- monokai colorscheme
   'ryanoasis/vim-devicons',
   require('plugins.nvim-listchars'),
@@ -84,11 +87,7 @@ local plugins = {
   require('plugins.trailblazer'),
   require('plugins.todo-comments'),
   require('plugins.gh'),
-  {
-    'pwntester/octo.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons' },
-  },
+  require('plugins.octo'),
   require('plugins.other'),
   require('plugins.nvim-window-picker'),
 
@@ -118,6 +117,8 @@ local plugins = {
       require("fzf-lua").setup({})
     end
   },
+  require('plugins.leap'),
+  require('plugins.journal'),
 
 
   -- tests
@@ -130,23 +131,14 @@ local plugins = {
 
   -- AI
   --'github/copilot.vim',
-  require('plugins.avante'),
+  --require('plugins.avante'),
+  --require('plugins.avante-remote'),
+  require('plugins.codecompanion'),
   require('plugins.gen-nvim'),
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
-    },
-  },
+  require('plugins.lspconfig'),
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -219,7 +211,6 @@ require('plugins.ranger')
 require('plugins.incline')
 require('plugins.surrounds')
 require('undotree').setup()
-require('plugins.octo')
 
 vim.cmd("FzfLua register_ui_select")
 --require("ibl").setup()
@@ -234,40 +225,40 @@ require('telescope').load_extension('media_files')
 require('telescope').load_extension('noice')
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>f/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  -- configure get_dropdown to expand previewer to full width of screen
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    layout_strategy = "vertical",
-    winblend = 10,
-    previewer = false,
-    shorten_path = false,
-    layout_config = {
-      width = 0.95,
-      height = 0.95,
-      horizontal = { preview_width = 0.9 },
-      vertical = { preview_height = 0.5 },
-    },
-  })
-end, { desc = '[F]uzzily [/] search in current buffer' })
+--vim.keymap.set('n', '<leader>f/', function()
+  ---- You can pass additional configuration to telescope to change theme, layout, etc.
+  ---- configure get_dropdown to expand previewer to full width of screen
+  --require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    --layout_strategy = "vertical",
+    --winblend = 10,
+    --previewer = false,
+    --shorten_path = false,
+    --layout_config = {
+      --width = 0.95,
+      --height = 0.95,
+      --horizontal = { preview_width = 0.9 },
+      --vertical = { preview_height = 0.5 },
+    --},
+  --})
+--end, { desc = '[F]uzzily [/] search in current buffer' })
 
-vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
-vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
---vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
-vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
-vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
-vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
-vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
-vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-vim.keymap.set('n', '<leader>ft', function() require('telescope.builtin').tags({ fname_width = 70 }) end,
-  { desc = '[F]ind [T]ags' })
+--vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
+--vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
+----vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
+--vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
+--vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+--vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+--vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
+--vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
+--vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
+--vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
+--vim.keymap.set('n', '<leader>ft', function() require('telescope.builtin').tags({ fname_width = 70 }) end,
+  --{ desc = '[F]ind [T]ags' })
 
--- Git telescope
-vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
-vim.keymap.set('n', '<leader>fgc', require('telescope.builtin').git_commits, { desc = '[F]ind [G]it [C]ommits' })
-vim.keymap.set('n', '<leader>fgs', require('telescope.builtin').git_stash, { desc = '[F]ind [G]it [S]tashes' })
+---- Git telescope
+--vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
+--vim.keymap.set('n', '<leader>fgc', require('telescope.builtin').git_commits, { desc = '[F]ind [G]it [C]ommits' })
+--vim.keymap.set('n', '<leader>fgs', require('telescope.builtin').git_stash, { desc = '[F]ind [G]it [S]tashes' })
 
 
 -- [[ Configure LSP ]]

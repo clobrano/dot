@@ -18,13 +18,11 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
-  nmap('<leader>fr', function() require('telescope.builtin').lsp_references({ fname_width = 70 }) end,
-    '[F]ind [R]eferences')
+  --nmap('<leader>fr', function() require('telescope.builtin').lsp_references({ fname_width = 70 }) end, '[F]ind [R]eferences')
   nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
   nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
-  nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({ symbol_width = 70 }) end,
-    '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  --nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({ symbol_width = 70 }) end, '[D]ocument [S]ymbols')
+  --nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -84,27 +82,35 @@ local servers = {
   },
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+          -- Depending on the usage, you might want to add additional paths here.
+          -- "${3rd}/luv/library"
+          -- "${3rd}/busted/library",
+        }
+      },
       telemetry = { enable = false },
     },
   },
   --harper_ls = {
-    --filetypes = { "markdown", "gitcommit" },
-    --settings = {
-      --["harper-ls"] = {
-        --userDictPath = "~/.config/nvim/spell/en.utf-8.add",
-        --linters = {
-          --Spaces = false,
-          --SentenceCapitalization = false,
-          --SpelledNumbers = false,
-          --SpellCheck = false,
-          --ToDoHyphen = false,
-        --},
-        --markdown = {
-          --IgnoreLinkTitle = true,
-        --},
-      --},
-    --}
+  --filetypes = { "markdown", "gitcommit" },
+  --settings = {
+  --["harper-ls"] = {
+  --userDictPath = "~/.config/nvim/spell/en.utf-8.add",
+  --linters = {
+  --Spaces = false,
+  --SentenceCapitalization = false,
+  --SpelledNumbers = false,
+  --SpellCheck = false,
+  --ToDoHyphen = false,
+  --},
+  --markdown = {
+  --IgnoreLinkTitle = true,
+  --},
+  --},
+  --}
   --},
 }
 

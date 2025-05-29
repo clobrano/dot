@@ -4,76 +4,74 @@ end
 
 
 function get_text_inside_brackets()
-    local line = vim.fn.getline(".")  -- Get the current line
-    local col = vim.fn.col(".")       -- Get the current column position
+  local line = vim.fn.getline(".") -- Get the current line
+  local col = vim.fn.col(".")      -- Get the current column position
 
-    -- Find the closest opening bracket before the cursor
-    local left_bracket_pos = nil
-    local left_bracket_type = nil
-    for i = col - 1, 1, -1 do
-        local char = line:sub(i, i)
-        if char == "(" or char == "[" or char == "{" then
-            left_bracket_pos = i
-            left_bracket_type = char
-            break
-        end
+  -- Find the closest opening bracket before the cursor
+  local left_bracket_pos = nil
+  local left_bracket_type = nil
+  for i = col - 1, 1, -1 do
+    local char = line:sub(i, i)
+    if char == "(" or char == "[" or char == "{" then
+      left_bracket_pos = i
+      left_bracket_type = char
+      break
     end
+  end
 
-    -- Find the closest closing bracket after the cursor
-    local right_bracket_pos = nil
-    local right_bracket_type = nil
-    for i = col, #line do
-        local char = line:sub(i, i)
-        if char == ")" or char == "]" or char == "}" then
-            right_bracket_pos = i
-            right_bracket_type = char
-            break
-        end
+  -- Find the closest closing bracket after the cursor
+  local right_bracket_pos = nil
+  local right_bracket_type = nil
+  for i = col, #line do
+    local char = line:sub(i, i)
+    if char == ")" or char == "]" or char == "}" then
+      right_bracket_pos = i
+      right_bracket_type = char
+      break
     end
+  end
 
-    -- If both positions are found, check if the brackets match and extract the text inside
-    if left_bracket_pos and right_bracket_pos then
-        -- Ensure the brackets match
-        if (left_bracket_type == "(" and right_bracket_type == ")") or
-           (left_bracket_type == "[" and right_bracket_type == "]") or
-           (left_bracket_type == "{" and right_bracket_type == "}") then
-            -- Extract text inside the brackets
-            local text_inside = line:sub(left_bracket_pos + 1, right_bracket_pos - 1)
-            return text_inside
-        end
+  -- If both positions are found, check if the brackets match and extract the text inside
+  if left_bracket_pos and right_bracket_pos then
+    -- Ensure the brackets match
+    if (left_bracket_type == "(" and right_bracket_type == ")") or
+        (left_bracket_type == "[" and right_bracket_type == "]") or
+        (left_bracket_type == "{" and right_bracket_type == "}") then
+      -- Extract text inside the brackets
+      local text_inside = line:sub(left_bracket_pos + 1, right_bracket_pos - 1)
+      return text_inside
     end
+  end
 
-    return nil  -- Return nil if no matching brackets are found
+  return nil -- Return nil if no matching brackets are found
 end
-
-
 
 -- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
 -- the function will get the uuid and jump to the file(s) where the corresponding
 -- Taskwarrior task object is defined
 function find_taskwarrior_from_uuid()
-    --local uuid = get_clipboard()
-    local uuid = vim.fn.expand('<cword>')
-    if uuid == "" then return end
+  --local uuid = get_clipboard()
+  local uuid = vim.fn.expand('<cword>')
+  if uuid == "" then return end
 
-    local cmd = "rg --glob '!**/Overview.md' -l -e '\\[.\\] .*" .. uuid .. "' ."
-    local result = vim.fn.systemlist(cmd)
+  local cmd = "rg --glob '!**/Overview.md' -l -e '\\[.\\] .*" .. uuid .. "' ."
+  local result = vim.fn.systemlist(cmd)
 
-    if #result == 1 then
-        vim.cmd("edit " .. result[1])
+  if #result == 1 then
+    vim.cmd("edit " .. result[1])
+    vim.cmd("silent! /" .. uuid)
+  elseif #result > 1 then
+    vim.ui.select(result, { prompt = "Multiple matches found. Choose a file:" }, function(choice)
+      if choice then
+        vim.cmd("edit " .. choice)
         vim.cmd("silent! /" .. uuid)
-    elseif #result > 1 then
-        vim.ui.select(result, { prompt = "Multiple matches found. Choose a file:" }, function(choice)
-            if choice then
-                vim.cmd("edit " .. choice)
-                vim.cmd("silent! /" .. uuid)
-            else
-              print("cannot open choice: " .. choice)
-            end
-        end)
-    else
-        print("No match found: ".. result[1])
-    end
+      else
+        print("cannot open choice: " .. choice)
+      end
+    end)
+  else
+    print("No match found")
+  end
 end
 
 vim.api.nvim_set_keymap("n", "<leader>fo", ":lua find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
@@ -82,19 +80,19 @@ vim.api.nvim_set_keymap("n", "<leader>fo", ":lua find_taskwarrior_from_uuid()<CR
 -- Add one hashtag '#' at the beginning of the current line
 function AddMarkdownHeader()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
-  local line = vim.api.nvim_get_current_line() -- Get current line content
-  vim.api.nvim_set_current_line('#' .. line) -- Prepend #
-  vim.api.nvim_win_set_cursor(0, { row, col + 1 }) -- Adjust cursor position
+  local line = vim.api.nvim_get_current_line()            -- Get current line content
+  vim.api.nvim_set_current_line('#' .. line)              -- Prepend #
+  vim.api.nvim_win_set_cursor(0, { row, col + 1 })        -- Adjust cursor position
 end
 
 -- Remove one hashtag '#' from the beginning of the current line
 function RemoveMarkdownHeader()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
-  local line = vim.api.nvim_get_current_line() -- Get current line content
+  local line = vim.api.nvim_get_current_line()            -- Get current line content
 
   -- Remove leading "#" only if it exists
   if line:sub(1, 1) == '#' then
-    vim.api.nvim_set_current_line(line:sub(2)) -- Remove first character
+    vim.api.nvim_set_current_line(line:sub(2))                    -- Remove first character
     vim.api.nvim_win_set_cursor(0, { row, math.max(0, col - 1) }) -- Adjust cursor position
   end
 end
@@ -115,8 +113,8 @@ function wrap_with_triple_backticks()
 
   vim.ui.input({ prompt = "Enter code language: " }, function(lang)
     local opening_backticks = lang and lang ~= "" and "```" .. lang or "```"
-    vim.api.nvim_buf_set_lines(0, end_line, end_line, false, {'```'})
-    vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, {opening_backticks})
+    vim.api.nvim_buf_set_lines(0, end_line, end_line, false, { '```' })
+    vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, { opening_backticks })
   end)
 end
 
@@ -138,6 +136,7 @@ function Yank_text_and_gbrowse_link()
   vim.fn.setreg('+', output)
   print('clipboard: ' .. output)
 end
+
 vim.api.nvim_set_keymap('v', '<leader>yb', ":lua Yank_text_and_gbrowse_link()<CR>",
   { desc = 'Yank selected text + its remote link (for code)', noremap = true, silent = true })
 
@@ -170,9 +169,9 @@ function Yank_code_block()
 
   -- If we found a valid range, proceed with yanking
   if start_line and end_line then
-    vim.api.nvim_win_set_cursor(0, {start_line,0})
+    vim.api.nvim_win_set_cursor(0, { start_line, 0 })
     vim.cmd('normal! v')
-    vim.api.nvim_win_set_cursor(0, {end_line,1000})
+    vim.api.nvim_win_set_cursor(0, { end_line, 1000 })
     vim.cmd('normal! y')
 
     -- Restore original cursor position
@@ -216,7 +215,7 @@ local function copy_code_block_to_file(block_type, filepath)
   -- If we found a valid range, proceed with copying
   if start_line and end_line then
     -- Get the lines of code block
-    local code_block = vim.api.nvim_buf_get_lines(0, start_line-1, end_line, false)
+    local code_block = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
 
     -- Create a temporary file and write the code block into it
     local file = io.open(filepath, "w")
@@ -229,15 +228,15 @@ end
 
 vim.api.nvim_create_user_command(
   "PlantUMLCreateASCII",
-    function()
-      copy_code_block_to_file("plantuml", "/tmp/plantuml.puml")
-      local handle = io.popen('cat /tmp/plantuml.puml | plantuml -pipe -utxt | tee /tmp/plantuml.txt | wl-copy')
-      if not handle then
-        print("failed to run plantuml command")
-        return
-      end
-      handle:close()
-      print("plantUML ASCII in clipboard")
+  function()
+    copy_code_block_to_file("plantuml", "/tmp/plantuml.puml")
+    local handle = io.popen('cat /tmp/plantuml.puml | plantuml -pipe -utxt | tee /tmp/plantuml.txt | wl-copy')
+    if not handle then
+      print("failed to run plantuml command")
+      return
+    end
+    handle:close()
+    print("plantUML ASCII in clipboard")
   end,
   {}
 )
@@ -274,7 +273,7 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
   -- If we found a valid range, proceed with copying
   if start_line and end_line then
     -- Get the lines of Mermaid code
-    local mermaid_code = vim.api.nvim_buf_get_lines(0, start_line-1, end_line, false)
+    local mermaid_code = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
 
     -- Create a temporary file and write the Mermaid code into it
     local tmp_file = "/tmp/render-mermaid.md"
@@ -301,9 +300,9 @@ end, {})
 
 -- Closes a list of buffers. Separate the buffers name by a comma
 vim.api.nvim_create_user_command("Bdelete", function(opts)
-  local buffers = vim.split(opts.args, ", ")  -- Split buffer list
+  local buffers = vim.split(opts.args, ", ")      -- Split buffer list
   for _, buf in ipairs(buffers) do
-    local sanitized_buf = vim.fn.fnameescape(buf)  -- Escape filenames properly
+    local sanitized_buf = vim.fn.fnameescape(buf) -- Escape filenames properly
     vim.cmd("bd " .. sanitized_buf)
   end
 end, { nargs = "+", complete = "buffer" })
@@ -322,7 +321,9 @@ function ToggleVirtualText()
     print("Virtual text ON")
   end
 end
-vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd> lua ToggleVirtualText()<cr>', {desc='Toggle Virtual Text', noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd> lua ToggleVirtualText()<cr>',
+  { desc = 'Toggle Virtual Text', noremap = true, silent = true })
 
 
 -- Uses the clipboard and the register 'k' to create a Markdown reference link at
@@ -397,14 +398,14 @@ local function refile_done()
   else
     print(result)
   end
-  vim.api.nvim_command('edit!')  -- Reload the buffer
+  vim.api.nvim_command('edit!') -- Reload the buffer
 end
 vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
 
 local function insert_date_header()
   -- Get the current date
-  local date = os.date("## %Y-%m-%d")      -- yyyy-mm-dd format
+  local date = os.date("## %Y-%m-%d")   -- yyyy-mm-dd format
   local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
 
   -- Concatenate the date and the weekday
@@ -453,7 +454,7 @@ function open_markdown_reference_url()
     print("No matches")
     return
   end
-  vim.ui.select(result, {prompt = "Choose one:"}, function(choice)
+  vim.ui.select(result, { prompt = "Choose one:" }, function(choice)
     if choice then
       local url = choice:match("https://%S+")
       if url then
@@ -468,9 +469,9 @@ function open_markdown_reference_url()
   end)
 end
 
-
 -- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua open_markdown_reference_url()<CR>',
+  { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 
 function Get_Smart_Weblink()
   local target_text = get_text_inside_brackets()
@@ -561,17 +562,21 @@ function CreateNoteFromFileName()
   local title = filename
   -- template for weekly notes
   if string.match(filename, "^%d%d%d%d%-%d%d%-%d%d") then
-    local year = string.sub(filename, 1, 4)
-    local month = string.sub(filename, 6, 7)
-    local day = string.sub(filename, 9, 10)
-    -- change Locale to English only for the following command
-    os.setlocale("C")
-    -- re-format the date as in "Mon 12 Jan 2021 Week02"
-    title = os.date("Week %V", os.time({ year = year, month = month, day = day }))
-    -- read the rest of the template from the journaling template
-    local template = vim.fn.readfile("./Templates/weekly-template.md")
-    -- write the template in current buffer
-    vim.fn.append(1, template)
+    -- Only for Work notes
+    if vim.fn.isdirectory('Resources') ~= 0 then
+      local year = string.sub(filename, 1, 4)
+      local month = string.sub(filename, 6, 7)
+      local day = string.sub(filename, 9, 10)
+      -- change Locale to English only for the following command
+      os.setlocale("C")
+      -- re-format the date as in "Mon 12 Jan 2021 Week02"
+      title = tostring(os.date("Week %V", os.time({ year = year, month = month, day = day })))
+      -- read the rest of the template from the journaling template
+      local template = vim.fn.readfile("./Templates/weekly-template.md")
+
+      -- write the template in current buffer
+      vim.fn.append(1, template)
+    end
   end
   -- template for files in Task folder
   if string.match(vim.fn.expand("%:p:h"), "Tasks") then
@@ -587,8 +592,7 @@ function CreateNoteFromFileName()
   vim.fn.append(2, os.date('Created: %Y-%m-%d'))
   vim.fn.append(3, '```')
   vim.fn.append(4, '')
-  vim.api.nvim_buf_set_lines(0, -1, -1, false, {'<!-- references -->'})
-
+  vim.api.nvim_buf_set_lines(0, -1, -1, false, { '<!-- references -->' })
 end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })
@@ -601,20 +605,24 @@ function Letsdo_goto()
 
   print(vim.inspect(vim.fn.system(command)))
 end
-vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>', { desc="Lets do begin", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc="Lets stop", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc="Lets cancel", noremap = true, silent = false })
+
+vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',
+  { desc = "Lets do begin", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
 
 function QuickNote(description)
   local command = 'neovim-quick-note.sh'
   print(vim.inspect(vim.fn.system(command)))
 end
+
 vim.api.nvim_set_keymap('n', '<leader>qn', "<cmd>lua QuickNote()<cr>", { noremap = true, silent = true })
 
 function QuickTask()
   local command = 'taskwarrior-quick-task.sh'
   print(vim.inspect(vim.fn.system(command)))
 end
+
 vim.api.nvim_set_keymap('n', '<leader>qt', "<cmd>lua QuickTask()<cr>", { noremap = true, silent = true })
 
 
@@ -698,7 +706,7 @@ function CreateFileAndWikiLink()
 
   -- Check if the file exists already
   local filename = selected_text .. '.md'
-  local result = vim.fs.find(filename, {type = 'file', limit = 1})
+  local result = vim.fs.find(filename, { type = 'file', limit = 1 })
   if #result ~= 0 then
     print("File " .. filename .. " exists already")
   else
@@ -719,7 +727,6 @@ function CreateFileAndWikiLink()
     end
   end
 end
-
 
 local M = {}
 

@@ -2,24 +2,15 @@ alias g='git'
 
 alias ga='git add'
 alias gap='git add -p'
-
-alias gc='git commit'
-
-alias gco='git checkout'
-
-alias gd='git diff'
-
-alias gl='git log --oneline --graph --date=format:'%y%m%d' --pretty=format:"%Cgreen%ad%Creset %C(auto)%h%Creset %s %C(cyan)<%aN>%Creset%C(auto)%d%Creset" '
-
-alias gr='git reset --hard HEAD'
-
-alias gs='git status'
-
 alias gb='git branch'
-alias gps='git push'
-alias gpl='git pull'
-
-alias gpll='git pull upstream master'
 alias gbl='git branch -l --sort=committerdate'
-
+alias gc='git commit'
+alias gco='git checkout'
+alias gd='git diff'
+alias gl='git log --oneline --graph --date=format:'%y%m%d' --pretty=format:"%Cgreen%ad%Creset %C(auto)%h%Creset %s %C(cyan)<%aN>%Creset%C(auto)%d%Creset" '
+alias gpl='git pull'
+alias gpll='git pull upstream master'
+alias gps='git push'
+alias gr='git reset --hard HEAD'
+alias gs='git status'
 alias gunstage='git reset HEAD'

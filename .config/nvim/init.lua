@@ -70,7 +70,7 @@ local plugins = {
   require('plugins.zenmode'),
   require('plugins.render-markdown'),
   --require('plugins.peek'),
-  require('plugins.snacks'),
+  --require('plugins.snacks'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -118,7 +118,7 @@ local plugins = {
     end
   },
   require('plugins.leap'),
-  require('plugins.journal'),
+  --require('plugins.journal'),
 
 
   -- tests
@@ -138,7 +138,7 @@ local plugins = {
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  require('plugins.lspconfig'),
+  require('plugins.mason-lspconfig'),
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -202,7 +202,7 @@ require('diagnostic')
 require('lsp')
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+--require('neodev').setup()
 
 
 require('plugins.fzf-vim')

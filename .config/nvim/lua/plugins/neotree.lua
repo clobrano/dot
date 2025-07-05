@@ -19,10 +19,9 @@ return {
     require('neo-tree').setup {
       filesystem = {
         bind_to_cwd = false,
-        --hijack_netrw_behavior = "disabled",
+        hijack_netrw_behavior = "disabled",
       }
     }
-    vim.keymap.set('n', '<leader>nt', ':Neotree reveal<cr>', { silent = true, noremap = true })
-    vim.keymap.set('n', '<leader>nb', ':Neotree buffers<cr>', { desc = '[F]ind [B]uffers' })
+    vim.keymap.set('n', '<leader>et', ':Neotree reveal<cr>', { silent = true, noremap = true })
   end
 }

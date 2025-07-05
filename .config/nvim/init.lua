@@ -108,6 +108,7 @@ local plugins = {
   --{ 'francoiscabrol/ranger.vim', dependencies = { 'rbgrouleff/bclose.vim' } },
   require('plugins.oil'),
   require('plugins.neotree'),
+  require('plugins.mini'),
   require('plugins.vim-g'),
   {
     "ibhagwan/fzf-lua",

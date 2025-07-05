@@ -6,6 +6,7 @@ alias ll='ls -l'
 
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
+alias wlcopy=wl-copy
 
 alias today='date +"%F"'
 alias yesterday='date --date="yesterday" +"%F"'
@@ -41,11 +42,12 @@ if command -v eza 2>&1 >/dev/null; then
     alias ls=eza
 fi
 
+# neovim Notes
 alias nn='cd $ME/Notes && nvim index.md'
+# neovim Orgmode
 alias no='cd $ME/Orgmode && nvim ReadItLater.org'
-alias q='neovim-quick-note.sh'
-alias t='taskwarrior-quick-task.sh'
-
+# neovim session
+alias ns='nvim -c "Telescope persisted"'
 
 if command -v vagrant 2>&1 > /dev/null; then
     alias v=vagrant

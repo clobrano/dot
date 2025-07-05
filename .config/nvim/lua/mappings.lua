@@ -119,7 +119,9 @@ nmap('<leader>ex', ':!%:p<cr>')
 
 
 -- ctags create
-vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create Ctags", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create [C][t]ags", noremap = true, silent = true })
+-- gotags create
+vim.keymap.set("n", "<leader>got", ":!gotags `find . -name '*.go' | grep -v './vendor'` > tags<cr>", { desc = "Create [G]o[t]ags", noremap = true, silent = true })
 
 -- directory change here
 nmap('<leader>here', ':lcd %:p:h<CR>')
@@ -247,8 +249,6 @@ imap('jj', '<Esc>')
 --imap('jj',   '<Esc>:write<CR>')
 
 -- Notes (see plugin/tasks)
--- get title from url (get url from clipboard)
-nmap('<leader>gt', ':r ! ~/workspace/script-fu/get-url-title.sh<cr>')
 -- open file with xdg-open (e.g. images in markdown files)
 nmap('<leader>xo', ':!xdg-open %:p:h/<cfile>')
 

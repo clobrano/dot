@@ -34,7 +34,8 @@ local plugins = {
   require('plugins.tagbar'),
   require('plugins.tabline'), -- needed to show buffers names on top
   require('plugins.lualine'),
-  require('plugins.startify'),
+  require('plugins.persisted'),
+  --require('plugins.startify'),
   require('plugins.noice'),
   { 'dhruvasagar/vim-table-mode' },
 

@@ -3,7 +3,46 @@ local function get_clipboard()
 end
 
 
-function get_text_inside_brackets()
+function FromGithubLinkToMarkdownPRRef()
+  -- e.g. https://github.com/<org>/<project>/pull/<number>
+  -- will be converted to [<org/<project> PR<number>]
+  -- and a Markdown reference link will be created at
+  -- the end of the buffer like below:
+  -- [<org/<project> PR<number>]: https://github.com/<org>/<project>/pull/<number>
+
+  local github_link = vim.fn.getreg('+') -- Get content from the system clipboard
+  if not github_link or github_link == '' then
+    vim.notify("Clipboard is empty.", vim.log.levels.WARN, { title = "GitHub Link" })
+    return
+  end
+
+  -- Regex to extract organization, project, and PR number
+  local pattern = "https://github.com/([^/]+)/([^/]+)/pull/(%d+)"
+  local org, project, pr_number = string.match(github_link, pattern)
+
+  if not (org and project and pr_number) then
+    vim.notify("Clipboard content is not a valid GitHub PR link.", vim.log.levels.ERROR, { title = "GitHub Link" })
+    return
+  end
+
+  local markdown_label = string.format("[%s/%s PR%s]", org, project, pr_number)
+  local markdown_ref = string.format("[%s/%s PR%s]: %s", org, project, pr_number, github_link)
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  local last_line = vim.api.nvim_buf_line_count(bufnr)
+
+  -- Insert the markdown reference at the end of the buffer.
+  vim.api.nvim_buf_set_lines(bufnr, last_line, last_line, false, {markdown_ref})
+
+  -- Insert the markdown label at the current cursor position
+  -- 'c' for character-wise insert, 'false' for inserting before cursor, 'true' for moving cursor to end of paste
+  vim.api.nvim_put({markdown_label}, "c", false, true)
+
+  vim.notify("GitHub PR link converted and reference added.", vim.log.levels.INFO, { title = "GitHub Link" })
+end
+
+
+local function get_text_inside_brackets()
   local line = vim.fn.getline(".") -- Get the current line
   local col = vim.fn.col(".")      -- Get the current column position
 
@@ -49,7 +88,7 @@ end
 -- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
 -- the function will get the uuid and jump to the file(s) where the corresponding
 -- Taskwarrior task object is defined
-function find_taskwarrior_from_uuid()
+function Find_taskwarrior_from_uuid()
   --local uuid = get_clipboard()
   local uuid = vim.fn.expand('<cword>')
   if uuid == "" then return end
@@ -74,7 +113,7 @@ function find_taskwarrior_from_uuid()
   end
 end
 
-vim.api.nvim_set_keymap("n", "<leader>fo", ":lua find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fo", ":lua Find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 -- Add one hashtag '#' at the beginning of the current line
@@ -104,7 +143,7 @@ end
 
 
 -- Wrap the selected text in tryple backtics with the option to add the quote type (e.g. go, bash, ...)
-function wrap_with_triple_backticks()
+function Wrap_with_triple_backticks()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
 
@@ -118,10 +157,14 @@ function wrap_with_triple_backticks()
   end)
 end
 
-vim.api.nvim_set_keymap('v', '<leader>`', ":lua wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>`', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 
 
-function Yank_text_and_gbrowse_link()
+function CopyCodeAndPermalink()
+  -- Get the current filetype
+  local filetype = vim.bo.filetype
+  print('Current filetype: ' .. filetype)
+
   -- yank current selection in z register
   vim.cmd('normal! `<v`>"ay')
   local saved_selection = vim.fn.getreg('a')
@@ -130,22 +173,35 @@ function Yank_text_and_gbrowse_link()
   vim.cmd("'<,'>GBrowse!")
   local link = vim.fn.getreg('+')
 
-  -- yank composed selection + link
-  -- NOTE: do not use markdown around the link, or it won't be clickable in Neovim
-  local output = '`' .. saved_selection .. '` - ' .. link
+  local allowed_filetypes = {
+    ["c"] = true,
+    ["cpp"] = true,
+    ["go"] = true,
+    ["lua"] = true,
+    ["python"] = true,
+    ["sh"] = true,
+  }
+
+  local output = ""
+  if allowed_filetypes[filetype] then
+    output = output .. "```" .. filetype .. "\n"
+  else
+    output = output .. "```"  .. "\n"
+  end
+  output = output .. "// " .. link .. "\n"
+  output = output .. saved_selection .. "\n"
+  output = output .. "```"
   vim.fn.setreg('+', output)
-  print('clipboard: ' .. output)
 end
 
-vim.api.nvim_set_keymap('v', '<leader>yb', ":lua Yank_text_and_gbrowse_link()<CR>",
-  { desc = 'Yank selected text + its remote link (for code)', noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cp', ":lua CopyCodeAndPermalink()<CR>",
+  { desc = 'Format selected code with its permalink', noremap = true, silent = true })
 
 
 function Yank_code_block()
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
-  local col_num = current_pos[2]
 
   -- Find the start and end of the code block
   local start_line, end_line = nil, nil
@@ -248,7 +304,6 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
-  local col_num = current_pos[2]
 
   -- Find the start and end of the code block
   local start_line, end_line = nil, nil
@@ -440,7 +495,7 @@ vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { 
 -- Open_url_from_selected_text searches for lines matching the format:
 -- [<selected text>]: <url>
 -- If it can find it, it opens the link in the browser
-function open_markdown_reference_url()
+function Open_markdown_reference_url()
   -- Step 1: Capture the text inside square brackets
   local selected_text = get_text_inside_brackets()
 
@@ -463,14 +518,18 @@ function open_markdown_reference_url()
         os.execute(open_command)
       end
     else
-      print("cannot open choice: " .. choice[1])
+      if choice ~= nil then
+        print("cannot open choice: " .. choice[1])
+      else
+        print("cannot open choice")
+      end
       return
     end
   end)
 end
 
 -- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua open_markdown_reference_url()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_markdown_reference_url()<CR>',
   { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 
 function Get_Smart_Weblink()
@@ -611,7 +670,7 @@ vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',
 vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
 
-function QuickNote(description)
+function QuickNote()
   local command = 'neovim-quick-note.sh'
   print(vim.inspect(vim.fn.system(command)))
 end

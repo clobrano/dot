@@ -5,8 +5,10 @@ vim.lsp.config("*", {
 })
 
 require("mason").setup()
-require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "lua_ls" }
+local lspconfig = require("lspconfig")
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup {
+  ensure_installed = { "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright" }
 }
 
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
@@ -17,7 +19,7 @@ vim.api.nvim_create_user_command('Format', function(_) vim.lsp.buf.format() end,
   { desc = 'Format current buffer with LSP' })
 
 
-if false then
+if true then
   --  This function gets run when an LSP connects to a particular buffer.
   local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
@@ -108,24 +110,6 @@ if false then
         telemetry = { enable = false },
       },
     },
-    --harper_ls = {
-    --filetypes = { "markdown", "gitcommit" },
-    --settings = {
-    --["harper-ls"] = {
-    --userDictPath = "~/.config/nvim/spell/en.utf-8.add",
-    --linters = {
-    --Spaces = false,
-    --SentenceCapitalization = false,
-    --SpelledNumbers = false,
-    --SpellCheck = false,
-    --ToDoHyphen = false,
-    --},
-    --markdown = {
-    --IgnoreLinkTitle = true,
-    --},
-    --},
-    --}
-    --},
   }
 
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -150,7 +134,7 @@ if false then
 
   lspconfig.markdown_oxide.setup({
     capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-    on_attach = on_attach,     -- configure your on attach config
+    on_attach = on_attach,       -- configure your on attach config
   })
 
   -- [[ Configure nvim-cmp ]]

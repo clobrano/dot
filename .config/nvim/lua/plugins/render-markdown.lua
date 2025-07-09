@@ -71,7 +71,7 @@ return {
             highlight = 'RenderMarkdownUnchecked',
         },
         checked = {
-            icon = '* [X]',
+            icon = '* [x]',
             highlight = 'RenderMarkdownChecked',
         },
         custom = {

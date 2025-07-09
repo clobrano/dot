@@ -128,7 +128,8 @@ local plugins = {
 
 
   -- go
-  require('plugins.vim-go'),
+  --require('plugins.vim-go'),
+  require('plugins.go-nvim'),
 
 
   -- AI

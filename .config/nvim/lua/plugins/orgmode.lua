@@ -18,13 +18,13 @@ return {
   config = function()
     -- Load treesitter grammar for org
 
-    -- Setup treesitter
-    require('nvim-treesitter.configs').setup({
-      highlight = {
-        enable = true,
-      },
-      ensure_installed = { 'org' },
-    })
+    -- Setup treesitter: NOTE: treesiter fails loading support for org, so I'll disable it for now
+    --require('nvim-treesitter.configs').setup({
+      --highlight = {
+        --enable = true,
+      --},
+      --ensure_installed = { 'org' },
+    --})
 
     -- Setup orgmode
     require('orgmode').setup({

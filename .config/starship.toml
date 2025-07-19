@@ -20,8 +20,8 @@ format = 'on [$symbol$branch]($style) '
 tag_disabled = false
 
 [golang]
-symbol = "GO "
-#format = '$symbol[($version )]($style)'
+#symbol = "GO "
+format = '$symbol[($version )]($style)'
 
 [hostname]
 format='[$hostname]($style) '
@@ -36,4 +36,8 @@ style = 'bold green dimmed'
 format = '[$symbol]($style) '
 disabled = false
 
+[gcloud]
+disabled = true
 
+[aws]
+disabled = true

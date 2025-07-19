@@ -70,7 +70,7 @@ nmap('C', 'ggvG$')
 -- buffer: show full path
 nmap('<leader>g', ":echo expand('%')<cr>")
 -- buffer: copy full path
-nmap('<leader>G', ':!echo % | wl-copy<cr>')
+nmap('<leader>G', ':!realpath % | wl-copy<cr>')
 
 -- buffer: close
 nmap('xx', ':bd<CR>')

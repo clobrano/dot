@@ -8,11 +8,11 @@ vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>Telescope diagnostics<CR>', { d
 -- If you don't want to use the telescope plug-in but still want to see all the errors/warnings, comment out the telescope line and uncomment this:
 -- vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
 
-vim.cmd [[
-  "Enable floating window (error and doc) on hover"
-  "autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
-  autocmd CursorHoldI *.go silent! lua vim.lsp.buf.hover({focusable = false})
-]]
+-- vim.cmd [[
+--   "Enable floating window (error and doc) on hover"
+--   "autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus = false})
+--   autocmd CursorHoldI *.go silent! lua vim.lsp.buf.hover({focusable = false})
+-- ]]
 
 vim.diagnostic.config({
   virtual_text = {

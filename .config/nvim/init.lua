@@ -36,7 +36,7 @@ local plugins = {
   require('plugins.lualine'),
   require('plugins.persisted'),
   --require('plugins.startify'),
-  require('plugins.noice'),
+  --require('plugins.noice'),
   { 'dhruvasagar/vim-table-mode' },
 
   -- Git/Revision related plugins
@@ -71,7 +71,7 @@ local plugins = {
   require('plugins.zenmode'),
   require('plugins.render-markdown'),
   --require('plugins.peek'),
-  --require('plugins.snacks'),
+  require('plugins.snacks'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -225,7 +225,7 @@ vim.cmd("FzfLua register_ui_select")
 pcall(require('telescope').load_extension, 'fzf')
 -- Enable media-file preview in telescope
 require('telescope').load_extension('media_files')
-require('telescope').load_extension('noice')
+--require('telescope').load_extension('noice')
 
 -- See `:help telescope.builtin`
 --vim.keymap.set('n', '<leader>f/', function()

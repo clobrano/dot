@@ -3,25 +3,25 @@ return {
   branch = "v3.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",     -- not strictly required, but recommended
+    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
   },
   filesystem = {
     window = {
       mappings = {
-        -- disable open_with_window_picker because it conflicts with my movement keys and
-        -- the needed plugin is also not installed
-        ['w'] = 'none'
-      }
+        ["L"] = "open_nofocus",
+      },
+    },
+    commands = {
+      open_nofocus = function(state)
+        require("neo-tree.sources.filesystem.commands").open(state)
+        vim.schedule(function()
+          vim.cmd([[Neotree focus]])
+        end)
+      end,
     },
   },
   config = function()
-    require('neo-tree').setup {
-      filesystem = {
-        bind_to_cwd = false,
-        hijack_netrw_behavior = "disabled",
-      }
-    }
     vim.keymap.set('n', '<leader>et', ':Neotree reveal<cr>', { silent = true, noremap = true })
   end
 }

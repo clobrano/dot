@@ -135,7 +135,7 @@ local plugins = {
   -- AI
   --'github/copilot.vim',
   --require('plugins.avante'),
-  --require('plugins.avante-remote'),
+  require('plugins.avante-remote'),
   require('plugins.codecompanion'),
   require('plugins.gen-nvim'),
 

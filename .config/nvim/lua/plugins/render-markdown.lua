@@ -76,7 +76,7 @@ return {
         },
         custom = {
             waiting = { raw = '[W]', rendered = '* [W]', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '* [+]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [>]', highlight = 'RenderMarkdownTodo' },
             prog25 = { raw = '[.]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
             prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },

@@ -2,6 +2,50 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
+local function escape_lua_pattern(s)
+  -- Escape characters that are magic in Lua patterns
+  return s:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")
+end
+
+function SendFileToRemote(server_name, remote_root_path)
+    local local_file_abs_path = vim.fn.expand('%:p')
+
+    -- Get the local Git repository root
+    local git_root_output = vim.fn.system('git rev-parse --show-toplevel')
+    local local_git_root = vim.fn.trim(git_root_output)
+
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({{ "Error: Not a Git repository or 'git rev-parse --show-toplevel' failed.", "ErrorMsg" }}, true, {})
+        return
+    end
+
+    -- Calculate the relative path from the local Git root
+    -- Escape local_git_root and the trailing slash for Lua pattern matching
+    local pattern_to_remove = "^" .. escape_lua_pattern(local_git_root .. "/")
+    local relative_path = string.gsub(local_file_abs_path, pattern_to_remove, '')
+
+    -- Construct the scp command
+    local scp_command = 'scp ' .. vim.fn.shellescape(local_file_abs_path) .. ' ' .. server_name .. ':' .. remote_root_path .. '/' .. vim.fn.shellescape(relative_path)
+
+    -- Execute the command
+    vim.api.nvim_echo({{ "Executing: " .. scp_command, "Normal" }}, true, {})
+    vim.cmd('!' .. scp_command)
+end
+
+vim.api.nvim_create_user_command(
+  'Scp',
+  function(opts)
+    local args = vim.split(opts.args, '%s+')
+    if #args ~= 2 then
+      vim.api.nvim_echo({{ "Usage: :Scp <server_name> <remote_root_path>", "ErrorMsg" }}, true, {})
+      return
+    end
+    SendFileToRemote(args[1], args[2])
+  end,
+  { nargs = '*', complete = 'file', desc = 'Send current file to remote server via scp' }
+)
+
+
 
 function FromGithubLinkToMarkdownPRRef()
   -- e.g. https://github.com/<org>/<project>/pull/<number>
@@ -536,46 +580,22 @@ function Get_Smart_Weblink()
   local target_text = get_text_inside_brackets()
   print(target_text)
 
-  -- PR ID is expected to be "<Project-ShortName> PR<number>"
-  local github = {
-    OCP_RELEASE = "https://github.com/openshift/release",
-    MDR = "https://github.com/medik8s/machine-deletion-remediation",
-    SNR = "https://github.com/medik8s/self-node-remediation",
-    NHC = "https://github.com/medik8s/node-healthcheck-operator",
-    NMO = "https://github.com/medik8s/node-maintenance-operator",
-    FAR = "https://github.com/medik8s/fence-agents-remediation",
-    DOT_GITHUB = "https://github.com/medik8s/.github",
-    M8S_GITHUB = "https://github.com/medik8s/.github",
-    M8S_TOOLS = "https://github.com/medik8s/tools",
-    CEO = "https://github.com/openshift/cluster-etcd-operator",
-    OCP_INSTALLER = "https://github.com/openshift/installer"
-  }
-
-  local gitlab = {
-    MDR = "https://gitlab.cee.redhat.com/dragonfly/machine-deletion-remediation",
-    SNR = "https://gitlab.cee.redhat.com/dragonfly/self-node-remediation",
-    NHC = "https://gitlab.cee.redhat.com/dragonfly/node-healthcheck-operator",
-    NMO = "https://gitlab.cee.redhat.com/dragonfly/node-maintenance-operator",
-    FAR = "https://gitlab.cee.redhat.com/dragonfly/fence-agents-remediation",
-    TnoOperator = "https://gitlab.cee.redhat.com/msluiter/tno-operator"
-  }
-
   local tokens = vim.split(target_text, " ")
   print(vim.inspect(tokens))   -- Use vim.inspect for better output
 
-  local short_name = tokens[1] -- Lua lists are 1-based
+  local org_project = tokens[1] -- Lua lists are 1-based
   local number = ""
   local base_url = ""
   if #(tokens) == 2 then
     if string.match(tokens[2], "PR") then
       number = tokens[2]:gsub("PR", "")
-      base_url = github[short_name] .. "/pull/" .. number
+      base_url = "https://github.com/" .. org_project .. "/pull/" .. number
     elseif string.match(tokens[2], "I") then
       number = tokens[2]:gsub("I", "")
-      base_url = github[short_name] .. "/issues/" .. number
+      base_url = "https://github.com/" .. org_project .. "/issues/" .. number
     elseif string.match(tokens[2], "MR") then
       number = tokens[2]:gsub("MR", "")
-      base_url = gitlab[short_name] .. "/-/merge_requests/" .. number
+      base_url = "https://gitlab.cee.redhat.com" .. org_project .. "/-/merge_requests/" .. number
     end
   end
 

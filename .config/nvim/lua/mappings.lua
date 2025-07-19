@@ -440,3 +440,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Avante
+vim.keymap.set("n", "<leader>jaa", ":AvanteAsk<cr>",
+  { desc = "[C]odecompanion [A]ction", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jac", ":AvanteChat<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jae", ":AvanteChat<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jat", ":AvanteToggle<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })

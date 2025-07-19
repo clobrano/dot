@@ -1,6 +1,20 @@
-local is_vendor_ignored = true
+
+--- close buffers inside a Telescope buffer view
+local function close_selected_buffers(bufnr)
+  require('telescope.actions').delete_buffer(bufnr)
+end
+
+--- Telescope options defined here, they'll be assigned below in this file
 local telescope_opts = {
   defaults = {
+    mappings = {
+      i = {
+        ["<c-d>"] = close_selected_buffers,
+      },
+      n = {
+        ["<c-d>"] = close_selected_buffers,
+      },
+    },
     file_ignore_patterns = {
       "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/", "^tags$"
     },
@@ -44,6 +58,11 @@ local telescope_opts = {
   },
 }
 
+
+
+
+--- is_vendor_ignored and TelescopeToggleVendorIgnore are used to toggle ignoring "vendor" folder when searching inside a golang project
+local is_vendor_ignored = true
 _G.TelescopeToggleVendorIgnore = function()
   is_vendor_ignored = not is_vendor_ignored
   if is_vendor_ignored then
@@ -62,6 +81,11 @@ _G.TelescopeToggleVendorIgnore = function()
   require("telescope").setup(telescope_opts)
 end
 
+
+
+
+
+--- Here is the actual Telescope plugin configuration
 return {
   'nvim-telescope/telescope.nvim',
   branch = '0.1.x',
@@ -118,7 +142,7 @@ return {
       { desc = '[T]elescope [T]oggle [V]endor in search' })
     vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
     vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
-    vim.keymap.set('n', '<leader>fB', function()
+    vim.keymap.set('n', '<leader>fb', function()
       require('telescope.builtin').buffers({
         layout_strategy = 'vertical',
         layout_config = {

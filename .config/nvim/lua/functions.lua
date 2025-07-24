@@ -2,34 +2,40 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
+
+
 local function escape_lua_pattern(s)
   -- Escape characters that are magic in Lua patterns
   return s:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")
 end
 
 function SendFileToRemote(server_name, remote_root_path)
-    local local_file_abs_path = vim.fn.expand('%:p')
+  local local_file_abs_path = vim.fn.expand('%:p')
 
-    -- Get the local Git repository root
-    local git_root_output = vim.fn.system('git rev-parse --show-toplevel')
-    local local_git_root = vim.fn.trim(git_root_output)
+  -- Get the local Git repository root
+  local git_root_output = vim.fn.system('git rev-parse --show-toplevel')
+  local local_git_root = vim.fn.trim(git_root_output)
 
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({{ "Error: Not a Git repository or 'git rev-parse --show-toplevel' failed.", "ErrorMsg" }}, true, {})
-        return
-    end
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({ { "Error: Not a Git repository or 'git rev-parse --show-toplevel' failed.", "ErrorMsg" } }, true,
+      {})
+    return
+  end
 
-    -- Calculate the relative path from the local Git root
-    -- Escape local_git_root and the trailing slash for Lua pattern matching
-    local pattern_to_remove = "^" .. escape_lua_pattern(local_git_root .. "/")
-    local relative_path = string.gsub(local_file_abs_path, pattern_to_remove, '')
+  -- Calculate the relative path from the local Git root
+  -- Escape local_git_root and the trailing slash for Lua pattern matching
+  local pattern_to_remove = "^" .. escape_lua_pattern(local_git_root .. "/")
+  local relative_path = string.gsub(local_file_abs_path, pattern_to_remove, '')
 
-    -- Construct the scp command
-    local scp_command = 'scp ' .. vim.fn.shellescape(local_file_abs_path) .. ' ' .. server_name .. ':' .. remote_root_path .. '/' .. vim.fn.shellescape(relative_path)
+  -- Construct the scp command
+  local scp_command = 'scp ' ..
+  vim.fn.shellescape(local_file_abs_path) ..
+  ' ' .. server_name .. ':' .. remote_root_path .. '/' .. vim.fn.shellescape(relative_path)
 
-    -- Execute the command
-    vim.api.nvim_echo({{ "Executing: " .. scp_command, "Normal" }}, true, {})
-    vim.cmd('!' .. scp_command)
+  -- Execute the command
+  vim.api.nvim_echo({ { "Executing: " .. scp_command, "Normal" } }, true, {})
+  vim.cmd('!' .. scp_command)
+  vim.api.nvim_echo({ { "Command DONE" } }, true, {})
 end
 
 vim.api.nvim_create_user_command(
@@ -37,7 +43,7 @@ vim.api.nvim_create_user_command(
   function(opts)
     local args = vim.split(opts.args, '%s+')
     if #args ~= 2 then
-      vim.api.nvim_echo({{ "Usage: :Scp <server_name> <remote_root_path>", "ErrorMsg" }}, true, {})
+      vim.api.nvim_echo({ { "Usage: :Scp <server_name> <remote_root_path>", "ErrorMsg" } }, true, {})
       return
     end
     SendFileToRemote(args[1], args[2])
@@ -76,15 +82,14 @@ function FromGithubLinkToMarkdownPRRef()
   local last_line = vim.api.nvim_buf_line_count(bufnr)
 
   -- Insert the markdown reference at the end of the buffer.
-  vim.api.nvim_buf_set_lines(bufnr, last_line, last_line, false, {markdown_ref})
+  vim.api.nvim_buf_set_lines(bufnr, last_line, last_line, false, { markdown_ref })
 
   -- Insert the markdown label at the current cursor position
   -- 'c' for character-wise insert, 'false' for inserting before cursor, 'true' for moving cursor to end of paste
-  vim.api.nvim_put({markdown_label}, "c", false, true)
+  vim.api.nvim_put({ markdown_label }, "c", false, true)
 
   vim.notify("GitHub PR link converted and reference added.", vim.log.levels.INFO, { title = "GitHub Link" })
 end
-
 
 local function get_text_inside_brackets()
   local line = vim.fn.getline(".") -- Get the current line
@@ -217,22 +222,24 @@ function CopyCodeAndPermalink()
   vim.cmd("'<,'>GBrowse!")
   local link = vim.fn.getreg('+')
 
-  local allowed_filetypes = {
-    ["c"] = true,
-    ["cpp"] = true,
-    ["go"] = true,
-    ["lua"] = true,
-    ["python"] = true,
-    ["sh"] = true,
+  local filetype_to_comment_map = {
+    ["c"] = "// ",
+    ["cpp"] = "// ",
+    ["go"] = "// ",
+    ["lua"] = "-- ",
+    ["python"] = "# ",
+    ["sh"] = "# ",
   }
 
   local output = ""
-  if allowed_filetypes[filetype] then
+  if filetype_to_comment_map[filetype] then
     output = output .. "```" .. filetype .. "\n"
+    output = output .. filetype_to_comment_map[filetype] .. link .. "\n"
   else
-    output = output .. "```"  .. "\n"
+    output = output .. "```" .. "\n"
+    output = output .. "// " .. link .. "\n"
   end
-  output = output .. "// " .. link .. "\n"
+
   output = output .. saved_selection .. "\n"
   output = output .. "```"
   vim.fn.setreg('+', output)
@@ -581,7 +588,7 @@ function Get_Smart_Weblink()
   print(target_text)
 
   local tokens = vim.split(target_text, " ")
-  print(vim.inspect(tokens))   -- Use vim.inspect for better output
+  print(vim.inspect(tokens))    -- Use vim.inspect for better output
 
   local org_project = tokens[1] -- Lua lists are 1-based
   local number = ""
@@ -867,6 +874,43 @@ M.searchSelectedText = function()
   -- Replace the original text with the replaced text
   require('telescope.builtin').live_grep({ search = selected_text })
 end
+
+
+--- Converts a specific task line format by removing the initial checkbox,
+--- the date/time string, and reformatting the final hashcode.
+---
+--- @param line string The input line to convert.
+--- @return string The converted line.
+function M.convert_task_line(line)
+  -- Remove the initial "* [ ] " prefix
+  local new_line = line:gsub("^%* %[ %] ", "* ")
+
+  -- Remove the date and time part, including surrounding spaces.
+  -- Example: " (2025-07-23 19:00)  "
+  -- The pattern matches a space, followed by literal parentheses containing
+  -- a date (YYYY-MM-DD) and time (HH:MM), followed by one or more spaces.
+  new_line = new_line:gsub("%s%((%d%d%d%d%-%d%d%-%d%d %d%d:%d%d)%)%s*", "")
+
+  -- Transform the "#W:hashcode" at the end into "(hashcode)".
+  -- %x+ matches one or more hexadecimal characters.
+  -- $ anchors the match to the end of the line.
+  new_line = new_line:gsub("#W:(%x+)$", " (%1)")
+
+  return new_line
+end
+
+-- Define a Neovim command to convert the current line
+vim.api.nvim_create_user_command('ConvertTaskLine', function()
+    local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
+    local current_line_content = vim.api.nvim_buf_get_lines(0, current_line_num - 1, current_line_num, false)[1]
+    local converted_line = M.convert_task_line(current_line_content)
+    vim.api.nvim_buf_set_lines(0, current_line_num - 1, current_line_num, false, {converted_line})
+end, {
+    desc = 'Convert the current task line format'
+})
+
+-- Optional: Map it to a keybinding for convenience (e.g., <leader>ct)
+vim.keymap.set('n', '<leader>pt', ':ConvertTaskLine<CR>', { desc = '[P]ick [T]askwarrior activity' })
 
 
 return M

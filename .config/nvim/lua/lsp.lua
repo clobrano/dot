@@ -149,7 +149,8 @@ if true then
       { name = 'nvim_lsp',
         option = {
           markdown_oxide = {
-            keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+            -- Added '@' to the keyword_pattern to allow snippets starting with '@'
+            keyword_pattern = [[\(\k\| \|\/\|#\|@\)\+]]
           }
         }
       },
@@ -195,13 +196,12 @@ if true then
     callback = function()
       cmp.setup.buffer({
         --enabled = false, -- Disable cmp entirely for this buffer
-        -- OR, if you just want to remove 'buffer' source:
-        -- sources = cmp.config.sources({
-        --   { name = 'nvim_lsp' }, -- Keep LSP if you have markdown LSP
-        --   { name = 'luasnip' },
-        --   { name = 'path' },
-        --   -- EXCLUDE 'buffer' here
-        -- }),
+        -- disabling buffer, like below, will suppress time snippets, like "@today"
+        --sources = cmp.config.sources({
+          --{ name = 'nvim_lsp' }, -- Keep LSP if you have markdown LSP
+          --{ name = 'luasnip' },
+          --{ name = 'path' },
+        --}),
       })
     end,
   })

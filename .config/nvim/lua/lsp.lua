@@ -145,10 +145,19 @@ if true then
   luasnip.config.setup {}
 
   cmp.setup {
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
+    sources = {
+      { name = 'nvim_lsp',
+        option = {
+          markdown_oxide = {
+            keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+          }
+        }
+      },
+      { name = 'luasnip' },
+      { name = 'natdat' },
+      { name = 'buffer' },
+      { name = 'path' },
+      --{ name = 'cmdline' }, -- do not enable it. It conflicts with editing Markdown (at least)
     },
     mapping = cmp.mapping.preset.insert {
       ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -170,21 +179,33 @@ if true then
         end
       end, { 'i', 's' }),
     },
-    sources = {
-      { name = 'nvim_lsp',
-        option = {
-          markdown_oxide = {
-            keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
-          }
-        }
-      },
-      { name = 'luasnip' },
-      { name = 'natdat' },
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
     },
     experimental = {
       ghost_text = false
     },
   }
+
+  -- Autocommand to disable buffer completion specifically for Markdown
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+      cmp.setup.buffer({
+        --enabled = false, -- Disable cmp entirely for this buffer
+        -- OR, if you just want to remove 'buffer' source:
+        -- sources = cmp.config.sources({
+        --   { name = 'nvim_lsp' }, -- Keep LSP if you have markdown LSP
+        --   { name = 'luasnip' },
+        --   { name = 'path' },
+        --   -- EXCLUDE 'buffer' here
+        -- }),
+      })
+    end,
+  })
+
   -- `/` cmdline setup.
   cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
@@ -192,18 +213,16 @@ if true then
       { name = 'buffer' }
     }
   })
-  -- `:` cmdline setup.
+
+  -- Setup for cmdline completion specifically for ':' and '!'
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      {
-        name = 'cmdline',
-        option = {
-          ignore_cmds = { 'Man', '!' }
-        }
-      }
-    })
+      { name = 'path' },
+      { name = 'cmdline' },
+      { name = 'shell_history' }, -- Add shell history here
+    }),
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
   })
 end

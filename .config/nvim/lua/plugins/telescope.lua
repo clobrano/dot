@@ -1,4 +1,3 @@
-
 --- close buffers inside a Telescope buffer view
 local function close_selected_buffers(bufnr)
   require('telescope.actions').delete_buffer(bufnr)
@@ -19,7 +18,7 @@ local telescope_opts = {
       "^.git/", "node_modules/", "^vendor/", "^venv/", "^.venv/", "^tags$"
     },
     path_display = Filename_first_path_display,
-    layout_strategy = 'flex',
+    layout_strategy = 'vertical', -- or 'flex'
     layout_config = {
       width = 0.99,
       height = 0.99,
@@ -39,6 +38,7 @@ local telescope_opts = {
         vertical = {
           prompt_position = "top",
           mirror = true,
+          preview_width = 0.7, -- Adjust results window width if needed
           -- The preview window will be above the results in this layout
         },
       },
@@ -151,7 +151,11 @@ return {
       })
     end, { desc = '[F]ind [B]uffers' })
     vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
-    vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+    vim.keymap.set('n', '<leader>ff', function()
+      require('telescope.builtin').find_files({
+        layout_strategy = 'vertical',
+      })
+    end, { desc = '[F]ind [F]iles' })
     vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
     vim.keymap.set('n', '<leader>fj',
@@ -189,5 +193,10 @@ return {
 
     -- Session via Persisted.nvim
     vim.keymap.set('n', '<leader>so', ":Telescope persisted<cr>", { desc = '[S]ession [O]pen (via Persisted)' })
+
+    -- abbreviation "tt" -> Telescope
+    vim.cmd [[
+      cnoreabbrev <expr> tt getcmdtype() == ":" && getcmdline() == 'tt' ? 'Telescope' : 'tt'
+    ]]
   end
 }

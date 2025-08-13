@@ -117,11 +117,8 @@ imap('<C-f>', '<C-x><C-f>')
 --nmap(<leader>ex <esc>:Explore<cr>
 nmap('<leader>ex', ':!%:p<cr>')
 
-
 -- ctags create
 vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create [C][t]ags", noremap = true, silent = true })
--- gotags create
-vim.keymap.set("n", "<leader>got", ":!gotags `find . -name '*.go' | grep -v './vendor'` > tags<cr>", { desc = "Create [G]o[t]ags", noremap = true, silent = true })
 
 -- directory change here
 nmap('<leader>here', ':lcd %:p:h<CR>')
@@ -129,8 +126,8 @@ nmap('<leader>here', ':lcd %:p:h<CR>')
 -- vimdiff: Diff Start, Diff Off, Diff Put, Diff Get
 --nmap('<leader>ds', ':windo diffthis<cr>')
 --nmap('<leader>do', ':windo diffoff<cr>')
-nmap('<leader>dp', ':diffput<cr>')
-nmap('<leader>dg', ':diffget<cr>')
+nmap('<leader>dh', ':diffget //2<cr>')
+nmap('<leader>dl', ':diffget //3<cr>')
 -- enhance diff put and diff obtain moving automatically to the next change
 nmap('dp', 'dp]c')
 nmap('do', 'do]c')

@@ -17,7 +17,6 @@ return {
   end,
   config = function()
     -- Load treesitter grammar for org
-
     -- Setup treesitter: NOTE: treesiter fails loading support for org, so I'll disable it for now
     --require('nvim-treesitter.configs').setup({
       --highlight = {
@@ -31,11 +30,14 @@ return {
       org_agenda_files = { '~/Me/Orgmode/**/*' },
       org_default_notes_file = '~/Me/Orgmode/Orgmode.org',
       org_capture_templates = {
-        t = { description = 'Task', template = '* TODO %?\n' },
+        -- no need to add newline after uuidgen, as the UUID is returned with the newline
+        t = { description = 'Task', template = '* TODO %?\n  DEADLINE: %^T\n  :PROPERTIES:\n  :ID: %(return vim.fn.system "uuidgen")  :END:', target= '~/Me/Orgmode/Orgmode.org'},
         n = { description = 'Note', template = '* %?\n' },
       },
-      --org_startup_folded = 'overview', -- 'showeverything',
+      org_todo_keywords = {'TODO', 'LATER', '|', 'DONE'},
       org_tags_column = -100,
+      org_deadline_warning_days = 0,
+      org_id_link_to_org_use_id = true,
    })
   end,
 }

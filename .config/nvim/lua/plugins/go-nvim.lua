@@ -19,6 +19,20 @@ return {
       end,
       group = format_sync_grp,
     })
+    vim.keymap.set("n", "<leader>goa", ":GoAlt<cr>", { desc="[GO] [A]lternate file", noremap=true, silent=true })
+    vim.keymap.set("n", "<leader>gob", ":GoBuild<cr>", { desc="[GO] [B]uild", noremap=true, silent=true })
+    vim.keymap.set("n", "<leader>goi", ":GoInstall<cr>", { desc="[GO] [I]nstall", noremap=true, silent=true })
+    vim.keymap.set("n", "<leader>gotf", ":GoTest<cr>", { desc="[GO] [T]est", noremap=true, silent=true })
+    vim.keymap.set("n", "<leader>gotf", ":GoTestFile<cr>", { desc="[GO] [T]est this [F]ile", noremap=true, silent=true })
+    vim.keymap.set("n", "<leader>gop", ":GoTestPackage<cr>", { desc="[GO] [T]est [P]ackage", noremap=true, silent=true })
+
+    -- Generate Tags with gotags
+    vim.api.nvim_create_user_command("GoTags",
+      function()
+        vim.fn.system(  ":!gotags `find . -name '*.go' | grep -v './vendor'` > tags<cr>")
+      end,
+      {})
+
   end,
   event = { "CmdlineEnter" },
   ft = { "go", 'gomod' },

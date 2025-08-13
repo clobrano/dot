@@ -11,7 +11,7 @@ return {
         gemini = function()
           return require('codecompanion.adapters').extend('gemini', {
             env = {
-              api_key = "GEMINI_API_KEY_PERSONAL",
+              api_key = "GEMINI_API_KEY",
             }
           })
         end

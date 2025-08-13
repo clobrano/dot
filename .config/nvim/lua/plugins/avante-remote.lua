@@ -8,8 +8,8 @@ return {
       gemini = {
         model = "gemini-2.5-flash",
         api_key_name = "GEMINI_API_KEY",
-      }
-    }
+      },
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",

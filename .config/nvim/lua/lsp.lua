@@ -53,6 +53,15 @@ if true then
     end, { desc = 'Format current buffer with LSP' })
   end
 
+  -- Configure LSP hover and signature help handlers to have borders
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded"
+  })
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded"
+  })
+
   if false then
     -- already configured in lua/diagnostic.lua
     -- keeping it for documentation
@@ -208,7 +217,9 @@ if true then
 
   -- `/` cmdline setup.
   cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
     sources = {
       { name = 'buffer' }
     }
@@ -216,13 +227,13 @@ if true then
 
   -- Setup for cmdline completion specifically for ':' and '!'
   cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' },
-      { name = 'cmdline' },
-      { name = 'shell_history' }, -- Add shell history here
-    }),
     mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
       ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
     }),
+    sources = cmp.config.sources({
+      { name = 'path' },
+      { name = 'cmdline' },
+      { name = 'shell_history' },
+    })
   })
 end

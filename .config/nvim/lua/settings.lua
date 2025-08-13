@@ -8,6 +8,24 @@ vim.cmd[[
 set guioptions-=m
 set guioptions-=T]]
 
+-- Set the winbar content
+vim.opt.winbar = "%f" -- Or "%t" for just the filename
+-- Define an autocmd to apply winbar highlights after colorscheme is loaded
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("WinBarColors", { clear = true }),
+  callback = function()
+    -- Clear existing WinBar highlights (important to clear any previously set background)
+    vim.cmd("highlight clear WinBar")
+    vim.cmd("highlight clear WinBarNC")
+
+    -- Active WinBar: distinct foreground, and no explicit background (will inherit buffer's background)
+    vim.api.nvim_set_hl(0, "WinBar", { fg = "#C6A0F6", bold = true }) -- Mauve text
+
+    -- Inactive WinBar: duller foreground, and no explicit background (will inherit buffer's background)
+    vim.api.nvim_set_hl(0, "WinBarNC", { fg = "#A5ADCE" }) -- Subtext0 text
+  end,
+})
+
 vim.cmd.colorscheme 'catppuccin'
 vim.wo.number = true
 vim.wo.relativenumber = true
@@ -68,7 +86,7 @@ vim.opt.swapfile = false
 
 vim.opt.joinspaces = false -- do not add space when joining lines
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 15
 vim.opt.shiftround = true                            -- always indent by multiple of shiftwidth
 vim.shiftwidth = 4                          -- spaces per tab (when shifting)
 vim.opt.shortmess:append('A')                          -- ignore annoying swapfile messages

@@ -51,7 +51,7 @@ source ~/.config/cconf/dot/dotfiles.sh
 # bindings (-e emacs, -v vi)
 bindkey -v
 # Re-enable history search in vi-mode
-bindkey '^R' history-incremental-search-backward
+#bindkey '^R' history-incremental-search-backward
 
 bindkey jj vi-cmd-mode
 autoload edit-command-line
@@ -242,12 +242,6 @@ if command -v kubectl 2>&1 >/dev/null; then
     [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 fi
 
-# run atuin if installed
-if command -v atuin >/dev/null; then
-    # Bind ctrl-r but not up arrow
-    eval "$(atuin init zsh --disable-up-arrow)"
-fi
-
 # source uncommitable env variables
 if [[ -f ~/Documents/unsharable ]]; then
     source ~/Documents/unsharable
@@ -279,3 +273,13 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+source <(helm completion zsh)
+
+# run atuin if installed
+if command -v atuin >/dev/null; then
+    # Bind ctrl-r but not up arrow
+    eval "$(atuin init zsh --disable-up-arrow)"
+    atuin import auto > /dev/null 2>&1
+fi
+
+

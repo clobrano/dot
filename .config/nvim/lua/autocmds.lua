@@ -48,6 +48,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end
 })
 
+-- golang settings
+vim.api.nvim_create_augroup("go_settings", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  group = "go_settings",
+  callback = function()
+    vim.opt_local.makeprg = "go build"
+    vim.opt_local.errorformat = "%f:%l:%c: %m"
+  end,
+})
+
 --" Hightlight word under cursor (all splits)
 --" Just like windo, but restore the current window when done. (see: https://vim.fandom.com/wiki/Windo_and_restore_current_window)
 --function! WinDoAndRestore(command)

@@ -69,4 +69,11 @@ alias bb="~/workspace/script-fu/BookMarkIt find"
 # ntfy.sh. To be used with
 alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
-alias cdf="source ~/workspace/script-fu/fzf-cd.sh"
+#alias cdf="source ~/workspace/script-fu/fzf-cd.sh"
+#alias cdf="cd \$(find $HOME -maxdepth 5 -type d -not -path \"*/.*\" | fzf --layout reverse --prompt \"Search directory> \")"
+alias cdf="cd \$(fuzzy-cd)"
+
+
+alias claude="source claude-config.sh; claude"
+alias gemini="gemini -m gemini-2.0-flash"
+alias geminirh="export GEMINI_API_KEY=$GEMINI_API_KEY_REDHAT; gemini"

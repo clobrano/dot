@@ -166,6 +166,8 @@ local plugins = {
   },
   'kiyoon/telescope-insert-path.nvim',
   'nvim-telescope/telescope-media-files.nvim',
+  require('plugins.luasnip-telescope'),
+
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
   -- requirements installed.

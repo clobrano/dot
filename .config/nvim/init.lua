@@ -20,19 +20,18 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   -- UI
-  "savq/melange-nvim",                                        -- default light theme
+  "savq/melange-nvim", -- default light theme
   require('plugins.catpuccin'),
   require('plugins.tokyonight'),
   require('plugins.dracula'),
   { 'projekt0n/github-nvim-theme', name = 'github-theme' },
-  "tanvirtin/monokai.nvim",                                   -- monokai colorscheme
+  "tanvirtin/monokai.nvim", -- monokai colorscheme
   'ryanoasis/vim-devicons',
   require('plugins.nvim-listchars'),
-  "b0o/incline.nvim",                                         -- for the floating filenames
-  'mtdl9/vim-log-highlighting',                               -- Highlight log files
+  'mtdl9/vim-log-highlighting', -- Highlight log files
   'xiyaowong/transparent.nvim',
   require('plugins.tagbar'),
-  require('plugins.tabline'), -- needed to show buffers names on top
+  --require('plugins.tabline'), -- needed to show buffers names on top
   require('plugins.lualine'),
   require('plugins.persisted'),
   --require('plugins.startify'),
@@ -55,7 +54,7 @@ local plugins = {
       { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
     },
   },
-  { "Gelio/cmp-natdat", config = true },
+  { "Gelio/cmp-natdat",       config = true },
 
   -- Notes and Markdown
   require('plugins.clipboard-image'),
@@ -64,14 +63,14 @@ local plugins = {
   require('plugins.markdown-preview'),
   require('plugins.marvim'), -- macro recorder
   require('plugins.orgmode'),
-  { "weirongxu/plantuml-previewer.vim" , dependencies = {'tyru/open-browser.vim', 'aklt/plantuml-syntax'}},
+  { "weirongxu/plantuml-previewer.vim", dependencies = { 'tyru/open-browser.vim', 'aklt/plantuml-syntax' } },
   --require('plugins.plantuml'),
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
   require('plugins.zenmode'),
   require('plugins.render-markdown'),
   --require('plugins.peek'),
-  require('plugins.snacks'),
+  --require('plugins.snacks'),
 
   -- Code and text helpers
   'jiangmiao/auto-pairs',
@@ -142,7 +141,6 @@ local plugins = {
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   require('plugins.mason-lspconfig'),
-
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -214,7 +212,7 @@ require('lsp')
 require('plugins.fzf-vim')
 require('plugins.ranger')
 --require('plugins.copilot')
-require('plugins.incline')
+--require('plugins.incline')
 require('plugins.surrounds')
 require('undotree').setup()
 
@@ -232,20 +230,20 @@ require('telescope').load_extension('media_files')
 
 -- See `:help telescope.builtin`
 --vim.keymap.set('n', '<leader>f/', function()
-  ---- You can pass additional configuration to telescope to change theme, layout, etc.
-  ---- configure get_dropdown to expand previewer to full width of screen
-  --require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    --layout_strategy = "vertical",
-    --winblend = 10,
-    --previewer = false,
-    --shorten_path = false,
-    --layout_config = {
-      --width = 0.95,
-      --height = 0.95,
-      --horizontal = { preview_width = 0.9 },
-      --vertical = { preview_height = 0.5 },
-    --},
-  --})
+---- You can pass additional configuration to telescope to change theme, layout, etc.
+---- configure get_dropdown to expand previewer to full width of screen
+--require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--layout_strategy = "vertical",
+--winblend = 10,
+--previewer = false,
+--shorten_path = false,
+--layout_config = {
+--width = 0.95,
+--height = 0.95,
+--horizontal = { preview_width = 0.9 },
+--vertical = { preview_height = 0.5 },
+--},
+--})
 --end, { desc = '[F]uzzily [/] search in current buffer' })
 
 --vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
@@ -259,7 +257,7 @@ require('telescope').load_extension('media_files')
 --vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
 --vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
 --vim.keymap.set('n', '<leader>ft', function() require('telescope.builtin').tags({ fname_width = 70 }) end,
-  --{ desc = '[F]ind [T]ags' })
+--{ desc = '[F]ind [T]ags' })
 
 ---- Git telescope
 --vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })

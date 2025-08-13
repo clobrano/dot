@@ -25,7 +25,7 @@ config.font_size = 10.5
 
 -- disable title bar
 --config.window_decorations = "INTEGRATED_BUTTONS | NONE"
-config.window_decorations = "NONE"
+--config.window_decorations = "NONE"
 
 -- disable the tab bar with only one tab
 config.hide_tab_bar_if_only_one_tab = true
@@ -39,10 +39,10 @@ config.window_frame = {
   border_right_width = '0.2cell',
   border_bottom_height = '0.1cell',
   border_top_height = '0.1cell',
-  border_left_color = 'pink',
-  border_right_color = 'pink',
-  border_bottom_color = 'pink',
-  border_top_color = 'pink',
+  --border_left_color = 'pink',
+  --border_right_color = 'pink',
+  --border_bottom_color = 'pink',
+  --border_top_color = 'pink',
   inactive_titlebar_bg = '#353535',
   inactive_titlebar_fg = '#cccccc',
   active_titlebar_fg = '#ffffff',
@@ -56,8 +56,8 @@ config.window_frame = {
 
 config.window_padding = { left = 10, right = 10, top = 5, bottom = 5, }
 -- large format
-config.initial_cols = 235
-config.initial_rows = 55
+--config.initial_cols = 235
+--config.initial_rows = 55
 -- short format
 --config.initial_cols = 120
 --config.initial_rows = 40

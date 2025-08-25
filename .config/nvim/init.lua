@@ -55,10 +55,12 @@ local plugins = {
     },
   },
   { "Gelio/cmp-natdat",       config = true },
+  require('plugins.gh'),
+  require('plugins.octo'),
 
   -- Notes and Markdown
   require('plugins.clipboard-image'),
-  require('plugins.github-preview'),
+  --require('plugins.github-preview'),
   require('plugins.icon-picker'),
   require('plugins.markdown-preview'),
   require('plugins.marvim'), -- macro recorder
@@ -67,7 +69,7 @@ local plugins = {
   --require('plugins.plantuml'),
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
-  require('plugins.zenmode'),
+  --require('plugins.zenmode'),
   require('plugins.render-markdown'),
   --require('plugins.peek'),
   --require('plugins.snacks'),
@@ -86,8 +88,6 @@ local plugins = {
   --require('plugins.nvim-highlight-colors'),
   require('plugins.trailblazer'),
   require('plugins.todo-comments'),
-  require('plugins.gh'),
-  require('plugins.octo'),
   require('plugins.other'),
   require('plugins.nvim-window-picker'),
 
@@ -99,8 +99,7 @@ local plugins = {
   'theHamsta/nvim-dap-virtual-text',
   'nvim-telescope/telescope-dap.nvim',
 
-  -- Search
-  require('plugins.telescope'),
+  -- Search/Navigation
   'junegunn/fzf.vim',
   'mileszs/ack.vim',
   'vim-scripts/MultipleSearch',
@@ -119,6 +118,7 @@ local plugins = {
     end
   },
   require('plugins.leap'),
+  require('plugins.telescope'),
   --require('plugins.journal'),
 
 
@@ -134,9 +134,9 @@ local plugins = {
   -- AI
   --'github/copilot.vim',
   --require('plugins.avante'),
-  require('plugins.avante-remote'),
-  require('plugins.codecompanion'),
-  require('plugins.gen-nvim'),
+  --require('plugins.avante-remote'),
+  --require('plugins.codecompanion'),
+  --require('plugins.gen-nvim'),
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -218,54 +218,6 @@ require('undotree').setup()
 
 vim.cmd("FzfLua register_ui_select")
 --require("ibl").setup()
-
--- [[ Configure Telescope ]]
--- See `:help telescope` and `:help telescope.setup()`
-
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
--- Enable media-file preview in telescope
-require('telescope').load_extension('media_files')
---require('telescope').load_extension('noice')
-
--- See `:help telescope.builtin`
---vim.keymap.set('n', '<leader>f/', function()
----- You can pass additional configuration to telescope to change theme, layout, etc.
----- configure get_dropdown to expand previewer to full width of screen
---require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
---layout_strategy = "vertical",
---winblend = 10,
---previewer = false,
---shorten_path = false,
---layout_config = {
---width = 0.95,
---height = 0.95,
---horizontal = { preview_width = 0.9 },
---vertical = { preview_height = 0.5 },
---},
---})
---end, { desc = '[F]uzzily [/] search in current buffer' })
-
---vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
---vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
-----vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[F]ind [B]uffers' })
---vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
---vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
---vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
---vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
---vim.keymap.set('n', '<leader>fl', require('telescope.builtin').resume, { desc = '[F]ind [L]ast search' })
---vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = '[F]ind [M]anual' })
---vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
---vim.keymap.set('n', '<leader>ft', function() require('telescope.builtin').tags({ fname_width = 70 }) end,
---{ desc = '[F]ind [T]ags' })
-
----- Git telescope
---vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })
---vim.keymap.set('n', '<leader>fgc', require('telescope.builtin').git_commits, { desc = '[F]ind [G]it [C]ommits' })
---vim.keymap.set('n', '<leader>fgs', require('telescope.builtin').git_stash, { desc = '[F]ind [G]it [S]tashes' })
-
-
--- [[ Configure LSP ]]
 
 -- Neovide custom settings
 if vim.fn.exists('g:neovide') == 1 then

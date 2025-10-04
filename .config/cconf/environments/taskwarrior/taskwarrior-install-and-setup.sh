@@ -43,6 +43,8 @@ build_from_source() {
     tar xvf "$archive"
     pushd "$package" || exit 1
     cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+    # if it complains about missing rustc, tries
+    # cmake -DRust_COMPILER="$HOME/.cargo/bin/rustc" -S . -B build -DCMAKE_BUILD_TYPE=Release
     cmake --build build
     sudo cmake --install build
     popd || exit 1

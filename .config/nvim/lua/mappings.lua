@@ -70,7 +70,7 @@ nmap('C', 'ggvG$')
 -- buffer: show full path
 nmap('<leader>g', ":echo expand('%')<cr>")
 -- buffer: copy full path
-nmap('<leader>G', ':!echo % | wl-copy<cr>')
+nmap('<leader>G', ':!realpath % | wl-copy<cr>')
 
 -- buffer: close
 nmap('xx', ':bd<CR>')
@@ -117,9 +117,8 @@ imap('<C-f>', '<C-x><C-f>')
 --nmap(<leader>ex <esc>:Explore<cr>
 nmap('<leader>ex', ':!%:p<cr>')
 
-
 -- ctags create
-vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create Ctags", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { desc = "Create [C][t]ags", noremap = true, silent = true })
 
 -- directory change here
 nmap('<leader>here', ':lcd %:p:h<CR>')
@@ -127,8 +126,8 @@ nmap('<leader>here', ':lcd %:p:h<CR>')
 -- vimdiff: Diff Start, Diff Off, Diff Put, Diff Get
 --nmap('<leader>ds', ':windo diffthis<cr>')
 --nmap('<leader>do', ':windo diffoff<cr>')
-nmap('<leader>dp', ':diffput<cr>')
-nmap('<leader>dg', ':diffget<cr>')
+nmap('<leader>dh', ':diffget //2<cr>')
+nmap('<leader>dl', ':diffget //3<cr>')
 -- enhance diff put and diff obtain moving automatically to the next change
 nmap('dp', 'dp]c')
 nmap('do', 'do]c')
@@ -247,8 +246,6 @@ imap('jj', '<Esc>')
 --imap('jj',   '<Esc>:write<CR>')
 
 -- Notes (see plugin/tasks)
--- get title from url (get url from clipboard)
-nmap('<leader>gt', ':r ! ~/workspace/script-fu/get-url-title.sh<cr>')
 -- open file with xdg-open (e.g. images in markdown files)
 nmap('<leader>xo', ':!xdg-open %:p:h/<cfile>')
 
@@ -440,3 +437,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Avante
+vim.keymap.set("n", "<leader>jaa", ":AvanteAsk<cr>",
+  { desc = "[C]odecompanion [A]ction", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jac", ":AvanteChat<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jae", ":AvanteChat<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>jat", ":AvanteToggle<cr>",
+  { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })

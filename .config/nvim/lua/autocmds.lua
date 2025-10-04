@@ -28,6 +28,37 @@ au FileType qf wincmd J
 autocmd TermOpen * startinsert
 ]]
 
+-- Autocmd to source a nvim.local.lua file if and only if it exists in the current directory
+
+local local_config_group = vim.api.nvim_create_augroup("LocalNvimConfig", { clear = true })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = local_config_group,
+  callback = function()
+    local current_dir = vim.fn.getcwd()
+    local local_config_file = current_dir .. "/nvim.local.lua"
+    local stat = vim.uv.fs_stat(local_config_file)
+
+    if stat and stat.type == "file"  then
+      local ok, err = pcall(dofile, local_config_file)
+      if not ok then
+        vim.notify(string.format("Error loading local nvim config: %s", err), vim.log.levels.Error)
+      end
+    end
+  end
+})
+
+-- golang settings
+vim.api.nvim_create_augroup("go_settings", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  group = "go_settings",
+  callback = function()
+    vim.opt_local.makeprg = "go build"
+    vim.opt_local.errorformat = "%f:%l:%c: %m"
+  end,
+})
+
 --" Hightlight word under cursor (all splits)
 --" Just like windo, but restore the current window when done. (see: https://vim.fandom.com/wiki/Windo_and_restore_current_window)
 --function! WinDoAndRestore(command)

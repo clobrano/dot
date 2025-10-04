@@ -5,8 +5,10 @@ vim.lsp.config("*", {
 })
 
 require("mason").setup()
-require("mason-lspconfig").setup {
-  ensure_installed = { "rust_analyzer", "lua_ls" }
+local lspconfig = require("lspconfig")
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup {
+  ensure_installed = { "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright" }
 }
 
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
@@ -17,7 +19,7 @@ vim.api.nvim_create_user_command('Format', function(_) vim.lsp.buf.format() end,
   { desc = 'Format current buffer with LSP' })
 
 
-if false then
+if true then
   --  This function gets run when an LSP connects to a particular buffer.
   local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
@@ -50,6 +52,15 @@ if false then
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
   end
+
+  -- Configure LSP hover and signature help handlers to have borders
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded"
+  })
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded"
+  })
 
   if false then
     -- already configured in lua/diagnostic.lua
@@ -108,24 +119,6 @@ if false then
         telemetry = { enable = false },
       },
     },
-    --harper_ls = {
-    --filetypes = { "markdown", "gitcommit" },
-    --settings = {
-    --["harper-ls"] = {
-    --userDictPath = "~/.config/nvim/spell/en.utf-8.add",
-    --linters = {
-    --Spaces = false,
-    --SentenceCapitalization = false,
-    --SpelledNumbers = false,
-    --SpellCheck = false,
-    --ToDoHyphen = false,
-    --},
-    --markdown = {
-    --IgnoreLinkTitle = true,
-    --},
-    --},
-    --}
-    --},
   }
 
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -150,7 +143,7 @@ if false then
 
   lspconfig.markdown_oxide.setup({
     capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-    on_attach = on_attach,     -- configure your on attach config
+    on_attach = on_attach,       -- configure your on attach config
   })
 
   -- [[ Configure nvim-cmp ]]
@@ -161,10 +154,20 @@ if false then
   luasnip.config.setup {}
 
   cmp.setup {
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
+    sources = {
+      { name = 'nvim_lsp',
+        option = {
+          markdown_oxide = {
+            -- Added '@' to the keyword_pattern to allow snippets starting with '@'
+            keyword_pattern = [[\(\k\| \|\/\|#\|@\)\+]]
+          }
+        }
+      },
+      { name = 'luasnip' },
+      { name = 'natdat' },
+      { name = 'buffer' },
+      { name = 'path' },
+      --{ name = 'cmdline' }, -- do not enable it. It conflicts with editing Markdown (at least)
     },
     mapping = cmp.mapping.preset.insert {
       ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -186,40 +189,51 @@ if false then
         end
       end, { 'i', 's' }),
     },
-    sources = {
-      { name = 'nvim_lsp',
-        option = {
-          markdown_oxide = {
-            keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
-          }
-        }
-      },
-      { name = 'luasnip' },
-      { name = 'natdat' },
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
     },
     experimental = {
       ghost_text = false
     },
   }
+
+  -- Autocommand to disable buffer completion specifically for Markdown
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+      cmp.setup.buffer({
+        --enabled = false, -- Disable cmp entirely for this buffer
+        -- disabling buffer, like below, will suppress time snippets, like "@today"
+        --sources = cmp.config.sources({
+          --{ name = 'nvim_lsp' }, -- Keep LSP if you have markdown LSP
+          --{ name = 'luasnip' },
+          --{ name = 'path' },
+        --}),
+      })
+    end,
+  })
+
   -- `/` cmdline setup.
   cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
     sources = {
       { name = 'buffer' }
     }
   })
-  -- `:` cmdline setup.
+
+  -- Setup for cmdline completion specifically for ':' and '!'
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
     sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      {
-        name = 'cmdline',
-        option = {
-          ignore_cmds = { 'Man', '!' }
-        }
-      }
+      { name = 'path' },
+      { name = 'cmdline' },
+      { name = 'shell_history' },
     })
   })
 end

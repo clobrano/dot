@@ -1,4 +1,4 @@
- ---@diagnostic disable: missing-fields
+---@diagnostic disable: missing-fields
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects', },
@@ -10,12 +10,12 @@ return { -- Highlight, edit, and navigate code
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
       auto_install = false,
-
-      highlight = { enable = true },
+      highlight = { enable = true, disable = { "org" } },
       indent = {
         enable = true,
         disable = {
           "markdown", -- indentation bullet point is worse
+          "org"
         },
       },
       incremental_selection = {

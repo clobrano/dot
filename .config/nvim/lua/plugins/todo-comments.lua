@@ -19,6 +19,7 @@ return {
                 PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
                 NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
                 TEST = { icon = "⏲ ", color = "test", alt = { "TESTING" } },
+                WIP = { icon = " ", color = "test", alt = { "WORKINPROGRESS" } },
                 PASS = { icon = " ", color = "success", alt = { "PASSED" } },
                 FAIL = { icon = " ", color = "error", alt = { "ISSUE", "FAILED" } },
                 OK = { icon = " ", color =   "success", alt = { "OK", "SOLVED" } },

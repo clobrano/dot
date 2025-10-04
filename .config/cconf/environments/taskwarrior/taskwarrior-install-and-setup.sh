@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
 
-: "${TASKWARRIOR_VERSION:=3.3.0}"
+: "${TASKWARRIOR_VERSION:=3.4.1}"
 : "${TASKWARRIOR_TUI_VERSION:=v0.26.3}"
 
 install_dependencies() {

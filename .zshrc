@@ -8,7 +8,7 @@ source $HOME/.config/cconf/environments/pyenv-init.sh
 export ME=$HOME/Me
 
 export CDPATH=$HOME/workspace
-#export GOROOT=/usr/local/go/
+export GOROOT=/usr/local/go/
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
 export GIT_TERMINAL_PROMPT=1
@@ -26,8 +26,8 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
 PATH=$PATH:$HOME/.atuin/bin
-#PATH=$PATH:${GOBIN}
-#PATH=$PATH:${GOROOT}/bin
+PATH=$PATH:${GOBIN}
+PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:$(go env GOPATH)/bin
 PATH=$PATH:/usr/local/go/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
@@ -38,6 +38,11 @@ fi
 ulimit -c unlimited
 # Enable gcc colours, available since gcc 4.9.0
 GCC_COLORS=1
+
+# source uncommitable env variables
+if [[ -f ~/Documents/unsharable ]]; then
+    source ~/Documents/unsharable
+fi
 
 #
 # Aliases
@@ -218,6 +223,10 @@ add-zsh-hook precmd () {
             echo elapsed `humanizetime $elapsed`
             cmd_start=0
         fi
+
+        if [[ $elapsed -gt 120 ]] && [[ $elapsed -lt 600 ]] && command -v notify-send 2>&1 > /dev/null; then
+            notify-send --app-name="zsh $(pwd)" --urgency normal "command done"
+        fi
     fi
     vcs_info_msg_0_="[...]"
     if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
@@ -240,11 +249,6 @@ add-zsh-hook preexec () {
 # kubectl completion
 if command -v kubectl 2>&1 >/dev/null; then
     [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-fi
-
-# source uncommitable env variables
-if [[ -f ~/Documents/unsharable ]]; then
-    source ~/Documents/unsharable
 fi
 
 NEWLINE=$'\n'

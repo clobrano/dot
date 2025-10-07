@@ -22,7 +22,7 @@ local plugins = {
   -- UI
   "savq/melange-nvim", -- default light theme
   require('plugins.catpuccin'),
-  require('plugins.tokyonight'),
+  require('plugins.onedark'),
   require('plugins.dracula'),
   { 'projekt0n/github-nvim-theme', name = 'github-theme' },
   "tanvirtin/monokai.nvim", -- monokai colorscheme
@@ -281,4 +281,3 @@ au FileType plantuml let g:plantuml_previewer#plantuml_jar_path="/home/clobrano/
 --if vim.fn.has 'nvim-0.5.1' == 1 then
 --require('vim.lsp.log').set_format_func(vim.inspect)
 --end
---

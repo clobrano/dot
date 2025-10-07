@@ -11,7 +11,7 @@ return {
         vim.keymap.set('n','<leader>gca', '<esc>:G commit --amend<cr>')
         vim.keymap.set('n','<leader>gcan', '<esc>:G commit --amend --no-edit<cr>')
         --vim.keymap.set('n','<leader>gl', '<esc>:botright G log<cr>')
-		--vim.keymap.set('n','<leader>gps', '<esc>:Dispatch! git push<cr>')
+        --vim.keymap.set('n','<leader>gps', '<esc>:Dispatch! git push<cr>')
         vim.keymap.set('n','<leader>gpl', '<esc>:Dispatch! git pull<cr>')
         --vim.keymap.set('n','<leader>gs', '<esc>:vertical G<cr>')
         vim.keymap.set('n','<leader>gv', '<esc>:GV<cr>')
@@ -19,9 +19,9 @@ return {
         -- Fugitive vertical diff
         vim.keymap.set('n', '<leader>gd', '<esc>:Gvdiff<space>')
         -- Gvdiff get from left split
-        vim.keymap.set('n', 'gdh', ':diffget //2')
+        vim.keymap.set('n', 'gh', ':diffget //2', {desc="[G]et diff from right [H] split"})
         -- Gvdiff get from right split
-        vim.keymap.set('n', 'gdl', ':diffget //3')
+        vim.keymap.set('n', 'gl', ':diffget //3', {desc="[G]et diff from left [L] split"})
 
         -- move to parent directory when exploring the tree
         vim.cmd[[

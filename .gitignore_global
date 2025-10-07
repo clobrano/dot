@@ -16,3 +16,7 @@ vimrc.local
 rh-community-release.sh
 .github_token.env
 pull-secret
+CLAUDE.md
+
+**/.claude/settings.local.json
+GEMINI.md

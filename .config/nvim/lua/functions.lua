@@ -4,12 +4,19 @@ end
 
 
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
-vim.cmd([[
-        :%s/\v^(\s*\n)*(#.*\n)(\s*\n)*/\r\r\2
+  local save_cursor = vim.fn.getpos('.')
+  vim.cmd([[
+        :%s/\v^(\s*\n)*(### .*\n)(\s*\n)*/\r\r\2/e
         :nohlsearch
       ]])
+  vim.cmd([[
+        :%s/\v^(\s*\n)*(## .*\n)(\s*\n)*/\r\r\r\2/e
+        :nohlsearch
+      ]])
+  vim.fn.setpos('.', save_cursor)
 end, {})
-vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>", { desc = "[M]arkdown [Format] header spaces", noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>",
+  { desc = "[M]arkdown [Format] header spaces", noremap = true, silent = true })
 
 -- Function to add # at the beginning of a line.
 -- If it's the first symbol, add a space between the symbol and the rest of the text.
@@ -53,10 +60,10 @@ function RemoveHashFromLine()
     new_line = ''
     -- If the line starts with '# ' (hash followed by a space), remove both
   elseif line:sub(2, 2) == ' ' then
-    new_line = line:sub(3)     -- Get substring starting from the 3rd character
+    new_line = line:sub(3) -- Get substring starting from the 3rd character
     -- If the line starts with '#' but not followed by a space (e.g., '#text'), remove only '#'
   else
-    new_line = line:sub(2)     -- Get substring starting from the 2nd character
+    new_line = line:sub(2) -- Get substring starting from the 2nd character
   end
 
   vim.api.nvim_set_current_line(new_line)
@@ -225,6 +232,20 @@ end
 
 vim.api.nvim_set_keymap("n", "<leader>fo", ":lua Find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
 
+-- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
+-- the function will get the uuid and open the corresponding Taskwarrior task object for editing
+function Edit_taskwarrior_from_uuid()
+  --local uuid = get_clipboard()
+  local uuid = vim.fn.expand('<cword>')
+  if uuid == "" then return end
+
+  local command = "task rc:~/.taskworkrc " .. uuid .. " edit"
+  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
+  vim.cmd(':terminal ' .. command)
+end
+
+vim.api.nvim_set_keymap("n", "<leader>eo", ":lua Edit_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
+
 
 -- Add one hashtag '#' at the beginning of the current line
 function AddMarkdownHeader()
@@ -284,23 +305,37 @@ function CopyCodeAndPermalink()
   local original_clipboard_content = vim.fn.getreg('+')
 
   -- Try to get the link from @upstream first
-  vim.cmd("'<,'>GBrowse! @upstream")
-  local upstream_link = vim.fn.getreg('+')
+  local upstream_success, upstream_link = pcall(function()
+    vim.cmd("'<,'>GBrowse! @upstream")
+    return vim.fn.getreg('+')
+  end)
 
-  if upstream_link ~= "" and upstream_link ~= original_clipboard_content then
+  if upstream_success and upstream_link ~= "" and upstream_link ~= original_clipboard_content then
     link = upstream_link
     print("Got permalink from upstream.")
-  else
-    -- If upstream failed or didn't change the clipboard, try @origin
-    print("Upstream permalink not found or failed, trying origin.")
-    -- Restore original clipboard content before trying origin, to accurately check for changes
-    vim.fn.setreg('+', original_clipboard_content)
-    vim.cmd("'<,'>GBrowse! @origin")
-    link = vim.fn.getreg('+')
-    if link == "" or link == original_clipboard_content then
-      print("Failed to get permalink from origin as well.")
+    if not upstream_success then
+      print("Upstream permalink failed: " .. upstream_link)
     else
-      print("Got permalink from origin.")
+      print("Upstream permalink not found or failed, trying origin.")
+    end
+  end
+
+  -- If upstream failed or didn't change the clipboard, try @origin
+  -- Restore original clipboard content before trying origin, to accurately check for changes
+  vim.fn.setreg('+', original_clipboard_content)
+  local origin_success, origin_link = pcall(function()
+    vim.cmd("'<,'>GBrowse! @origin")
+    return vim.fn.getreg('+')
+  end)
+
+  if origin_success and origin_link ~= "" and origin_link ~= original_clipboard_content then
+    link = origin_link
+    print("Got permalink from origin.")
+  else
+    if not origin_success then
+      print("Failed to get permalink from origin: " .. origin_link)
+    else
+      print("Failed to get permalink from origin as well.")
     end
   end
 
@@ -642,12 +677,7 @@ vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
 
 local function insert_date_header()
-  -- Get the current date
-  local date = os.date("## %Y-%m-%d")   -- yyyy-mm-dd format
-  local weekday = os.date("%a"):upper() -- Weekday short name (e.g. 'THU')
-
-  -- Concatenate the date and the weekday
-  local formatted_date = date .. " " .. weekday
+  local formatted_date = os.date("* _%A %d %B_:")
 
   -- Insert the formatted date at the current cursor position
   vim.api.nvim_put({ formatted_date }, "c", false, true)
@@ -655,6 +685,7 @@ end
 
 -- Bind the function to a command (Optional)
 vim.api.nvim_create_user_command('InsertDateHeader', insert_date_header, {})
+vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { noremap = true, silent = true, desc = '[I]nsert [D]ate [H]eader' })
 
 
 
@@ -712,7 +743,7 @@ function Open_markdown_reference_url()
 end
 
 -- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Open_markdown_reference_url()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>',
   { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 
 function Get_Smart_Weblink()
@@ -756,7 +787,7 @@ function Goto_Weblink()
   vim.fn.system(command)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
 
 
 function ReplaceSpacesWithHypens()
@@ -1009,7 +1040,8 @@ end
 
 
 --- Converts a specific task line format by removing the initial checkbox,
---- unwanted symbols, and reformatting the final hashcode.
+--- unwanted symbols, and reformatting the final hashcode, replacing the outline with
+--- a chapter section
 ---
 --- @param line string The input line to convert.
 --- @return string The converted line.
@@ -1019,7 +1051,7 @@ function M.convert_task_line(line)
   -- This regex finds a prefix (indentation and optional bullet) and a checkbox,
   -- and replaces the match with just the prefix, effectively removing the checkbox.
   -- It handles prefixes like '  * ', '* ', and checkboxes like [ ], [x], [X], [S].
-  new_line = new_line:gsub("^(%s*[%*%-]?%s*)%[[xXS%s]%]%s*", "%1")
+  new_line = new_line:gsub("^(%s*)[%*%-]?%s*%[[xXS%s]%]%s*", "### %1")
 
   -- Remove the date and time part, including surrounding spaces.
   -- Example: " (2025-07-23 19:00)  "

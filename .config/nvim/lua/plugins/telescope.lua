@@ -60,7 +60,6 @@ local telescope_opts = {
 
 
 
-
 --- is_vendor_ignored and TelescopeToggleVendorIgnore are used to toggle ignoring "vendor" folder when searching inside a golang project
 local is_vendor_ignored = true
 _G.TelescopeToggleVendorIgnore = function()
@@ -89,7 +88,11 @@ end
 return {
   'nvim-telescope/telescope.nvim',
   branch = '0.1.x',
-  dependencies = { 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim" },
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-live-grep-args.nvim',
+    'crispgm/telescope-heading.nvim',  -- no dependency, markdown header picker
+  },
   config = function()
     -- Display entry text after two tabs as comment.
     -- Used to display file paths as filename followed by greyed-out path.
@@ -118,6 +121,12 @@ return {
     end
 
     require('telescope').setup(telescope_opts)
+
+    -- load pickers
+    pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
+    require('telescope').load_extension('media_files') -- Enable media-file preview in telescope
+    require('telescope').load_extension('heading')
+    --require('telescope').load_extension('noice')
 
     -- Mappings
     vim.keymap.set(
@@ -156,7 +165,8 @@ return {
         layout_strategy = 'vertical',
       })
     end, { desc = '[F]ind [F]iles' })
-    vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+    vim.keymap.set('n', '<leader>fh', '<cmd>Telescope heading<cr>', { desc = '[F]ind Markdown [h]eaders' })
+    vim.keymap.set('n', '<leader>fH', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
     vim.keymap.set('n', '<leader>fj',
       function()

@@ -70,7 +70,7 @@ nmap('C', 'ggvG$')
 -- buffer: show full path
 nmap('<leader>g', ":echo expand('%')<cr>")
 -- buffer: copy full path
-nmap('<leader>G', ':!realpath % | wl-copy<cr>')
+nmap('<leader>G', ':!realpath "%" | wl-copy<cr>')
 
 -- buffer: close
 nmap('xx', ':bd<CR>')
@@ -447,3 +447,7 @@ vim.keymap.set("n", "<leader>jae", ":AvanteChat<cr>",
   { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
 vim.keymap.set("n", "<leader>jat", ":AvanteToggle<cr>",
   { desc = "[C]odecompanion [C]hat", silent = true, noremap = true })
+
+-- Remapping arrow keys in Command mode
+vim.api.nvim_set_keymap('c', '<C-k>', '<Cmd>call feedkeys("<Up>", "n")<CR>', { noremap = true, silent = true, desc = "Remap Up arrow key to C-k" })
+vim.api.nvim_set_keymap('c', '<C-l>', '<Cmd>call feedkeys("<Down>", "n")<CR>', { noremap = true, silent = true, desc = "Remap Down arrow key to C-l" })

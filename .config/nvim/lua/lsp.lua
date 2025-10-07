@@ -5,7 +5,6 @@ vim.lsp.config("*", {
 })
 
 require("mason").setup()
-local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup {
   ensure_installed = { "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright" }
@@ -131,17 +130,17 @@ if true then
     ensure_installed = vim.tbl_keys(servers),
     handlers = {
       function(server_name)
-        lspconfig[server_name].setup {
+        vim.lsp.config(server_name, {
           capabilities = capabilities,
           on_attach = on_attach,
           settings = servers[server_name],
           filetypes = (servers[server_name] or {}).filetypes,
-        }
+        })
       end
     }
   }
 
-  lspconfig.markdown_oxide.setup({
+  vim.lsp.config("markdown_oxide", {
     capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
     on_attach = on_attach,       -- configure your on attach config
   })

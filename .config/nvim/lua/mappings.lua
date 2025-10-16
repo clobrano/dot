@@ -389,7 +389,7 @@ nmap('<leader>zk', "<esc>:lua require'functions'.zettelkastenID()<cr>")
 nmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 
 -- find todos in all files (needs folke/todo-comments)
-nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')
+--nmap('<leader>td', ':TodoTelescope keywords=TODO<cr>')
 -- find todos in current buffer (local) (needs folke/todo-comments)
 --nmap('<leader>tdl', ':TodoTelescope keywords=TODO cwd=%<cr>')
 

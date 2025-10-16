@@ -9,8 +9,9 @@ return {
       "let g:test#basic#start_normal = 1
       let g:test#neovim#term_position = "hor botright 5"
       ]]
-    vim.keymap.set('n', '<leader>ts', ':TestSuite<cr>')
-    vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>')
+    -- commented out as they are more useful for Taskwarrior
+    --vim.keymap.set('n', '<leader>ts', ':TestSuite<cr>')
+    --vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>')
     vim.keymap.set('n', '<leader>tl', ':TestLast<cr>')
     vim.cmd [[
       let g:test#golang#ginkgo#options = '--show-node-events'

@@ -205,7 +205,7 @@ end
 -- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
 -- the function will get the uuid and jump to the file(s) where the corresponding
 -- Taskwarrior task object is defined
-function Find_taskwarrior_from_uuid()
+function Task_find_from_uuid()
   --local uuid = get_clipboard()
   local uuid = vim.fn.expand('<cword>')
   if uuid == "" then return end
@@ -229,13 +229,11 @@ function Find_taskwarrior_from_uuid()
     print("No match found")
   end
 end
-
-vim.api.nvim_set_keymap("n", "<leader>fo", ":lua Find_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
 
 -- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
 -- the function will get the uuid and open the corresponding Taskwarrior task object for editing
-function Edit_taskwarrior_from_uuid()
-  --local uuid = get_clipboard()
+function Task_edit_from_uuid()
   local uuid = vim.fn.expand('<cword>')
   if uuid == "" then return end
 
@@ -243,8 +241,30 @@ function Edit_taskwarrior_from_uuid()
   vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
   vim.cmd(':terminal ' .. command)
 end
+vim.api.nvim_set_keymap("n", "<leader>te", ":lua Task_edit_from_uuid()<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<leader>eo", ":lua Edit_taskwarrior_from_uuid()<CR>", { noremap = true, silent = true })
+
+function Task_done_from_uuid()
+  local uuid = vim.fn.expand('<cword>')
+  if uuid == "" then return end
+
+  local command = "task rc:~/.taskworkrc " .. uuid .. " done"
+  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
+  vim.cmd(':terminal ' .. command)
+end
+vim.api.nvim_set_keymap("n", "<leader>td", ":lua Task_done_from_uuid()<CR>", { noremap = true, silent = true })
+
+
+function Task_undo_from_uuid()
+  --local uuid = get_clipboard()
+  local uuid = vim.fn.expand('<cword>')
+  if uuid == "" then return end
+
+  local command = "task rc:~/.taskworkrc " .. uuid .. " undo"
+  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
+  vim.cmd(':terminal ' .. command)
+end
+vim.api.nvim_set_keymap("n", "<leader>tu", ":lua Task_undo_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 -- Add one hashtag '#' at the beginning of the current line

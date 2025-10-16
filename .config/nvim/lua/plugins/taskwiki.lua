@@ -1,6 +1,5 @@
 -- Define the base path for your Taskwiki files
 local work_journal_data_location = '/home/clobrano/Documents/RedHatNotes'
-local personal_journal_data_location = '/home/clobrano/Me/Notes'
 
 -- Configuration
 return {
@@ -30,8 +29,7 @@ return {
       callback = function(args)
         local file_path = vim.api.nvim_buf_get_name(args.buf)
         -- Check if the file_path starts with one of the journal_data_locations
-        if file_path:sub(1, #work_journal_data_location) == work_journal_data_location or
-            file_path:sub(1, #personal_journal_data_location) == personal_journal_data_location then
+        if file_path:sub(1, #work_journal_data_location) == work_journal_data_location then
           vim.cmd [[
             TaskWikiBufferLoad
           ]]

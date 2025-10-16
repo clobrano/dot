@@ -60,17 +60,18 @@ local plugins = {
 
   -- Notes and Markdown
   require('plugins.clipboard-image'),
-  --require('plugins.github-preview'),
   require('plugins.icon-picker'),
   require('plugins.markdown-preview'),
   require('plugins.marvim'), -- macro recorder
   require('plugins.orgmode'),
   { "weirongxu/plantuml-previewer.vim", dependencies = { 'tyru/open-browser.vim', 'aklt/plantuml-syntax' } },
-  --require('plugins.plantuml'),
   require('plugins.taskwiki'),
   require('plugins.vimwiki'),
-  --require('plugins.zenmode'),
+  --require('plugins.m_taskwarrior_d'),
   require('plugins.render-markdown'),
+  --require('plugins.github-preview'),
+  --require('plugins.plantuml'),
+  --require('plugins.zenmode'),
   --require('plugins.peek'),
   --require('plugins.snacks'),
 
@@ -204,6 +205,7 @@ require('settings')
 require('mappings')
 require('diagnostic')
 require('lsp')
+require('ai')
 
 -- Setup neovim lua configuration
 --require('neodev').setup()

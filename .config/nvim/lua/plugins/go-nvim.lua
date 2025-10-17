@@ -25,11 +25,18 @@ return {
     vim.keymap.set("n", "<leader>gotf", ":GoTest<cr>", { desc="[GO] [T]est", noremap=true, silent=true })
     vim.keymap.set("n", "<leader>gotf", ":GoTestFile<cr>", { desc="[GO] [T]est this [F]ile", noremap=true, silent=true })
     vim.keymap.set("n", "<leader>gop", ":GoTestPackage<cr>", { desc="[GO] [T]est [P]ackage", noremap=true, silent=true })
+    vim.keymap.set("n", "<M-]>", function() vim.cmd('vsplit') vim.lsp.buf.definition() end, { desc = "[GO] Jump to definition (vsplit)" })
 
     -- Generate Tags with gotags
     vim.api.nvim_create_user_command("GoTags",
       function()
-        vim.fn.system(  ":!gotags `find . -name '*.go' | grep -v './vendor'` > tags<cr>")
+        local command = "gotags `find . -name '*.go' | grep -v './vendor'` > tags"
+        print("Executing: " .. command)
+        local handle = io.popen(command)
+        local output = handle:read("*a")
+        local exit_code = handle:close()
+        print("Output: " .. output)
+        print("Exit code: " .. tostring(exit_code))
       end,
       {})
 

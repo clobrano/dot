@@ -1,11 +1,9 @@
 return {
-  "catppuccin/nvim",
-  name = "catppuccin",
+  'olimorris/onedarkpro.nvim',
   priority = 1000,
 
   config = function()
-    require("catppuccin").setup {
-      --flavour = "frappe",
+    require("onedarkpro").setup {
       custom_highlights = function(colors)
         return {
           Todo = { fg = colors.flamingo, bg = colors.none },
@@ -19,10 +17,10 @@ return {
       end
     }
     -- Create an autocommand group for clarity (optional but recommended)
-    -- Create an autocommand that triggers on the ColorScheme event for 'catppuccin'
-    local transparent_augroup = vim.api.nvim_create_augroup("CatppuccinTransparentBackground", { clear = true })
+    -- Create an autocommand that triggers on the ColorScheme event for 'onedark'
+    local transparent_augroup = vim.api.nvim_create_augroup("OneDarkTransparentBackground", { clear = true })
     vim.api.nvim_create_autocmd("ColorScheme", {
-      pattern = "catppuccin*", -- This ensures it only runs when catppuccin is loaded
+      pattern = "onedark*", -- This ensures it only runs when onedark is loaded
       group = transparent_augroup,
       callback = function()
         vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

@@ -46,7 +46,7 @@ end=$(date +%s)
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
 elapsed_time=$(date +"%H:%M.%S" --date="@$((end - begin - 3600))")
-echo " $full_name $elapsed_time"
+echo "▶️$full_name $elapsed_time"
 
 # Short name for OneThing Gnome extention
 #name=$full_name

@@ -5,6 +5,15 @@ local function spell()
   return ''
 end
 
+local function readonly_status()
+  -- Check the 'readonly' buffer option
+  if vim.bo.readonly then
+    -- Return your preferred read-only indicator (e.g., lock icon or 'RO')
+    return '  ' -- Or ' [RO] '
+  end
+  return '' -- Return an empty string if not read-only
+end
+
 -- in this lualine configuration file, I want a function
 -- that returns the currently configured LLM. This
 -- information is available in require('gen').GetLLMModel
@@ -25,7 +34,7 @@ return {
     },
     sections = {
       lualine_a = { 'branch' },
-      lualine_b = { },
+      lualine_b = { readonly_status },
       lualine_c = { },
       lualine_x = { 'diff', 'diagnostics' },
       lualine_y = { spell, 'progress', 'searchcount' },

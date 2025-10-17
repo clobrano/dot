@@ -164,5 +164,15 @@ return {
       }
     })
     vim.keymap.set("n",  "<leader>oo", ":Octo ")
+
+    --[[vim.api.nvim_create_autocmd("BufWinEnter", {]]
+      --[[group = vim.api.nvim_create_augroup("OctoTheme", { clear = true }),]]
+      --[[callback = function(event)]]
+        --[[-- Check if the current buffer is an Octo buffer (replace with actual check)]]
+        --[[if string.find(vim.fn.bufname(event.buf), "octo") then]]
+          --[[vim.cmd.colorscheme "catppuccin" -- Replace "default" with the desired colorscheme]]
+        --[[end]]
+      --[[end,]]
+    --[[})]]
   end
 }

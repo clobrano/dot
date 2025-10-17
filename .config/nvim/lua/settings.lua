@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 vim.cmd.colorscheme 'catppuccin'
 vim.wo.number = true
-vim.wo.relativenumber = true
+vim.wo.relativenumber = false
 vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true -- Enable break indent

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install golang runtime
-: "${INSTALL_GO_VERSION:="1.23.12"}"
+: "${INSTALL_GO_VERSION:="1.25.1"}"
 URL="https://go.dev/dl/go$INSTALL_GO_VERSION.linux-amd64.tar.gz"
 
 echo "Install version INSTALL_GO_VERSION=${INSTALL_GO_VERSION}?"

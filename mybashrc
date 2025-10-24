@@ -89,7 +89,10 @@ ZSH_VERSION=${ZSH_VERSION-"none"}
 ulimit -c unlimited
 
 # Fuzzy finder configuration
-[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+if command -v fzf 2>&1 >/dev/null; then
+    source <(fzf --bash)
+    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
+fi
 
 # aliases
 alias bi='source ${HOME}/.bashrc'

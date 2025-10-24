@@ -25,7 +25,7 @@ fi
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
-PATH=$PATH:$HOME/.atuin/bin
+#PATH=$PATH:$HOME/.atuin/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:$(go env GOPATH)/bin
@@ -56,7 +56,7 @@ source ~/.config/cconf/dot/dotfiles.sh
 # bindings (-e emacs, -v vi)
 bindkey -v
 # Re-enable history search in vi-mode
-#bindkey '^R' history-incremental-search-backward
+bindkey '^R' history-incremental-search-backward
 
 bindkey jj vi-cmd-mode
 autoload edit-command-line
@@ -167,8 +167,10 @@ unsetopt completealiases
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
+if command -v fzf 2>&1 >/dev/null; then
+    source <(fzf --zsh)
+    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
+fi
 
 #
 # Prompt
@@ -277,13 +279,15 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+if command -v helm 2>&1 > /dev/null; then
 source <(helm completion zsh)
+fi
 
 # run atuin if installed
-if command -v atuin >/dev/null; then
-    # Bind ctrl-r but not up arrow
-    eval "$(atuin init zsh --disable-up-arrow)"
-    atuin import auto > /dev/null 2>&1
-fi
+#if command -v atuin >/dev/null; then
+    ## Bind ctrl-r but not up arrow
+    #eval "$(atuin init zsh --disable-up-arrow)"
+    #atuin import auto > /dev/null 2>&1
+#fi
 
 

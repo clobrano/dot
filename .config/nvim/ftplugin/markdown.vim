@@ -1,7 +1,7 @@
 set concealcursor=c
 set expandtab
 set foldlevel=99
-set nonumber
+set number
 set relativenumber
 set shiftwidth=4
 set signcolumn=yes:2

@@ -19,9 +19,9 @@ config.color_scheme = 'catppuccin-frappe'
 
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
-config.font = wezterm.font('Source Code Pro Medium', { italic = false })
+--config.font = wezterm.font('Source Code Pro')
 --config.font = wezterm.font('Fira Code Retina', { italic = false, weight = 'Bold' })
-config.font_size = 10.5
+config.font_size = 10.2
 
 -- disable title bar
 --config.window_decorations = "INTEGRATED_BUTTONS | NONE"

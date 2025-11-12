@@ -10,11 +10,11 @@ return {
         -- Turn on / off heading icon & background rendering
         enabled = true,
         -- Turn on / off any sign column related rendering
-        sign = true,
+        sign = false,
         -- Determines how icons fill the available space:
         --  inline:  underlying '#'s are concealed resulting in a left aligned icon
         --  overlay: result is left padded with spaces to hide any additional '#'
-        position = 'overlay',
+        position = 'inline',
         -- Replaces '#+' of 'atx_h._marker'
         -- The number of '#' in the heading determines the 'level'
         -- The 'level' is used to index into the array using a cycle
@@ -27,7 +27,7 @@ return {
         --  full:  full width of the window
         -- Can also be an array of the above values in which case the 'level' is used
         -- to index into the array using a clamp
-        width = 'block',
+        width = 'full',
         -- Amount of padding to add to the left of headings
         left_pad = 0,
         -- Amount of padding to add to the right of headings when width is 'block'
@@ -48,9 +48,9 @@ return {
           'RenderMarkdownH1Bg',
           'RenderMarkdownH2Bg',
           'RenderMarkdownH3Bg',
-          'RenderMarkdownH4Bg',
-          'RenderMarkdownH5Bg',
-          'RenderMarkdownH6Bg',
+          'RenderMarkdownH3Bg',
+          'RenderMarkdownH3Bg',
+          'RenderMarkdownH3Bg',
         },
         -- The 'level' is used to index into the array using a clamp
         -- Highlight for the heading and sign icons
@@ -76,7 +76,7 @@ return {
         },
         custom = {
             waiting = { raw = '[W]', rendered = '* [W]', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '* [_]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
             prog25 = { raw = '[.]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
             prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },

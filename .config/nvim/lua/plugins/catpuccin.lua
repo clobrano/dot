@@ -9,7 +9,7 @@ return {
       custom_highlights = function(colors)
         return {
           Todo = { fg = colors.flamingo, bg = colors.none },
-          WinSeparator = { fg = colors.flamingo, bg = colors.none },
+          --WinSeparator = { fg = colors.flamingo, bg = colors.none },
           ["@markup.quote.markdown"] = { fg = colors.overlay2, bold = false },
           -- Remove annoying background highlight from the following tags
           ["@comment.todo.comment"] = { bg = 'none' },

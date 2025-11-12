@@ -46,6 +46,7 @@ fi
 alias nn='cd $ME/Notes && nvim index.md'
 # neovim Orgmode
 alias no='cd $ME/Orgmode && nvim Orgmode.org'
+alias nr='cd $ME/Orgmode && nvim ReadItLater.org'
 # neovim session
 alias ns='nvim -c "Telescope persisted"'
 
@@ -77,4 +78,4 @@ alias cdf="cd \$(fuzzy-cd)"
 alias claude="source claude-config.sh; /usr/local/bin/claude"
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
 alias geminirh="export GEMINI_API_KEY=$GEMINI_API_KEY_REDHAT; /usr/local/bin/gemini --model gemini-2.5-pro"
-alias direload="cd .. ; cd -"
+alias goreloadversion="cd .. ; cd -"

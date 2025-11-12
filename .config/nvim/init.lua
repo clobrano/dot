@@ -31,12 +31,11 @@ local plugins = {
   'mtdl9/vim-log-highlighting', -- Highlight log files
   'xiyaowong/transparent.nvim',
   require('plugins.tagbar'),
-  --require('plugins.tabline'), -- needed to show buffers names on top
   require('plugins.lualine'),
   require('plugins.persisted'),
-  --require('plugins.startify'),
-  --require('plugins.noice'),
+  require('plugins.no-neck-pain'),
   { 'dhruvasagar/vim-table-mode' },
+  --require('plugins.noice'),
 
   -- Git/Revision related plugins
   require('plugins.vim-fugitive'),
@@ -65,8 +64,9 @@ local plugins = {
   require('plugins.marvim'), -- macro recorder
   require('plugins.orgmode'),
   { "weirongxu/plantuml-previewer.vim", dependencies = { 'tyru/open-browser.vim', 'aklt/plantuml-syntax' } },
-  require('plugins.taskwiki'),
-  require('plugins.vimwiki'),
+  --require('plugins.taskwiki'),
+  --require('plugins.vimwiki'),
+  require('plugins.frontline'),
   --require('plugins.m_taskwarrior_d'),
   require('plugins.render-markdown'),
   --require('plugins.github-preview'),

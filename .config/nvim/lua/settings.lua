@@ -26,7 +26,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.cmd.colorscheme 'catppuccin'
+vim.cmd.colorscheme 'catppuccin-frappe'
+vim.o.winborder = 'rounded'
 vim.wo.number = true
 vim.wo.relativenumber = false
 vim.o.mouse = 'a'

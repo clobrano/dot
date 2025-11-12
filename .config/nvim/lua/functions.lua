@@ -241,7 +241,7 @@ function Task_edit_from_uuid()
   vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
   vim.cmd(':terminal ' .. command)
 end
-vim.api.nvim_set_keymap("n", "<leader>te", ":lua Task_edit_from_uuid()<CR>", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("n", "<leader>te", ":lua Task_edit_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 function Task_done_from_uuid()

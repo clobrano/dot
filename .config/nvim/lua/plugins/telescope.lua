@@ -133,16 +133,21 @@ return {
       'n', '<leader>f/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         -- configure get_dropdown to expand previewer to full width of screen
-        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          layout_strategy = "flex",
-          enable_preview = false,
-          shorten_path = false,
-          -- set it again as this is independent from the default layout configured above
-          layout_config = {
-            width = 0.99,
-            height = 0.99,
-          }
-        })
+        require("telescope.builtin").current_buffer_fuzzy_find({
+        -- function from
+        -- https://github.com/nvim-telescope/telescope.nvim/pull/1401#issuecomment-957234973
+        tiebreak = function(entry1, entry2, prompt)
+          local start_pos1, _ = entry1.ordinal:find(prompt)
+          if start_pos1 then
+            local start_pos2, _ = entry2.ordinal:find(prompt)
+            if start_pos2 then
+              return start_pos1 < start_pos2
+            end
+          end
+          return false
+        end,
+        additional_args = { "--ignore-case", "--pcre2" },
+      })
       end,
       { desc = '[F]uzzily [/] search in current buffer' }
     )

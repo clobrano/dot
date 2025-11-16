@@ -981,10 +981,14 @@ function CreateFileAndWikiLink()
   else
     print("File " .. filename .. " does not exist")
     -- Create a Markdown file in the Resources directory
-    local filepath = "Resources/" .. filename
-    if vim.fn.isdirectory('Resources') == 0 then
-      -- Personal notes have a different destination name
+    local filepath = ""
+    if vim.fn.isdirectory('3-Resources') ~= 0 then
       filepath = "3-Resources/" .. filename
+    elseif vim.fn.isdirectory('Resources') ~= 0 then
+      filepath = "Resources/" .. filename
+    else
+      print("Error: Neither '3-Resources/' nor 'Resources/' directory found. Cannot create file.")
+      return
     end
 
     local file = io.open(filepath, "w")
@@ -997,113 +1001,20 @@ function CreateFileAndWikiLink()
   end
 end
 
-local M = {}
-
-M.current_theme = 'catppuccin-frappe' -- Set the default theme as 'dracula'
-M.dark_theme = 'catppuccin-frappe'
-M.light_theme = 'melange'
-M.font_size = 'h11.5'
-
-M.toggle_theme = function()
-  if M.current_theme == M.dark_theme then
-    vim.cmd('colorscheme ' .. M.light_theme)
-    vim.cmd('ListcharsDisable')
-    vim.o.background = 'light'
-    vim.cmd('set guifont=FiraCode\\ Nerd\\ Font\\ Mono:' .. M.font_size)
-    M.current_theme = M.light_theme
-  else
-    vim.cmd('colorscheme ' .. M.dark_theme)
-    vim.o.background = 'dark'
-    vim.cmd('ListcharsEnable')
-    vim.cmd('set guifont=Source\\ Code\\ Pro:' .. M.font_size)
-    M.current_theme = M.dark_theme
-  end
+function AppendOutlineReference()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+  local uuid = vim.fn.system("uuidgen")
+  uuid = uuid:gsub("[\n\r]", "") -- Remove newline/carriage return from uuidgen output
+  -- Neovim recognize tags only if they start with an alphabet character. Prepending "nor" (Note Outline Ref)
+  local new_text = ' [[][ #nor-' .. uuid .. ' ]]'
+  local new_line = line .. new_text
+  vim.api.nvim_set_current_line(new_line)
+  -- Position cursor inside '#' followed by the UUID
+  vim.api.nvim_win_set_cursor(0, { row, #line + 7 })
 end
 
--- Function to execute and paste result
-M.executeAndPaste = function(command)
-  -- Save cursor position
-  local save_cursor = vim.fn.getpos('.')
-
-  -- Execute your function (replace 'your_function()' with the actual function)
-  local result = vim.fn.system(command)
-
-  -- Remove trailing whitespace, including null characters
-  result = result:gsub('%s*$', '')
-  -- Paste the result after the cursor on the same line
-  vim.fn.setline('.', vim.fn.getline('.') .. result)
-
-  -- Restore cursor position
-  vim.fn.setpos('.', save_cursor)
-end
-
-M.makeGmailSearchLink = function()
-  -- Get selected text
-  local selected_text = get_clipboard()
-  -- Replace spaces with '+' in the selected text
-  local replaced_text = string.gsub(selected_text, " ", "+")
-  -- Replace the original text with the replaced text
-  local search_link = "#email [" ..
-      selected_text .. "]" .. "(https://mail.google.com/mail/u/0/#search/" .. replaced_text .. ")"
-  local pos = vim.fn.getpos('.')
-  vim.fn.setline(pos[2], search_link)
-end
-
-
--- use require('telescope.builtin').live_grep to search currently selected text
-M.searchSelectedText = function()
-  -- Get selected text
-  local selected_text = vim.fn.getreg(vim.fn.visualmode())
-  -- Replace the original text with the replaced text
-  require('telescope.builtin').live_grep({ search = selected_text })
-end
-
-
---- Converts a specific task line format by removing the initial checkbox,
---- unwanted symbols, and reformatting the final hashcode, replacing the outline with
---- a chapter section
----
---- @param line string The input line to convert.
---- @return string The converted line.
-function M.convert_task_line(line)
-  local new_line = line
-
-  -- This regex finds a prefix (indentation and optional bullet) and a checkbox,
-  -- and replaces the match with just the prefix, effectively removing the checkbox.
-  -- It handles prefixes like '  * ', '* ', and checkboxes like [ ], [x], [X], [S].
-  new_line = new_line:gsub("^(%s*)[%*%-]?%s*%[[xXS%s]%]%s*", "### %1")
-
-  -- Remove the date and time part, including surrounding spaces.
-  -- Example: " (2025-07-23 19:00)  "
-  new_line = new_line:gsub("%s%((%d%d%d%d%-%d%d%-%d%d %d%d:%d%d)%)%s*", "")
-
-  -- Remove priority markers like '!!!', '!!', '!', and '^'
-  -- The order is important to correctly remove longer sequences first.
-  new_line = new_line:gsub("%s+!!!", "")
-  new_line = new_line:gsub("%s+!!", "")
-  new_line = new_line:gsub("%s+!", "")
-  new_line = new_line:gsub("%s+%^", "")
-
-  -- Transform the "#W:hashcode" at the end into "(hashcode)".
-  -- %x+ matches one or more hexadecimal characters.
-  -- $ anchors the match to the end of the line.
-  new_line = new_line:gsub("%s*#W:(%x+)$", " (%1)")
-
-  return new_line
-end
-
--- Define a Neovim command to convert the current line
-vim.api.nvim_create_user_command('ConvertTaskLine', function()
-  local current_line_num = vim.api.nvim_win_get_cursor(0)[1]
-  local current_line_content = vim.api.nvim_buf_get_lines(0, current_line_num - 1, current_line_num, false)[1]
-  local converted_line = M.convert_task_line(current_line_content)
-  vim.api.nvim_buf_set_lines(0, current_line_num - 1, current_line_num, false, { converted_line })
-end, {
-  desc = 'Convert the current task line format'
-})
-
--- Optional: Map it to a keybinding for convenience (e.g., <leader>ct)
-vim.keymap.set('n', '<leader>pt', ':ConvertTaskLine<CR>', { desc = '[P]ick [T]askwarrior activity' })
-
+vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>',
+  { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
 
 return M

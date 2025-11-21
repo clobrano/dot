@@ -1,9 +1,11 @@
+# [profiler start]
+#zmodload zsh/zprof
 #
 # Configuration from Bashrc
 #
 setopt autocd     # cd into folder without typing 'cd'
 source $HOME/.config/cconf/dot/dotfiles.sh
-source $HOME/.config/cconf/environments/pyenv-init.sh
+#source $HOME/.config/cconf/environments/pyenv-init.sh
 
 export ME=$HOME/Me
 
@@ -25,10 +27,8 @@ fi
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
-#PATH=$PATH:$HOME/.atuin/bin
 PATH=$PATH:${GOBIN}
 PATH=$PATH:${GOROOT}/bin
-PATH=$PATH:$(go env GOPATH)/bin
 PATH=$PATH:/usr/local/go/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
     PATH=$PATH:${HOME}/workspace/me/flutter/bin
@@ -101,8 +101,6 @@ else
 fi
 
 
-# For thinkpad pointer (it only works on X11, but it is up to the script to detect it)
-#[[ -e thinkpointer.sh ]] && thinkpointer.sh
 #
 # Completion
 #
@@ -112,6 +110,7 @@ setopt auto_cd
 setopt interactivecomments
 cdpath=($HOME $HOME/workspace)
 
+fpath=($HOME/.config/cconf/zsh/completions $fpath)
 autoload -U compinit
 compinit -u
 
@@ -135,9 +134,9 @@ source ~/.config/cconf/zsh/functions.zsh
 #
 # History
 #
-HISTSIZE=5000               # How many lines of history to keep in memory
+HISTSIZE=2000               # How many lines of history to keep in memory
 HISTFILE=~/.zsh_history     # Where to save history to disk
-SAVEHIST=5000               # Number of history entries to save to disk
+SAVEHIST=2000               # Number of history entries to save to disk
 setopt BANG_HIST            # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY     # Write the history file in the ":start:elapsed;command" format.
 setopt HIST_FIND_NO_DUPS    # Do not display a line previously found.
@@ -155,12 +154,15 @@ setopt SHARE_HISTORY        # share history across terminals
 #
 
 ZSH_CUSTOM=~/.config/cconf/zsh
-for plugin in $(ls $ZSH_CUSTOM/plugins); do
-    if [[ -f $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh ]]; then
-        source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
-    fi
+#for plugin in $(ls $ZSH_CUSTOM/plugins); do
+    #if [[ -f $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh ]]; then
+        #source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
+    #fi
+#done
+#source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
+for plugin_file in $ZSH_CUSTOM/plugins/*/*.plugin.zsh(N); do
+    source $plugin_file
 done
-source $ZSH_CUSTOM/plugins/zsh-async/async.plugin.zsh
 
 unsetopt complete_aliases
 unsetopt completealiases
@@ -168,7 +170,7 @@ unsetopt completealiases
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 if command -v fzf 2>&1 >/dev/null; then
-    source <(fzf --zsh)
+    source ~/.config/cconf/zsh/completions/fzf-init.zsh
     export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 fi
 
@@ -176,67 +178,68 @@ fi
 # Prompt
 #
 
-# async vcs_info update wrapper
-_vbe_vcs_info() {
-    cd -q $1
-    if [ -n vsc_info ]; then
-        vcs_info 2>&1 >/dev/null
-        print ${vcs_info_msg_0_}
-    fi
-}
-# async vcs_info update worker
-_vbe_vcs_info_done() {
-    local stdout=$3
-    vcs_info_msg_0_=$stdout
-    zle reset-prompt
-}
+## --- "Manual" GIT dashboard with async zsh pluging. Replaced by Starpship.
+## async vcs_info update wrapper
+#_vbe_vcs_info() {
+#    cd -q $1
+#    if [ -n vsc_info ]; then
+#        vcs_info 2>&1 >/dev/null
+#        print ${vcs_info_msg_0_}
+#    fi
+#}
+## async vcs_info update worker
+#_vbe_vcs_info_done() {
+#    local stdout=$3
+#    vcs_info_msg_0_=$stdout
+#    zle reset-prompt
+#}
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
-autoload -Uz vcs_info
+#autoload -Uz vcs_info
 
 # vcs info (for git)
-zstyle ':vcs_info:*' enable git
-() {
-    zstyle ':vcs_info:git*:*' formats '\ue725 %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
-    zstyle ':vcs_info:git*:*' actionformats 'on %F{green}(%a)%b|%m%c%u%f' # default ' (%s)-[%b|%a]%c%u-'
-    zstyle ':vcs_info:*' stagedstr "%F{green}+%f" # default 'S'
-    zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
-    zstyle ':vcs_info:*' use-simple true
-    zstyle ':vcs_info:*' check-for-changes true
-    #zstyle ':vcs_info:git+set-message:*' hooks git-untracked
-    #+vi-git-untracked() {
-        #emulate -L zsh
-        #if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-            #hook_com[unstaged]+="%F{blue}!%f"
+#zstyle ':vcs_info:*' enable git
+#() {
+#    zstyle ':vcs_info:git*:*' formats '\ue725 %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
+#    zstyle ':vcs_info:git*:*' actionformats 'on %F{green}(%a)%b|%m%c%u%f' # default ' (%s)-[%b|%a]%c%u-'
+#    zstyle ':vcs_info:*' stagedstr "%F{green}+%f" # default 'S'
+#    zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
+#    zstyle ':vcs_info:*' use-simple true
+#    zstyle ':vcs_info:*' check-for-changes true
+#    zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+#    +vi-git-untracked() {
+#        emulate -L zsh
+#        if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+#            hook_com[unstaged]+="%F{blue}!%f"
+#        fi
+#    }
+#}
+#source $ZSH_CUSTOM/plugins/zsh-async/async.zsh
+#async_init
+#async_start_worker vcs_info
+#async_register_callback vcs_info _vbe_vcs_info_done
+## async vcs_info schedule
+#add-zsh-hook precmd () {
+    #now_timestamp_=$(date +%H:%M:%S)
+    #local cmd_end="$SECONDS"
+    #if [[ $cmd_start -gt 0 ]]; then
+        #elapsed=$((cmd_end-cmd_start))
+        #if [[ $elapsed -gt 10 ]]; then
+            #echo elapsed `humanizetime $elapsed`
+            #cmd_start=0
         #fi
-    #}
-}
-source $ZSH_CUSTOM/plugins/zsh-async/async.zsh
-async_init
-async_start_worker vcs_info
-async_register_callback vcs_info _vbe_vcs_info_done
-# async vcs_info schedule
-add-zsh-hook precmd () {
-    now_timestamp_=$(date +%H:%M:%S)
-    local cmd_end="$SECONDS"
-    if [[ $cmd_start -gt 0 ]]; then
-        elapsed=$((cmd_end-cmd_start))
-        if [[ $elapsed -gt 10 ]]; then
-            echo elapsed `humanizetime $elapsed`
-            cmd_start=0
-        fi
 
-        if [[ $elapsed -gt 120 ]] && [[ $elapsed -lt 600 ]] && command -v notify-send 2>&1 > /dev/null; then
-            notify-send --app-name="zsh $(pwd)" --urgency normal "command done"
-        fi
-    fi
-    vcs_info_msg_0_="[...]"
-    if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
-        async_init
-        async_start_worker vcs_info
-        async_register_callback vcs_info _vbe_vcs_info_done
-    fi
-}
+        #if [[ $elapsed -gt 120 ]] && [[ $elapsed -lt 600 ]] && command -v notify-send 2>&1 > /dev/null; then
+            #notify-send --app-name="zsh $(pwd)" --urgency normal "command done"
+        #fi
+    #fi
+    #vcs_info_msg_0_="[...]"
+    #if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
+        #async_init
+        #async_start_worker vcs_info
+        #async_register_callback vcs_info _vbe_vcs_info_done
+    #fi
+#}
 
 add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
@@ -248,18 +251,14 @@ add-zsh-hook preexec () {
     cmd_start="$SECONDS"
 }
 
-# kubectl completion
-if command -v kubectl 2>&1 >/dev/null; then
-    [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-fi
+# Custom PROMPT (replaced by staship, but I'll keep it if I stop using starship)
+#NEWLINE=$'\n'
+#LPROMPT_BASE="%F{blue}%B%~%b%f"
+#setopt PROMPT_SUBST
 
-NEWLINE=$'\n'
-LPROMPT_BASE="%F{blue}%B%~%b%f"
-setopt PROMPT_SUBST
-
-export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
-#export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
-export RPROMPT=""
+#export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
+##export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
+#export RPROMPT=""
 
 # init starship if installed
 if command -v starship 2>&1 >/dev/null; then
@@ -268,8 +267,7 @@ if command -v starship 2>&1 >/dev/null; then
 fi
 
 # use zshz in place of "cd", but only if installed
-command -v zshz >/dev/null
-if [ $? -eq 0 ]; then
+if command -v zshz >/dev/null; then
     eval "$(zoxide init zsh --cmd cd)"
 fi
 
@@ -279,15 +277,5 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-if command -v helm 2>&1 > /dev/null; then
-source <(helm completion zsh)
-fi
-
-# run atuin if installed
-#if command -v atuin >/dev/null; then
-    ## Bind ctrl-r but not up arrow
-    #eval "$(atuin init zsh --disable-up-arrow)"
-    #atuin import auto > /dev/null 2>&1
-#fi
-
-
+# [profiler end]
+#zprof

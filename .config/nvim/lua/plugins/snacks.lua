@@ -112,7 +112,7 @@ return {
             wrap = false,
             signcolumn = "yes",
             statuscolumn = " ",
-            conceallevel = 3,
+            --conceallevel = 3,
           },
         })
       end,

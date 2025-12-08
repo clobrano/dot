@@ -5,7 +5,7 @@
 
 
 ## Taskwarrior stats view
-interval_time_min=1
+interval_time_min=10
 current_time_min=$(date +%M)
 
 if [ $((current_time_min % interval_time_min)) -eq 0 ]; then
@@ -51,5 +51,4 @@ for oldreminders_lock in $(find "$HOME" -maxdepth 1 -name ".calcurse-reminder-*"
         rm "$oldreminders_lock"
     fi
 done
-
 

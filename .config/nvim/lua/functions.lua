@@ -2,7 +2,6 @@ local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
-
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
   local save_cursor = vim.fn.getpos('.')
   vim.cmd([[
@@ -18,58 +17,55 @@ end, {})
 vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>",
   { desc = "[M]arkdown [Format] header spaces", noremap = true, silent = true })
 
--- Function to add # at the beginning of a line.
--- If it's the first symbol, add a space between the symbol and the rest of the text.
-function AddHashToLine()
+-- Function to set the number of '#' at the beginning of a line.
+-- If level is 0, all '#' are removed.
+function SetMarkdownHeader(level)
+  level = tonumber(level) -- Ensure level is a number
+  if level == nil then level = 0 end -- Default to 0 if input is not a number
+
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
-  local new_line
-  local chars_added = 0
 
-  -- If the line already starts with '#', just prepend another '#'
-  if line:sub(1, 1) == '#' then
-    new_line = '#' .. line
-    chars_added = 1
+  -- Remove all existing leading '#' and any trailing space
+  local clean_line = line:gsub("^%s*#+%s*", "")
+
+  local new_line
+  if level > 0 then
+    new_line = string.rep("#", level) .. " " .. clean_line
   else
-    -- If the line does not start with '#', prepend '# '
-    new_line = '# ' .. line
-    chars_added = 2
+    new_line = clean_line
   end
 
   vim.api.nvim_set_current_line(new_line)
-  vim.api.nvim_win_set_cursor(0, { row, col + chars_added })
+
+  -- Adjust cursor position to try and maintain relative position
+  local old_leading_chars_len = #line - #line:gsub("^%s*#+%s*", "")
+  local new_leading_chars_len = (level > 0 and (level + 1)) or 0
+  local cursor_offset = new_leading_chars_len - old_leading_chars_len
+
+  vim.api.nvim_win_set_cursor(0, { row, math.max(0, col + cursor_offset) })
 end
 
-vim.api.nvim_set_keymap("n", "<leader>ha", ":lua AddHashToLine()<CR>", { noremap = true, silent = true })
-
--- Function to remove # at the beginning of a line.
--- If '#' is the only symbol, remove the entire line.
--- If '#' is followed by a space, remove both '#' and the space.
-function RemoveHashFromLine()
+-- Type <N> before triggering the command. E.g. type "3" before <leader>ha to create a Markdown header level 3
+vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count == 0 and 1 or vim.v.count)<CR>", { noremap = true, silent = true, desc = "Set Markdown Header Level (using count)" })
+function RemoveMarkdownHeaderWithCount()
   local line = vim.api.nvim_get_current_line()
+  local current_hashes = line:match("^(#+)%s*")
+  local num_current_hashes = current_hashes and #current_hashes or 0
+  local remove_count = vim.v.count
 
-  -- Do nothing if the line does not start with '#'
-  if line:sub(1, 1) ~= '#' then
-    return
-  end
-
-  local new_line
-
-  -- If the line is exactly '#', make it an empty line
-  if #line == 1 then
-    new_line = ''
-    -- If the line starts with '# ' (hash followed by a space), remove both
-  elseif line:sub(2, 2) == ' ' then
-    new_line = line:sub(3) -- Get substring starting from the 3rd character
-    -- If the line starts with '#' but not followed by a space (e.g., '#text'), remove only '#'
+  local target_hashes
+  if remove_count == 0 then
+    target_hashes = 0 -- Remove all hashes if count is 0
   else
-    new_line = line:sub(2) -- Get substring starting from the 2nd character
+    target_hashes = math.max(0, num_current_hashes - remove_count)
   end
-
-  vim.api.nvim_set_current_line(new_line)
+  SetMarkdownHeader(target_hashes)
 end
 
-vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveHashFromLine()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
+
+
 
 
 local function escape_lua_pattern(s)
@@ -1016,5 +1012,21 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>',
   { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
+
+function ToggleTodoDone()
+  local line = vim.api.nvim_get_current_line()
+  local new_line = line
+
+  if line:match("TODO:") then
+    new_line = line:gsub("TODO:", "DONE:")
+  elseif line:match("DONE:") then
+    new_line = line:gsub("DONE:", "TODO:")
+  end
+
+  vim.api.nvim_set_current_line(new_line)
+end
+
+vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>lua ToggleTodoDone()<CR>',
+  { desc = '[T]oggle [T]ODO/DONE', noremap = true, silent = true })
 
 return M

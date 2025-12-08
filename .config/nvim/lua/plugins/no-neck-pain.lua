@@ -3,7 +3,7 @@ return {
   version = "*",
   config = function()
     require("no-neck-pain").setup({
-      width = 160,
+      width = 140,
       buffers = {
         right = {
           enabled = false,

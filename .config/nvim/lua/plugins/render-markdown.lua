@@ -14,7 +14,7 @@ return {
         -- Determines how icons fill the available space:
         --  inline:  underlying '#'s are concealed resulting in a left aligned icon
         --  overlay: result is left padded with spaces to hide any additional '#'
-        position = 'inline',
+        position = 'overlay',
         -- Replaces '#+' of 'atx_h._marker'
         -- The number of '#' in the heading determines the 'level'
         -- The 'level' is used to index into the array using a cycle
@@ -71,12 +71,13 @@ return {
             highlight = 'RenderMarkdownUnchecked',
         },
         checked = {
-            icon = '* [x]',
+            icon = '* [✓]',
             highlight = 'RenderMarkdownChecked',
         },
         custom = {
             waiting = { raw = '[W]', rendered = '* [W]', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [•]', highlight = 'RenderMarkdownTodo' },
+            deleted = { raw = '[-]', rendered = '* [/]', highlight = 'RenderMarkdownTodo' },
             prog25 = { raw = '[.]', rendered = '* [.]', highlight = 'RenderMarkdownTodo' },
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
             prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },
@@ -84,18 +85,19 @@ return {
     },
     code = {
         -- Turn on / off code block & inline code rendering
-        enabled = false,
+        enabled = true,
         -- Turn on / off any sign column related rendering
-        sign = true,
+        sign = false,
         -- Determines how code blocks & inline code are rendered:
         --  none:     disables all rendering
         --  normal:   adds highlight group to code blocks & inline code, adds padding to code blocks
         --  language: adds language icon to sign column if enabled and icon + name above code blocks
         --  full:     normal + language
-        style = 'normal',
+        style = 'language',
         -- Determines where language icon is rendered:
         --  right: right side of code block
         --  left:  left side of code block
+        language_name = false,
         position = 'left',
         -- Amount of padding to add around the language
         -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
@@ -113,22 +115,23 @@ return {
         left_margin = 0,
         -- Amount of padding to add to the left of code blocks
         -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        left_pad = 0,
+        left_pad = 1,
         -- Amount of padding to add to the right of code blocks when width is 'block'
         -- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-        right_pad = 0,
+        right_pad = 1,
         -- Minimum width to use for code blocks when width is 'block'
         min_width = 0,
         -- Determins how the top / bottom of code block are rendered:
         --  thick: use the same highlight as the code body
         --  thin:  when lines are empty overlay the above & below icons
-        border = 'thick',
+        border = 'thin',
         -- Used above code blocks for thin border
         above = '▄',
         -- Used below code blocks for thin border
         below = '▀',
         -- Highlight for code blocks
-        highlight = 'RenderMarkdownCode',
+        highlight = 'RenderMarkdownCodeInline',
+        highlight_border = 'RenderMarkdownCodeInline',
         -- Highlight for inline code
         highlight_inline = 'RenderMarkdownCodeInline',
     },

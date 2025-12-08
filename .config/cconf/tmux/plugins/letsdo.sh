@@ -44,9 +44,12 @@ begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo
 
 end=$(date +%s)
 
+TODAY=$(lets see today | grep "total time:" | sed 's/\x1b\[[0-9;]*m//g' | awk 'match($0, /[0-9]+h [0-9]{1,2}m/) {print substr($0, RSTART, RLENGTH)}')
+WEEK=$(lets see this week | grep "total time:" | sed 's/\x1b\[[0-9;]*m//g' | awk 'match($0, /[0-9]+h [0-9]{1,2}m/) {print substr($0, RSTART, RLENGTH)}')
+
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
 elapsed_time=$(date +"%H:%M.%S" --date="@$((end - begin - 3600))")
-echo "❇️ $full_name $elapsed_time"
+echo "⭐ $full_name $elapsed_time/$TODAY/$WEEK"
 
 # Short name for OneThing Gnome extention
 #name=$full_name

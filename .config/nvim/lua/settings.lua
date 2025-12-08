@@ -64,6 +64,7 @@ vim.opt.backspace = {'indent', 'eol', 'start'} -- fix backspace misbehavior
 vim.opt.cmdheight = 2
 
 vim.opt.conceallevel = 2 -- conceal text hidden unless it has a custom replacement
+vim.o.conceallevel = 2 -- conceal text hidden unless it has a custom replacement
 vim.opt.concealcursor = 'c' -- do not conceal in normal mode, simpler editing
 
 vim.opt.colorcolumn = '0'

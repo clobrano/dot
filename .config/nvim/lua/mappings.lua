@@ -39,7 +39,7 @@ vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = "[F]ind [L]ast buffer" })
 
 
 -- buffer: reload
-nmap('<leader>rl', ':e!<cr>')
+nmap('<leader>rl', ':e! | LspRestart <cr>')
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
 
@@ -397,11 +397,9 @@ nmap('<leader>gl', ":lua require'functions'.makeGmailSearchLink()<cr>")
 -- yank till the end of the line
 nmap('Y', 'yg_')
 
--- wrap/unwrap locally and in all windows
-nmap('<leader>sw', ':set wrap<cr>')
-nmap('<leader>swn', ':set nowrap<cr>')
-nmap('<leader>swa', ':windo set wrap<cr>')
-nmap('<leader>swna', ':windo set nowrap<cr>')
+-- wrap/unwrap toggle
+nmap('<leader>w', ':set wrap!<cr>')
+nmap('<leader>wa', ':windo set wrap!<cr>')
 
 -- markdown section
 -- bold

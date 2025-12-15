@@ -77,5 +77,4 @@ alias cdf="cd \$(fuzzy-cd)"
 
 alias claude="source claude-config.sh; /usr/local/bin/claude"
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
-alias geminirh="export GEMINI_API_KEY=$GEMINI_API_KEY_REDHAT; /usr/local/bin/gemini --model gemini-2.5-pro"
 alias goreloadversion="cd .. ; cd -"

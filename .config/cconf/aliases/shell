@@ -8,6 +8,8 @@ alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
 alias wlcopy=wl-copy
 
+# Date helpers
+alias now='date +"%F-%H%M%S"'
 alias today='date +"%F"'
 alias yesterday='date --date="yesterday" +"%F"'
 alias lastweek='date --date="last week" +"%F"'
@@ -75,6 +77,5 @@ alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 alias cdf="cd \$(fuzzy-cd)"
 
 
-alias claude="source claude-config.sh; /usr/local/bin/claude"
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
 alias goreloadversion="cd .. ; cd -"

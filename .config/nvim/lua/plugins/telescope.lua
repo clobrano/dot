@@ -122,11 +122,17 @@ return {
 
     require('telescope').setup(telescope_opts)
 
-    -- load pickers
-    pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
-    require('telescope').load_extension('media_files') -- Enable media-file preview in telescope
-    require('telescope').load_extension('heading')
-    --require('telescope').load_extension('noice')
+    -- Defer extension loading until VimEnter to ensure all dependencies are loaded
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        -- load pickers
+        pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
+        pcall(require('telescope').load_extension, 'media_files') -- Enable media-file preview in telescope
+        pcall(require('telescope').load_extension, 'heading')
+        --require('telescope').load_extension('noice')
+      end,
+      once = true,
+    })
 
     -- Mappings
     vim.keymap.set(

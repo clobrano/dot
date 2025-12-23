@@ -1,39 +1,15 @@
 #!/usr/bin/env bash
-# Starship prompt installer - OS-agnostic
+# Starship prompt installer - Uses official installer script only
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LIB_DIR="$(cd "$SCRIPT_DIR/../../lib" && pwd)"
 
-source "$LIB_DIR/detect.sh"
 source "$LIB_DIR/install.sh"
 source "$LIB_DIR/utils.sh"
 
-install_from_package() {
-    local pkg_manager=$(get_preferred_pkg_manager)
-    print_info "Installing Starship using $pkg_manager..."
-
-    case "$pkg_manager" in
-        dnf|toolbox|distrobox)
-            pkg_install "starship" "$pkg_manager"
-            ;;
-        brew)
-            pkg_install "starship" "$pkg_manager"
-            ;;
-        apt)
-            # Starship not in standard Debian/Ubuntu repos, fall back to script
-            return 1
-            ;;
-        *)
-            return 1
-            ;;
-    esac
-
-    return 0
-}
-
-install_from_script() {
+install_starship() {
     print_info "Installing Starship using official installer script..."
 
     if ! command -v curl &> /dev/null; then
@@ -41,7 +17,7 @@ install_from_script() {
         exit 1
     fi
 
-    # Use official installer
+    # Use official installer (always use script, not package managers)
     curl -sS https://starship.rs/install.sh | sh -s -- -y
 
     print_success "Starship installed via official script"
@@ -88,10 +64,8 @@ main() {
         exit 0
     fi
 
-    # Try package manager first, fall back to script
-    if ! install_from_package; then
-        install_from_script
-    fi
+    # Install using official script
+    install_starship
 
     # Verify installation
     if pkg_is_installed starship; then

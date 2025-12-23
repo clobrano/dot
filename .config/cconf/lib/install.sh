@@ -19,7 +19,7 @@ pkg_install() {
 
     case "$pkg_manager" in
         dnf)
-            sudo dnf install -y "$package"
+            sudo dnf install -y --skip-unavailable "$package"
             ;;
         brew)
             brew install "$package"
@@ -28,10 +28,10 @@ pkg_install() {
             flatpak install -y "$package"
             ;;
         toolbox)
-            toolbox run sudo dnf install -y "$package"
+            toolbox run sudo dnf install -y --skip-unavailable "$package"
             ;;
         distrobox)
-            distrobox enter fedora -- sudo dnf install -y "$package"
+            distrobox enter fedora -- sudo dnf install -y --skip-unavailable "$package"
             ;;
         apt)
             sudo apt install -y "$package"
@@ -69,7 +69,7 @@ pkg_install_bulk() {
 
     case "$pkg_manager" in
         dnf)
-            sudo dnf install -y "${packages[@]}"
+            sudo dnf install -y --skip-unavailable "${packages[@]}"
             ;;
         brew)
             brew install "${packages[@]}"
@@ -80,10 +80,10 @@ pkg_install_bulk() {
             done
             ;;
         toolbox)
-            toolbox run sudo dnf install -y "${packages[@]}"
+            toolbox run sudo dnf install -y --skip-unavailable "${packages[@]}"
             ;;
         distrobox)
-            distrobox enter fedora -- sudo dnf install -y "${packages[@]}"
+            distrobox enter fedora -- sudo dnf install -y --skip-unavailable "${packages[@]}"
             ;;
         apt)
             sudo apt install -y "${packages[@]}"

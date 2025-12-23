@@ -64,7 +64,7 @@ install_base_packages() {
     )
 
     print_info "Installing ${#packages[@]} base packages..."
-    sudo dnf install -y "${packages[@]}"
+    sudo dnf install -y --skip-unavailable "${packages[@]}"
 
     print_success "Base packages installed"
 }
@@ -81,15 +81,15 @@ enable_rpm_fusion() {
     local fedora_version=$(rpm -E %fedora)
 
     print_info "Installing RPM Fusion Free..."
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${fedora_version}.noarch.rpm"
 
     print_info "Installing RPM Fusion Nonfree..."
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${fedora_version}.noarch.rpm"
 
     print_info "Updating core group..."
-    sudo dnf group update core -y
+    sudo dnf group update core -y --skip-unavailable
 
     print_success "RPM Fusion enabled"
 }
@@ -98,18 +98,18 @@ install_media_codecs() {
     print_info "Installing multimedia codecs..."
 
     print_info "Installing GStreamer plugins..."
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         gstreamer1-plugins-{bad-\*,good-\*,base} \
         gstreamer1-plugin-openh264 \
         gstreamer1-libav \
         --exclude=gstreamer1-plugins-bad-free-devel
 
     print_info "Installing LAME..."
-    sudo dnf install -y lame\* --exclude=lame-devel
+    sudo dnf install -y --skip-unavailable lame\* --exclude=lame-devel
 
     print_info "Upgrading multimedia groups..."
-    sudo dnf group upgrade --with-optional Multimedia -y
-    sudo dnf group update multimedia sound-and-video -y
+    sudo dnf group upgrade --with-optional Multimedia -y --skip-unavailable
+    sudo dnf group update multimedia sound-and-video -y --skip-unavailable
 
     print_success "Media codecs installed"
 }

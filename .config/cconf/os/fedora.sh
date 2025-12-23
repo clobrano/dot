@@ -41,6 +41,7 @@ install_base_packages() {
     # Removed: task (installed via environments/taskwarrior/install.sh)
     # Removed: atuin (user doesn't want it)
     # Removed: conserver-client (user doesn't recall needing it)
+    # Removed: xclip, deja-dup, recode (user doesn't need them)
 
     local packages=(
         alacritty
@@ -49,16 +50,13 @@ install_base_packages() {
         clang
         clang-tools-extra
         curl
-        deja-dup
         eza
         fd-find
         gh
         git
         python3-pip
-        recode
         stow
         tmux
-        xclip
         yq
         zsh
     )

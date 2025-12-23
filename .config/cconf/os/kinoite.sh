@@ -75,7 +75,16 @@ install_base_brew_packages() {
     )
 
     print_info "Installing ${#packages[@]} base packages..."
-    brew install "${packages[@]}"
+
+    # Install packages individually to skip already installed ones
+    for pkg in "${packages[@]}"; do
+        if brew list "$pkg" &> /dev/null; then
+            print_info "$pkg already installed (skipping)"
+        else
+            print_info "Installing $pkg..."
+            brew install "$pkg"
+        fi
+    done
 
     print_success "Base packages installed via Homebrew"
 }

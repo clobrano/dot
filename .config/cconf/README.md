@@ -10,11 +10,17 @@ cd ~/.dot/.config/cconf
 # Show available targets
 make help
 
-# Bootstrap your OS and install all tools
+# Bootstrap your OS and install CLI tools (default)
 make all
+
+# Install CLI tools + GUI applications
+make all-with-apps
 
 # Or install specific components
 make neovim golang lsp taskwarrior starship
+
+# Install GUI applications separately (optional)
+make flatpak-apps
 ```
 
 ## Directory Structure
@@ -45,8 +51,10 @@ make neovim golang lsp taskwarrior starship
 │   ├── taskwarrior/
 │   │   ├── install.sh         # Taskwarrior + TUI
 │   │   └── taskwarrior.pdf    # Documentation
-│   └── starship/
-│       └── install.sh         # Starship prompt
+│   ├── starship/
+│   │   └── install.sh         # Starship prompt
+│   └── flatpak/
+│       └── install.sh         # GUI apps (Chrome, Slack, etc.)
 │
 └── archive/              # Old scripts (not maintained)
     └── README.md         # Archive documentation
@@ -69,19 +77,23 @@ make neovim golang lsp taskwarrior starship
 ## Makefile Targets
 
 ### Main Targets
-- `make all` - Complete setup (OS + all tools)
+- `make all` or `make all-cli` - Install CLI tools only (default)
+- `make all-with-apps` - Install everything (CLI tools + GUI apps)
 - `make os-bootstrap` - Bootstrap OS only
 - `make dev` - Install development environment (neovim + golang + lsp)
 - `make help` - Show all available targets
 
-### Individual Tools
-- `make neovim` - Neovim + dependencies + LSPs
+### CLI Tools
+- `make neovim` - Neovim + dependencies
 - `make golang` - Go programming language
 - `make lsp` - All language servers
 - `make lsp-python` - Python LSP only
 - `make lsp-bash` - Bash LSP only
 - `make taskwarrior` - Task management (version check logic)
 - `make starship` - Shell prompt
+
+### GUI Applications
+- `make flatpak-apps` - Install Flatpak GUI apps (Chrome, Slack, Telegram, Obsidian, etc.)
 
 ### Utilities
 - `make info` - Show system information

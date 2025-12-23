@@ -145,20 +145,6 @@ enable_flatpak() {
     print_success "Flatpak configured"
 }
 
-install_flatpak_apps() {
-    print_info "Installing Flatpak applications..."
-
-    local flatpak_script="$SCRIPT_DIR/../environments/flatpak-install-apps.sh"
-
-    if [ -f "$flatpak_script" ]; then
-        print_info "Running Flatpak apps installation..."
-        bash "$flatpak_script"
-    else
-        print_warning "Flatpak apps script not found at $flatpak_script"
-        print_info "You can install apps manually with: flatpak install flathub <app-id>"
-    fi
-}
-
 install_essential_rpms() {
     print_info "Some packages need to be layered on the immutable OS..."
     print_warning "This requires a reboot after installation!"
@@ -218,7 +204,8 @@ print_usage_guide() {
     print_info "=== Package Manager Guide ==="
     echo ""
     print_info "1. GUI Applications → Use Flatpak"
-    echo "   flatpak install flathub <app-id>"
+    echo "   make flatpak-apps               # Install curated GUI apps"
+    echo "   flatpak install flathub <app-id>  # Or install manually"
     echo ""
     print_info "2. CLI Tools & Development → Use Homebrew"
     echo "   brew install <package>"
@@ -232,8 +219,11 @@ print_usage_guide() {
     echo "   systemctl reboot"
     echo ""
     print_info "Next steps:"
-    print_info "  - Run 'make all' to install development tools"
-    print_info "  - Or run individual targets: 'make neovim golang lsp taskwarrior starship'"
+    print_info "  1. Install CLI tools: make all (or make dev for dev tools only)"
+    print_info "  2. Install GUI apps (optional): make flatpak-apps"
+    print_info "  3. Or run individual targets: make neovim golang lsp taskwarrior starship"
+    echo ""
+    print_info "Run 'make help' to see all available targets"
 }
 
 main() {
@@ -260,18 +250,15 @@ main() {
     # Step 2: Enable and configure Flatpak
     enable_flatpak
 
-    # Step 3: Install Flatpak apps
-    install_flatpak_apps
-
-    # Step 4: Install Homebrew
+    # Step 3: Install Homebrew
     install_homebrew
 
-    # Step 5: Install base packages via Homebrew
+    # Step 4: Install base packages via Homebrew
     if command -v brew &> /dev/null; then
         install_base_brew_packages
     fi
 
-    # Step 6: Setup container environment (toolbox or distrobox)
+    # Step 5: Setup container environment (toolbox or distrobox)
     if command -v toolbox &> /dev/null; then
         setup_toolbox
     elif command -v distrobox &> /dev/null; then
@@ -281,7 +268,7 @@ main() {
         print_info "Reboot and run this script again to set up containers"
     fi
 
-    # Step 7: Initialize git submodules
+    # Step 6: Initialize git submodules
     initialize_git_submodules
 
     # Print usage guide

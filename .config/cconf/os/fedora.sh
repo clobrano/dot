@@ -114,19 +114,6 @@ install_media_codecs() {
     print_success "Media codecs installed"
 }
 
-install_flatpak_apps() {
-    print_info "Checking for Flatpak apps script..."
-
-    local flatpak_script="$SCRIPT_DIR/../environments/flatpak-install-apps.sh"
-
-    if [ -f "$flatpak_script" ]; then
-        print_info "Running Flatpak apps installation..."
-        bash "$flatpak_script"
-    else
-        print_warning "Flatpak apps script not found at $flatpak_script"
-    fi
-}
-
 initialize_git_submodules() {
     print_info "Initializing git submodules..."
 
@@ -166,20 +153,17 @@ main() {
     # Step 4: Install media codecs
     install_media_codecs
 
-    # Step 5: Install Flatpak apps (if script exists)
-    if command -v flatpak &> /dev/null; then
-        install_flatpak_apps
-    else
-        print_warning "Flatpak not installed, skipping Flatpak apps"
-    fi
-
-    # Step 6: Initialize git submodules
+    # Step 5: Initialize git submodules
     initialize_git_submodules
 
     print_success "Fedora OS bootstrap completed successfully!"
+    echo ""
     print_info "Next steps:"
-    print_info "  1. Run 'make all' to install development tools"
-    print_info "  2. Or run individual targets: 'make neovim golang lsp taskwarrior starship'"
+    print_info "  1. Install CLI tools: make all (or make dev for dev tools only)"
+    print_info "  2. Install GUI apps (optional): make flatpak-apps"
+    print_info "  3. Or run individual targets: make neovim golang lsp taskwarrior starship"
+    echo ""
+    print_info "Run 'make help' to see all available targets"
 }
 
 main "$@"

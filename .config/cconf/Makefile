@@ -2,12 +2,23 @@
 # Run 'make help' for usage information
 
 SHELL := /bin/bash
-.PHONY: all help os-bootstrap neovim neovim-deps golang lsp lsp-python lsp-bash taskwarrior starship clean info
+.PHONY: all all-cli all-with-apps help os-bootstrap neovim neovim-deps golang lsp lsp-python lsp-bash taskwarrior starship flatpak-apps clean info
 
-# Default target
-all: info os-bootstrap neovim golang lsp taskwarrior starship
+# Default target - CLI tools only
+all: all-cli
+
+# CLI tools only (no GUI apps)
+all-cli: info os-bootstrap neovim golang lsp taskwarrior starship
 	@echo ""
-	@echo "✓ All components installed successfully!"
+	@echo "✓ All CLI tools installed successfully!"
+	@echo ""
+	@echo "To install GUI applications: make flatpak-apps"
+	@echo "Restart your shell to apply all changes."
+
+# Everything including Flatpak GUI apps
+all-with-apps: all-cli flatpak-apps
+	@echo ""
+	@echo "✓ All components including GUI apps installed!"
 	@echo ""
 	@echo "Restart your shell to apply all changes."
 
@@ -15,30 +26,38 @@ help:
 	@echo "Dotfiles Environment Setup - Makefile Targets"
 	@echo ""
 	@echo "Main targets:"
-	@echo "  make all          - Install everything (OS bootstrap + all tools)"
-	@echo "  make os-bootstrap - Bootstrap OS (Fedora or Kinoite)"
-	@echo "  make dev          - Install development tools (neovim, golang, lsp)"
+	@echo "  make all             - Install CLI tools only (default)"
+	@echo "  make all-cli         - Install CLI tools only (explicit)"
+	@echo "  make all-with-apps   - Install everything (CLI tools + GUI apps)"
+	@echo "  make os-bootstrap    - Bootstrap OS (Fedora or Kinoite)"
+	@echo "  make dev             - Install development tools (neovim, golang, lsp)"
 	@echo ""
-	@echo "Individual tool targets:"
-	@echo "  make neovim       - Install Neovim and its dependencies"
-	@echo "  make golang       - Install Go language"
-	@echo "  make lsp          - Install all Language Servers"
-	@echo "  make taskwarrior  - Install Taskwarrior"
-	@echo "  make starship     - Install Starship prompt"
+	@echo "CLI tool targets:"
+	@echo "  make neovim          - Install Neovim and its dependencies"
+	@echo "  make golang          - Install Go language"
+	@echo "  make lsp             - Install all Language Servers"
+	@echo "  make taskwarrior     - Install Taskwarrior"
+	@echo "  make starship        - Install Starship prompt"
+	@echo ""
+	@echo "GUI application targets:"
+	@echo "  make flatpak-apps    - Install Flatpak GUI apps (Chrome, Slack, etc.)"
 	@echo ""
 	@echo "LSP-specific targets:"
-	@echo "  make lsp-python   - Install Python LSP only"
-	@echo "  make lsp-bash     - Install Bash LSP only"
+	@echo "  make lsp-python      - Install Python LSP only"
+	@echo "  make lsp-bash        - Install Bash LSP only"
 	@echo ""
 	@echo "Utility targets:"
-	@echo "  make info         - Show system information"
-	@echo "  make clean        - Clean up temporary files"
-	@echo "  make help         - Show this help message"
+	@echo "  make info            - Show system information"
+	@echo "  make clean           - Clean up temporary files"
+	@echo "  make help            - Show this help message"
 	@echo ""
 	@echo "Examples:"
+	@echo "  make all                    # CLI tools only"
+	@echo "  make all-with-apps          # Everything including GUI apps"
 	@echo "  make os-bootstrap           # Just set up the OS"
 	@echo "  make neovim golang          # Install specific tools"
 	@echo "  make dev                    # Install dev environment"
+	@echo "  make flatpak-apps           # Install GUI apps only"
 
 info:
 	@echo "=== System Information ==="
@@ -100,6 +119,11 @@ taskwarrior:
 starship:
 	@echo "=== Installing Starship ==="
 	@bash environments/starship/install.sh
+
+# Flatpak GUI applications
+flatpak-apps:
+	@echo "=== Installing Flatpak GUI Applications ==="
+	@bash environments/flatpak/install.sh
 
 # Development environment (common dev tools)
 dev: neovim golang lsp

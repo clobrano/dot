@@ -2,7 +2,7 @@
 # Run 'make help' for usage information
 
 SHELL := /bin/bash
-.PHONY: all all-cli all-with-apps help os-bootstrap neovim neovim-deps golang lsp lsp-python lsp-bash taskwarrior starship flatpak-apps clean info
+.PHONY: all all-cli all-with-apps help os-bootstrap rpmfusion neovim neovim-deps golang lsp lsp-python lsp-bash taskwarrior starship flatpak-apps clean info
 
 # Default target - CLI tools only
 all: all-cli
@@ -12,7 +12,10 @@ all-cli: info os-bootstrap neovim golang lsp taskwarrior starship
 	@echo ""
 	@echo "✓ All CLI tools installed successfully!"
 	@echo ""
-	@echo "To install GUI applications: make flatpak-apps"
+	@echo "Optional components:"
+	@echo "  - RPM Fusion & media codecs: make rpmfusion"
+	@echo "  - GUI applications: make flatpak-apps"
+	@echo ""
 	@echo "Restart your shell to apply all changes."
 
 # Everything including Flatpak GUI apps
@@ -39,7 +42,8 @@ help:
 	@echo "  make taskwarrior     - Install Taskwarrior"
 	@echo "  make starship        - Install Starship prompt"
 	@echo ""
-	@echo "GUI application targets:"
+	@echo "Optional components (Fedora only):"
+	@echo "  make rpmfusion       - Install RPM Fusion repos & media codecs"
 	@echo "  make flatpak-apps    - Install Flatpak GUI apps (Chrome, Slack, etc.)"
 	@echo ""
 	@echo "LSP-specific targets:"
@@ -57,6 +61,7 @@ help:
 	@echo "  make os-bootstrap           # Just set up the OS"
 	@echo "  make neovim golang          # Install specific tools"
 	@echo "  make dev                    # Install dev environment"
+	@echo "  make rpmfusion              # Install RPM Fusion & codecs (Fedora)"
 	@echo "  make flatpak-apps           # Install GUI apps only"
 
 info:
@@ -83,6 +88,11 @@ os-bootstrap:
 		echo "Cannot detect OS. Please run the appropriate script from os/ directory"; \
 		exit 1; \
 	fi
+
+# RPM Fusion repositories and media codecs (Fedora only)
+rpmfusion:
+	@echo "=== Installing RPM Fusion & Media Codecs ==="
+	@bash os/rpmfusion.sh
 
 # Neovim and dependencies
 neovim-deps:

@@ -37,7 +37,8 @@ make flatpak-apps
 │
 ├── os/                   # OS-specific bootstrapping
 │   ├── fedora.sh         # Fedora workstation setup
-│   └── kinoite.sh        # Immutable OS (Kinoite/Silverblue) setup
+│   ├── kinoite.sh        # Immutable OS (Kinoite/Silverblue) setup
+│   └── rpmfusion.sh      # RPM Fusion & media codecs (optional)
 │
 ├── environments/         # Tool-specific installers
 │   ├── neovim/
@@ -64,9 +65,9 @@ make flatpak-apps
 
 ### Fedora Workstation
 - Uses DNF package manager
-- RPM Fusion repositories
-- Media codecs
-- Flatpak applications
+- RPM Fusion repositories (optional - `make rpmfusion`)
+- Media codecs (optional - included with rpmfusion)
+- Flatpak applications (optional - `make flatpak-apps`)
 
 ### Kinoite / Silverblue (Immutable OS)
 - Homebrew for CLI tools
@@ -92,7 +93,8 @@ make flatpak-apps
 - `make taskwarrior` - Task management (version check logic)
 - `make starship` - Shell prompt
 
-### GUI Applications
+### Optional Components (Fedora)
+- `make rpmfusion` - Install RPM Fusion repositories & media codecs
 - `make flatpak-apps` - Install Flatpak GUI apps (Chrome, Slack, Telegram, Obsidian, etc.)
 
 ### Utilities

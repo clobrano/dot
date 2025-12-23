@@ -67,51 +67,6 @@ install_base_packages() {
     print_success "Base packages installed"
 }
 
-enable_rpm_fusion() {
-    print_info "Enabling RPM Fusion repositories..."
-
-    # Check if RPM Fusion is already installed
-    if rpm -q rpmfusion-free-release &> /dev/null; then
-        print_info "RPM Fusion already enabled"
-        return 0
-    fi
-
-    local fedora_version=$(rpm -E %fedora)
-
-    print_info "Installing RPM Fusion Free..."
-    sudo dnf install -y --skip-unavailable \
-        "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${fedora_version}.noarch.rpm"
-
-    print_info "Installing RPM Fusion Nonfree..."
-    sudo dnf install -y --skip-unavailable \
-        "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${fedora_version}.noarch.rpm"
-
-    print_info "Updating core group..."
-    sudo dnf group update core -y --skip-unavailable
-
-    print_success "RPM Fusion enabled"
-}
-
-install_media_codecs() {
-    print_info "Installing multimedia codecs..."
-
-    print_info "Installing GStreamer plugins..."
-    sudo dnf install -y --skip-unavailable \
-        gstreamer1-plugins-{bad-\*,good-\*,base} \
-        gstreamer1-plugin-openh264 \
-        gstreamer1-libav \
-        --exclude=gstreamer1-plugins-bad-free-devel
-
-    print_info "Installing LAME..."
-    sudo dnf install -y --skip-unavailable lame\* --exclude=lame-devel
-
-    print_info "Upgrading multimedia groups..."
-    sudo dnf group upgrade --with-optional Multimedia -y --skip-unavailable
-    sudo dnf group update multimedia sound-and-video -y --skip-unavailable
-
-    print_success "Media codecs installed"
-}
-
 initialize_git_submodules() {
     print_info "Initializing git submodules..."
 
@@ -145,21 +100,16 @@ main() {
     # Step 2: Install base packages
     install_base_packages
 
-    # Step 3: Enable RPM Fusion
-    enable_rpm_fusion
-
-    # Step 4: Install media codecs
-    install_media_codecs
-
-    # Step 5: Initialize git submodules
+    # Step 3: Initialize git submodules
     initialize_git_submodules
 
     print_success "Fedora OS bootstrap completed successfully!"
     echo ""
     print_info "Next steps:"
     print_info "  1. Install CLI tools: make all (or make dev for dev tools only)"
-    print_info "  2. Install GUI apps (optional): make flatpak-apps"
-    print_info "  3. Or run individual targets: make neovim golang lsp taskwarrior starship"
+    print_info "  2. Install RPM Fusion & media codecs (optional): make rpmfusion"
+    print_info "  3. Install GUI apps (optional): make flatpak-apps"
+    print_info "  4. Or run individual targets: make neovim golang lsp taskwarrior starship"
     echo ""
     print_info "Run 'make help' to see all available targets"
 }

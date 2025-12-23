@@ -40,6 +40,7 @@ case "$PKG_MANAGER" in
             "fzf"
             "the_silver_searcher"
             "ripgrep"
+            "luarocks"
         )
         ;;
     apt)
@@ -60,6 +61,7 @@ case "$PKG_MANAGER" in
             "fzf"
             "the_silver_searcher"
             "ripgrep"
+            "luarocks"
         )
         ;;
 esac

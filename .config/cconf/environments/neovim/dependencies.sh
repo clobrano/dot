@@ -73,4 +73,24 @@ for dep in "${DEPENDENCIES[@]}"; do
     pkg_install "$dep" "$PKG_MANAGER"
 done
 
+# Install tree-sitter CLI using cargo
+print_info "Installing tree-sitter CLI..."
+
+# Source cargo environment if it exists (needed after fresh rust install)
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
+
+if command -v cargo &> /dev/null; then
+    if ! command -v tree-sitter &> /dev/null; then
+        cargo install tree-sitter-cli
+        print_success "tree-sitter CLI installed!"
+    else
+        print_success "tree-sitter CLI already installed!"
+    fi
+else
+    print_warning "Cargo not found, skipping tree-sitter CLI installation"
+    print_warning "Run 'make rust' to install Rust/Cargo first"
+fi
+
 print_success "Neovim dependencies installed successfully!"

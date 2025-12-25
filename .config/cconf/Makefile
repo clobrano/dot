@@ -2,7 +2,7 @@
 # Run 'make help' for usage information
 
 SHELL := /bin/bash
-.PHONY: all all-cli all-with-apps help os-bootstrap rpmfusion neovim neovim-deps golang lsp lsp-python lsp-bash taskwarrior starship flatpak-apps clean info
+.PHONY: all all-cli all-with-apps help os-bootstrap rpmfusion neovim neovim-deps rust golang lsp lsp-python lsp-bash taskwarrior starship flatpak-apps clean info
 
 # Default target - CLI tools only
 all: all-cli
@@ -37,6 +37,7 @@ help:
 	@echo ""
 	@echo "CLI tool targets:"
 	@echo "  make neovim          - Install Neovim and its dependencies"
+	@echo "  make rust            - Install Rust and Cargo"
 	@echo "  make golang          - Install Go language"
 	@echo "  make lsp             - Install all Language Servers"
 	@echo "  make taskwarrior     - Install Taskwarrior"
@@ -95,7 +96,7 @@ rpmfusion:
 	@bash os/rpmfusion.sh
 
 # Neovim and dependencies
-neovim-deps:
+neovim-deps: rust
 	@echo "=== Installing Neovim Dependencies ==="
 	@bash environments/neovim/dependencies.sh
 
@@ -107,6 +108,11 @@ neovim: neovim-deps
 golang:
 	@echo "=== Installing Go ==="
 	@bash environments/golang/install.sh
+
+# Rust/Cargo
+rust:
+	@echo "=== Installing Rust/Cargo ==="
+	@bash environments/rust/install.sh
 
 # Language Servers (depends on neovim)
 lsp-python:

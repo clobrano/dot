@@ -33,48 +33,9 @@ stow .
 echo "source ~/.dot/mybashrc" >> ~/.bashrc
 ```
 
-### 4. Install Optional Tools
+### 4. Install Dependencies and Tools
 
-Now that your dotfiles are linked, you can proceed to install the various applications and tools for which configurations are provided. You can install them using your system's package manager or by leveraging the convenience scripts located in `~/.dot/.config/cconf/environments/`.
-
-#### General Installation via Scripts
-
-For Fedora users, a comprehensive set of base requirements, including `alacritty`, `zsh`, `tmux`, `neovim`, `ranger`, and `taskwarrior`, can be installed using:
-
-```sh
-~/.dot/.config/cconf/environments/fedora/02-dnf-install-base-requirements.sh
-```
-
-#### Specific Tool Installation Scripts
-
-Some tools have dedicated installation scripts for more detailed setup:
-
-*   **Starship (prompt):**
-    ```sh
-    ~/.dot/.config/cconf/environments/starship-install.sh
-    ```
-*   **Wezterm (terminal emulator):** This is installed via Flatpak.
-    ```sh
-    ~/.dot/.config/cconf/environments/flatpak-install-apps.sh
-    ```
-    (Note: `flatpak-install-apps.sh` installs Wezterm along with other Flatpak applications.)
-*   **Neovim (build from source):** If you prefer building Neovim from source rather than installing a package, this script handles Fedora dependencies using `dnf`:
-    ```sh
-    ~/.dot/.config/cconf/environments/neovim/neovim-build-from-source.sh
-    ```
-*   **Ranger (plugins):** To install Ranger devicons plugin:
-    ```sh
-    ~/.dot/.config/cconf/environments/ranger-plugins.sh
-    ```
-*   **Taskwarrior (build from source & TUI):** For building Taskwarrior and its TUI from source, this script uses `dnf` for dependencies:
-    ```sh
-    ~/.dot/.config/cconf/environments/taskwarrior/taskwarrior-install-and-setup.sh
-    ```
-*   **Rust (and rust-analyzer):** Required for some tools (e.g., building Neovide or other Rust-based applications):
-    ```sh
-    ~/.dot/.config/cconf/environments/rust-install-and-setup.sh
-    ```
-
+The project contains several install scripts under `.config/cconf/` directory and a `.config/cconf/Makefile` that orchestrates them, see `make help` for more information.
 
 ---
 

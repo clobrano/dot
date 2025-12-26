@@ -1,0 +1,104 @@
+[Custom Commands][net.local.BookMarkIt.desktop]
+Exec=/usr/bin/konsole -e BookmarkIt -action add
+Name=BookMarkIt Add
+
+[Custom Commands][net.local.ai-english-teacher.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/ai-english-teacher.sh"
+Name=AI English Teacher
+
+[Custom Commands][net.local.alacritty.desktop]
+Exec=/usr/bin/konsole -e BookmarkIt -action find
+Name=BookMarkIt Find
+
+[Custom Commands][net.local.kde-shortcut.sh-2.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh whatsapp"
+Name=Whatsap
+
+[Custom Commands][net.local.kde-shortcut.sh-3.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh note"
+Name=Shortcut Note
+
+[Custom Commands][net.local.kde-shortcut.sh-4.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh slack"
+Name=Slack
+
+[Custom Commands][net.local.kde-shortcut.sh-5.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh terminal"
+Name=Terminal
+
+[Custom Commands][net.local.kde-shortcut.sh-6.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh browser"
+Name=Shortcut browser
+
+[Custom Commands][net.local.kde-shortcut.sh-7.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh chrome"
+Name=Chrome
+
+[Custom Commands][net.local.kde-shortcut.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh terminal"
+Name=Terminal
+
+[Custom Commands][net.local.key.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/key.sh $HOME/Documents/yubikey.gpg OATH463975B7"
+Name=YubiKey
+
+[Custom Commands][net.local.neovim-quick-note.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"
+Name=QuickNote
+
+[Custom Commands][net.local.pr-link-convert.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/pr-link-convert.sh"
+Name=Link Converter
+
+[Custom Commands][net.local.readitlater.sh.desktop]
+Exec=bash -c "/usr/bin/konsole -e $HOME/workspace/golang/bin/readitlater"
+Name=ReadItLater
+
+[Custom Commands][net.local.taskwarrior-quick-task.sh.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/orgmode-quick-task.sh"
+Name=QuickTask
+
+[net.local.BookMarkIt.desktop][Global Shortcuts]
+_launch=Alt+Shift+B
+
+[net.local.ai-english-teacher.sh.desktop][Global Shortcuts]
+_launch=Meta+I
+
+[net.local.alacritty.desktop][Global Shortcuts]
+_launch=Alt+Shift+F
+
+[net.local.kde-shortcut.sh-2.desktop][Global Shortcuts]
+_launch=Meta+Z
+
+[net.local.kde-shortcut.sh-3.desktop][Global Shortcuts]
+_launch=Meta+N
+
+[net.local.kde-shortcut.sh-4.desktop][Global Shortcuts]
+_launch=Meta+S
+
+[net.local.kde-shortcut.sh-5.desktop][Global Shortcuts]
+_launch=Meta+J
+
+[net.local.kde-shortcut.sh-6.desktop][Global Shortcuts]
+_launch=Meta+B
+
+[net.local.kde-shortcut.sh-7.desktop][Global Shortcuts]
+_launch=Meta+C
+
+[net.local.kde-shortcut.sh.desktop][Global Shortcuts]
+_launch=
+
+[net.local.key.sh.desktop][Global Shortcuts]
+_launch=Alt+Shift+Y
+
+[net.local.neovim-quick-note.sh.desktop][Global Shortcuts]
+_launch=Alt+Shift+N
+
+[net.local.pr-link-convert.sh.desktop][Global Shortcuts]
+_launch=Meta+L
+
+[net.local.readitlater.sh.desktop][Global Shortcuts]
+_launch=Alt+Shift+P
+
+[net.local.taskwarrior-quick-task.sh.desktop][Global Shortcuts]
+_launch=Alt+Shift+T

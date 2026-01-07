@@ -45,7 +45,10 @@ help:
 	@echo ""
 	@echo "Optional components (Fedora only):"
 	@echo "  make rpmfusion       - Install RPM Fusion repos & media codecs"
+	@echo ""
+	@echo "Optional components:"
 	@echo "  make flatpak-apps    - Install Flatpak GUI apps (Chrome, Slack, etc.)"
+	@echo "  make golang-apps     - Install Golang-based applications"
 	@echo ""
 	@echo "LSP-specific targets:"
 	@echo "  make lsp-python      - Install Python LSP only"
@@ -108,6 +111,10 @@ neovim: neovim-deps
 golang:
 	@echo "=== Installing Go ==="
 	@bash environments/golang/install.sh
+
+golang-apps: golang
+	@echo "=== Installing Go ==="
+	@bash environments/golang/apps.sh
 
 # Rust/Cargo
 rust:

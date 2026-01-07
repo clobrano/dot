@@ -1,7 +1,7 @@
-news.version=3.3.0
+news.version=3.4.1
 data.location=/home/clobrano/Documents/taskwarriorRH
 
-include no-color.theme
+#include no-color.theme
 
 include ~/.dot/taskwarrior-customization
 report.next.sort=due+,start-,urgency-,project+

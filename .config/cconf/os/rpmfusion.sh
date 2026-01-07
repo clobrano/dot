@@ -7,6 +7,12 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LIB_DIR="$(cd "$SCRIPT_DIR/../lib" && pwd)"
 
+if command -v rpm-ostree 2>&1 >/dev/null; then
+    INSTALLER=rpm-ostree
+else
+    INSTALLER=dnf
+fi
+
 source "$LIB_DIR/detect.sh"
 source "$LIB_DIR/install.sh"
 source "$LIB_DIR/utils.sh"
@@ -23,15 +29,15 @@ enable_rpm_fusion() {
     local fedora_version=$(rpm -E %fedora)
 
     print_info "Installing RPM Fusion Free..."
-    sudo dnf install -y --skip-unavailable \
+    sudo ${INSTALLER} install -y \
         "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${fedora_version}.noarch.rpm"
 
     print_info "Installing RPM Fusion Nonfree..."
-    sudo dnf install -y --skip-unavailable \
+    sudo ${INSTALLER} install -y \
         "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${fedora_version}.noarch.rpm"
 
     print_info "Updating core group..."
-    sudo dnf group update core -y --skip-unavailable
+    sudo ${INSTALLER} group update core -y-unavailable
 
     print_success "RPM Fusion enabled"
 }
@@ -40,18 +46,18 @@ install_media_codecs() {
     print_info "Installing multimedia codecs..."
 
     print_info "Installing GStreamer plugins..."
-    sudo dnf install -y --skip-unavailable \
+    sudo ${INSTALLER} install -y \
         gstreamer1-plugins-{bad-\*,good-\*,base} \
         gstreamer1-plugin-openh264 \
         gstreamer1-libav \
         --exclude=gstreamer1-plugins-bad-free-devel
 
     print_info "Installing LAME..."
-    sudo dnf install -y --skip-unavailable lame\* --exclude=lame-devel
+    sudo ${INSTALLER} install -y lame\* --exclude=lame-devel
 
     print_info "Upgrading multimedia groups..."
-    sudo dnf group upgrade --with-optional Multimedia -y --skip-unavailable
-    sudo dnf group update multimedia sound-and-video -y --skip-unavailable
+    sudo ${INSTALLER} group upgrade --with-optional Multimedia -y
+    sudo ${INSTALLER} group update multimedia sound-and-video -y
 
     print_success "Media codecs installed"
 }

@@ -3,7 +3,7 @@ return {
   config = function()
     require("frontline").setup({
     workspaces = {
-      personal = "~/.taskpersonalrc",
+      personal = "~/.mytaskrc",
       work = "~/.taskrc",
     },
     default_workspace = "work",  -- Used when no @workspace specified

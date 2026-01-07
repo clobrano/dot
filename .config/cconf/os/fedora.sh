@@ -58,6 +58,7 @@ install_base_packages() {
         stow
         tmux
         yq
+        zoxide
         zsh
     )
 

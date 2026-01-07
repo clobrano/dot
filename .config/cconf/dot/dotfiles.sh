@@ -3,7 +3,8 @@
 export DOTFILES=$HOME/.config/cconf
 
 if [ -d  "$DOTFILES/aliases" ]; then
-    for i in $(ls "$DOTFILES/aliases"); do
-        source "$DOTFILES/aliases/$i"
+    for i in "$DOTFILES"/aliases/*; do
+        # shellcheck disable=SC1090
+        source "$i"
     done
 fi

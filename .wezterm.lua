@@ -5,7 +5,8 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- Spawn the right tmux shell in login mode
-config.default_prog = { '/usr/bin/zsh' }
+--config.default_prog = { '/usr/bin/zsh' }
+config.default_prog = { '/home/clobrano/workspace/golang/bin/cliprouter' }
 
 -- Specify additional patterns to match when in quick select mode
 config.quick_select_patterns = {
@@ -59,8 +60,8 @@ config.window_padding = { left = 10, right = 10, top = 5, bottom = 5, }
 --config.initial_cols = 235
 --config.initial_rows = 55
 -- short format
---config.initial_cols = 120
---config.initial_rows = 40
+config.initial_cols = 120
+config.initial_rows = 30
 
 --config.background = {
   --{

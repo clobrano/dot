@@ -1,2 +1,2 @@
-alias mui='wui --config ~/.config/wui/personal-config.yaml'
-alias rl='wui --config ~/.config/wui/readitlater.yaml'
+alias mui='wui --config ~/Me/Taskwarrior/personal-config.yaml'
+alias rui='wui --config ~/Me/Taskwarrior/readitlater-desk.yaml'

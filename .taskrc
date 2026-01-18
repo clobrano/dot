@@ -1,7 +1,10 @@
 news.version=3.4.1
 data.location=/home/clobrano/Documents/taskwarriorRH
 
-#include no-color.theme
-
 include ~/.dot/taskwarrior-customization
 report.next.sort=due+,start-,urgency-,project+
+
+uda.jira.type=string
+uda.jira.label=JIRA
+uda.pr.type=string
+uda.pr.label=PR

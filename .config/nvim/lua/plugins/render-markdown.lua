@@ -69,16 +69,15 @@ return {
         position = 'inline',
         unchecked = {
             --icon = '*    ',
-            icon = '*    ',
+            icon = '* [ ]',
             highlight = 'RenderMarkdownUnchecked',
-        },
-        checked = {
-            icon = '*  ✓ ',
+        },         checked = {
+            icon = '* [✓]',
             highlight = 'RenderMarkdownChecked',
         },
         custom = {
             waiting = { raw = '[W]', rendered = '*  w ', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '*  ▶ ', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = '* [▶]', highlight = 'RenderMarkdownTodo' },
             deleted = { raw = '[-]', rendered = '*  ✗ ', highlight = 'RenderMarkdownTodo' },
             prog25 = { raw = '[.]', rendered = '*  . ', highlight = 'RenderMarkdownTodo' },
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },

@@ -244,7 +244,7 @@ fi
 add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
-    switch_go_version
+    #switch_go_version
     auto_venv
 }
 add-zsh-hook preexec () {
@@ -269,6 +269,11 @@ fi
 # use zshz in place of "cd", but only if installed
 if command -v zshz >/dev/null; then
     eval "$(zoxide init zsh --cmd cd)"
+fi
+
+# enable fuzzy-cd
+if command -v fuzzy-cd >/dev/null; then
+    eval "$(fuzzy-cd init zsh)"
 fi
 
 # bun completions

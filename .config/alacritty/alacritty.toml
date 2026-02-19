@@ -10,11 +10,11 @@ normal = { family = "Source Code Pro Medium", style = "Regular" }
 history = 0
 
 [window]
-decorations = "None"
+#decorations = "None"
 dynamic_padding = true
 opacity = 1.00
 #startup_mode = "Maximized"
-decorations_theme_variant = "Dark"
+#decorations_theme_variant = "Dark"
 
 [window.dimensions]
 columns = 130
@@ -29,5 +29,5 @@ live_config_reload = true
 
 import = [
   # uncomment the flavour you want below:
-  "~/.config/alacritty/catppuccin-frappe.toml"
+  "~/.config/alacritty/catppuccin-mocha.toml"
 ]

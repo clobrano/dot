@@ -8,3 +8,5 @@ uda.jira.type=string
 uda.jira.label=JIRA
 uda.pr.type=string
 uda.pr.label=PR
+uda.url.type=string
+uda.url.label=URL

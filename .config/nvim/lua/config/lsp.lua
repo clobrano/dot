@@ -40,8 +40,12 @@ if true then
     --nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('K', function()
+      vim.lsp.buf.hover({ border = "rounded", max_width = 80, max_height = 20 })
+    end, 'Hover Documentation')
+    nmap('<M-k>', function()
+      vim.lsp.buf.signature_help({ border = "rounded", max_width = 80, max_height = 20 })
+    end, 'Signature Documentation')
 
     -- Lesser used LSP functionality
     nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
@@ -54,11 +58,15 @@ if true then
 
   -- Configure LSP hover and signature help handlers to have borders
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded"
+    border = "rounded",
+    max_width = 80,
+    max_height = 20,
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded"
+    border = "rounded",
+    max_width = 80,
+    max_height = 20,
   })
 
   if false then

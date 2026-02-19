@@ -59,3 +59,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- colorscheme for diff view
+--vim.api.nvim_create_autocmd("OptionSet", {
+  --pattern = "diff",
+  --callback = function()
+    --if vim.v.option_new == "1" then
+      --print("changing colorscheme for diff view")
+      --vim.cmd("colorscheme oldbook")
+    --else
+      ---- Optional: Set it back to your normal theme when diff ends
+      --vim.cmd("colorscheme catppuccin")
+    --end
+  --end,
+--})

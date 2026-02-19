@@ -1,3 +1,11 @@
+function mann() {
+    if command -v bat 2>&1 >/dev/null; then
+        man "$1" | bat --style=plain --language=Manpage
+    else
+        man "$1"
+    fi
+}
+
 function auto_venv() {
     # automatically activate python virtualenv
 

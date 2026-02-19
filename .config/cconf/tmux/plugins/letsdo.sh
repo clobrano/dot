@@ -20,7 +20,7 @@ if ! command -v "$YQ" >/dev/null; then
     exit 1
 fi
 
-DATA_DIRECTORY=$($YQ -r ".data_directory" ${YAML_CONFIG})
+DATA_DIRECTORY=$($YQ -r ".data_directory" "${YAML_CONFIG}")
 if [[ -z ${DATA_DIRECTORY} ]]; then
     echo "config error: could not find data_directory from ${YAML_CONFIG}"
     exit 1
@@ -49,7 +49,7 @@ WEEK=$(lets see this week | grep "total time:" | sed 's/\x1b\[[0-9;]*m//g' | awk
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
 elapsed_time=$(date +"%H:%M.%S" --date="@$((end - begin - 3600))")
-echo "⭐ $full_name $elapsed_time/$TODAY/$WEEK"
+echo -e "⭐ $full_name /#[fg=colour50]$elapsed_time#[fg=white] #[fg=colour5]$TODAY#[fg=white] #[fg=colour4]$WEEK#[fg=white]/"
 
 # Short name for OneThing Gnome extention
 #name=$full_name
@@ -60,7 +60,7 @@ echo "⭐ $full_name $elapsed_time/$TODAY/$WEEK"
 #dconf write /org/gnome/shell/extensions/one-thing/thing-value "'  $name $elapsed_time'"
 
 # Reminder of time spent on the same task
-warn_time_minutes=15
+warn_time_minutes=30
 work_time_seconds=$((end - begin))
 work_time_minutes=$((work_time_seconds / 60))
 if [ "$work_time_minutes" -lt 0 ] || [ ! $((work_time_minutes % warn_time_minutes)) -eq 0 ]; then
@@ -105,7 +105,6 @@ else
     # all checks passed, we can send the notification
     echo "$full_name" > "$WARNING_FILE"
     notify-send --app-name "Tmux|Letsdo" "$elapsed_time on - $full_name -"
-    paplay /usr/share/sounds/freedesktop/stereo/complete.oga
 fi
 
 

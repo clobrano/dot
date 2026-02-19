@@ -522,8 +522,8 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
 
--- Move the cursor in a Mermaid section, the function will create the SVG
-vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
+-- Move the cursor in a Mermaid section, the function will create the picture according to the output extension
+vim.api.nvim_create_user_command("MermaidCreateImage", function(opts)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
@@ -564,11 +564,11 @@ vim.api.nvim_create_user_command("MermaidCreateSVG", function(opts)
     local output = vim.fn.input("Enter full output path: ")
 
     -- Run the mermaid-cli command
-    local command = string.format("~/Apps/node_modules/.bin/mmdc -i %s -o %s", tmp_file, output)
+    local command = string.format("~/Apps/node_modules/.bin/mmdc -i %s -o %s --scale 3", tmp_file, output)
     os.execute(command)
 
     -- Optionally, print a message
-    print("Mermaid image generated!")
+    print("Mermaid image generated at " .. output)
   else
     -- If no valid Mermaid block is found, print an error message
     print("No Mermaid code block found at cursor position.")
@@ -693,10 +693,10 @@ vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
 
 local function insert_date_header()
-  local formatted_date = os.date("* _%A %d %B_:")
+  local formatted_date = os.date("- _%A %d %B_:")
 
   -- Insert the formatted date at the current cursor position
-  vim.api.nvim_put({ formatted_date }, "c", false, true)
+  vim.api.nvim_put({ formatted_date }, "l", true, true)
 end
 
 -- Bind the function to a command (Optional)
@@ -738,24 +738,33 @@ function Open_markdown_reference_url()
   if #result == 0 then
     print("No matches")
     return
-  end
-  vim.ui.select(result, { prompt = "Choose one:" }, function(choice)
-    if choice then
-      local url = choice:match("https://%S+")
-      if url then
-        local open_command = "xdg-open " .. vim.fn.shellescape(url)
-        print("opening " .. url)
-        os.execute(open_command)
-      end
+  elseif #result == 1 then
+    local choice = result[1]
+    local url = choice:match("https://%S+")
+    if url then
+      local open_command = "xdg-open " .. vim.fn.shellescape(url)
+      print("opening " .. url)
+      os.execute(open_command)
     else
-      if choice ~= nil then
-        print("cannot open choice: " .. choice[1])
+      print("cannot extract URL from: " .. choice)
+    end
+  else
+    vim.ui.select(result, { prompt = "Choose one:" }, function(choice)
+      if choice then
+        local url = choice:match("https://%S+")
+        if url then
+          local open_command = "xdg-open " .. vim.fn.shellescape(url)
+          print("opening " .. url)
+          os.execute(open_command)
+        else
+          print("cannot open choice: " .. choice[1])
+        end
       else
         print("cannot open choice")
       end
       return
-    end
-  end)
+    end)
+  end
 end
 
 -- Map the function to a key in visual mode

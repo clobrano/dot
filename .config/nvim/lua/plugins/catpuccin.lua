@@ -11,8 +11,9 @@ return {
           Todo = { fg = colors.flamingo, bg = colors.none },
           --WinSeparator = { fg = colors.flamingo, bg = colors.none },
           ["@markup.quote.markdown"] = { fg = colors.overlay2, bold = false },
-          -- Remove annoying background highlight from the following tags
+          -- Remove the background highlight from the following tags which clashes with Todo-comments plugin
           ["@comment.todo.comment"] = { bg = 'none' },
+          ["@comment.warning.comment"] = { bg = 'none' },
           ["@comment.note.comment"] = { bg = 'none' },
           ["@comment.fix.comment"] = { bg = 'none' },
         }

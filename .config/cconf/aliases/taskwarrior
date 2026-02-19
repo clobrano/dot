@@ -1,2 +1,4 @@
+alias m='task rc:$HOME/.mytaskrc'
 alias mui='wui --config ~/Me/Taskwarrior/personal-config.yaml'
+alias r='task rc:$HOME/.readitlaterrc'
 alias rui='wui --config ~/Me/Taskwarrior/readitlater-desk.yaml'

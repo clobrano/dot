@@ -1,13 +1,7 @@
-alias bi='source ~/.bashrc'
-alias zi='source ~/.zshrc'
-
-alias l='ls -l'
-alias ll='ls -l'
-
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
-alias wlcopy=wl-copy
 
+#######################################################################################
 # Date helpers
 alias now='date +"%F-%H%M%S"'
 alias today='date +"%F"'
@@ -17,26 +11,34 @@ alias friday='date --date="Friday" +"%F"'
 alias eow='date --date="next Sunday" +"%F"'
 alias sow='date --date="last Monday" +"%F"'
 
-# Better cat
+#######################################################################################
+# YAZI
+alias y=yazi
+
+#######################################################################################
+# CAT/BAT
 if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias cat="batcat --style=plain"
 else if [[ $(which bat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
         alias cat="bat --style=plain"
-    fi 
+    fi
 fi
 
-# Better ls
+#######################################################################################
+# LS/EZA
 if command -v eza 2>&1 >/dev/null; then
     alias ls=eza
 fi
-# Better df
-alias duf="duf -theme dark"
 
+#######################################################################################
+# DF/DUF
+alias duf="duf -theme dark"
 if [[ $(which nodejs 2>/dev/null | grep bin | wc -l) = "1" ]]; then
     alias node='nodejs'  # in ubuntu binary is called wrong
 fi
 
-# Kubernetes
+#######################################################################################
+# KUBERNETES
 alias k=kubectl
 alias kd='kubectl describe'
 alias kc='kubectl create'
@@ -44,33 +46,43 @@ alias kdry='--dry-run=client --output=yaml'
 alias cdkube="cd ~/.kube"
 alias d=docker
 
-# Neovim
+#######################################################################################
+# NEOVIM
+# my notes
 alias nn='cd $ME/Notes && nvim index.md'
-# neovim Orgmode
+# Orgmode
 alias no='cd $ME/Orgmode && nvim Orgmode.org'
 alias nr='cd $ME/Orgmode && nvim ReadItLater.org'
+# Work
+alias ns='cd $HOME/Documents/RedHatNotes && nvim Journal/Overview.md'
 # Neovim session
-alias ns='nvim -c "Telescope persisted"'
+alias nt='nvim -c "Telescope persisted"'
 alias nreview="nvim -c \"Octo pr list\""
 
 
-
+#######################################################################################
+# GOLANG GIMME
 # This is for gimme. Sometimes the go project folder I'm in doesn't get the right go version. Re-entering the folder
 # fixes it, so :shrug:
 alias goreloadversion="cd .. ; cd -"
 
+
+#######################################################################################
+# BOOKMARKIT
 # I know, an alias for my own script... but bookmark is a meaningful name
 # I need to add 'find'
-alias bb="BookMarkIt"
+alias bb="BookmarkIt"
 
-# ntfy.sh. To be used with
+#######################################################################################
+# NTFY.SH
 alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
-#alias cdf="source ~/workspace/script-fu/fzf-cd.sh"
-#alias cdf="cd \$(find $HOME -maxdepth 5 -type d -not -path \"*/.*\" | fzf --layout reverse --prompt \"Search directory> \")"
-#alias cdf="cd \$(fuzzy-cd)"
-alias cclip="wl-copy"
 
+#######################################################################################
+# MY GEMINI
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
 
+
+#######################################################################################
+# BRIEFLY
 alias briefly-pod='podman run -d --name briefly --userns=keep-id -e BRIEFLY_LLM_PROVIDER=gemini -e GOOGLE_API_KEY=$GEMINI_API_KEY -e BRIEFLY_NTFY_TOPIC=briefly-summary -v $HOME/Me/Whisper:/data/inbox:Z -v $HOME/Me/Notes/3-Resources/ReadItLater:/data/output:Z briefly:latest'

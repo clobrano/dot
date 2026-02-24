@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.cmd.colorscheme 'catppuccin'
+vim.cmd.colorscheme 'catppuccin-frappe'
 vim.o.winborder = 'rounded'
 vim.wo.number = true
 vim.wo.relativenumber = false
@@ -54,7 +54,7 @@ vim.opt.laststatus = 3 -- always show status
 vim.opt.linebreak = true -- wrap long lines at characters in 'breakat'
 
 vim.wo.signcolumn = 'yes:2' -- Keep signcolumn on by default
-vim.o.updatetime = 250 -- Decrease update time
+vim.o.updatetime = 500 -- Balanced update time (reduces LSP request frequency)
 vim.o.timeoutlen = 500 -- This is also the timeout for which-key
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
 vim.o.termguicolors = true -- You should make sure your terminal supports this

@@ -19,12 +19,11 @@ vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>Telescope diagnostics<CR>',
 -- ]]
 
 vim.diagnostic.config({
-  virtual_text = {
-    -- source = "if_many",  -- Use "if_many" to show source when multiple diagnostics
-    source = false, -- Use false to never show the source
-    -- source = true,          -- Use true to always show the source (might be verbose)
-    prefix = '●', -- Could be '■', '▎', 'x'
-  },
+  virtual_text = false, -- Disabled to reduce memory in large files (use <leader>do for float)
+  -- virtual_text = {
+  --   source = false,
+  --   prefix = '●',
+  -- },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '●', -- Default: E

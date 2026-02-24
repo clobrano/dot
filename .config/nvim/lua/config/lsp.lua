@@ -105,7 +105,37 @@ if true then
   --  If you want to override the default filetypes that your language server will attach to you can
   --  define the property 'filetypes' to the map in question.
   local servers = {
-    gopls = {},
+    gopls = {
+      gopls = {
+        -- Memory optimization for large repositories
+        analyses = {
+          unusedparams = false,
+          shadow = false,
+          fieldalignment = false,
+          nilness = false,
+          unusedwrite = false,
+        },
+        staticcheck = false,
+        usePlaceholders = false,
+        codelenses = {
+          gc_details = false,
+          generate = false,
+          regenerate_cgo = false,
+          tidy = false,
+          upgrade_dependency = false,
+          vendor = false,
+        },
+        hints = {
+          assignVariableTypes = false,
+          compositeLiteralFields = false,
+          compositeLiteralTypes = false,
+          constantValues = false,
+          functionTypeParameters = false,
+          parameterNames = false,
+          rangeVariableTypes = false,
+        },
+      },
+    },
     pyright = {},
     markdown_oxide = {},
     clangd = {},

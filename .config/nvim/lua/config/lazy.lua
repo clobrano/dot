@@ -32,4 +32,6 @@ require("lazy").setup({
   install = { colorscheme = { "nord" } },
   -- automatically check for plugin updates
   checker = { enabled = false },
+  -- disable config file change detection (reduces file watching overhead)
+  change_detection = { enabled = false },
 })

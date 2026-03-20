@@ -59,6 +59,47 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+
+local big_file_group = vim.api.nvim_create_augroup("BigFileSettings", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+  group = big_file_group,
+  pattern = "*",
+  callback = function(ev)
+    -- Set threshold to 1MB
+    local filesize = vim.fn.getfsize(ev.file)
+    if filesize > 1024 * 1024 then
+      -- 1. Disable undo history (huge memory saver)
+      vim.opt_local.undolevels = -1
+
+      -- 2. Disable swap files and autoread
+      vim.opt_local.swapfile = false
+      vim.opt_local.bufhidden = "unload"
+
+      -- 3. Disable incremental search and folds
+      vim.opt_local.syntax = "off"
+      vim.opt_local.foldmethod = "manual"
+      vim.o.hlsearch = false
+
+      -- 4. Treesitter check (wrapped in pcall to avoid errors if not installed)
+      local ok, ts_configs = pcall(require, "nvim-treesitter.configs")
+      if ok then
+        vim.cmd("TSBufDisable highlight")
+        vim.cmd("TSBufDisable indent")
+      end
+
+      -- Disable Flash
+      local ok, flash_config = pcall(require, "flash")
+      if ok then
+        flash_config.toggle()
+      end
+
+      -- Helpful notification
+      vim.notify("Large file detected: Performance mode enabled.", vim.log.levels.WARN)
+    end
+  end,
+})
+
+
 -- colorscheme for diff view
 --vim.api.nvim_create_autocmd("OptionSet", {
   --pattern = "diff",

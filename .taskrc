@@ -6,7 +6,12 @@ report.next.sort=due+,start-,urgency-,project+
 
 uda.jira.type=string
 uda.jira.label=JIRA
+
 uda.pr.type=string
 uda.pr.label=PR
+
+uda.gdoc.type=string
+uda.gdoc.label=GDOC
+
 uda.url.type=string
 uda.url.label=URL

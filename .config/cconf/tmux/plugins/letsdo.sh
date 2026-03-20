@@ -37,7 +37,7 @@ full_name=$(sed -n 's_"name": "\(.*\)",_\1_p' "$DATA_DIRECTORY/letsdo-task")
 full_name=${full_name##+([[:space:]])}    # strip leading whitespace;  no quote expansion!
 full_name=${full_name%%+([[:space:]])}   # strip trailing whitespace; no quote expansion!
 # Sanitize task name
-full_name=$(echo "$full_name" | tr -d '"'\''')
+full_name=$(echo "$full_name" | tr -d '"'\''' | sed 's/#/##/g')
 
 begin=$(date +%s -d "$(sed -n 's_"start": "\(.*\)"_\1_p' "$DATA_DIRECTORY/letsdo-task")")
 

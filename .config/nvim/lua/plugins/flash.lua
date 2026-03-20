@@ -13,12 +13,11 @@ return {
     },
   },
   keys = {
-    { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+    { "s",  mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
   },
   config = function(_, opts)
     require("flash").setup(opts)
     vim.api.nvim_create_user_command("FlashToggle", function()
-      require("flash").toggle()
-    end, { desc = "Toggle Flash Search" })
+      require("flash").toggle() end, { desc = "Toggle Flash Search" })
   end,
 }

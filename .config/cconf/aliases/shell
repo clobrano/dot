@@ -49,16 +49,20 @@ alias d=docker
 #######################################################################################
 # NEOVIM
 # my notes
-alias nn='cd $ME/Notes && nvim index.md'
+alias nn="nvim -c 'lua require('persisted').load({ name = 'Notes' })'"
 # Orgmode
-alias no='cd $ME/Orgmode && nvim Orgmode.org'
-alias nr='cd $ME/Orgmode && nvim ReadItLater.org'
+alias no="nvim -c 'lua require('persisted').load({ name = 'Orgmode' })'"
+alias nr="nvim -c 'lua require('persisted').load({ name = 'ReadItLater' })'"
 # Work
-alias ns='cd $HOME/Documents/RedHatNotes && nvim Journal/Overview.md'
-# Neovim session
-alias nt='nvim -c "Telescope persisted"'
+alias nw="nvim -c \"lua require('persisted').load({ name = 'RedHatNotes' })\""
+# Neovim Persisted sessions selector
+alias ns='nvim -c "Telescope persisted"'
+# Octo
 alias nreview="nvim -c \"Octo pr list\""
-
+# Alias for your work notes
+worknotes() {
+  nvim -c "lua require('persisted').load({ name = 'WorkNotes' })"
+}
 
 #######################################################################################
 # GOLANG GIMME

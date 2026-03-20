@@ -273,7 +273,7 @@ fi
 
 # enable fuzzy-cd
 if command -v fuzzy-cd >/dev/null; then
-    eval "$(fuzzy-cd init zsh)"
+    eval "$(fuzzy-cd init --depth 6 zsh)"
 fi
 
 # bun completions
@@ -284,3 +284,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 # [profiler end]
 #zprof
+
+if command -v direnv 2>&1 >/dev/null; then
+    eval "$(direnv hook zsh)"
+fi

@@ -12,7 +12,12 @@
 	sync = !git pull upstream ${MAIN_BRANCH:-main} && git push origin ${MAIN_BRANCH:-main}
 	syncthis = !git pull upstream master && git push origin master
 	sw = !git switch
+	# worktree: new branch in sibling dir ../repo-branch
 	wa = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wa <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local current_repo_name=$(basename \"$(pwd)\"); local worktree_path=\"../${current_repo_name}-${new_branch_name}\"; git worktree add -b \"${new_branch_name}\" \"${worktree_path}\" \"${base_branch}\"; }; f"
+	# worktree: new branch inside repo root
+	wA = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wA <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git worktree add -b \"${new_branch_name}\" \"${repo_root}/${new_branch_name}\" \"${base_branch}\"; }; f"
+	# worktree: checkout existing remote branch inside repo root
+	wR = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wR <branch-name> [<remote>]\"; return 1; fi; local branch_name=\"$1\"; local remote=\"${2:-origin}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git fetch \"${remote}\" \"${branch_name}\" && git worktree add --track -B \"${branch_name}\" \"${repo_root}/${branch_name}\" \"${remote}/${branch_name}\"; }; f"
 	w = worktree
 [core]
 	excludesfile = /home/clobrano/.gitignore_global

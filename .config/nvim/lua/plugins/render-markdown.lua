@@ -7,15 +7,19 @@ return {
   config = function()
     require('render-markdown').setup({
       completions = { coq = { enabled = true } },
+      dash = {
+        -- Disable dash rendering to prevent frontmatter delimiters from being rendered as horizontal rules
+        enabled = false,
+      },
       heading = {
         -- Turn on / off heading icon & background rendering
         enabled = true,
         -- Turn on / off any sign column related rendering
-        sign = false,
+        sign = true,
         -- Determines how icons fill the available space:
         --  inline:  underlying '#'s are concealed resulting in a left aligned icon
         --  overlay: result is left padded with spaces to hide any additional '#'
-        position = 'overlay',
+        position = 'inline',
         -- Replaces '#+' of 'atx_h._marker'
         -- The number of '#' in the heading determines the 'level'
         -- The 'level' is used to index into the array using a cycle
@@ -83,6 +87,16 @@ return {
             prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
             prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },
         },
+    },
+    quote = {
+        -- Turn on / off block quote & callout rendering
+        enabled = true,
+        -- Replaces '>' of 'block_quote_marker'
+        icon = '▎',
+        -- Whether to repeat icon on wrapped lines
+        repeat_linebreak = false,
+        -- Highlight for the quote icon
+        highlight = 'RenderMarkdownQuote',
     },
     code = {
         -- Turn on / off code block & inline code rendering

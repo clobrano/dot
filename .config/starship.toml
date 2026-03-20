@@ -20,7 +20,11 @@ format = 'on [$symbol$branch]($style) '
 tag_disabled = false
 
 [golang]
-#symbol = "GO "
+symbol = "GO "
+format = '$symbol[($version )]($style)'
+
+[python]
+symbol = "PY "
 format = '$symbol[($version )]($style)'
 
 [hostname]
@@ -41,3 +45,7 @@ disabled = true
 
 [aws]
 disabled = true
+
+[kubernetes]
+disabled = false
+format = '[$symbol($cluster $namespace)](dimmed blue) '

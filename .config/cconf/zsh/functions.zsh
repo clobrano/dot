@@ -44,7 +44,7 @@ function is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-function switch_go_version() {
+function go_version_load_from_go_mod() {
     GO_MOD_FILE="$(pwd)/go.mod"
     if [ ! -f $GO_MOD_FILE ]; then
         return

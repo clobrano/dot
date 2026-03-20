@@ -403,12 +403,14 @@ nmap('<leader>wa', ':windo set wrap!<cr>')
 
 -- markdown section
 -- bold
-vmap('<leader>bo', '"adi**<esc>"apa**<esc>')
+vmap('<leader>bo', 'c**<C-r>"**<esc>')
 -- wikilink
 --vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
 vmap('<leader>ml', ':<C-u>lua CreateFileAndWikiLink()<CR>')
 -- strikethrough
 vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
+-- inline code
+vmap('<leader>i', 'c`<C-r>"`<esc>')
 
 -- Some plugins things
 -- TODO: move it to zenmode

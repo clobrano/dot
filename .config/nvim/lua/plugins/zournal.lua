@@ -44,6 +44,7 @@ return {
       vim.keymap.set('n', '<leader>zw', ':ZournalWeeklyJournal<cr>', {desc="Open Zournal Weekly", noremap = true,silent=true}),
       vim.keymap.set('n', '<leader>zc', ':ZournalTagCopy<cr>', {desc="Zournal Tag Copy", noremap = true,silent=true}),
       vim.keymap.set('n', '<leader>za', ':ZournalTagAdd<cr>', {desc="Zournal Tag Add", noremap = true,silent=true}),
+      vim.keymap.set('n', '<leader>zb', ':ZournalBacklinks<cr>', {desc="Zournal Backlinks", noremap = true,silent=true}),
       vim.keymap.set('n', '<leader>zr', ':ZournalTagReferences<cr>', {desc="Zournal Tag References", noremap = true,silent=true}),
       vim.keymap.set('n', '<leader>zf', ':ZournalTagFollow<cr>', {desc="Zournal Tag Follow", noremap = true,silent=true}),
       vim.keymap.set('n', '<leader>zn', ':ZournalInbox<cr>', {desc="Zournal New File in Inbox", noremap = true,silent=true}),

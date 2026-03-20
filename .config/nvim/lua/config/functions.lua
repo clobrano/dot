@@ -1,3 +1,51 @@
+------------------------------------------------------------------------------
+-- MAPPINGS
+------------------------------------------------------------------------------
+vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>", { desc = "[M]arkdown [Format] header spaces", noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count == 0 and 1 or vim.v.count)<CR>", { noremap = true, silent = true, desc = "Set Markdown Header Level (using count)" })
+vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
+vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>`', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cp', ":lua CopyCodeAndPermalink()<CR>", { desc = 'Format selected code with its permalink', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>bdl', 'Bdelete ', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd> lua ToggleVirtualText()<cr>', { desc = 'Toggle Virtual Text', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ra', '<cmd>lua Add_reference_link()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>tw', ':TaskWarriorTask ', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { noremap = true, silent = true, desc = '[I]nsert [D]ate [H]eader' })
+
+vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
+vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
+
+vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>lua ReplaceSpacesWithHypens()<CR>', { noremap = true, silent = true, desc = 'Replace space with Hyphens in the clipboard text' })
+vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
+
+
+vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',
+  { desc = "Lets do begin", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
+
+
+vim.api.nvim_set_keymap('v', '<leader>gt', '<cmd>lua Get_title_from_url()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
+
+
+vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>', { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>lua ToggleTodoDone()<CR>',
+  { desc = '[T]oggle [T]ODO/DONE', noremap = true, silent = true })
+
+------------------------------------------------------------------------------
+-- FUNCTIONS
+------------------------------------------------------------------------------
 local function get_clipboard()
   return vim.fn.getreg('+')
 end
@@ -14,8 +62,8 @@ vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
       ]])
   vim.fn.setpos('.', save_cursor)
 end, {})
-vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>",
-  { desc = "[M]arkdown [Format] header spaces", noremap = true, silent = true })
+
+
 
 -- Function to set the number of '#' at the beginning of a line.
 -- If level is 0, all '#' are removed.
@@ -47,7 +95,7 @@ function SetMarkdownHeader(level)
 end
 
 -- Type <N> before triggering the command. E.g. type "3" before <leader>ha to create a Markdown header level 3
-vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count == 0 and 1 or vim.v.count)<CR>", { noremap = true, silent = true, desc = "Set Markdown Header Level (using count)" })
+
 function RemoveMarkdownHeaderWithCount()
   local line = vim.api.nvim_get_current_line()
   local current_hashes = line:match("^(#+)%s*")
@@ -62,8 +110,6 @@ function RemoveMarkdownHeaderWithCount()
   end
   SetMarkdownHeader(target_hashes)
 end
-
-vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
 
 
 
@@ -225,42 +271,6 @@ function Task_find_from_uuid()
     print("No match found")
   end
 end
-vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
-
--- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
--- the function will get the uuid and open the corresponding Taskwarrior task object for editing
-function Task_edit_from_uuid()
-  local uuid = vim.fn.expand('<cword>')
-  if uuid == "" then return end
-
-  local command = "task rc:~/.taskworkrc " .. uuid .. " edit"
-  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
-  vim.cmd(':terminal ' .. command)
-end
---vim.api.nvim_set_keymap("n", "<leader>te", ":lua Task_edit_from_uuid()<CR>", { noremap = true, silent = true })
-
-
-function Task_done_from_uuid()
-  local uuid = vim.fn.expand('<cword>')
-  if uuid == "" then return end
-
-  local command = "task rc:~/.taskworkrc " .. uuid .. " done"
-  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
-  vim.cmd(':terminal ' .. command)
-end
-vim.api.nvim_set_keymap("n", "<leader>td", ":lua Task_done_from_uuid()<CR>", { noremap = true, silent = true })
-
-
-function Task_undo_from_uuid()
-  --local uuid = get_clipboard()
-  local uuid = vim.fn.expand('<cword>')
-  if uuid == "" then return end
-
-  local command = "task rc:~/.taskworkrc " .. uuid .. " undo"
-  vim.api.nvim_echo({ { "Executing: " .. command, "Normal" } }, true, {})
-  vim.cmd(':terminal ' .. command)
-end
-vim.api.nvim_set_keymap("n", "<leader>tu", ":lua Task_undo_from_uuid()<CR>", { noremap = true, silent = true })
 
 
 -- Add one hashtag '#' at the beginning of the current line
@@ -283,12 +293,6 @@ function RemoveMarkdownHeader()
   end
 end
 
--- Key mappings in insert mode
--- Unnecessary. Add markdown with TAB and <C-u> is the default for move upward by a page, I don't want to override it
---vim.api.nvim_set_keymap('n', '<C-i>', '<Cmd>lua AddMarkdownHeader()<CR>', { noremap = true, silent = true })
---vim.api.nvim_set_keymap('n', '<C-u>', '<Cmd>lua RemoveMarkdownHeader()<CR>', { noremap = true, silent = true })
-
-
 -- Wrap the selected text in tryple backtics with the option to add the quote type (e.g. go, bash, ...)
 function Wrap_with_triple_backticks()
   local start_pos = vim.fn.getpos("'<")
@@ -304,7 +308,6 @@ function Wrap_with_triple_backticks()
   end)
 end
 
-vim.api.nvim_set_keymap('v', '<leader>`', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 
 
 function CopyCodeAndPermalink()
@@ -378,8 +381,6 @@ function CopyCodeAndPermalink()
   vim.fn.setreg('+', output)
 end
 
-vim.api.nvim_set_keymap('v', '<leader>cp', ":lua CopyCodeAndPermalink()<CR>",
-  { desc = 'Format selected code with its permalink', noremap = true, silent = true })
 
 
 function Yank_code_block()
@@ -419,11 +420,6 @@ function Yank_code_block()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', {
-  desc = 'Yank code block',
-  noremap = true,
-  silent = true
-})
 
 function Select_code_block()
   -- Get the current cursor position
@@ -461,11 +457,6 @@ function Select_code_block()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', {
-  desc = 'Yank code block',
-  noremap = true,
-  silent = true
-})
 local function copy_code_block_to_file(block_type, filepath)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -519,8 +510,6 @@ vim.api.nvim_create_user_command(
   end,
   {}
 )
-
-vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
 
 -- Move the cursor in a Mermaid section, the function will create the picture according to the output extension
 vim.api.nvim_create_user_command("MermaidCreateImage", function(opts)
@@ -584,7 +573,6 @@ vim.api.nvim_create_user_command("Bdelete", function(opts)
     vim.cmd("bd " .. sanitized_buf)
   end
 end, { nargs = "+", complete = "buffer" })
-vim.api.nvim_set_keymap('n', '<leader>bdl', 'Bdelete ', { noremap = true, silent = true })
 
 
 
@@ -600,47 +588,32 @@ function ToggleVirtualText()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>dt', '<cmd> lua ToggleVirtualText()<cr>',
-  { desc = 'Toggle Virtual Text', noremap = true, silent = true })
 
 
--- Uses the clipboard and the register 'k' to create a Markdown reference link at
--- the bottom of the buffer
--- e.g.
--- [<content of register k>]: <content of the clipboard>
 function Add_reference_link()
-  -- Step 1: Get the description from the 'k' register and the URL from the default register
-  local description = vim.fn.getreg('k')
-  local url = get_clipboard()
-  url = url:gsub("[\n\r]", "") -- Strip newlines from the URL
-
-  -- Step 2: Validate that both the description and the URL are not empty
-  if description == "" or url == "" then
-    print("Both the 'k' register and the default register must contain content.")
+  local target_text = get_text_inside_brackets()
+  if not target_text then
+    vim.notify("No text found inside brackets at cursor position.", vim.log.levels.ERROR, { title = "Markdown Link" })
     return
   end
 
-  -- Step 3: Save the current cursor position
-  local original_cursor_pos = vim.api.nvim_win_get_cursor(0)
+  local base_url = Get_Smart_Weblink()
+  if not base_url or base_url == "" then
+    vim.notify("Could not determine smart weblink.", vim.log.levels.ERROR, { title = "Markdown Link" })
+    return
+  end
 
-  -- Step 4: Format the reference link
-  local reference_link = description .. ": " .. url
+  -- The URL is already copied to the clipboard by Get_Smart_Weblink
 
-  -- Step 5: Append the reference link to the bottom of the buffer
+  local markdown_ref = string.format("[%s]: %s", target_text, base_url)
+
   local bufnr = vim.api.nvim_get_current_buf()
-  local line_count = vim.api.nvim_buf_line_count(bufnr)
+  local last_line = vim.api.nvim_buf_line_count(bufnr)
 
-  vim.api.nvim_buf_set_lines(bufnr, line_count, line_count, false, { reference_link })
+  vim.api.nvim_buf_set_lines(bufnr, last_line, last_line, false, { markdown_ref })
 
-  -- Step 6: Return the cursor to the original position
-  vim.api.nvim_win_set_cursor(0, original_cursor_pos)
-
-  -- Step 7: Notify the user
-  print("+" .. reference_link)
+  vim.notify("Markdown reference link added.", vim.log.levels.INFO, { title = "Markdown Link" })
 end
-
--- Optional: Map the function to a key
-vim.api.nvim_set_keymap('n', '<leader>ra', '<cmd>lua Add_reference_link()<CR>', { noremap = true, silent = true })
 
 
 local function add_square_brackets(line)
@@ -662,8 +635,6 @@ end
 vim.api.nvim_create_user_command('TaskWarriorTask', function(opts)
   taskwarrior_task(opts.args)
 end, { nargs = 1 })
-
-vim.api.nvim_set_keymap('n', '<leader>tw', ':TaskWarriorTask ', { noremap = true, silent = true })
 
 
 local function refile_done()
@@ -701,8 +672,6 @@ end
 
 -- Bind the function to a command (Optional)
 vim.api.nvim_create_user_command('InsertDateHeader', insert_date_header, {})
-vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { noremap = true, silent = true, desc = '[I]nsert [D]ate [H]eader' })
-
 
 
 function Yank_inbracket()
@@ -713,13 +682,9 @@ function Select_inbracket()
   vim.api.nvim_feedkeys('vi]', 'n', true)
 end
 
-vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
-
 function Select_outbracket()
   vim.api.nvim_feedkeys('va]', 'n', true)
 end
-
-vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 
 
 -- Open_url_from_selected_text searches for lines matching the format:
@@ -767,9 +732,7 @@ function Open_markdown_reference_url()
   end
 end
 
--- Map the function to a key in visual mode
-vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>',
-  { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
+
 
 function Get_Smart_Weblink()
   local target_text = get_text_inside_brackets()
@@ -802,8 +765,6 @@ function Get_Smart_Weblink()
   return base_url
 end
 
-vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
-
 function Goto_Weblink()
   local base_url = Get_Smart_Weblink()
   local command = "xdg-open " .. base_url
@@ -812,9 +773,6 @@ function Goto_Weblink()
   vim.fn.system(command)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
-
-
 function ReplaceSpacesWithHypens()
   local clipboard = get_clipboard()
   local replaced_text = string.gsub(clipboard, " ", "-")
@@ -822,10 +780,6 @@ function ReplaceSpacesWithHypens()
   vim.fn.setline(pos[2], replaced_text)
   print(replaced_text)
 end
-
--- key mapping for the above function in normal mode
-vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>lua ReplaceSpacesWithHypens()<CR>',
-  { noremap = true, silent = true, desc = 'Replace space with Hyphens in the clipboard text' })
 
 
 
@@ -862,16 +816,12 @@ function CreateNoteFromFileName()
 
   -- write the title and reference in current buffer
   vim.fn.append(0, '# ' .. title)
-  vim.fn.append(1, '```')
-  vim.fn.append(2, os.date('Created: %Y-%m-%d'))
-  vim.fn.append(3, '```')
-  vim.fn.append(4, '')
+  vim.fn.append(1, '')
+  vim.fn.append(2, '#research')
   vim.api.nvim_buf_set_lines(0, -1, -1, false, { '<!-- references -->' })
 end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })
-vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
-
 
 function Letsdo_goto()
   local task_description = get_clipboard()
@@ -879,36 +829,6 @@ function Letsdo_goto()
 
   print(vim.inspect(vim.fn.system(command)))
 end
-
-vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',
-  { desc = "Lets do begin", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
-
-function QuickNote()
-  local command = 'neovim-quick-note.sh'
-  print(vim.inspect(vim.fn.system(command)))
-end
-
-vim.api.nvim_set_keymap('n', '<leader>qn', "<cmd>lua QuickNote()<cr>", { noremap = true, silent = true })
-
-function QuickTask()
-  local command = 'taskwarrior-quick-task.sh'
-  print(vim.inspect(vim.fn.system(command)))
-end
-
-vim.api.nvim_set_keymap('n', '<leader>qt', "<cmd>lua QuickTask()<cr>", { noremap = true, silent = true })
-
-
-
-
-
--- key mapping to stop the current running "letsdo" command
-vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })
--- key mapping to show letsdo completed sessions (append a search query to the below command or enter to show today's
--- sessions)
-vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
-
 
 function Get_title_from_url()
   -- Get the URL from the selection
@@ -931,7 +851,6 @@ function Get_title_from_url()
   vim.fn.append(pos[2], title)
 end
 
-vim.api.nvim_set_keymap('v', '<leader>gt', '<cmd>lua Get_title_from_url()<cr>', { noremap = true, silent = true })
 
 function Markdown_link_from_url()
   -- Get the URL from the selection
@@ -957,8 +876,6 @@ function Markdown_link_from_url()
   vim.fn.setline(pos[2], link)
 end
 
--- link title
-vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
 -- SurroundWithMarkdownLink add [[]] around the selected text AND creates the file if it doesn't exist
 function CreateFileAndWikiLink()
@@ -1019,8 +936,6 @@ function AppendOutlineReference()
   vim.api.nvim_win_set_cursor(0, { row, #line + 7 })
 end
 
-vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>',
-  { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
 
 function ToggleTodoDone()
   local line = vim.api.nvim_get_current_line()
@@ -1035,7 +950,6 @@ function ToggleTodoDone()
   vim.api.nvim_set_current_line(new_line)
 end
 
-vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>lua ToggleTodoDone()<CR>',
-  { desc = '[T]oggle [T]ODO/DONE', noremap = true, silent = true })
+
 
 return M

@@ -49,6 +49,8 @@ local telescope_opts = {
       find_files = {
         no_ignore = true,
         no_ignore_parent = true,
+        git_files = false, -- Explicitly tell Telescope to not use git for file listing
+        hidden = true, -- Include hidden files (like .gitignore itself, or .config directories)
       },
       colorscheme = {
         enable_preview = true

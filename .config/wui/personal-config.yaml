@@ -1,0 +1,79 @@
+task_bin: task
+taskrc_path: /home/clobrano/.taskrc
+tui:
+    sidebar_width: 33
+    scroll_buffer: 1
+    input_mode: floating
+    tabs:
+        - name: Next
+          filter: ( status:pending or status:active ) -WAITING
+        - name: Waiting
+          filter: status:waiting
+        - name: Projects
+          filter: status:pending or status:active
+        - name: Tags
+          filter: status:pending or status:active
+        - name: All
+          filter: status:pending or status:waiting or status:active
+    columns:
+        - id
+        - project
+        - priority
+        - due
+        - dependency
+        - description
+    keybindings:
+        annotate: a
+        delete: x
+        done: d
+        down: j
+        edit: e
+        filter: /
+        first: g
+        help: '?'
+        last: G
+        modify: m
+        new: "n"
+        next_section: L
+        page_down: ctrl+d
+        page_up: ctrl+u
+        prev_section: H
+        quit: q
+        refresh: r
+        toggle_sidebar: tab
+        undo: u
+        up: k
+    theme:
+        name: dark
+        priority_high: "9"
+        priority_medium: "11"
+        priority_low: "12"
+        due_overdue: "9"
+        due_today: "11"
+        due_soon: "11"
+        status_active: "15"
+        status_waiting: "8"
+        status_completed: "8"
+        header_fg: "12"
+        footer_fg: "8"
+        separator_fg: "8"
+        selection_bg: "250"
+        selection_fg: "16"
+        sidebar_border: "8"
+        sidebar_title: "12"
+        label_fg: "12"
+        value_fg: "15"
+        dim_fg: "8"
+        error_fg: "9"
+        success_fg: "10"
+        tag_fg: "14"
+        section_active_fg: "15"
+        section_active_bg: "63"
+        section_inactive_fg: "246"
+calendar_sync:
+    enabled: false
+    calendar_name: ""
+    task_filter: status:pending or status:completed
+    credentials_path: /home/clobrano/.config/wui/credentials.json
+    token_path: /home/clobrano/.config/wui/token.json
+    auto_sync_on_quit: false

@@ -1,0 +1,59 @@
+task_bin: task
+taskrc_path: /home/clobrano/.taskrc
+calendar_sync:
+    enabled: true
+    auto_sync_on_quit: true
+    calendar_name: "To-do"           # Name of your Google Calendar (required)
+    task_filter: "+calendar modified.after:-8h"    # Taskwarrior filter (required)
+    credentials_path: /home/clobrano/Me/Taskwarrior/calendarsync/credentials.json
+    token_path: /home/clobrano/Me/Taskwarrior/calendarsync/token.json
+tui:
+    sidebar_width: 75
+    scroll_buffer: 3
+    relative_dates: true
+    tabs:
+        - name: Doing/Active
+          filter: +doing or +ACTIVE
+          sort: modified
+          reverse: true
+        - name: Next
+          filter: +PENDING ( +OVERDUE or +doing or due:today or scheduled.before:now or priority:H ) -WAITING
+          sort: urgency
+        - name: This week
+          filter: ( due.after=sow due.before=eow ) or ( scheduled.after=sow scheduled.before=eow )
+          sort: due
+        - name: OVERDUE
+          filter: +OVERDUE
+        - name: Recent
+          filter: modified.after:sow
+          sort: modified
+          reverse: true
+        - name: Inbox
+          filter: "status.not:deleted +PENDING ( (+inbox) or (project: created.after:2026-01-01) )"
+          sort: modified
+        - name: Projects
+          filter: status:pending or status:active
+        - name: Tags
+          filter: status:pending or status:active
+    columns:
+        - name: id
+          label: "ID"
+        - name: project
+          label: "PROJECT"
+        - name: priority
+          label: "!"
+        - name: annotation
+          label: "A"
+        - name: dependency
+          label: "B"
+        - name: due
+          label: "Due"
+        - name: description
+          label: "DESCRIPTION"
+    custom_commands:
+        c:
+            name: "Format Task with JIRA and PR"
+            command: "bash -c \"echo '{{.description}}\nJIRA: {{.jira}}\nPR: {{.pr}}' | wl-copy\""
+            description: "Format the task with minimal information for my Notes"
+    theme:
+        name: dark

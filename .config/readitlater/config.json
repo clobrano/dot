@@ -1,0 +1,9 @@
+{
+  "backend": "taskwarrior",
+  "taskrc_path": "$HOME/.readitlaterrc",
+  "org_filepath": "/home/clobrano/Me/Orgmode/ReadItLater.org",
+  "org_archive_filepath": [
+    "/home/clobrano/Me/Orgmode/ReadItLater.org_archive",
+    "/home/clobrano/Me/Orgmode/Orgmode.org_archive"
+  ]
+}

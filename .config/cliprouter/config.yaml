@@ -1,0 +1,98 @@
+# Clipboard Router Configuration
+
+scripts:
+  - name: Claude Code Review
+    description: "Local code review with Claude"
+    notify_before: "preparing for code review"
+    notify_on_error: "could not complete code review: ${STDOUT}"
+    interactive: true
+    command: |
+      #!/usr/bin/env bash
+      set -e
+
+      # check dependencies
+      source "/home/clobrano/Documents/unsharable" || exit 1
+      source "/home/clobrano/workspace/toolbelt/claude-config.sh" || exit 2
+
+      REVIEW_DEST_ROOT="/home/clobrano/workspace/codeReviews/"
+      PR_LINK="${CLIP}"
+      echo "'${CLIP}'"
+      # Regex captures: 1=Org, 2=Project, 3=PR Number
+      if [[ $PR_LINK =~ github\.com/([^/]+)/([^/]+)/pull/([0-9]+) ]]; then
+        PR_ORG=${BASH_REMATCH[1]}
+        PR_PROJ=${BASH_REMATCH[2]}
+        PR_NUM=${BASH_REMATCH[3]}
+
+        echo "Org: $PR_ORG"
+        echo "Project: $PR_PROJ"
+        echo "PR Number: $PR_NUM"
+      else
+        exit 3
+      fi
+
+      # Ensure to remove the temporary directory
+      TMP_DIR=$(mktemp -d)
+      trap 'rm -rf $TMP_DIR' SIGINT
+
+      pushd "$TMP_DIR" || exit 4
+
+      git init
+      git remote add origin "https://github.com/$PR_ORG/$PR_PROJ.git"
+      git fetch --depth 1 origin "pull/$PR_NUM/head:pr-$PR_NUM"
+      git checkout "pr-$PR_NUM"
+
+      set -x
+      if [ $(task "/code review.*$PR_PROJ PR$PR_NUM/" export | jq 'length') -eq 0 ]; then
+          # create a new task to track this code review
+          task add "code review [$PR_ORG/$PR_PROJ PR$PR_NUM]" +codereview +doing
+      fi
+      set +x
+
+      mkdir -p "$REVIEW_DEST_ROOT"
+      PR_REV_FILE="$REVIEW_DEST_ROOT/$(date +"%F-%H%M%S")-$PR_ORG-$PR_PROJ-PR$PR_NUM.md"
+      # Write the computed value to CLIPROUTER_ENV_FILE
+      echo "PR_REV_FILE=$PR_REV_FILE" >> "$CLIPROUTER_ENV_FILE"
+
+      claude "/review $PR_NUM" > "$PR_REV_FILE"
+  - name: Content Editor
+    description: Improve content format and clarity
+    notify_on_error: "Could not Edit content: ${STDOUT}"
+    interactive: true
+    command: |
+      #!/usr/bin/env bash
+      DEST=$HOME/workspace/ContentEditor
+      mkdir -p "$DEST"
+      EDITED_CONTENT=$HOME/workspace/ContentEditor/$(date +%F-%H%M).md
+
+      $HOME/workspace/toolbelt/gm "You are professional English content editor. Grade the message after the triple dashes (---), accept the message tone as intended by the author, point out specific errors one by one, and provide 2 new versions using the same tone and improving English form and clarity. Also copy your review in $EDITED_CONTENT file --- ${CLIP}"
+  - name: Read It Later
+    interactive: true
+    command: bash -c "$HOME/workspace/golang/bin/readitlater"
+  - name: Prow Test Review
+    notify_on_error: "Could not complete prow review: ${STDOUT}"
+    interactive: true
+    command: |
+      #!/usr/bin/env bash
+      set -e
+      source $HOME/workspace/toolbelt/claude-config.sh
+      DEST="$HOME/Downloads/ISSUES"
+
+      # Capture prow-helper output to extract the final path
+      OUTPUT=$($HOME/workspace/golang/bin/prow-helper \
+        --dest "${DEST}" \
+        --analyze-cmd "$HOME/workspace/toolbelt/cl-oneshot '/review:prow-test-artifacts'" "${CLIP}" 2>&1 | tee /dev/stderr)
+
+      # Extract the final folder path from output
+      WORKDIR=$(echo "$OUTPUT" | grep -oP 'Renamed folder to: \K.*' || true)
+
+      if [ -z "$WORKDIR" ]; then
+        # Fallback: try to find via ls -t
+        cd "${DEST}"
+        cd "$(/bin/ls -t | head -1)"
+        cd "$(/bin/ls -t | head -1)"
+        WORKDIR="$(pwd)"
+      fi
+
+      echo "Working directory: $WORKDIR"
+      cd "$WORKDIR"
+      claude --continue

@@ -33,7 +33,22 @@ return {
       enable = true,                   -- Lascia attiva la UI per i link e il resto
       bullets = { enable = false },    -- Disabilita i punti elenco di obsidian.nvim
       checkboxes = { enable = false }, -- Disabilita le checkbox di obsidian.nvim
+      hl_groups = {
+        ObsidianRefText = { fg = "#89ddff" },
+      },
     },
+    -- Use the wiki link text as the file name for new notes
+    note_id_func = function(title)
+      if title ~= nil then
+        -- Replace characters that are invalid in filenames, but keep spaces
+        return title:gsub("[/\\:*?\"<>|]", "")
+      else
+        return tostring(os.time())
+      end
+    end,
+    follow_url_func = function(url)
+      vim.ui.open(url)
+    end,
     -- Place new notes in the workspace's resources folder
     note_path_func = function(spec)
       local vault = spec.dir
@@ -44,9 +59,16 @@ return {
       end
     end,
     note_frontmatter_func = function(note)
-      local out = {
-        modified = os.date("%Y-%m-%d")
-      }
+      local out = {}
+
+      -- Only update 'modified' if the buffer has actual changes
+      if vim.bo.modified and note.metadata ~= nil and note.metadata.modified ~= nil then
+        out.modified = os.date("%Y-%m-%d")
+      elseif note.metadata ~= nil and note.metadata.modified ~= nil then
+        out.modified = note.metadata.modified
+      else
+        out.modified = os.date("%Y-%m-%d")
+      end
 
       if note.metadata ~= nil and note.metadata.created ~= nil then
         out.created = note.metadata.created

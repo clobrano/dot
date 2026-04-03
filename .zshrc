@@ -244,7 +244,7 @@ fi
 add-zsh-hook chpwd (){
     now_timestamp_=$(date +%H:%M:%S)
     vcs_info_msg_0_="[...]"
-    #switch_go_version
+    go_version_load_from_go_mod
     auto_venv
 }
 add-zsh-hook preexec () {

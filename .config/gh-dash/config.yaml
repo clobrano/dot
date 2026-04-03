@@ -1,12 +1,17 @@
 prSections:
-- title: My Pull Requests
-  filters: is:open author:@me
+- title: Involved
+  filters: is:open involves:@me -author:@me
   type: null
 - title: Needs My Review
   filters: is:open review-requested:@me
   type: null
-- title: Involved
-  filters: is:open involves:@me -author:@me
+- title: "Changes Requested"
+  filters: "is:open author:@me review:changes-requested"
+- title: Medik8s
+  filters: is:open org:medik8s -author:@me sort:updated-desc
+  type: null
+- title: My Pull Requests
+  filters: is:open author:@me
   type: null
 issuesSections:
 - title: My Issues

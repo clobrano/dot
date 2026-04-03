@@ -47,5 +47,26 @@ disabled = true
 disabled = true
 
 [kubernetes]
-disabled = false
-format = '[$symbol($cluster $namespace)](dimmed blue) '
+disabled = true
+
+[custom.kube]
+when = "test -n \"$KUBECONFIG\" && test -f \"$KUBECONFIG\""
+command = '''
+server=$(kubectl config view --minify --output 'jsonpath={.clusters[0].cluster.server}' 2>/dev/null)
+cluster=$(echo "$server" | sed -n 's|https\?://api\.\([^.]*\)\..*|\1|p')
+cluster=${cluster:-$(kubectl config current-context 2>/dev/null || echo "unknown")}
+ns=$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)
+label="☸ $cluster"
+if [ -n "$ns" ] && [ "$ns" != "default" ]; then
+  label="$label:$ns"
+fi
+if kubectl cluster-info --request-timeout=2s >/dev/null 2>&1; then
+  echo "$label"
+else
+  echo "$label ⚠"
+fi
+'''
+style = "dimmed blue"
+format = '[$output]($style) '
+ignore_timeout = true
+shell = ["bash", "--noprofile", "--norc"]

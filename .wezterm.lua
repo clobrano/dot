@@ -60,8 +60,8 @@ config.window_padding = { left = 10, right = 10, top = 5, bottom = 5, }
 --config.initial_cols = 235
 --config.initial_rows = 55
 -- short format
-config.initial_cols = 120
-config.initial_rows = 30
+config.initial_cols = 150
+config.initial_rows = 40
 
 --config.background = {
   --{

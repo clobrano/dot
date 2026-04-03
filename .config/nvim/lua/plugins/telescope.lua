@@ -43,20 +43,19 @@ local telescope_opts = {
         },
       },
     },
-    pickers = {
-      lsp_references = { fname_width = 100, },
-      tags = { fname_width = 100, },
-      find_files = {
-        no_ignore = true,
-        no_ignore_parent = true,
-        git_files = false, -- Explicitly tell Telescope to not use git for file listing
-        hidden = true, -- Include hidden files (like .gitignore itself, or .config directories)
-      },
-      colorscheme = {
-        enable_preview = true
-      },
+  },
+  pickers = {
+    lsp_references = { fname_width = 100, },
+    tags = { fname_width = 100, },
+    find_files = {
+      no_ignore = true,
+      no_ignore_parent = true,
+      git_files = false, -- Explicitly tell Telescope to not use git for file listing
+      hidden = true, -- Include hidden files (like .gitignore itself, or .config directories)
     },
-
+    colorscheme = {
+      enable_preview = true
+    },
   },
 }
 
@@ -160,6 +159,8 @@ return {
       { desc = '[F]uzzily [/] search in current buffer' }
     )
 
+    vim.api.nvim_create_user_command('TelescopeToggleVendorInSearch', function() _G.TelescopeToggleVendorIgnore() end,
+      { desc = 'Toggle vendor folder in Telescope search' })
     vim.keymap.set('n', '<leader>ttv', function() _G.TelescopeToggleVendorIgnore() end,
       { desc = '[T]elescope [T]oggle [V]endor in search' })
     vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
@@ -173,11 +174,14 @@ return {
       })
     end, { desc = '[F]ind [B]uffers' })
     vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
-    vim.keymap.set('n', '<leader>ff', function()
-      require('telescope.builtin').find_files({
-        layout_strategy = 'vertical',
-      })
-    end, { desc = '[F]ind [F]iles' })
+
+    -- disabled in favour of FzfLua files
+    -- vim.keymap.set('n', '<leader>ff', function()
+    --   require('telescope.builtin').find_files({
+    --     layout_strategy = 'vertical',
+    --   })
+    -- end, { desc = '[F]ind [F]iles' })
+
     vim.keymap.set('n', '<leader>fh', '<cmd>Telescope heading<cr>', { desc = '[F]ind Markdown [h]eaders' })
     vim.keymap.set('n', '<leader>fH', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
@@ -200,14 +204,48 @@ return {
       end, { desc = '[L]SP [R]eferences' }
     )
     vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-    vim.keymap.set('n', '<leader>ft',
-      function()
-        require('telescope.builtin').tags({
-          layout_strategy = "vertical",
-          enable_preview = false,
-          fname_width = 100, -- Keep your fname_width setting
-        })
-      end, { desc = '[F]ind [T]ags' })
+
+    -- disabling Tag search via Telescope. FzfLua is preferred at the time of writing
+    -- vim.keymap.set('n', '<leader>ft',
+    --   function()
+    --     local make_entry = require('telescope.make_entry')
+    --     local entry_display = require('telescope.pickers.entry_display')
+    --     local utils = require('telescope.utils')
+
+    --     local tag_opts = {
+    --       layout_strategy = "vertical",
+    --       enable_preview = false,
+    --       fname_width = 100,
+    --       show_line = false,
+    --       only_sort_tags = true,
+    --       bufnr = vim.api.nvim_get_current_buf(),
+    --     }
+
+    --     -- Custom entry maker with wider tag column
+    --     local original_gen = make_entry.gen_from_ctags(tag_opts)
+    --     local displayer = entry_display.create {
+    --       separator = " │ ",
+    --       items = {
+    --         { width = tag_opts.fname_width },
+    --         { remaining = true },
+    --       },
+    --     }
+    --     tag_opts.entry_maker = function(line)
+    --       local entry = original_gen(line)
+    --       if entry then
+    --         entry.display = function(e)
+    --           local display_path = utils.transform_path(tag_opts, e.filename)
+    --           return displayer {
+    --             { display_path },
+    --             e.tag,
+    --           }
+    --         end
+    --       end
+    --       return entry
+    --     end
+
+    --     require('telescope.builtin').tags(tag_opts)
+    --   end, { desc = '[F]ind [T]ags' })
 
     -- Git telescope
     vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })

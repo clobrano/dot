@@ -165,14 +165,17 @@ return {
       { desc = '[T]elescope [T]oggle [V]endor in search' })
     vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
     vim.keymap.set('v', "<leader>fa", require("telescope-live-grep-args.shortcuts").grep_visual_selection)
-    vim.keymap.set('n', '<leader>fb', function()
-      require('telescope.builtin').buffers({
-        layout_strategy = 'vertical',
-        layout_config = {
-          mirror = true, -- This places the preview above the results list
-        },
-      })
-    end, { desc = '[F]ind [B]uffers' })
+
+    -- disabled in favour of FzfLua
+    -- vim.keymap.set('n', '<leader>fb', function()
+    --   require('telescope.builtin').buffers({
+    --     layout_strategy = 'vertical',
+    --     layout_config = {
+    --       mirror = true, -- This places the preview above the results list
+    --     },
+    --   })
+    -- end, { desc = '[F]ind [B]uffers' })
+
     vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
 
     -- disabled in favour of FzfLua files

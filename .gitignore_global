@@ -19,3 +19,6 @@ pull-secret
 **/.claude/settings.local.json
 GEMINI.md
 .envrc
+tasks/*
+prds/*
+CLAUDE.md

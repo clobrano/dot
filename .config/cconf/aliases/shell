@@ -89,3 +89,7 @@ alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
 #######################################################################################
 # BRIEFLY
 alias briefly-pod='podman run -d --name briefly --userns=keep-id -e BRIEFLY_LLM_PROVIDER=gemini -e GOOGLE_API_KEY=$GEMINI_API_KEY -e BRIEFLY_NTFY_TOPIC=briefly-summary -v $HOME/Me/Whisper:/data/inbox:Z -v $HOME/Me/Notes/3-Resources/ReadItLater:/data/output:Z briefly:latest'
+
+#######################################################################################
+# FZF ~/.config folders
+alias fconf='fuz -d ~/.config'

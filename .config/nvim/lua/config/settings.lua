@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.cmd.colorscheme 'catppuccin-frappe'
+vim.cmd.colorscheme 'catppuccin'
 vim.o.winborder = 'rounded'
 vim.wo.number = true
 vim.wo.relativenumber = false
@@ -73,7 +73,8 @@ vim.opt.cursorlineopt = 'number'
 vim.cmd[[highlight CursorLineNr ctermfg=yellow guifg=yellow]]
 
 vim.opt.expandtab = true
-vim.opt.formatoptions = 'tcroqn2bljp' -- smart auto-indenting in numbered list
+vim.opt.formatoptions = 'tcroqn2bljpr' -- smart auto-indenting in numbered list; r continues comments on new lines
+vim.opt.comments = ':>' -- blockquote marker
 
 vim.opt.list = true -- show whitespace
 

@@ -97,7 +97,7 @@ else
         fi
     fi
 
-    if echo "$full_name" | grep "#meeting" >/dev/null; then
+    if echo "$full_name" | grep "#MEETING" >/dev/null; then
         # skip notifications during meetings
         exit 0
     fi

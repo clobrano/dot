@@ -9,4 +9,6 @@ set spell
 set softtabstop=4
 set tabstop=4
 set textwidth=0
+set formatoptions+=r
+set comments=:>
 nnoremap <buffer> <leader>rm F]lDa

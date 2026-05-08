@@ -3,7 +3,7 @@
 #
 # Configuration from Bashrc
 #
-setopt autocd     # cd into folder without typing 'cd'
+#setopt autocd     # cd into folder without typing 'cd'
 source $HOME/.config/cconf/dot/dotfiles.sh
 #source $HOME/.config/cconf/environments/pyenv-init.sh
 
@@ -88,6 +88,7 @@ _fix_cursor() {
 }
 
 precmd_functions+=(_fix_cursor)
+precmd_functions+=(run_smart_automation)
 
 # custom bindings
 source ~/.config/cconf/zsh/bindings.zsh
@@ -175,91 +176,15 @@ if command -v fzf 2>&1 >/dev/null; then
     export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 fi
 
-#
-# Prompt
-#
-
-## --- "Manual" GIT dashboard with async zsh pluging. Replaced by Starpship.
-## async vcs_info update wrapper
-#_vbe_vcs_info() {
-#    cd -q $1
-#    if [ -n vsc_info ]; then
-#        vcs_info 2>&1 >/dev/null
-#        print ${vcs_info_msg_0_}
-#    fi
-#}
-## async vcs_info update worker
-#_vbe_vcs_info_done() {
-#    local stdout=$3
-#    vcs_info_msg_0_=$stdout
-#    zle reset-prompt
-#}
-
-# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
-#autoload -Uz vcs_info
-
-# vcs info (for git)
-#zstyle ':vcs_info:*' enable git
-#() {
-#    zstyle ':vcs_info:git*:*' formats '\ue725 %F{green}%b%m%c%u%f' # default ' (%s)-[%b]%c%u-'
-#    zstyle ':vcs_info:git*:*' actionformats 'on %F{green}(%a)%b|%m%c%u%f' # default ' (%s)-[%b|%a]%c%u-'
-#    zstyle ':vcs_info:*' stagedstr "%F{green}+%f" # default 'S'
-#    zstyle ':vcs_info:*' unstagedstr "%F{red}!%f" # default 'U'
-#    zstyle ':vcs_info:*' use-simple true
-#    zstyle ':vcs_info:*' check-for-changes true
-#    zstyle ':vcs_info:git+set-message:*' hooks git-untracked
-#    +vi-git-untracked() {
-#        emulate -L zsh
-#        if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-#            hook_com[unstaged]+="%F{blue}!%f"
-#        fi
-#    }
-#}
-#source $ZSH_CUSTOM/plugins/zsh-async/async.zsh
-#async_init
-#async_start_worker vcs_info
-#async_register_callback vcs_info _vbe_vcs_info_done
-## async vcs_info schedule
-#add-zsh-hook precmd () {
-    #now_timestamp_=$(date +%H:%M:%S)
-    #local cmd_end="$SECONDS"
-    #if [[ $cmd_start -gt 0 ]]; then
-        #elapsed=$((cmd_end-cmd_start))
-        #if [[ $elapsed -gt 10 ]]; then
-            #echo elapsed `humanizetime $elapsed`
-            #cmd_start=0
-        #fi
-
-        #if [[ $elapsed -gt 120 ]] && [[ $elapsed -lt 600 ]] && command -v notify-send 2>&1 > /dev/null; then
-            #notify-send --app-name="zsh $(pwd)" --urgency normal "command done"
-        #fi
-    #fi
-    #vcs_info_msg_0_="[...]"
-    #if ! async_job vcs_info _vbe_vcs_info $PWD 2>&1 >/dev/null; then
-        #async_init
-        #async_start_worker vcs_info
-        #async_register_callback vcs_info _vbe_vcs_info_done
-    #fi
-#}
-
 add-zsh-hook chpwd (){
-    now_timestamp_=$(date +%H:%M:%S)
-    vcs_info_msg_0_="[...]"
+    #now_timestamp_=$(date +%H:%M:%S)
     go_version_load_from_go_mod
     auto_venv
 }
+
 add-zsh-hook preexec () {
     cmd_start="$SECONDS"
 }
-
-# Custom PROMPT (replaced by staship, but I'll keep it if I stop using starship)
-#NEWLINE=$'\n'
-#LPROMPT_BASE="%F{blue}%B%~%b%f"
-#setopt PROMPT_SUBST
-
-#export PS1=" \${now_timestamp_} $LPROMPT_BASE \${vcs_info_msg_0_}${NEWLINE} %(?.%F{green}%B➤ %b%f.%F{red}%B➤ %b%f) "
-##export RPROMPT="$RPROMPT_BASE %F{yellow}%B%~%b%f"
-#export RPROMPT=""
 
 # init starship if installed
 if command -v starship 2>&1 >/dev/null; then

@@ -2,13 +2,17 @@ kubectl_bin: kubectl
 pager: less
 tabs:
     - name: Nodes
-      command: get nodes -o wide
+      command: get nodes
     - name: RHWA
       command: get pods -n openshift-workload-availability
+    - name: ServiceMonitor
+      command: get servicemonitor -n openshift-workload-availability
     - name: SBR
-      command: get pods -A -l app.kubernetes.io/name=sbd-operator
-    - name: SBR-agent
-      command: get daemonsets -A -l app=sbd-agent
+      command: get pods -A -l app.kubernetes.io/name=sbr-operator
+    - name: SBR daemonset
+      command: get daemonsets -A -l app=sbr-agent
+    - name: SBR agent pods
+      command: get pods -A -l app=sbr-agent
     - name: CEO
       command: get pods -n openshift-etcd-operator
     - name: ETCD

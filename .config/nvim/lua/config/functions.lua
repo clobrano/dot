@@ -5,7 +5,7 @@ vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>", { 
 vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count == 0 and 1 or vim.v.count)<CR>", { noremap = true, silent = true, desc = "Set Markdown Header Level (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>`', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>I', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cp', ":lua CopyCodeAndPermalink()<CR>", { desc = 'Format selected code with its permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })

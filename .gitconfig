@@ -12,15 +12,15 @@
 	sync = !git pull upstream ${MAIN_BRANCH:-main} && git push origin ${MAIN_BRANCH:-main}
 	syncthis = !git pull upstream master && git push origin master
 	sw = !git switch
-	# worktree: new branch in sibling dir ../repo-branch
-	wa = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wa <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local current_repo_name=$(basename \"$(pwd)\"); local worktree_path=\"../${current_repo_name}-${new_branch_name}\"; git worktree add -b \"${new_branch_name}\" \"${worktree_path}\" \"${base_branch}\"; }; f"
-	# worktree: new branch inside repo root
-	wA = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wA <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git worktree add -b \"${new_branch_name}\" \"${repo_root}/${new_branch_name}\" \"${base_branch}\"; }; f"
-	# worktree: checkout existing remote branch inside repo root
+	# worktree: new branch inside repo root. E.g. `git wa fix/somebug`
+	wa = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wA <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git worktree add -b \"${new_branch_name}\" \"${repo_root}/${new_branch_name}\" \"${base_branch}\"; }; f"
+	# worktree: checkout existing remote branch inside repo root. E.g. `git wR sbr-0-2 upstream`
 	wR = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wR <branch-name> [<remote>]\"; return 1; fi; local branch_name=\"$1\"; local remote=\"${2:-origin}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git fetch \"${remote}\" \"${branch_name}\" && git worktree add --track -B \"${branch_name}\" \"${repo_root}/${branch_name}\" \"${remote}/${branch_name}\"; }; f"
 	w = worktree
+	rm-tree = "!f() { \\\n  git worktree list | grep -vE \"(bare|\\[main\\])\" | \\\n  fzf --multi --header \"Select worktrees to PURGE (Branch + Path)\" | while read -r line; do \\\n    path=$(echo \"$line\" | awk \"{print \\$1}\"); \\\n    branch=$(echo \"$line\" | grep -o \"\\[.*\\]\" | tr -d \"[]\"); \\\n    git worktree remove \"$path\"; \\\n    if [ -n \"$branch\" ]; then \\\n      git branch -d \"$branch\" 2>/dev/null || echo \"Branch $branch kept (has unmerged changes)\"; \\\n    fi; \\\n  done; \\\n}; f"
 [core]
 	excludesfile = /home/clobrano/.gitignore_global
+	pager = delta
 [init]
 	defaultBranch = main
 [http "https://gitlab.cee.redhat.com/"]
@@ -28,3 +28,31 @@
 [user]
 	email = you@example.com
 	name = Your Name
+	signingkey = /home/clobrano/.ssh/id_sign_key.pub
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = false
+	line-numbers = true
+	syntax-theme = Monokai Extended
+
+	# 1. Base line colors (Text color only, no background)
+	minus-style = red
+	plus-style = green
+
+	# 2. Word-level changes (The "emph" parts)
+	# This uses a dark background with bold text so white text stays readable
+	minus-emph-style = bold red 52
+	plus-emph-style = bold green 22
+
+	# 3. Clean up the UI
+	map-styles = bold purple => syntax "#442c2c", bold cyan => syntax "#2c442c"
+	zero-style = syntax
+	whitespace-error-style = 22 reverse
+[rerere]
+	enabled = true
+[merge]
+	conflictStyle = zdiff3
+[gpg]
+	format = ssh

@@ -1,3 +1,16 @@
+function run_smart_automation() {
+    # If the directory hasn't changed, do nothing
+    [[ "$PWD" == "$_LAST_WORKING_DIR" ]] && return
+    
+    # Otherwise, run your logic
+    #now_timestamp_=$(date +%H:%M:%S)
+    go_version_load_from_go_mod
+    auto_venv
+    
+    # Update the "state" variable
+    _LAST_WORKING_DIR="$PWD"
+}
+
 function mann() {
     if command -v bat 2>&1 >/dev/null; then
         man "$1" | bat --style=plain --language=Manpage
@@ -49,14 +62,15 @@ function go_version_load_from_go_mod() {
     if [ ! -f $GO_MOD_FILE ]; then
         return
     fi
-    GOMOD_VERSION=$(grep -E "go [[:digit:]]\.[[:digit:]][[:digit:]]" $GO_MOD_FILE | awk '{print $2}')
+    # Extract go version line (e.g., "go 1.24.13" -> "1.24")
+    GOMOD_VERSION=$(grep -E "^go [[:digit:]]+" $GO_MOD_FILE | awk '{print $2}' | grep -oE "^[[:digit:]]+\.[[:digit:]]+")
     # go.mod only supports major.minor versions, adding ".x" at the end to instruct Gimme to get the latest patch version
-    GOMOD_VERSION+=".x"
+    GOMOD_VERSION+="${GOMOD_VERSION:+.x}"
     [[ -z $GOMOD_VERSION ]] && eval $(gimme stable) && return
 
     GO_VERSION=`go version | awk '{print $3}'`
     if [[ "go$GOMOD_VERSION" != $GO_VERSION ]]; then
-        if [[ $GOMOD_VERSION = "1.17" ]]; then
+        if [[ $GOMOD_VERSION = "1.17.x" ]]; then
             echo "[!] Go.mod has version $GOMOD_VERSION, but gimme cannot get it"
             return
         fi

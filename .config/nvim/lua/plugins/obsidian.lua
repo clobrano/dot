@@ -48,7 +48,8 @@ return {
     end,
     -- Place new notes in the workspace's resources folder
     note_path_func = function(spec)
-      local vault = spec.dir
+      local client = require("obsidian").get_client()
+      local vault = client.dir
       if tostring(vault):find("RedHatNotes") then
         return vault / "Resources" / tostring(spec.id)
       else
@@ -57,6 +58,13 @@ return {
     end,
     note_frontmatter_func = function(note)
       local out = {}
+
+      -- keep personalized metadata
+      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+        for k, v in pairs(note.metadata) do
+          out[k] = v
+        end
+      end
 
       -- Only update 'modified' if the buffer has actual changes
       if vim.bo.modified and note.metadata ~= nil and note.metadata.modified ~= nil then
@@ -82,9 +90,18 @@ return {
         out.created = created
       end
 
-      -- keep personalized metadata
-      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-        for k, v in pairs(note.metadata) do
+      -- add per-vault journal metadata
+      if tostring(note.path):find("Journal") then
+        local client = require("obsidian").get_client()
+        local vault = client.dir
+        local default_metadata = {}
+
+        if tostring(vault):find("RedHatNotes") then
+        else
+          default_metadata.backpain = 0
+          default_metadata.floss = 0
+        end
+        for k, v in pairs(default_metadata) do
           if out[k] == nil then
             out[k] = v
           end

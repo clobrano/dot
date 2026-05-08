@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # -*- coding: UTF-8 -*-
+print_mem_state() {
+    echo "󰍛 $(free -h | awk '/Mem/ {print $3"/"$2}')"
+}
+
 print_cpu_temp() {
     if [[ $(which sensors | wc -l) -eq 1 ]]; then
         local temp
@@ -10,4 +14,6 @@ print_cpu_temp() {
     fi
 }
 
-print_cpu_temp
+cpu="$(print_cpu_temp)"
+mem="$(print_mem_state)"
+echo "$mem $cpu"

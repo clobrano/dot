@@ -50,7 +50,7 @@ disabled = true
 disabled = true
 
 [custom.kube]
-when = "test -n \"$KUBECONFIG\" && test -f \"$KUBECONFIG\""
+when = "test -n \"$KUBECONFIG\" && test -f \"$KUBECONFIG\" || test -f $KUBE/config"
 command = '''
 server=$(kubectl config view --minify --output 'jsonpath={.clusters[0].cluster.server}' 2>/dev/null)
 cluster=$(echo "$server" | sed -n 's|https\?://api\.\([^.]*\)\..*|\1|p')

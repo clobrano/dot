@@ -1,4 +1,7 @@
 prSections:
+- title: Medik8s
+  filters: is:open org:medik8s
+  type: null
 - title: Involved
   filters: is:open involves:@me -author:@me
   type: null
@@ -7,9 +10,7 @@ prSections:
   type: null
 - title: "Changes Requested"
   filters: "is:open author:@me review:changes-requested"
-- title: Medik8s
-  filters: is:open org:medik8s -author:@me sort:updated-desc
-  type: null
+
 - title: My Pull Requests
   filters: is:open author:@me
   type: null
@@ -24,17 +25,16 @@ repo:
   branchesRefetchIntervalSeconds: 30
   prsRefetchIntervalSeconds: 60
 repoPaths:
-  openshift/*: ~/workspace/github/openshift/*
-  medik8s/*: ~/workspace/github/medik8s/*
-  clobrano/*: ~/workspace/github/clobrano/*
-  ClusterLabs/*: ~/workspace/github/clusterlabs/*
+  openshift/*: ~/workspace/codeReviews/openshift/*
+  medik8s/*: ~/workspace/codeReviews/medik8s/*
+  clobrano/*: ~/workspace/codeReviews/clobrano/*
+  ClusterLabs/*: ~/workspace/codeReviews/clusterlabs/*
 defaults:
   sectionsWidth: 50
   preview:
     open: false
     width: 100
-  prsLimit: 20
-  prApproveComment: LGTM
+  prApproveComment: /lgtm
   issuesLimit: 20
   view: prs
   layout:
@@ -76,6 +76,14 @@ keybindings:
   universal: []
   issues: []
   prs:
+  - key: d
+    name: sticky diff
+    command: >
+      gh pr diff {{.PrNumber}} --repo {{.RepoName}} | delta --side-by-side --paging=always
+  - key: V
+    name: approve with hold
+    command: >
+      gh pr review {{.PrNumber}} --repo {{.RepoName}} --approve --body $'/lgtm\ngiving the chance to get more reviews\n/hold'
   - key: O
     builtin: checkout
   - key: C

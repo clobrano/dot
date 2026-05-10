@@ -31,14 +31,14 @@ fi
 
 [[ -e /etc/profile.d/vte-2.91.sh ]] && source /etc/profile.d/vte-2.91.sh
 
-function _update_ps1() {
-    dir=`basename $(dirname $PWD)`/`basename $PWD`
-    PS1="\u • ${dir} $ "
-}
+#function _update_ps1() {
+    #dir=`basename $(dirname $PWD)`/`basename $PWD`
+    #PS1="\u • ${dir} $ "
+#}
 
-if [ "$TERM" != "linux" ]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+#if [ "$TERM" != "linux" ]; then
+    #PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+#fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -53,13 +53,17 @@ fi
 
 export EDITOR="nvim"
 
+# Load my dotfiles
 source $HOME/.config/cconf/dot/dotfiles.sh
-source $HOME/.config/cconf/environments/pyenv-init.sh
+#source $HOME/.config/cconf/environments/pyenv-init.sh
 
 export CDPATH=$HOME/workspace
+
+# GOLANG
 #export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
+
 export GIT_TERMINAL_PROMPT=1
 
 export ME=$HOME/Me
@@ -67,7 +71,7 @@ export ME=$HOME/Me
 # PATH
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/toolkit
-PATH=$PATH:$HOME/.atuin/bin
+[[ -d "$HOME/.atuin" ]] && PATH=$PATH:$HOME/.atuin/bin
 #PATH=$PATH:${GOROOT}/bin
 PATH=$PATH:${GOBIN}
 PATH=~/.local/bin:$PATH
@@ -89,7 +93,10 @@ ZSH_VERSION=${ZSH_VERSION-"none"}
 ulimit -c unlimited
 
 # Fuzzy finder configuration
-[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+if command -v fzf 2>&1 >/dev/null; then
+    source <(fzf --bash)
+    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
+fi
 
 # aliases
 alias bi='source ${HOME}/.bashrc'

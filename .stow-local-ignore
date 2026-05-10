@@ -3,3 +3,8 @@
 README.md
 .bashrc
 .gitconfig
+tags
+^GEMINI.md
+.claude
+^dotfiles_documentation
+^kde-commands-shortcuts.kksrc

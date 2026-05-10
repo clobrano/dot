@@ -5,7 +5,8 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- Spawn the right tmux shell in login mode
-config.default_prog = { '/usr/bin/zsh' }
+--config.default_prog = { '/usr/bin/zsh' }
+config.default_prog = { '/home/clobrano/workspace/golang/bin/cliprouter' }
 
 -- Specify additional patterns to match when in quick select mode
 config.quick_select_patterns = {
@@ -19,9 +20,9 @@ config.color_scheme = 'catppuccin-frappe'
 
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
-config.font = wezterm.font('Source Code Pro Medium', { italic = false })
+--config.font = wezterm.font('Source Code Pro')
 --config.font = wezterm.font('Fira Code Retina', { italic = false, weight = 'Bold' })
-config.font_size = 10.5
+config.font_size = 10.2
 
 -- disable title bar
 --config.window_decorations = "INTEGRATED_BUTTONS | NONE"
@@ -59,8 +60,8 @@ config.window_padding = { left = 10, right = 10, top = 5, bottom = 5, }
 --config.initial_cols = 235
 --config.initial_rows = 55
 -- short format
---config.initial_cols = 120
---config.initial_rows = 40
+config.initial_cols = 150
+config.initial_rows = 40
 
 --config.background = {
   --{

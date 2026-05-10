@@ -5,11 +5,10 @@
 
 
 ## Taskwarrior stats view
-interval_time_min=1
+interval_time_min=10
 current_time_min=$(date +%M)
-
 if [ $((current_time_min % interval_time_min)) -eq 0 ]; then
-    "$HOME"/workspace/script-fu/taskwarrior-update-stats.sh
+    "$HOME/workspace/script-fu/taskwarrior-update-stats.sh"
 fi
 # sometimes updating taskwarrior stats fails. Avoid presenting
 # partial information on tmux output
@@ -51,5 +50,4 @@ for oldreminders_lock in $(find "$HOME" -maxdepth 1 -name ".calcurse-reminder-*"
         rm "$oldreminders_lock"
     fi
 done
-
 

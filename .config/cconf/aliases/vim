@@ -1,1 +1,2 @@
 alias n='nvim'
+alias ngv='nvim -c "autocmd VimEnter * GV"'

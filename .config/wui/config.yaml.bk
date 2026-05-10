@@ -1,0 +1,78 @@
+task_bin: task
+taskrc_path: /home/clobrano/.taskrc
+tui:
+    sidebar_width: 40
+    tabs:
+        - name: Next
+          filter: +PENDING ( +OVERDUE or +ACTIVE or due:today or priority:H ) -WAITING
+        - name: Overdue
+          filter: +OVERDUE
+        - name: This week
+          filter: ( due.after=sow due.before=eow ) or ( scheduled.after=sow scheduled.before=eow )
+        - name: TNF
+          filter: +PENDING project:TNF
+        - name: Medik8s
+          filter: +PENDING project:M8s
+        - name: Done this week
+          filter: status:completed end.after:sow end.before:eow
+        - name: Modified this week
+          filter: modified.after:sow
+        - name: Projects
+          filter: status:pending or status:active
+        - name: Tags
+          filter: status:pending or status:active
+    columns:
+        - id
+        - project
+        - due
+        - priority
+        - tags
+        - description
+    keybindings:
+        annotate: a
+        delete: x
+        done: d
+        down: j
+        edit: e
+        filter: /
+        first: g
+        help: '?'
+        last: G
+        modify: m
+        new: "n"
+        next_section: L
+        page_down: ctrl+d
+        page_up: ctrl+u
+        prev_section: H
+        quit: q
+        refresh: r
+        toggle_sidebar: tab
+        undo: u
+        up: k
+    theme:
+        name: dark
+        priority_high: "9"
+        priority_medium: "11"
+        priority_low: "12"
+        due_overdue: "9"
+        due_today: "11"
+        due_soon: "11"
+        status_active: "15"
+        status_waiting: "8"
+        status_completed: "8"
+        header_fg: "12"
+        footer_fg: "8"
+        separator_fg: "8"
+        selection_bg: "12"
+        selection_fg: "0"
+        sidebar_border: "8"
+        sidebar_title: "12"
+        label_fg: "12"
+        value_fg: "15"
+        dim_fg: "8"
+        error_fg: "9"
+        success_fg: "10"
+        tag_fg: "14"
+        section_active_fg: "15"
+        section_active_bg: "63"
+        section_inactive_fg: "246"

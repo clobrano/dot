@@ -4,49 +4,27 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[alias]
+	cfiles = !git diff --name-only $(git merge-base HEAD \"${MAIN_BRANCH:-main}\")
+	stat = !git diff --stat $(git merge-base HEAD \"${MAIN_BRANCH:-main}\")
+	reviewall = !nvim -c \"DiffviewOpen ${MAIN_BRANCH:-main}\"
+	review = !nvim -p +\"tabdo Gvdiff ${MAIN_BRANCH:-main}\" +\"let g:gitgutter_diff_base = '${MAIN_BRANCH:-main}'\"
+	sync = !git pull upstream ${MAIN_BRANCH:-main} && git push origin ${MAIN_BRANCH:-main}
+	syncthis = !git pull upstream master && git push origin master
+	sw = !git switch
+	# worktree: new branch in sibling dir ../repo-branch
+	wa = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wa <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local current_repo_name=$(basename \"$(pwd)\"); local worktree_path=\"../${current_repo_name}-${new_branch_name}\"; git worktree add -b \"${new_branch_name}\" \"${worktree_path}\" \"${base_branch}\"; }; f"
+	# worktree: new branch inside repo root
+	wA = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wA <branch-name> [<base-branch>]\"; return 1; fi; local new_branch_name=\"$1\"; local base_branch=\"${2:-main}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git worktree add -b \"${new_branch_name}\" \"${repo_root}/${new_branch_name}\" \"${base_branch}\"; }; f"
+	# worktree: checkout existing remote branch inside repo root
+	wR = "!f() { if [ -z \"$1\" ]; then echo \"Usage: git wR <branch-name> [<remote>]\"; return 1; fi; local branch_name=\"$1\"; local remote=\"${2:-origin}\"; local repo_root=$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\"); git fetch \"${remote}\" \"${branch_name}\" && git worktree add --track -B \"${branch_name}\" \"${repo_root}/${branch_name}\" \"${remote}/${branch_name}\"; }; f"
+	w = worktree
 [core]
 	excludesfile = /home/clobrano/.gitignore_global
-	editor = nvim
-	sshCommand = ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-[mergetool "nvim"]
-	cmd = nvim -f -c \"DiffviewOpen\" \"$MERGED\"
-[merge]
-	;conflictStyle = diff3
-	tool = nvim
 [init]
 	defaultBranch = main
-[pull]
-	rebase = false
-[alias]
-	co = checkout
-	cm = commit
-	sw = switch
-	swf = !git-switch-fuzzy.sh
-	st = status
-	sh = stash
-	pl = pull
-	l = log --graph --oneline
-    wa = !git-add-worktree.sh
-    w = worktree
-    l1 = log -1
-    rc = rebase --continue
-    ri = rebase --interactive
-	cfiles = !git diff --name-only $(git merge-base HEAD \"$(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\")
-	stat = !git diff --stat $(git merge-base HEAD \"$(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\")
-	reviewall = !nvim -c \"DiffviewOpen $(git symbolic-ref refs/remotes/origin/HEAD | awk -F '/' '{print $NF}')\"
-	reviewthis = !nvim -c \"DiffviewOpen HEAD~1\"
-	review = !nvim -c \"DiffviewOpen ${REF:-main}\"
-	sync = !git pull upstream $(git branch | awk '/*/{print $2}') && git push origin $(git branch | awk '/*/{print $2}')
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[credential "https://gitlab.cee.redhat.com"]
-	helper = 
-	helper = !/usr/bin/glab auth git-credential
+[http "https://gitlab.cee.redhat.com/"]
+	sslVerify = false
 [user]
-	name = Carlo Lobrano
-	email = c.lobrano@gmail.com
-[safe]
-	directory = /home/clobrano/mnt/remote-user/go/src/github.com/metal3-io/cluster-api-provider-metal3
+	email = you@example.com
+	name = Your Name

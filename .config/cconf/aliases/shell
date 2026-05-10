@@ -1,13 +1,9 @@
-alias bi='source ~/.bashrc'
-alias zi='source ~/.zshrc'
-
-alias l='ls -l'
-alias ll='ls -l'
-
 alias itsmine='sudo chown $USER'
 alias xo='xdg-open'
-alias wlcopy=wl-copy
 
+#######################################################################################
+# Date helpers
+alias now='date +"%F-%H%M%S"'
 alias today='date +"%F"'
 alias yesterday='date --date="yesterday" +"%F"'
 alias lastweek='date --date="last week" +"%F"'
@@ -15,66 +11,82 @@ alias friday='date --date="Friday" +"%F"'
 alias eow='date --date="next Sunday" +"%F"'
 alias sow='date --date="last Monday" +"%F"'
 
+#######################################################################################
+# YAZI
+alias y=yazi
+
+#######################################################################################
+# CAT/BAT
 if [[ $(which batcat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
-    alias cat=batcat
+    alias cat="batcat --style=plain"
 else if [[ $(which bat 2>/dev/null | grep bin | wc -l) = "1" ]]; then
-        # This is for openSUSE
-        alias cat=bat
-    fi 
+        alias cat="bat --style=plain"
+    fi
 fi
 
-alias sendat='sudo $GOBIN/sendat'
-
-if [[ $(which nodejs 2>/dev/null | grep bin | wc -l) = "1" ]]; then
-    alias node='nodejs'  # in ubuntu binary is called wrong
-fi
-
-alias k=kubectl
-alias kd='kubectl describe'
-alias kc='kubectl create'
-alias kdry='--dry-run=client --output=yaml'
-
-alias d=docker
-
-alias duf="duf -theme dark"
-
+#######################################################################################
+# LS/EZA
 if command -v eza 2>&1 >/dev/null; then
     alias ls=eza
 fi
 
-# neovim Notes
-alias nn='cd $ME/Notes && nvim index.md'
-# neovim Orgmode
-alias no='cd $ME/Orgmode && nvim Orgmode.org'
-# neovim session
-alias ns='nvim -c "Telescope persisted"'
-
-if command -v vagrant 2>&1 > /dev/null; then
-    alias v=vagrant
+#######################################################################################
+# DF/DUF
+alias duf="duf -theme dark"
+if [[ $(which nodejs 2>/dev/null | grep bin | wc -l) = "1" ]]; then
+    alias node='nodejs'  # in ubuntu binary is called wrong
 fi
 
+#######################################################################################
+# KUBERNETES
+alias k=kubectl
+alias kd='kubectl describe'
+alias kc='kubectl create'
+alias kdry='--dry-run=client --output=yaml'
 alias cdkube="cd ~/.kube"
+alias d=docker
 
-alias cclip="wl-copy"
+#######################################################################################
+# NEOVIM
+# my notes
+alias nn="nvim -c 'lua require('persisted').load({ name = 'Notes' })'"
+# Orgmode
+alias no="nvim -c 'lua require('persisted').load({ name = 'Orgmode' })'"
+alias nr="nvim -c 'lua require('persisted').load({ name = 'ReadItLater' })'"
+# Work
+alias nw="nvim -c \"lua require('persisted').load({ name = 'RedHatNotes' })\""
+# Neovim Persisted sessions selector
+alias ns='nvim -c "Telescope persisted"'
+# Octo
 alias nreview="nvim -c \"Octo pr list\""
+# Alias for your work notes
+worknotes() {
+  nvim -c "lua require('persisted').load({ name = 'WorkNotes' })"
+}
 
+#######################################################################################
+# GOLANG GIMME
 # This is for gimme. Sometimes the go project folder I'm in doesn't get the right go version. Re-entering the folder
 # fixes it, so :shrug:
-alias rein="cd .. && cd -"
+alias goreloadversion="cd .. ; cd -"
 
+
+#######################################################################################
+# BOOKMARKIT
 # I know, an alias for my own script... but bookmark is a meaningful name
 # I need to add 'find'
-alias bb="BookMarkIt"
+alias bb="BookmarkIt"
 
-# ntfy.sh. To be used with
+#######################################################################################
+# NTFY.SH
 alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
-#alias cdf="source ~/workspace/script-fu/fzf-cd.sh"
-#alias cdf="cd \$(find $HOME -maxdepth 5 -type d -not -path \"*/.*\" | fzf --layout reverse --prompt \"Search directory> \")"
-alias cdf="cd \$(fuzzy-cd)"
 
-
-alias claude="source claude-config.sh; /usr/local/bin/claude"
+#######################################################################################
+# MY GEMINI
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
-alias geminirh="export GEMINI_API_KEY=$GEMINI_API_KEY_REDHAT; /usr/local/bin/gemini --model gemini-2.5-pro"
-alias direload="cd .. ; cd -"
+
+
+#######################################################################################
+# BRIEFLY
+alias briefly-pod='podman run -d --name briefly --userns=keep-id -e BRIEFLY_LLM_PROVIDER=gemini -e GOOGLE_API_KEY=$GEMINI_API_KEY -e BRIEFLY_NTFY_TOPIC=briefly-summary -v $HOME/Me/Whisper:/data/inbox:Z -v $HOME/Me/Notes/3-Resources/ReadItLater:/data/output:Z briefly:latest'

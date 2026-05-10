@@ -1,0 +1,276 @@
+-- Add the same capabilities to ALL server configurations.
+-- Refer to :h vim.lsp.config() for more information.
+vim.lsp.config("*", {
+  capabilities = vim.lsp.protocol.make_client_capabilities()
+})
+
+require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup {
+  ensure_installed = { "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright" }
+}
+
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
+vim.keymap.set('n', '<leader>fd', vim.lsp.buf.definition, { desc = '[F]ind [D]efinition' })
+vim.keymap.set('n', '<leader>fi', vim.lsp.buf.implementation, { desc = '[F]ind [I]mplementation' })
+vim.keymap.set('n', '<leader>fD', vim.lsp.buf.type_definition, { desc = 'Find Type [D]efinition' })
+vim.api.nvim_create_user_command('Format', function(_) vim.lsp.buf.format() end,
+  { desc = 'Format current buffer with LSP' })
+
+
+if true then
+  --  This function gets run when an LSP connects to a particular buffer.
+  local on_attach = function(_, bufnr)
+    local nmap = function(keys, func, desc)
+      if desc then
+        desc = 'LSP: ' .. desc
+      end
+
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    end
+
+    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+    nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
+    --nmap('<leader>fr', function() require('telescope.builtin').lsp_references({ fname_width = 70 }) end, '[F]ind [R]eferences')
+    nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
+    nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
+    --nmap('<leader>ds', function() require('telescope.builtin').lsp_document_symbols({ symbol_width = 70 }) end, '[D]ocument [S]ymbols')
+    --nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+    -- See `:help K` for why this keymap
+    nmap('K', function()
+      vim.lsp.buf.hover({ border = "rounded", max_width = 80, max_height = 20 })
+    end, 'Hover Documentation')
+    nmap('<M-k>', function()
+      vim.lsp.buf.signature_help({ border = "rounded", max_width = 80, max_height = 20 })
+    end, 'Signature Documentation')
+
+    -- Lesser used LSP functionality
+    nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
+
+    -- Create a command `:Format` local to the LSP buffer
+    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+      vim.lsp.buf.format()
+    end, { desc = 'Format current buffer with LSP' })
+  end
+
+  -- Configure LSP hover and signature help handlers to have borders
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded",
+    max_width = 80,
+    max_height = 20,
+  })
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded",
+    max_width = 80,
+    max_height = 20,
+  })
+
+  if false then
+    -- already configured in lua/diagnostic.lua
+    -- keeping it for documentation
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        underline = false,
+        signs = true,
+        update_in_insert = true,
+      }
+    )
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      vim.lsp.handlers.hover, {
+        virtual_text = false,
+        -- Use a sharp border with `FloatBorder` highlights
+        border = "single",
+        focusable = false,
+      }
+    )
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+      vim.lsp.handlers.hover, {
+        -- Use a sharp border with `FloatBorder` highlights
+        border = "single"
+      }
+    )
+  end
+
+  -- Enable the following language servers
+  --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+  --
+  --  Add any additional override configuration in the following tables. They will be passed to
+  --  the `settings` field of the server config. You must look up that documentation yourself.
+  --
+  --  If you want to override the default filetypes that your language server will attach to you can
+  --  define the property 'filetypes' to the map in question.
+  local servers = {
+    gopls = {
+      gopls = {
+        -- Memory optimization for large repositories
+        analyses = {
+          unusedparams = false,
+          shadow = false,
+          fieldalignment = false,
+          nilness = false,
+          unusedwrite = false,
+        },
+        staticcheck = false,
+        usePlaceholders = false,
+        codelenses = {
+          gc_details = false,
+          generate = false,
+          regenerate_cgo = false,
+          tidy = false,
+          upgrade_dependency = false,
+          vendor = false,
+        },
+        hints = {
+          assignVariableTypes = false,
+          compositeLiteralFields = false,
+          compositeLiteralTypes = false,
+          constantValues = false,
+          functionTypeParameters = false,
+          parameterNames = false,
+          rangeVariableTypes = false,
+        },
+      },
+    },
+    pyright = {},
+    markdown_oxide = {},
+    clangd = {},
+    bashls = {
+      filetypes = { "sh", "zsh", "bash" },
+    },
+    lua_ls = {
+      Lua = {
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME
+            -- Depending on the usage, you might want to add additional paths here.
+            -- "${3rd}/luv/library"
+            -- "${3rd}/busted/library",
+          }
+        },
+        telemetry = { enable = false },
+      },
+    },
+  }
+
+  -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+  -- Ensure the servers above are installed
+  mason_lspconfig.setup {
+    automatic_installation = true,
+    ensure_installed = vim.tbl_keys(servers),
+    handlers = {
+      function(server_name)
+        vim.lsp.config(server_name, {
+          capabilities = capabilities,
+          on_attach = on_attach,
+          settings = servers[server_name],
+          filetypes = (servers[server_name] or {}).filetypes,
+        })
+      end
+    }
+  }
+
+  vim.lsp.config("markdown_oxide", {
+    capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+    on_attach = on_attach,       -- configure your on attach config
+  })
+
+  -- [[ Configure nvim-cmp ]]
+  -- See `:help cmp`
+  local cmp = require 'cmp'
+  local luasnip = require 'luasnip'
+  require('luasnip.loaders.from_vscode').lazy_load()
+  luasnip.config.setup {}
+
+  cmp.setup {
+    sources = {
+      { name = 'nvim_lsp',
+        option = {
+          markdown_oxide = {
+            -- Added '@' to the keyword_pattern to allow snippets starting with '@'
+            keyword_pattern = [[\(\k\| \|\/\|#\|@\)\+]]
+          }
+        }
+      },
+      { name = 'luasnip' },
+      { name = 'natdat' },
+      { name = 'buffer' },
+      { name = 'path' },
+      --{ name = 'cmdline' }, -- do not enable it. It conflicts with editing Markdown (at least)
+    },
+    mapping = cmp.mapping.preset.insert {
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete {},
+      ['<Tab>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+    },
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
+    },
+    experimental = {
+      ghost_text = false
+    },
+  }
+
+  -- Autocommand to disable buffer completion specifically for Markdown
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+      cmp.setup.buffer({
+        --enabled = false, -- Disable cmp entirely for this buffer
+        -- disabling buffer, like below, will suppress time snippets, like "@today"
+        --sources = cmp.config.sources({
+          --{ name = 'nvim_lsp' }, -- Keep LSP if you have markdown LSP
+          --{ name = 'luasnip' },
+          --{ name = 'path' },
+        --}),
+      })
+    end,
+  })
+
+  -- `/` cmdline setup.
+  cmp.setup.cmdline('/', {
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Setup for cmdline completion specifically for ':' and '!'
+  cmp.setup.cmdline(':', {
+    mapping = vim.tbl_extend('force', cmp.mapping.preset.cmdline(), {
+      ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Enable Tab for confirmation
+    }),
+    sources = cmp.config.sources({
+      { name = 'path' },
+      { name = 'cmdline' },
+      { name = 'shell_history' },
+    })
+  })
+end

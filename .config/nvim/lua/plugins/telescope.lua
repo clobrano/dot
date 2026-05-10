@@ -43,18 +43,19 @@ local telescope_opts = {
         },
       },
     },
-    pickers = {
-      lsp_references = { fname_width = 100, },
-      tags = { fname_width = 100, },
-      find_files = {
-        no_ignore = true,
-        no_ignore_parent = true,
-      },
-      colorscheme = {
-        enable_preview = true
-      },
+  },
+  pickers = {
+    lsp_references = { fname_width = 100, },
+    tags = { fname_width = 100, },
+    find_files = {
+      no_ignore = true,
+      no_ignore_parent = true,
+      git_files = false, -- Explicitly tell Telescope to not use git for file listing
+      hidden = true, -- Include hidden files (like .gitignore itself, or .config directories)
     },
-
+    colorscheme = {
+      enable_preview = true
+    },
   },
 }
 
@@ -87,7 +88,7 @@ end
 --- Here is the actual Telescope plugin configuration
 return {
   'nvim-telescope/telescope.nvim',
-  branch = '0.1.x',
+  branch = 'master',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-live-grep-args.nvim',
@@ -122,31 +123,44 @@ return {
 
     require('telescope').setup(telescope_opts)
 
-    -- load pickers
-    pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
-    require('telescope').load_extension('media_files') -- Enable media-file preview in telescope
-    require('telescope').load_extension('heading')
-    --require('telescope').load_extension('noice')
+    -- Defer extension loading until VimEnter to ensure all dependencies are loaded
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        -- load pickers
+        pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
+        pcall(require('telescope').load_extension, 'media_files') -- Enable media-file preview in telescope
+        pcall(require('telescope').load_extension, 'heading')
+        --require('telescope').load_extension('noice')
+      end,
+      once = true,
+    })
 
     -- Mappings
     vim.keymap.set(
       'n', '<leader>f/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         -- configure get_dropdown to expand previewer to full width of screen
-        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          layout_strategy = "flex",
-          enable_preview = false,
-          shorten_path = false,
-          -- set it again as this is independent from the default layout configured above
-          layout_config = {
-            width = 0.99,
-            height = 0.99,
-          }
-        })
+        require("telescope.builtin").current_buffer_fuzzy_find({
+        -- function from
+        -- https://github.com/nvim-telescope/telescope.nvim/pull/1401#issuecomment-957234973
+        tiebreak = function(entry1, entry2, prompt)
+          local start_pos1, _ = entry1.ordinal:find(prompt)
+          if start_pos1 then
+            local start_pos2, _ = entry2.ordinal:find(prompt)
+            if start_pos2 then
+              return start_pos1 < start_pos2
+            end
+          end
+          return false
+        end,
+        additional_args = { "--ignore-case", "--pcre2" },
+      })
       end,
       { desc = '[F]uzzily [/] search in current buffer' }
     )
 
+    vim.api.nvim_create_user_command('TelescopeToggleVendorInSearch', function() _G.TelescopeToggleVendorIgnore() end,
+      { desc = 'Toggle vendor folder in Telescope search' })
     vim.keymap.set('n', '<leader>ttv', function() _G.TelescopeToggleVendorIgnore() end,
       { desc = '[T]elescope [T]oggle [V]endor in search' })
     vim.keymap.set('n', '<leader>fa', require('telescope.builtin').live_grep, { desc = '[F]ind [A]all' })
@@ -160,11 +174,14 @@ return {
       })
     end, { desc = '[F]ind [B]uffers' })
     vim.keymap.set('n', '<leader>fc', require('telescope.builtin').colorscheme, { desc = '[F]ind [C]olorscheme' })
-    vim.keymap.set('n', '<leader>ff', function()
-      require('telescope.builtin').find_files({
-        layout_strategy = 'vertical',
-      })
-    end, { desc = '[F]ind [F]iles' })
+
+    -- disabled in favour of FzfLua files
+    -- vim.keymap.set('n', '<leader>ff', function()
+    --   require('telescope.builtin').find_files({
+    --     layout_strategy = 'vertical',
+    --   })
+    -- end, { desc = '[F]ind [F]iles' })
+
     vim.keymap.set('n', '<leader>fh', '<cmd>Telescope heading<cr>', { desc = '[F]ind Markdown [h]eaders' })
     vim.keymap.set('n', '<leader>fH', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
@@ -187,14 +204,48 @@ return {
       end, { desc = '[L]SP [R]eferences' }
     )
     vim.keymap.set('n', '<leader>fs', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
-    vim.keymap.set('n', '<leader>ft',
-      function()
-        require('telescope.builtin').tags({
-          layout_strategy = "vertical",
-          enable_preview = false,
-          fname_width = 100, -- Keep your fname_width setting
-        })
-      end, { desc = '[F]ind [T]ags' })
+
+    -- disabling Tag search via Telescope. FzfLua is preferred at the time of writing
+    -- vim.keymap.set('n', '<leader>ft',
+    --   function()
+    --     local make_entry = require('telescope.make_entry')
+    --     local entry_display = require('telescope.pickers.entry_display')
+    --     local utils = require('telescope.utils')
+
+    --     local tag_opts = {
+    --       layout_strategy = "vertical",
+    --       enable_preview = false,
+    --       fname_width = 100,
+    --       show_line = false,
+    --       only_sort_tags = true,
+    --       bufnr = vim.api.nvim_get_current_buf(),
+    --     }
+
+    --     -- Custom entry maker with wider tag column
+    --     local original_gen = make_entry.gen_from_ctags(tag_opts)
+    --     local displayer = entry_display.create {
+    --       separator = " │ ",
+    --       items = {
+    --         { width = tag_opts.fname_width },
+    --         { remaining = true },
+    --       },
+    --     }
+    --     tag_opts.entry_maker = function(line)
+    --       local entry = original_gen(line)
+    --       if entry then
+    --         entry.display = function(e)
+    --           local display_path = utils.transform_path(tag_opts, e.filename)
+    --           return displayer {
+    --             { display_path },
+    --             e.tag,
+    --           }
+    --         end
+    --       end
+    --       return entry
+    --     end
+
+    --     require('telescope.builtin').tags(tag_opts)
+    --   end, { desc = '[F]ind [T]ags' })
 
     -- Git telescope
     vim.keymap.set('n', '<leader>fgb', require('telescope.builtin').git_branches, { desc = '[F]ind [G]it [B]ranches' })

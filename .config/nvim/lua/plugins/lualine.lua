@@ -36,7 +36,7 @@ return {
       lualine_a = { 'branch' },
       lualine_b = { readonly_status },
       lualine_c = { },
-      lualine_x = { 'diff', 'diagnostics' },
+      lualine_x = { 'diff', { 'diagnostics', sources = { 'nvim_workspace_diagnostic' } } },
       lualine_y = { spell, 'progress', 'searchcount' },
       lualine_z = { 'location' }
     },

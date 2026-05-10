@@ -28,6 +28,7 @@ vim.g.tagbar_type_go = {
 return {
     'majutsushi/tagbar',
     config = function()
-        vim.keymap.set('n', '<leader>to', ':TagbarToggle fj<cr>')
+        vim.api.nvim_create_user_command('Toc', ':TagbarToggle fj', {})
+        vim.keymap.set('n', '<leader>toc', ':TagbarToggle fj<cr>')
     end
 }

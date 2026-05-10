@@ -1,20 +1,4 @@
-alias wk='task rc:~/.taskworkrc'
-alias me='task'
-
-alias donetoday='wk end.after:yesterday complete sl'
-
-alias wknext="wk \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" sl"
-alias next="me \"+PENDING (+OVERDUE or +TODAY or priority:H or +ACTIVE)\" sl"
-
-alias wkactive="wk +ACTIVE sl"
-alias active="me +ACTIVE sl"
-
-alias wkweek="wk due.before:eow sl"
-alias week="me due.before:eow sl"
-
-alias wkmonth="wk due.before:eom sl"
-alias month="me due.before:eom sl"
-
-alias vit='export TASKRC=~/.taskrc  TASKDATA=$ME/Taskwarrior; vit'
-alias wtui='taskwarrior-tui --taskrc ~/.taskworkrc'
-alias ptui='taskwarrior-tui'
+alias m='task rc:$HOME/Me/Taskwarrior/taskrcs/taskrc-personal-desktop'
+alias mui='wui --config ~/Me/Taskwarrior/wui-configs/wui-personal-desktop.yaml'
+alias r='task rc:$HOME/Me/Taskwarrior/taskrcs/taskrc-readitlater-desktop'
+alias rui='wui --config ~/Me/Taskwarrior/wui-configs/wui-readitlater-desktop.yaml'

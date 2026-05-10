@@ -30,8 +30,5 @@ return {
         \   vim.keymap_set( <buffer> <leader>.. :edit %:h<CR> |
         \ endif
         ]]
-
-        -- this is for fugitive-gitlab
-        vim.cmd("let g:fugitive_gitlab_domains = ['https://gitlab.cee.redhat.com']")
     end,
 }

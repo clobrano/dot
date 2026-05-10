@@ -12,7 +12,7 @@ return {
       reaction_viewer_hint_icon = "", -- marker for user reactions
       user_icon = " ", -- user icon
       timeline_marker = "", -- timeline marker
-      timeline_indent = "2", -- timeline indentation
+      timeline_indent = 2, -- timeline indentation
       right_bubble_delimiter = "", -- bubble delimiter
       left_bubble_delimiter = "", -- bubble delimiter
       github_hostname = "", -- GitHub Enterprise host
@@ -164,6 +164,7 @@ return {
       }
     })
     vim.keymap.set("n",  "<leader>oo", ":Octo ")
+    vim.keymap.set("n", "<leader>vu", '<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<leader>vv]u", true, true, true), "n", false)<CR>', { desc = "Toggle viewed state and go to next unviewed" })
 
     --[[vim.api.nvim_create_autocmd("BufWinEnter", {]]
       --[[group = vim.api.nvim_create_augroup("OctoTheme", { clear = true }),]]

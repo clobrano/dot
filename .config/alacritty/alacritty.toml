@@ -1,5 +1,5 @@
 [terminal]
-shell = { program = "/usr/bin/tmux" }
+shell = { program = "/bin/bash" }
 
 
 [font]
@@ -10,11 +10,11 @@ normal = { family = "Source Code Pro Medium", style = "Regular" }
 history = 0
 
 [window]
-decorations = "None"
+#decorations = "None"
 dynamic_padding = true
 opacity = 1.00
 #startup_mode = "Maximized"
-decorations_theme_variant = "Dark"
+#decorations_theme_variant = "Dark"
 
 [window.dimensions]
 columns = 130

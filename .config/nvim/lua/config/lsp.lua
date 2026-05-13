@@ -1,3 +1,8 @@
+-- Shim for vim.lsp.codelens.enable which is missing in some Neovim versions (e.g. 0.11 nightly)
+if vim.lsp.codelens and not vim.lsp.codelens.enable then
+  vim.lsp.codelens.enable = function() end
+end
+
 -- Add the same capabilities to ALL server configurations.
 -- Refer to :h vim.lsp.config() for more information.
 vim.lsp.config("*", {

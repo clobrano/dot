@@ -1,17 +1,7 @@
+# [Created by task 3.1.0 8/26/2024 17:40:34]
 news.version=3.4.1
-data.location=/home/clobrano/Documents/taskwarriorRH
+data.location=/home/carlo/workspace/taskwarrior-wui-testbench
+include no-color.theme
 
 include ~/.dot/taskwarrior-customization
-report.next.sort=due+,start-,urgency-,project+
 
-uda.jira.type=string
-uda.jira.label=JIRA
-
-uda.pr.type=string
-uda.pr.label=PR
-
-uda.gdoc.type=string
-uda.gdoc.label=GDOC
-
-uda.url.type=string
-uda.url.label=URL

@@ -110,17 +110,127 @@ build_neovim_from_source() {
     print_success "Neovim built and installed from source!"
 }
 
-main() {
-    print_info "Starting Neovim installation..."
+get_latest_stable_github_version() {
+    local latest_url="https://api.github.com/repos/neovim/neovim/releases/latest"
+    local response
 
-    # Check if already installed
-    if pkg_is_installed nvim && [ "$BUILD_FROM_SOURCE" != "true" ]; then
-        print_success "Neovim is already installed!"
-        nvim --version | head -1
+    if ! response=$(curl -fsSL "$latest_url" 2>/dev/null); then
+        print_error "Failed to reach GitHub API. Check your network connection." >&2
+        exit 1
+    fi
+    if [ -z "$response" ]; then
+        print_error "Empty response from GitHub API." >&2
+        exit 1
+    fi
+
+    local version=""
+    if command -v jq &>/dev/null; then
+        version=$(echo "$response" | jq -r '.tag_name // empty' 2>/dev/null)
+    else
+        version=$(echo "$response" \
+            | grep -o '"tag_name": "v[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"' \
+            | grep -o 'v[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*' | head -1)
+    fi
+
+    # Fallback: query release-x.y branches
+    if [ -z "$version" ]; then
+        local branches_url="https://api.github.com/repos/neovim/neovim/branches?per_page=100"
+        local branches_response
+
+        if ! branches_response=$(curl -fsSL "$branches_url" 2>/dev/null); then
+            print_error "Failed to reach GitHub branches API. Check your network connection." >&2
+            exit 1
+        fi
+        if [ -z "$branches_response" ]; then
+            print_error "Empty response from GitHub branches API." >&2
+            exit 1
+        fi
+
+        local latest_branch=""
+        if command -v jq &>/dev/null; then
+            latest_branch=$(echo "$branches_response" \
+                | jq -r '[.[] | select(.name | test("^release-[0-9]+\\.[0-9]+$")) | .name] | sort_by(split("-")[1] | split(".") | map(tonumber)) | last // empty' 2>/dev/null)
+        else
+            latest_branch=$(echo "$branches_response" \
+                | grep -o '"name": "release-[0-9][0-9]*\.[0-9][0-9]*"' \
+                | grep -o 'release-[0-9][0-9]*\.[0-9][0-9]*' \
+                | sort -V | tail -1)
+        fi
+
+        if [ -n "$latest_branch" ]; then
+            version="${latest_branch#release-}.0"
+        else
+            print_error "Could not determine latest stable Neovim version from GitHub." >&2
+            exit 1
+        fi
+    else
+        version="${version#v}"
+    fi
+
+    print_info "Latest stable Neovim on GitHub: $version" >&2
+    echo "$version"
+}
+
+get_installed_nvim_version() {
+    if ! command -v nvim &>/dev/null; then
+        echo ""
+        return 0
+    fi
+
+    local raw
+    raw=$(nvim --version 2>/dev/null | head -1)
+    echo "$raw" | grep -o 'NVIM v[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*' \
+        | grep -o '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*'
+}
+
+check_nvim_version_and_prompt() {
+    local latest installed
+
+    latest=$(get_latest_stable_github_version) || exit 1
+    installed=$(get_installed_nvim_version)
+
+    if [ -z "$installed" ]; then
+        print_info "Neovim is not installed. Will install latest stable ($latest)."
+        return 0
+    fi
+
+    local cmp=0
+    if version_compare "$installed" "$latest"; then
+        cmp=0
+    else
+        cmp=$?
+    fi
+
+    if [ "$cmp" -eq 0 ] || [ "$cmp" -eq 1 ]; then
+        print_success "Neovim $installed is already the latest stable version."
         exit 0
     fi
 
-    # Try package manager first, unless explicitly building from source
+    # Newer version available
+    print_info "Neovim $installed is installed. Neovim $latest is available."
+
+    if [ "$BUILD_FROM_SOURCE" = "true" ]; then
+        print_warning "Newer stable Neovim $latest is available. Proceeding with source build anyway..."
+        return 0
+    fi
+
+    read -r -p "Would you like to upgrade? [y/N] " answer
+    case "$answer" in
+        [yY])
+            export BUILD_FROM_SOURCE=true
+            return 0 ;;
+        *)
+            print_info "Skipping upgrade."
+            exit 0
+            ;;
+    esac
+}
+
+main() {
+    print_info "Starting Neovim installation..."
+
+    check_nvim_version_and_prompt
+
     if [ "$BUILD_FROM_SOURCE" = "true" ]; then
         build_neovim_from_source
     else
@@ -140,4 +250,6 @@ main() {
     fi
 }
 
-main "$@"
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+    main "$@"
+fi

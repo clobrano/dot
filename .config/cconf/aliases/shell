@@ -82,8 +82,11 @@ alias bb="BookmarkIt"
 alias ntfy="curl -d done ntfy.sh/$NTFY_HANDLE"
 
 
+<<<<<<< Updated upstream
 #######################################################################################
 # MY GEMINI
+alias claude="source claude-config.sh; /usr/local/bin/claude"
+alias myclaude="~/.npm-global/bin/claude"
 alias gemini="/usr/local/bin/gemini -m gemini-2.5-flash"
 
 

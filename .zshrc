@@ -28,7 +28,8 @@ PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
 PATH=$PATH:$HOME/workspace/toolbelt
 PATH=$PATH:${GOBIN}
-PATH=$PATH:${GOROOT}/bin
+#PATH=$PATH:${GOROOT}/bin
+PATH=$PATH:$(go env GOPATH)/bin
 PATH=$PATH:/usr/local/go/bin
 if [[ -d ${HOME}/workspace/me/flutter ]]; then
     PATH=$PATH:${HOME}/workspace/me/flutter/bin
@@ -282,9 +283,10 @@ fi
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-# [profiler end]
-#zprof
 
 if command -v direnv 2>&1 >/dev/null; then
     eval "$(direnv hook zsh)"
 fi
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
+

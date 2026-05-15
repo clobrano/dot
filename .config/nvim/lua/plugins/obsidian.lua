@@ -18,16 +18,13 @@ return {
     -- see below for full list of optional dependencies 👇
   },
   opts = {
-    workspaces = {
+    workspaces = vim.tbl_filter(
+      function(ws) return vim.fn.isdirectory(vim.fn.expand(ws.path)) == 1 end,
       {
-        name = "work",
-        path = "~/Documents/RedHatNotes",
-      },
-      {
-        name = "personal",
-        path = "~/Me/Notes",
-      },
-    },
+        { name = "work",     path = "~/Documents/RedHatNotes" },
+        { name = "personal", path = "~/Me/Notes" },
+      }
+    ),
     -- let render-markdown ONLY manage UI for the following objects
     ui = {
       enable = true,                   -- Lascia attiva la UI per i link e il resto

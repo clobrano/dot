@@ -61,18 +61,7 @@ install_base_brew_packages() {
         return 1
     fi
 
-    local packages=(
-        bat
-        eza
-        fd
-        fzf
-        gh
-        git
-        ripgrep
-        stow
-        tmux
-        zsh
-    )
+    source "$SCRIPT_DIR/../packages/kinoite.sh"
 
     print_info "Installing ${#packages[@]} base packages..."
 

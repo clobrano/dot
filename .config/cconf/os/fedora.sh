@@ -43,24 +43,7 @@ install_base_packages() {
     # Removed: conserver-client (user doesn't recall needing it)
     # Removed: xclip, deja-dup, recode (user doesn't need them)
 
-    local packages=(
-        alacritty
-        bat
-        bear
-        clang
-        clang-tools-extra
-        curl
-        eza
-        fd-find
-        gh
-        git
-        python3-pip
-        stow
-        tmux
-        yq
-        zoxide
-        zsh
-    )
+    source "$SCRIPT_DIR/../packages/fedora.sh"
 
     print_info "Installing ${#packages[@]} base packages..."
     sudo dnf install -y --skip-unavailable "${packages[@]}"

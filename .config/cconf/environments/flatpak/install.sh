@@ -28,28 +28,7 @@ ensure_flatpak() {
     fi
 }
 
-# GUI Applications to install
-FLATPAK_APPS=(
-    # System utilities
-    "com.github.tchx84.Flatseal"              # Flatpak permissions manager
-
-    # Terminal emulators
-    "org.wezfurlong.wezterm"                  # WezTerm terminal
-
-    # Web browsers
-    "com.google.Chrome"                       # Google Chrome
-
-    # Cloud storage & sync
-    "com.dropbox.Client"                      # Dropbox
-    "com.github.zocker_160.SyncThingy"        # Syncthing GUI
-
-    # Productivity
-    "md.obsidian.Obsidian"                    # Obsidian notes
-
-    # Communication
-    "org.telegram.desktop"                    # Telegram
-    "com.slack.Slack"                         # Slack
-)
+source "$SCRIPT_DIR/../../packages/flatpak.sh"
 
 install_flatpak_apps() {
     print_info "Installing ${#FLATPAK_APPS[@]} Flatpak applications..."

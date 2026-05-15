@@ -1,6 +1,4 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -8,41 +6,31 @@ case $- in
       *) return;;
 esac
 
-stty -ixon          # Disable terminal freeze shortcut C-s
-shopt -s autocd     # cd into folder without typing 'cd'
+# Shell behavior
+stty -ixon          # Disable terminal freeze (C-s)
+shopt -s autocd
 shopt -s checkwinsize
 
-# command history
-shopt -s histappend # append to the history file, don't overwrite it
+# History
+shopt -s histappend
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
-# terminal and color (more below)
+# Terminal
 COLORTERM=gnome-terminal
 TERM=xterm-256color
 color_prompt=yes
 
-# set variable identifying the chroot you work in (used in the prompt below)
+# Chroot prompt label
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 [[ -e /etc/profile.d/vte-2.91.sh ]] && source /etc/profile.d/vte-2.91.sh
 
-#function _update_ps1() {
-    #dir=`basename $(dirname $PWD)`/`basename $PWD`
-    #PS1="\u • ${dir} $ "
-#}
-
-#if [ "$TERM" != "linux" ]; then
-    #PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-#fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# Bash completion
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
@@ -52,88 +40,67 @@ if ! shopt -oq posix; then
 fi
 
 export EDITOR="nvim"
-
-# Load my dotfiles
-source $HOME/.config/cconf/dot/dotfiles.sh
-#source $HOME/.config/cconf/environments/pyenv-init.sh
-
+export GIT_TERMINAL_PROMPT=1
+export ME=$HOME/Me
+export GCC_COLORS=1
 export CDPATH=$HOME/workspace
-
-# GOLANG
-#export GOROOT=/usr/local/go
 export GOPATH=$HOME/workspace/golang
 export GOBIN=${GOPATH}/bin
-
-export GIT_TERMINAL_PROMPT=1
-
-export ME=$HOME/Me
-
-# PATH
-PATH=$PATH:$HOME/workspace/script-fu
-PATH=$PATH:$HOME/toolkit
-[[ -d "$HOME/.atuin" ]] && PATH=$PATH:$HOME/.atuin/bin
-#PATH=$PATH:${GOROOT}/bin
-PATH=$PATH:${GOBIN}
-PATH=~/.local/bin:$PATH
-PATH=$PATH:/usr/local/go/bin
-PATH=$PATH:/opt/nvim-linux-x86_64/bin/
-if [[ -d $HOME/.cargo ]]; then
-    PATH=$HOME/.cargo/bin:$PATH
-fi
 
 # Redtimer
 export REDTIMER_LOG_SESSION_PATH="${HOME}/MyBox/work/telit/redtimer-session-log.txt"
 export REDTIMER_WORK_SESSION_TIME=40
 export REDTIMER_PAUSE_SESSION_TIME=5
 
-# Enable gcc colours, available since gcc 4.9.0
-GCC_COLORS=1
-# Fix ZSH_VERSION unbound variable
-ZSH_VERSION=${ZSH_VERSION-"none"}
-# Let's have core dumps
-ulimit -c unlimited
+# PATH
+PATH=$PATH:$HOME/workspace/script-fu
+PATH=$PATH:$HOME/toolkit
+PATH=$PATH:${GOBIN}
+PATH=~/.local/bin:$PATH
+PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:/opt/nvim-linux-x86_64/bin
+[[ -d "$HOME/.atuin" ]] && PATH=$PATH:$HOME/.atuin/bin
+[[ -d "$HOME/.cargo" ]] && PATH=$HOME/.cargo/bin:$PATH
+export PATH
 
-# Fuzzy finder configuration
-if command -v fzf 2>&1 >/dev/null; then
-    source <(fzf --bash)
-    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
-fi
-
-# aliases
+# Aliases (itsmine and ls overrides live in .config/cconf/aliases/shell)
 alias bi='source ${HOME}/.bashrc'
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -l'
 alias la='ls -alF'
 alias grep='grep --color=auto'
-alias itsmine="sudo chown $USER"
 
-#command -v task >/dev/null
-#if [[ $? -eq 0 ]]; then
-    #complete -F _mybinary myscript
-#fi
+# Dotfiles (sources all files under .config/cconf/aliases/)
+source "$HOME/.config/cconf/dot/dotfiles.sh"
 
-# Local bash configurations I don't want to save upstream
-[ -f $HOME/.local_bashrc ] && source $HOME/.local_bashrc
-[ -f $HOME/Documents/unsharable ] && source $HOME/Documents/unsharable
-
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-
-command -v task>/dev/null
-if [[ $? -eq 0 ]]; then
-    complete -F _task wk
-    complete -F _task me
-    complete -F _task next
-    complete -F _task wknext
+# Fuzzy finder
+if command -v fzf &>/dev/null; then
+    source <(fzf --bash)
+    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
 fi
 
-# use zshz in place of "cd", but only if installed
-command -v zoxide >/dev/null
-if [ $? -eq 0 ]; then
+# Task completions
+if command -v task &>/dev/null; then
+    complete -F _task wk me next wknext
+fi
+
+# bash-preexec must be sourced before tools that hook into it (atuin, zoxide)
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+# zoxide (replaces cd)
+if command -v zoxide &>/dev/null; then
     eval "$(zoxide init bash --cmd cd)"
 fi
 
-# run atuin if installed
-if command -v atuin 2>&1 >/dev/null; then
-    # Bind ctrl-r but not up arrow
+# atuin (shell history)
+if command -v atuin &>/dev/null; then
     eval "$(atuin init bash --disable-up-arrow)"
 fi
+
+# Override any zsh-style _nvim completion that causes "setopt: command not found"
+# errors when bash resolves completions for the nvim alias
+complete -o default n 2>/dev/null
+
+# Local overrides
+[[ -f "$HOME/.local_bashrc" ]] && source "$HOME/.local_bashrc"
+[[ -f "$HOME/Documents/unsharable" ]] && source "$HOME/Documents/unsharable"

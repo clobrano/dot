@@ -19,6 +19,8 @@ tabs:
       command: get pods -n openshift-etcd
     - name: Secrets
       command: get Secrets -A
+      sort_by: creation_time   # sort by AGE column
+      sort_reverse: false       # oldest first
     - name: ConfigMap
       command: get ConfigMap -A
 custom_commands: []

@@ -49,7 +49,7 @@ WEEK=$(lets see this week | grep "total time:" | sed 's/\x1b\[[0-9;]*m//g' | awk
 
 # TODO: Why I need an 1h offset to get the right value? Is it for the daylight setting?
 elapsed_time=$(date +"%H:%M.%S" --date="@$((end - begin - 3600))")
-echo -e "⭐ $full_name /#[fg=colour50]$elapsed_time#[fg=white] #[fg=colour5]$TODAY#[fg=white] #[fg=colour4]$WEEK#[fg=white]/"
+echo -e "🛠️ $full_name /#[fg=colour50]$elapsed_time#[fg=white] #[fg=colour5]$TODAY#[fg=white] #[fg=colour4]$WEEK#[fg=white]/"
 
 # Short name for OneThing Gnome extention
 #name=$full_name

@@ -5,4 +5,4 @@ set -x
     fi
 }
 alias dev="tmux-attach-or-create 0-devel"
-alias mynotes="tmux-attach-or-create 1-note"
+alias notes="tmux-attach-or-create 1-note"

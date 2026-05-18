@@ -1,8 +1,3 @@
--- Shim for vim.lsp.codelens.enable which is missing in some Neovim versions (e.g. 0.11 nightly)
-if vim.lsp.codelens and not vim.lsp.codelens.enable then
-  vim.lsp.codelens.enable = function() end
-end
-
 -- Add the same capabilities to ALL server configurations.
 -- Refer to :h vim.lsp.config() for more information.
 vim.lsp.config("*", {
@@ -11,8 +6,60 @@ vim.lsp.config("*", {
 
 require("mason").setup()
 local mason_lspconfig = require("mason-lspconfig")
+
+-- Define server configurations first (before mason setup)
+local servers = {
+  gopls = {
+    analyses = {
+      unusedparams = true,
+      shadow = true,
+      fieldalignment = false,
+      nilness = false,
+      unusedwrite = false,
+    },
+    staticcheck = false,
+    usePlaceholders = false,
+    codelenses = {
+      gc_details = false,
+      generate = false,
+      regenerate_cgo = false,
+      tidy = true,
+      upgrade_dependency = false,
+      vendor = false,
+    },
+    hints = {
+      assignVariableTypes = true,
+      compositeLiteralFields = true,
+      compositeLiteralTypes = true,
+      constantValues = true,
+      functionTypeParameters = true,
+      parameterNames = true,
+      rangeVariableTypes = true,
+    },
+  },
+  pyright = {},
+  markdown_oxide = {},
+  clangd = {},
+  bashls = {
+    filetypes = { "sh", "zsh", "bash" },
+  },
+  lua_ls = {
+    Lua = {
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+        }
+      },
+      telemetry = { enable = false },
+    },
+  },
+}
+
+-- Ensure servers are installed
 mason_lspconfig.setup {
-  ensure_installed = { "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright" }
+  automatic_installation = true,
+  ensure_installed = vim.tbl_keys(servers),
 }
 
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
@@ -25,7 +72,7 @@ vim.api.nvim_create_user_command('Format', function(_) vim.lsp.buf.format() end,
 
 if true then
   --  This function gets run when an LSP connects to a particular buffer.
-  local on_attach = function(_, bufnr)
+  local on_attach = function(client, bufnr)
     local nmap = function(keys, func, desc)
       if desc then
         desc = 'LSP: ' .. desc
@@ -45,12 +92,8 @@ if true then
     --nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
-    nmap('K', function()
-      vim.lsp.buf.hover({ border = "rounded", max_width = 80, max_height = 20 })
-    end, 'Hover Documentation')
-    nmap('<M-k>', function()
-      vim.lsp.buf.signature_help({ border = "rounded", max_width = 80, max_height = 20 })
-    end, 'Signature Documentation')
+    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
     nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
@@ -59,20 +102,31 @@ if true then
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
+
+    -- Enable inlay hints if supported
+    if client and client:supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    -- Enable codelens if supported
+    if client and client:supports_method("textDocument/codeLens") then
+      vim.api.nvim_create_autocmd("BufEnter", {
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.codelens.refresh()
+        end,
+      })
+    end
   end
 
   -- Configure LSP hover and signature help handlers to have borders
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-    max_width = 80,
-    max_height = 20,
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-    max_width = 80,
-    max_height = 20,
-  })
+  local hover_opts = { border = "rounded", max_width = 80, max_height = 20 }
+  vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+    vim.lsp.handlers.hover(err, result, ctx, vim.tbl_extend("force", config or {}, hover_opts))
+  end
+  vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+    vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_extend("force", config or {}, hover_opts))
+  end
 
   if false then
     -- already configured in lua/diagnostic.lua
@@ -101,91 +155,39 @@ if true then
     )
   end
 
-  -- Enable the following language servers
-  --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-  --
-  --  Add any additional override configuration in the following tables. They will be passed to
-  --  the `settings` field of the server config. You must look up that documentation yourself.
-  --
-  --  If you want to override the default filetypes that your language server will attach to you can
-  --  define the property 'filetypes' to the map in question.
-  local servers = {
-    gopls = {
-      gopls = {
-        -- Memory optimization for large repositories
-        analyses = {
-          unusedparams = false,
-          shadow = false,
-          fieldalignment = false,
-          nilness = false,
-          unusedwrite = false,
-        },
-        staticcheck = false,
-        usePlaceholders = false,
-        codelenses = {
-          gc_details = false,
-          generate = false,
-          regenerate_cgo = false,
-          tidy = false,
-          upgrade_dependency = false,
-          vendor = false,
-        },
-        hints = {
-          assignVariableTypes = false,
-          compositeLiteralFields = false,
-          compositeLiteralTypes = false,
-          constantValues = false,
-          functionTypeParameters = false,
-          parameterNames = false,
-          rangeVariableTypes = false,
-        },
-      },
-    },
-    pyright = {},
-    markdown_oxide = {},
-    clangd = {},
-    bashls = {
-      filetypes = { "sh", "zsh", "bash" },
-    },
-    lua_ls = {
-      Lua = {
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME
-            -- Depending on the usage, you might want to add additional paths here.
-            -- "${3rd}/luv/library"
-            -- "${3rd}/busted/library",
-          }
-        },
-        telemetry = { enable = false },
-      },
-    },
-  }
-
   -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-  -- Ensure the servers above are installed
-  mason_lspconfig.setup {
-    automatic_installation = true,
-    ensure_installed = vim.tbl_keys(servers),
-    handlers = {
-      function(server_name)
-        vim.lsp.config(server_name, {
-          capabilities = capabilities,
-          on_attach = on_attach,
-          settings = servers[server_name],
-          filetypes = (servers[server_name] or {}).filetypes,
-        })
-      end
+  -- Enable additional LSP features for Neovim 0.12+
+  capabilities.textDocument.colorProvider = { dynamicRegistration = false }
+  capabilities.inlineCompletion = { dynamicRegistration = false }
+
+  -- Configure each server with capabilities and settings
+  for server_name, server_config in pairs(servers) do
+    local config_opts = {
+      capabilities = capabilities,
+      on_attach = on_attach,
     }
-  }
+
+    -- Add settings if the server has them
+    if server_name == "gopls" then
+      config_opts.settings = { gopls = server_config }
+    elseif server_name == "lua_ls" then
+      config_opts.settings = { Lua = server_config.Lua }
+    end
+
+    -- Add filetypes if specified
+    if server_config.filetypes then
+      config_opts.filetypes = server_config.filetypes
+    end
+
+    vim.lsp.config(server_name, config_opts)
+  end
 
   vim.lsp.config("markdown_oxide", {
-    capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-    on_attach = on_attach,       -- configure your on attach config
+    capabilities = capabilities,
+    on_attach = on_attach,
   })
 
   -- [[ Configure nvim-cmp ]]
@@ -278,4 +280,7 @@ if true then
       { name = 'shell_history' },
     })
   })
+
+  -- Enable all configured servers for Neovim 0.12+
+  vim.lsp.enable({ "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright", "markdown_oxide" })
 end

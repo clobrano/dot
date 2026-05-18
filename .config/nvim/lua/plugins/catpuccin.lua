@@ -29,6 +29,29 @@ return {
 
           -- Ensure wikilinks stay distinct (usually Blue)
           --RenderMarkdownWikiLink = { fg = colors.blue, underline = true },
+
+          -- LSP semantic tokens for Neovim 0.12+
+          -- These are the highlight groups that gopls sends via semantic tokens
+          ["@lsp.type.function"] = { fg = colors.blue },
+          ["@lsp.type.method"] = { fg = colors.blue },
+          ["@lsp.type.variable"] = { fg = colors.text },
+          ["@lsp.type.parameter"] = { fg = colors.peach },
+          ["@lsp.type.type"] = { fg = colors.yellow },
+          ["@lsp.type.class"] = { fg = colors.yellow },
+          ["@lsp.type.interface"] = { fg = colors.yellow },
+          ["@lsp.type.enum"] = { fg = colors.yellow },
+          ["@lsp.type.enumMember"] = { fg = colors.flamingo },
+          ["@lsp.type.constant"] = { fg = colors.yellow },
+          ["@lsp.type.keyword"] = { fg = colors.mauve },
+          ["@lsp.type.comment"] = { fg = colors.surface2, italic = true },
+          ["@lsp.type.string"] = { fg = colors.green },
+          ["@lsp.type.number"] = { fg = colors.peach },
+          ["@lsp.type.operator"] = { fg = colors.sky },
+          ["@lsp.type.namespace"] = { fg = colors.blue },
+          ["@lsp.type.property"] = { fg = colors.text },
+          ["@lsp.type.decorator"] = { fg = colors.flamingo },
+          ["@lsp.type.macro"] = { fg = colors.mauve },
+          ["@lsp.type.event"] = { fg = colors.flamingo },
         }
       end
     }

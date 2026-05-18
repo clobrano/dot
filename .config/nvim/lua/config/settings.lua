@@ -36,7 +36,7 @@ vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
 vim.opt.foldmethod='expr'
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"  -- require nvim 0.12
+-- indentexpr is handled by treesitter in Neovim 0.12 when parser is available
 --vim.o.foldcolumn= '0'
 vim.o.foldlevelstart=99
 vim.opt.foldlevelstart=99

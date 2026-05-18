@@ -10,32 +10,40 @@ local mason_lspconfig = require("mason-lspconfig")
 -- Define server configurations
 local servers = {
   gopls = {
+    -- Static analysis checks
     analyses = {
-      unusedparams = true,
-      shadow = true,
-      fieldalignment = false,
-      nilness = false,
-      unusedwrite = false,
+      unusedparams = true,          -- Warn about unused function parameters
+      shadow = true,                -- Warn about shadowed variables
+      fieldalignment = false,       -- Check struct field alignment (disabled for performance)
+      nilness = false,              -- Check for potential nil pointer dereferences
+      unusedwrite = false,          -- Check for unused variable assignments
     },
-    staticcheck = false,
-    usePlaceholders = false,
+    staticcheck = true,             -- Enable additional static checks beyond standard analyses
+    usePlaceholders = false,        -- Don't insert placeholders in completion items
+
+    -- Code lens actions shown in editor
     codelenses = {
-      gc_details = false,
-      generate = false,
-      regenerate_cgo = false,
-      tidy = true,
-      upgrade_dependency = false,
-      vendor = false,
+      gc_details = false,           -- Disable GC optimization details lens
+      generate = false,             -- Disable go generate lens
+      regenerate_cgo = false,       -- Disable cgo regeneration lens
+      tidy = true,                  -- Show lens for tidying imports (add/remove unused)
+      upgrade_dependency = true,    -- Show lens for upgrading dependencies to newer versions
+      vendor = true,                -- Show lens for managing vendored dependencies
     },
+
+    -- Inlay hints displayed in editor
     hints = {
-      assignVariableTypes = true,
-      compositeLiteralFields = true,
-      compositeLiteralTypes = true,
-      constantValues = true,
-      functionTypeParameters = true,
-      parameterNames = true,
-      rangeVariableTypes = true,
+      assignVariableTypes = false,        -- Show inferred variable types
+      compositeLiteralFields = false,    -- Show field names in struct literals
+      compositeLiteralTypes = false,      -- Show struct types in literals
+      constantValues = false,            -- Show inferred constant values
+      functionTypeParameters = false,     -- Show type parameters in function calls
+      parameterNames = false,            -- Show parameter names in function calls
+      rangeVariableTypes = true,         -- Show types of range loop variables
     },
+
+    -- Enable semantic tokens (required for proper syntax highlighting in 0.12)
+    semanticTokens = true,
   },
   pyright = {},
   markdown_oxide = {},
@@ -114,8 +122,23 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Enable additional LSP features for Neovim 0.12+
 capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 capabilities.inlineCompletion = { dynamicRegistration = false }
-capabilities.textDocument.inlayHint = { dynamicRegistration = false }
+capabilities.textDocument.inlayHint = { dynamicRegistration = true }
 capabilities.textDocument.codeLens = { dynamicRegistration = false }
+-- Enable semantic tokens for syntax highlighting
+capabilities.textDocument.semanticTokens = {
+  dynamicRegistration = false,
+  requests = { range = false, full = true },
+  tokenTypes = {
+    "namespace", "type", "class", "enum", "interface", "struct",
+    "typeParameter", "parameter", "variable", "property", "enumMember",
+    "event", "function", "method", "macro", "keyword", "modifier",
+    "comment", "string", "number", "regexp", "operator", "decorator",
+  },
+  tokenModifiers = {
+    "declaration", "definition", "readonly", "static", "deprecated",
+    "abstract", "async", "modification", "documentation", "defaultLibrary",
+  },
+}
 
 -- Configure each server with capabilities and settings
 for server_name, server_config in pairs(servers) do
@@ -146,6 +169,9 @@ vim.lsp.config("markdown_oxide", {
 
 -- Enable all configured servers for Neovim 0.12+
 vim.lsp.enable({ "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright", "markdown_oxide" })
+
+-- Enable inlay hints globally
+vim.lsp.inlay_hint.enable(true)
 
 -- Autocmd to enable codelens when gopls attaches
 vim.api.nvim_create_autocmd('LspAttach', {

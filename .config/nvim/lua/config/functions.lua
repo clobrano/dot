@@ -40,8 +40,8 @@ vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr
 
 vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>', { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>lua ToggleTodoDone()<CR>',
-  { desc = '[T]oggle [T]ODO/DONE', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>rd', '<cmd>lua ToggleTodoDone()<CR>',
+  { desc = 'Toggle TODO/DONE', noremap = true, silent = true })
 
 ------------------------------------------------------------------------------
 -- FUNCTIONS

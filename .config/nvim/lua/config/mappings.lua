@@ -39,7 +39,7 @@ vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = "[F]ind [L]ast buffer" })
 
 
 -- buffer: reload
-nmap('<leader>rl', ':e! | LspRestart <cr>')
+nmap('<leader>rl', ':e! | :lsp restart <cr>')
 -- buffer: delete till the end of the line
 nmap('X', 'vg_x')
 
@@ -377,9 +377,6 @@ nmap('<C-]>', 'g<C-]>')
 
 -- find vim tags with telescope
 nmap('<leader>fv', 'vt: & <leader>fa')
-
--- lsp servers mappings
-nmap('<leader>lr', ':LspRestart<cr>')
 
 -- paste a UUID for referencing text content (e.g. in markdown files)
 --imap('<C-u>', "<esc>:lua require'functions'.executeAndPaste('uuidgen | cut -d\"-\" -f1')<cr>ea")

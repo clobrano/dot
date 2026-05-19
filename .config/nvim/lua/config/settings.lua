@@ -34,15 +34,33 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
-vim.opt.foldmethod='expr'
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- indentexpr is handled by treesitter in Neovim 0.12 when parser is available
---vim.o.foldcolumn= '0'
+-- Set foldmethod based on filetype
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('FoldMethod', { clear = true }),
+  callback = function()
+    if vim.bo.filetype == 'markdown' or vim.bo.filetype == 'org' or vim.bo.filetype == 'rst' then
+      vim.wo.foldmethod = 'indent'
+    else
+      vim.wo.foldmethod = 'expr'
+      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end
+  end,
+})
+
 vim.o.foldlevelstart=99
 vim.opt.foldlevelstart=99
 vim.o.foldlevel=99
 vim.opt.foldlevel=99
 vim.o.foldenable = false
+
+-- Custom fold text display
+vim.o.foldtext = 'v:lua.CustomFoldText()'
+
+function CustomFoldText()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart
+  return line .. ' --- folded ' .. line_count .. ' lines...'
+end
 
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.smartcase = true

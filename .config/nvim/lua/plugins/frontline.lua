@@ -6,7 +6,7 @@ return {
     workspaces = {
       personal =
       {
-        rc = "~/.mytaskrc",
+        rc = "~/Me/Taskwarrior/taskrcs/taskrc-personal-desktop",
         notes_directory = "~/Me/Notes/1-Projects",
       },
       work = {

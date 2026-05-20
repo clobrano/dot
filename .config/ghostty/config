@@ -54,14 +54,16 @@ font-feature=liga
 font-thicken=true
 font-thicken-strength=100
 
-# Default width in characters (cells)
-window-width = 120
-# Default height in characters (cells)
-window-height = 35
-
 theme=catppuccin-frappe.conf
+
+window-save-state = always
+
 
 # Avoid breaking links
 link-previews = true
+
 # Ensure shell integration is fully enabled
 shell-integration = detect
+
+
+confirm-close-surface = false

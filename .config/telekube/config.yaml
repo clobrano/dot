@@ -1,26 +1,36 @@
 kubectl_bin: kubectl
 pager: less
+refresh_interval: 5s
+logs_follow_in_new_shell: true
+keybindings:
+    quit: q
+    help: '?'
+    refresh: r
+    search: /
+    describe: d
+    logs: L
+    delete: D
+    edit: e
+    exec: x
+    port_forward: p
+    scale: s
+    rollout_restart: R
+    yaml_view: "Y"
+    json_view: J
+    switch_namespace: "n"
+    switch_context: c
+    multi_select: ' '
+    enter: enter
+    escape: esc
+    up: up
+    down: down
+    tab_next: tab
+    tab_prev: shift+tab
 tabs:
-    - name: Nodes
-      command: get nodes
-    - name: RHWA
-      command: get pods -n openshift-workload-availability
-    - name: ServiceMonitor
-      command: get servicemonitor -n openshift-workload-availability
-    - name: SBR
-      command: get pods -A -l app.kubernetes.io/name=sbr-operator
-    - name: SBR daemonset
-      command: get daemonsets -A -l app=sbr-agent
-    - name: SBR agent pods
-      command: get pods -A -l app=sbr-agent
-    - name: CEO
-      command: get pods -n openshift-etcd-operator
-    - name: ETCD
-      command: get pods -n openshift-etcd
-    - name: Secrets
-      command: get Secrets -A
-      sort_by: creation_time   # sort by AGE column
-      sort_reverse: false       # oldest first
-    - name: ConfigMap
-      command: get ConfigMap -A
+    - name: Pods
+      command: pods -A
+    - name: Deployments
+      command: deployments -A
+    - name: Services
+      command: services -A
 custom_commands: []

@@ -14,7 +14,7 @@ scripts:
       source "/home/clobrano/Documents/unsharable" || exit 1
       source "/home/clobrano/workspace/toolbelt/claude-config.sh" || exit 2
 
-      REVIEW_DEST_ROOT="/home/clobrano/workspace/codeReviews/"
+      REVIEW_DEST_ROOT="/home/clobrano/workspace/codeReviews/ai-gen-reviews"
       PR_LINK="${CLIP}"
       echo "'${CLIP}'"
       # Regex captures: 1=Org, 2=Project, 3=PR Number
@@ -26,6 +26,10 @@ scripts:
         echo "Org: $PR_ORG"
         echo "Project: $PR_PROJ"
         echo "PR Number: $PR_NUM"
+
+        PR_AUTHOR=$(gh pr view "$PR_NUM" --repo "$PR_ORG/$PR_PROJ" --json author --jq '.author.login')
+        PR_AUTHOR=${PR_AUTHOR//\//-}
+        echo "Author: $PR_AUTHOR"
       else
         exit 3
       fi
@@ -39,19 +43,20 @@ scripts:
       git init
       git remote add origin "https://github.com/$PR_ORG/$PR_PROJ.git"
       git fetch --depth 1 origin "pull/$PR_NUM/head:pr-$PR_NUM"
-      git checkout "pr-$PR_NUM"
+      git checkout "pr-$PR_NUM" 
+
+      mkdir -p "$REVIEW_DEST_ROOT"
+      PR_REV_FILE="$REVIEW_DEST_ROOT/$(date +"%F-%H%M%S")-$PR_ORG-$PR_PROJ-PR$PR_NUM-$PR_AUTHOR.md"
+      # Write the computed value to CLIPROUTER_ENV_FILE
+      echo "PR_REV_FILE=$PR_REV_FILE" >> "$CLIPROUTER_ENV_FILE"
 
       set -x
       if [ $(task "/code review.*$PR_PROJ PR$PR_NUM/" export | jq 'length') -eq 0 ]; then
           # create a new task to track this code review
-          task add "code review [$PR_ORG/$PR_PROJ PR$PR_NUM]" +codereview +doing
+          task add "[$PR_ORG/$PR_PROJ PR$PR_NUM] $PR_AUTHOR" project:M8s +codereview +doing
+          task +LATEST annotate "NOTE: \"$PR_REV_FILE\""
       fi
       set +x
-
-      mkdir -p "$REVIEW_DEST_ROOT"
-      PR_REV_FILE="$REVIEW_DEST_ROOT/$(date +"%F-%H%M%S")-$PR_ORG-$PR_PROJ-PR$PR_NUM.md"
-      # Write the computed value to CLIPROUTER_ENV_FILE
-      echo "PR_REV_FILE=$PR_REV_FILE" >> "$CLIPROUTER_ENV_FILE"
 
       claude "/review $PR_NUM" > "$PR_REV_FILE"
   - name: Content Editor
@@ -65,9 +70,6 @@ scripts:
       EDITED_CONTENT=$HOME/workspace/ContentEditor/$(date +%F-%H%M).md
 
       $HOME/workspace/toolbelt/gm "You are professional English content editor. Grade the message after the triple dashes (---), accept the message tone as intended by the author, point out specific errors one by one, and provide 2 new versions using the same tone and improving English form and clarity. Also copy your review in $EDITED_CONTENT file --- ${CLIP}"
-  - name: Read It Later
-    interactive: true
-    command: bash -c "$HOME/workspace/golang/bin/readitlater"
   - name: Prow Test Review
     notify_on_error: "Could not complete prow review: ${STDOUT}"
     interactive: true
@@ -96,3 +98,9 @@ scripts:
       echo "Working directory: $WORKDIR"
       cd "$WORKDIR"
       claude --continue
+  - name: Read It Later
+    interactive: true
+    command: bash -c "$HOME/workspace/golang/bin/readitlater"
+  - name: QuickNote
+    interactive: true
+    command: bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"

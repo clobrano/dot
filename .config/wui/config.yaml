@@ -19,11 +19,11 @@ tui:
         - name: Next
           filter: +PENDING ( +OVERDUE or +doing or due:today or scheduled.before:now or priority:H ) -WAITING
           sort: urgency
+        - name: OVERDUE
+          filter: +OVERDUE
         - name: This week
           filter: ( due.after=sow due.before=eow ) or ( scheduled.after=sow scheduled.before=eow )
           sort: due
-        - name: OVERDUE
-          filter: +OVERDUE
         - name: Recent
           filter: modified.after:sow
           sort: modified
@@ -31,6 +31,10 @@ tui:
         - name: Inbox
           filter: "status.not:deleted +PENDING ( (+inbox) or (project: created.after:2026-01-01) )"
           sort: modified
+        - name: CVEs
+          filter: +PENDING +cve
+          sort: modified
+          reverse: true
         - name: Projects
           filter: status:pending or status:active
         - name: Tags
@@ -41,13 +45,15 @@ tui:
         - name: project
           label: "PROJECT"
         - name: priority
-          label: "!"
+          label: "PR"
         - name: annotation
-          label: "A"
+          label: "AN"
         - name: dependency
-          label: "B"
+          label: "DE"
         - name: due
           label: "Due"
+        - name: scheduled
+          label: "Sch"
         - name: description
           label: "DESCRIPTION"
     custom_commands:

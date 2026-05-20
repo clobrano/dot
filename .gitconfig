@@ -10,7 +10,19 @@
 	reviewall = !nvim -c \"DiffviewOpen ${MAIN_BRANCH:-main}\"
 	review = !nvim -p +\"tabdo Gvdiff ${MAIN_BRANCH:-main}\" +\"let g:gitgutter_diff_base = '${MAIN_BRANCH:-main}'\"
 	sync = !git pull upstream ${MAIN_BRANCH:-main} && git push origin ${MAIN_BRANCH:-main}
-	syncthis = !git pull upstream master && git push origin master
+	syncthis = "!f() { \
+		local branch=$(git branch --show-current); \
+		if [ -z \"$branch\" ]; then \
+			echo \"Error: Could not determine current branch\"; \
+			return 1; \
+		fi; \
+		git pull upstream \"$branch\" || return 1; \
+		if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then \
+			git push origin \"$branch\"; \
+		else \
+			echo \"Pulled from upstream. Skipping push to origin because '$branch' is not main or master.\"; \
+		fi; \
+	}; f"
 	sw = !git switch
 	w = worktree
 	# worktree: new branch inside repo root. E.g. `git wa fix/somebug`

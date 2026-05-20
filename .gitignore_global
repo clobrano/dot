@@ -21,4 +21,5 @@ GEMINI.md
 .envrc
 tasks/*
 prds/*
+prd/*
 CLAUDE.md

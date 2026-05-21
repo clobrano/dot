@@ -41,8 +41,8 @@ return {
         always_select_remote_on_create = false -- always give prompt to select base remote repo when creating PRs
       },
       file_panel = {
-        size = 10,       -- changed files panel rows
-        use_icons = true -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
+        size = 10,    -- changed files panel rows
+        icons = true  -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
       },
       mappings = {
         issue = {
@@ -159,10 +159,6 @@ return {
       },
     })
     vim.keymap.set("n",  "<leader>oo", ":Octo ")
-    vim.keymap.set("n",  "<leader>os", ":Octo review start ")
-    vim.keymap.set("n",  "<leader>oS", ":Octo review submit ")
-    vim.keymap.set("n",  "<leader>or", ":Octo review resume ")
-    vim.keymap.set("n", "<leader>vu", '<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<leader>vv]u", true, true, true), "n", false)<CR>', { desc = "Toggle viewed state and go to next unviewed" })
 
     --[[vim.api.nvim_create_autocmd("BufWinEnter", {]]
       --[[group = vim.api.nvim_create_augroup("OctoTheme", { clear = true }),]]

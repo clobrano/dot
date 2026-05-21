@@ -1,11 +1,12 @@
 return {
-  "cuducos/yaml.nvim",
-  ft = { "yaml" }, -- optional
+  "https://tangled.org/cuducos.me/yaml.nvim",
+  ft = { "yaml" },                   -- optional
   dependencies = {
-    "nvim-treesitter/nvim-treesitter",
+    "folke/snacks.nvim",             -- optional
     "nvim-telescope/telescope.nvim", -- optional
+    "ibhagwan/fzf-lua"               -- optional
   },
-  config = function ()
-    vim.keymap.set('n', '<leader>sy', ':YAMLView<cr>', {desc = 'Show current YAML path'})
+  config = function()
+    vim.keymap.set('n', '<leader>sy', ':YAMLView<cr>', { desc = 'Show current YAML path' })
   end
 }

@@ -753,7 +753,7 @@ function Get_Smart_Weblink()
       base_url = "https://github.com/" .. org_project .. "/issues/" .. number
     elseif string.match(tokens[2], "MR") then
       number = tokens[2]:gsub("MR", "")
-      base_url = "https://gitlab.cee.redhat.com" .. org_project .. "/-/merge_requests/" .. number
+      base_url = "https://gitlab.cee.redhat.com/" .. org_project .. "/-/merge_requests/" .. number
     end
   end
 

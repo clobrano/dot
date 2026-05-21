@@ -33,4 +33,12 @@ tabs:
       command: deployments -A
     - name: Services
       command: services -A
+    - name: RHWA
+      command: pods -n openshift-workload-availability
+    - name: SBR
+      command: pods -n sbr-operator-system
+    - name: Subs
+      command: subs -A
+    - name: Jobs
+      command: jobs -A
 custom_commands: []

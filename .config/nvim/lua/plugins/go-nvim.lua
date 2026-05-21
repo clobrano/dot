@@ -3,12 +3,14 @@ return {
   dependencies = { -- optional packages
     "ray-x/guihua.lua",
     "neovim/nvim-lspconfig",
-    "nvim-treesitter/nvim-treesitter",
   },
   opts = {
-    lsp_codelens = false,
-    -- lsp_keymaps = false,
-    -- other options
+    lsp_codelens = true,
+    -- Disable treesitter features to avoid "plugin not loaded" warnings
+    -- as we are using Neovim 0.12 built-in treesitter
+    build_tags = "", 
+    icons = false,
+    textobjects = false,
   },
   config = function(_, opts)
     require("go").setup(opts)

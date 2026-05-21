@@ -18,13 +18,13 @@ local servers = {
       nilness = false,              -- Check for potential nil pointer dereferences
       unusedwrite = false,          -- Check for unused variable assignments
     },
-    staticcheck = true,             -- Enable additional static checks beyond standard analyses
+    staticcheck = false,            -- Enable additional static checks beyond standard analyses
     usePlaceholders = false,        -- Don't insert placeholders in completion items
 
     -- Code lens actions shown in editor
     codelenses = {
-      gc_details = false,           -- Disable GC optimization details lens
-      generate = false,             -- Disable go generate lens
+      gc_details = true,           -- Disable GC optimization details lens
+      generate = true,             -- Disable go generate lens
       regenerate_cgo = false,       -- Disable cgo regeneration lens
       tidy = true,                  -- Show lens for tidying imports (add/remove unused)
       upgrade_dependency = true,    -- Show lens for upgrading dependencies to newer versions
@@ -39,7 +39,7 @@ local servers = {
       constantValues = false,            -- Show inferred constant values
       functionTypeParameters = false,     -- Show type parameters in function calls
       parameterNames = false,            -- Show parameter names in function calls
-      rangeVariableTypes = true,         -- Show types of range loop variables
+      rangeVariableTypes = false,         -- Show types of range loop variables
     },
 
     -- Enable semantic tokens (required for proper syntax highlighting in 0.12)

@@ -11,10 +11,29 @@ source "$LIB_DIR/detect.sh"
 source "$LIB_DIR/install.sh"
 source "$LIB_DIR/utils.sh"
 
-# Default Go version for manual installation
-DEFAULT_GO_VERSION="1.23.0"
-GO_VERSION="${INSTALL_GO_VERSION:-$DEFAULT_GO_VERSION}"
 INSTALL_METHOD="${INSTALL_METHOD:-auto}"  # auto, package, tarball, gimme
+
+get_latest_go_version() {
+    local url="https://go.dev/dl/?mode=json"
+    local raw version
+
+    if command -v curl &>/dev/null; then
+        raw=$(curl -sL --max-time 10 "$url" 2>/dev/null)
+    elif command -v wget &>/dev/null; then
+        raw=$(wget -qO- --timeout=10 "$url" 2>/dev/null)
+    fi
+
+    version=$(printf '%s' "$raw" | grep -o '"version": *"go[0-9][^"]*"' | head -1 | sed 's/.*"go//;s/".*//')
+    echo "${version}"
+}
+
+get_installed_go_version() {
+    go version 2>/dev/null | grep -o 'go[0-9][0-9.]*' | head -1 | sed 's/^go//'
+}
+
+version_lt() {
+    [ "$(printf '%s\n' "$1" "$2" | sort -V | head -1)" = "$1" ] && [ "$1" != "$2" ]
+}
 
 install_go_from_package() {
     local pkg_manager=$(get_preferred_pkg_manager)
@@ -37,15 +56,27 @@ install_go_from_package() {
 }
 
 install_go_from_tarball() {
-    print_info "Installing Go ${GO_VERSION} from official tarball..."
+    local go_version="${INSTALL_GO_VERSION}"
+
+    if [[ -z "$go_version" ]]; then
+        print_info "Fetching latest stable Go version..."
+        go_version=$(get_latest_go_version)
+        if [[ -z "$go_version" ]]; then
+            print_error "Could not determine latest Go version; set INSTALL_GO_VERSION to override"
+            return 1
+        fi
+        print_info "Latest stable Go version: ${go_version}"
+    fi
+
+    print_info "Installing Go ${go_version} from official tarball..."
 
     local arch="amd64"
     if [[ "$(uname -m)" == "aarch64" ]]; then
         arch="arm64"
     fi
 
-    local url="https://go.dev/dl/go${GO_VERSION}.linux-${arch}.tar.gz"
-    local tarball="go${GO_VERSION}.linux-${arch}.tar.gz"
+    local url="https://go.dev/dl/go${go_version}.linux-${arch}.tar.gz"
+    local tarball="go${go_version}.linux-${arch}.tar.gz"
 
     # Download
     print_info "Downloading Go from $url..."
@@ -102,9 +133,24 @@ main() {
 
     # Check if already installed
     if pkg_is_installed go && [ "$INSTALL_METHOD" != "tarball" ] && [ "$INSTALL_METHOD" != "gimme" ]; then
-        print_success "Go is already installed!"
-        go version
-        exit 0
+        local installed latest
+        installed=$(get_installed_go_version)
+        latest=$(get_latest_go_version)
+
+        if [[ -z "$latest" ]]; then
+            print_warning "Could not fetch latest Go version; skipping update check"
+            print_success "Go ${installed} is installed"
+            go version
+            exit 0
+        fi
+
+        if version_lt "$installed" "$latest"; then
+            print_warning "Go ${installed} is installed, but ${latest} is available — updating..."
+        else
+            print_success "Go ${installed} is up to date!"
+            go version
+            exit 0
+        fi
     fi
 
     case "$INSTALL_METHOD" in
@@ -131,12 +177,17 @@ main() {
     esac
 
     # Verify installation
-    if pkg_is_installed go; then
+    if [ "$INSTALL_METHOD" = "gimme" ]; then
+        if command -v gimme &>/dev/null; then
+            print_success "gimme installed successfully!"
+            print_info "Run 'gimme <version>' to install a Go version"
+        else
+            print_error "gimme installation failed!"
+            exit 1
+        fi
+    elif pkg_is_installed go; then
         print_success "Go installed successfully!"
         go version
-    elif [ "$INSTALL_METHOD" = "gimme" ]; then
-        print_success "gimme installed successfully!"
-        print_info "Run 'gimme <version>' to install a Go version"
     else
         print_error "Go installation failed!"
         exit 1

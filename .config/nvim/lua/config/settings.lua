@@ -34,24 +34,56 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true -- Enable break indent
 vim.o.undofile = true -- Save undo history
--- Set foldmethod based on filetype
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('FoldMethod', { clear = true }),
-  callback = function()
-    if vim.bo.filetype == 'markdown' or vim.bo.filetype == 'org' or vim.bo.filetype == 'rst' then
-      vim.wo.foldmethod = 'indent'
-    else
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- Fold function for markdown headers
+function MarkdownHeaderFoldLevel()
+  local line = vim.fn.getline(vim.v.lnum)
+
+  -- Check if line starts with '#' (header)
+  if line:match('^#+') then
+    local level = #line:match('^#+')
+    return '>' .. level
+  end
+
+  -- For content lines, find parent header level
+  local current_line = vim.v.lnum
+  for i = current_line - 1, 1, -1 do
+    local prev_line = vim.fn.getline(i)
+    if prev_line:match('^#+') then
+      local parent_level = #prev_line:match('^#+')
+      -- Check if next line is a header at same or higher level (closes fold)
+      local next_line = vim.fn.getline(current_line + 1)
+      if next_line:match('^#+') then
+        local next_level = #next_line:match('^#+')
+        if next_level <= parent_level then
+          return '<' .. parent_level
+        end
+      end
+      return tostring(parent_level)
     end
-  end,
+  end
+
+  return '0'
+end
+
+-- Set foldmethod based on filetype
+local function setup_foldmethod()
+  local ft = vim.bo.filetype
+  if ft == 'markdown' or ft == 'org' or ft == 'rst' or ft == 'text' or ft == '' then
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.MarkdownHeaderFoldLevel()'
+  else
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  end
+end
+
+vim.api.nvim_create_autocmd({'FileType', 'BufRead', 'BufNewFile'}, {
+  group = vim.api.nvim_create_augroup('FoldMethod', { clear = true }),
+  callback = setup_foldmethod,
 })
 
-vim.o.foldlevelstart=99
-vim.opt.foldlevelstart=99
-vim.o.foldlevel=99
-vim.opt.foldlevel=99
-vim.o.foldenable = false
+vim.o.foldlevelstart = 20
+vim.o.foldenable = true
 
 -- Custom fold text display
 vim.o.foldtext = 'v:lua.CustomFoldText()'

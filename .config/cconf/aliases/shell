@@ -72,6 +72,10 @@ alias goreloadversion="cd .. ; cd -"
 
 
 #######################################################################################
+# Syncthing
+alias scli='syncthing cli'
+
+#######################################################################################
 # BOOKMARKIT
 # I know, an alias for my own script... but bookmark is a meaningful name
 # I need to add 'find'

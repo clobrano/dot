@@ -14,6 +14,13 @@ local function readonly_status()
   return '' -- Return an empty string if not read-only
 end
 
+local function current_dir()
+  local cwd = vim.fn.getcwd()
+  local home = vim.fn.expand('~')
+  local dir = cwd:gsub('^' .. vim.fn.escape(home, '%') .. '/?', '')
+  return '  ' .. dir
+end
+
 -- in this lualine configuration file, I want a function
 -- that returns the currently configured LLM. This
 -- information is available in require('gen').GetLLMModel
@@ -34,7 +41,7 @@ return {
     },
     sections = {
       lualine_a = { 'branch' },
-      lualine_b = { readonly_status },
+      lualine_b = { readonly_status, current_dir },
       lualine_c = { },
       lualine_x = { 'diff', { 'diagnostics', sources = { 'nvim_workspace_diagnostic' } } },
       lualine_y = { spell, 'progress', 'searchcount' },

@@ -26,6 +26,7 @@ keybindings:
     down: down
     tab_next: tab
     tab_prev: shift+tab
+    delete_tab: '-'
 tabs:
     - name: Pods
       command: pods -A

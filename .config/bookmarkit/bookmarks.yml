@@ -415,3 +415,13 @@ bookmarks:
       link: https://github.com/pulls
     - key: Red_Hat_writing_style_guide
       link: https://redhat-documentation.github.io/supplementary-style-guide/ssg.md
+    - key: CVE_analisys_tool_Or_Raz
+      link: https://github.com/razo7/vigil
+    - key: GITLAB_Dragonfly_ALL_merge_requests
+      link: https://gitlab.cee.redhat.com/groups/dragonfly/-/merge_requests
+    - key: GITHUB_Medik8s_ALL_pull_requests
+      link: https://github.com/pulls?q=is%3Aopen+is%3Apr+org%3Amedik8s+
+    - key: JIRA_RHWA_Planning
+      link: https://redhat.atlassian.net/jira/plans/1774/scenarios/1771/timeline?vid=3208
+    - key: JIRA_RHWA_CVE_issues
+      link: https://redhat.atlassian.net/issues/?filter=110744

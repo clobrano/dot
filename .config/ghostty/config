@@ -1,3 +1,24 @@
+font-family=Source Code Pro Medium
+font-size=10.5
+font-feature=liga
+font-thicken=true
+font-thicken-strength=100
+
+theme=catppuccin-frappe.conf
+
+window-save-state = always
+window-width = 160
+window-height = 45
+
+# Avoid breaking links
+link-previews = true
+
+# Ensure shell integration is fully enabled
+shell-integration = detect
+
+confirm-close-surface = false
+
+
 # This is the configuration file for Ghostty.
 #
 # This template file has been automatically created at the following
@@ -47,23 +68,3 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-
-font-family=Source Code Pro Medium
-font-size=10.5
-font-feature=liga
-font-thicken=true
-font-thicken-strength=100
-
-theme=catppuccin-frappe.conf
-
-window-save-state = always
-
-
-# Avoid breaking links
-link-previews = true
-
-# Ensure shell integration is fully enabled
-shell-integration = detect
-
-
-confirm-close-surface = false

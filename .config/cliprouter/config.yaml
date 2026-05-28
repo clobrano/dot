@@ -53,7 +53,7 @@ scripts:
       set -x
       if [ $(task "/code review.*$PR_PROJ PR$PR_NUM/" export | jq 'length') -eq 0 ]; then
           # create a new task to track this code review
-          task add "[$PR_ORG/$PR_PROJ PR$PR_NUM] $PR_AUTHOR" project:M8s +codereview +doing
+          task add "codereview [$PR_ORG/$PR_PROJ PR$PR_NUM] $PR_AUTHOR" project:M8s +codereview +doing
           task +LATEST annotate "NOTE: \"$PR_REV_FILE\""
       fi
       set +x
@@ -104,3 +104,13 @@ scripts:
   - name: QuickNote
     interactive: true
     command: bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"
+  - name: BookMarkIt FIND
+    description: "My Bookmarks"
+    interactive: true
+    command: |
+      konsole -e $HOME/workspace/golang/bin/BookmarkIt
+  - name: BookMarkIt ADD
+    description: "My Bookmarks"
+    interactive: true
+    command: |
+      konsole -e $HOME/workspace/golang/bin/BookmarkIt -action add

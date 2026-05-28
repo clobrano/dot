@@ -7,9 +7,9 @@ return {
       'num', -- Level 1: 1.
       'abc', -- Level 2: a.
       'std*', -- Level 3: *
-      'std-', -- Level 4: -
+      'std*', -- Level 4: -
       'std*', -- Level 5: *
-      'std-' -- Level 6: -
+      'std*' -- Level 6: -
     }
   end
 }

@@ -15,7 +15,6 @@ return {
     require('overseer').setup(opts)
 
     vim.keymap.set('n', '<leader>or', '<cmd>OverseerRun<cr>', { desc = 'Overseer Run' })
-    vim.keymap.set('n', '<leader>oo', '<cmd>OverseerOpen<cr>', { desc = 'Overseer Open' })
     vim.keymap.set('n', '<leader>ot', '<cmd>OverseerToggle<cr>', { desc = 'Overseer Toggle' })
 
     local telescope = require('telescope.builtin')

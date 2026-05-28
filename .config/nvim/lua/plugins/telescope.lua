@@ -37,7 +37,7 @@ local telescope_opts = {
         },
         vertical = {
           prompt_position = "top",
-          mirror = true,
+          mirror = false,
           preview_width = 0.7, -- Adjust results window width if needed
           -- The preview window will be above the results in this layout
         },
@@ -55,6 +55,9 @@ local telescope_opts = {
     },
     colorscheme = {
       enable_preview = true
+    },
+    heading = {
+      sorter = require('telescope.sorters').highlighter_only,
     },
   },
 }
@@ -185,7 +188,15 @@ return {
     --   })
     -- end, { desc = '[F]ind [F]iles' })
 
-    vim.keymap.set('n', '<leader>fh', '<cmd>Telescope heading<cr>', { desc = '[F]ind Markdown [h]eaders' })
+    vim.keymap.set('n', '<leader>fh', function()
+      require('telescope').extensions.heading.heading({
+        layout_strategy = 'vertical',
+        layout_config = {
+          prompt_position = 'bottom',
+          mirror = true,
+        },
+      })
+    end, { desc = '[F]ind Markdown [h]eaders' })
     vim.keymap.set('n', '<leader>fH', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
     vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [k]eymaps' })
     vim.keymap.set('n', '<leader>fj',

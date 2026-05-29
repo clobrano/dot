@@ -60,11 +60,7 @@ label="☸ $cluster"
 if [ -n "$ns" ] && [ "$ns" != "default" ]; then
   label="$label:$ns"
 fi
-if kubectl cluster-info --request-timeout=2s >/dev/null 2>&1; then
-  echo "$label"
-else
-  echo "$label ⚠"
-fi
+echo "$label"
 '''
 style = "dimmed blue"
 format = '[$output]($style) '

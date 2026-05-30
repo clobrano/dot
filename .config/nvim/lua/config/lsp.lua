@@ -62,6 +62,7 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+  harper_ls = {},
 }
 
 -- Ensure servers are installed
@@ -162,13 +163,32 @@ for server_name, server_config in pairs(servers) do
   vim.lsp.config(server_name, config_opts)
 end
 
+-- Enable all configured servers (harper_ls has autostart=false)
+vim.lsp.enable({ "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright", "markdown_oxide" })
+
 vim.lsp.config("markdown_oxide", {
   capabilities = capabilities,
   on_attach = on_attach,
 })
 
--- Enable all configured servers for Neovim 0.12+
-vim.lsp.enable({ "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright", "markdown_oxide" })
+-- Toggle harper_ls
+_G.harper_ls_enabled = true
+
+local function toggle_harper_ls()
+  _G.harper_ls_enabled = not _G.harper_ls_enabled
+  if _G.harper_ls_enabled then
+    vim.lsp.enable({ "harper_ls" })
+    print("Harper LSP enabled")
+  else
+    for _, client in ipairs(vim.lsp.get_clients({ name = "harper_ls" })) do
+      vim.lsp.stop_client(client.id)
+    end
+    print("Harper LSP disabled")
+  end
+end
+
+vim.api.nvim_create_user_command('ToggleHarperLs', toggle_harper_ls, { desc = 'Toggle Harper LSP server' })
+vim.keymap.set('n', '<leader>th', toggle_harper_ls, { desc = '[T]oggle [H]arper LSP' })
 
 -- Enable inlay hints globally
 vim.lsp.inlay_hint.enable(true)

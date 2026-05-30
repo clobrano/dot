@@ -87,7 +87,7 @@ local on_attach = function(client, bufnr)
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>la', require('actions-preview').code_actions, '[L]anguage [A]ction')
 
   nmap('<leader>fd', vim.lsp.buf.definition, '[F]ind [D]efinition')
   nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')

@@ -425,3 +425,5 @@ bookmarks:
       link: https://redhat.atlassian.net/jira/plans/1774/scenarios/1771/timeline?vid=3208
     - key: JIRA_RHWA_CVE_issues
       link: https://redhat.atlassian.net/issues/?filter=110744
+    - key: Konflux_console_web_login
+      link: oc login --web --server=https://api.stone-prod-p02.hjvn.p1.openshiftapps.com:6443

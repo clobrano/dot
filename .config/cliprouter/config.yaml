@@ -104,13 +104,13 @@ scripts:
   - name: QuickNote
     interactive: true
     command: bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"
-  - name: BookMarkIt FIND
+  - name: BookMarkIt OPEN
     description: "My Bookmarks"
     interactive: true
     command: |
-      konsole -e $HOME/workspace/golang/bin/BookmarkIt
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action find"
   - name: BookMarkIt ADD
     description: "My Bookmarks"
-    interactive: true
+    interactive: false
     command: |
-      konsole -e $HOME/workspace/golang/bin/BookmarkIt -action add
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action add"

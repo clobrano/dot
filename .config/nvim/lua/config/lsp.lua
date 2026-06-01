@@ -12,34 +12,34 @@ local servers = {
   gopls = {
     -- Static analysis checks
     analyses = {
-      unusedparams = true,          -- Warn about unused function parameters
-      shadow = true,                -- Warn about shadowed variables
-      fieldalignment = false,       -- Check struct field alignment (disabled for performance)
-      nilness = false,              -- Check for potential nil pointer dereferences
-      unusedwrite = false,          -- Check for unused variable assignments
+      unusedparams = true,    -- Warn about unused function parameters
+      shadow = true,          -- Warn about shadowed variables
+      fieldalignment = false, -- Check struct field alignment (disabled for performance)
+      nilness = false,        -- Check for potential nil pointer dereferences
+      unusedwrite = false,    -- Check for unused variable assignments
     },
-    staticcheck = false,            -- Enable additional static checks beyond standard analyses
-    usePlaceholders = false,        -- Don't insert placeholders in completion items
+    staticcheck = false,      -- Enable additional static checks beyond standard analyses
+    usePlaceholders = false,  -- Don't insert placeholders in completion items
 
     -- Code lens actions shown in editor
     codelenses = {
-      gc_details = true,           -- Disable GC optimization details lens
-      generate = true,             -- Disable go generate lens
-      regenerate_cgo = false,       -- Disable cgo regeneration lens
-      tidy = true,                  -- Show lens for tidying imports (add/remove unused)
-      upgrade_dependency = true,    -- Show lens for upgrading dependencies to newer versions
-      vendor = true,                -- Show lens for managing vendored dependencies
+      gc_details = true,         -- Disable GC optimization details lens
+      generate = true,           -- Disable go generate lens
+      regenerate_cgo = false,    -- Disable cgo regeneration lens
+      tidy = true,               -- Show lens for tidying imports (add/remove unused)
+      upgrade_dependency = true, -- Show lens for upgrading dependencies to newer versions
+      vendor = true,             -- Show lens for managing vendored dependencies
     },
 
     -- Inlay hints displayed in editor
     hints = {
-      assignVariableTypes = false,        -- Show inferred variable types
-      compositeLiteralFields = false,    -- Show field names in struct literals
-      compositeLiteralTypes = false,      -- Show struct types in literals
-      constantValues = false,            -- Show inferred constant values
-      functionTypeParameters = false,     -- Show type parameters in function calls
-      parameterNames = false,            -- Show parameter names in function calls
-      rangeVariableTypes = false,         -- Show types of range loop variables
+      assignVariableTypes = false,    -- Show inferred variable types
+      compositeLiteralFields = false, -- Show field names in struct literals
+      compositeLiteralTypes = false,  -- Show struct types in literals
+      constantValues = false,         -- Show inferred constant values
+      functionTypeParameters = false, -- Show type parameters in function calls
+      parameterNames = false,         -- Show parameter names in function calls
+      rangeVariableTypes = false,     -- Show types of range loop variables
     },
 
     -- Enable semantic tokens (required for proper syntax highlighting in 0.12)
@@ -62,7 +62,29 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-  harper_ls = {},
+  harper_ls = {
+    filetypes = { "markdown" },
+    settings = {
+      ["harper-ls"] = {
+        userDictPath = "~/.config/nvim/spell/en.utf-8.add",
+        diagnosticSeverity = "hint",
+        linters = {
+          ToDoHyphen = false,
+          SentenceCapitalization = false,
+          SpellCheck = true,
+          LongSentences = false,
+          SplitWords = false,
+          UseTitleCase = false,
+        },
+        isolateEnglish = true,
+        markdown = {
+          -- [ignores this part]()
+          -- [[ also ignore wiki links ]]
+          IgnoreLinkTitle = true,
+        }
+      },
+    },
+  },
 }
 
 -- Ensure servers are installed
@@ -142,17 +164,22 @@ capabilities.textDocument.semanticTokens = {
 }
 
 -- Configure each server with capabilities and settings
+local settings_map = {
+  gopls = function(config) return { gopls = config } end,
+  lua_ls = function(config) return { Lua = config.Lua } end,
+}
+
 for server_name, server_config in pairs(servers) do
   local config_opts = {
     capabilities = capabilities,
     on_attach = on_attach,
   }
 
-  -- Add settings if the server has them
-  if server_name == "gopls" then
-    config_opts.settings = { gopls = server_config }
-  elseif server_name == "lua_ls" then
-    config_opts.settings = { Lua = server_config.Lua }
+  -- Add settings if available
+  if settings_map[server_name] then
+    config_opts.settings = settings_map[server_name](server_config)
+  elseif server_config.settings then
+    config_opts.settings = server_config.settings
   end
 
   -- Add filetypes if specified
@@ -163,32 +190,17 @@ for server_name, server_config in pairs(servers) do
   vim.lsp.config(server_name, config_opts)
 end
 
--- Enable all configured servers (harper_ls has autostart=false)
-vim.lsp.enable({ "rust_analyzer", "lua_ls", "bashls", "gopls", "pyright", "markdown_oxide" })
+-- Enable all configured servers
+vim.lsp.enable(vim.tbl_keys(servers))
 
-vim.lsp.config("markdown_oxide", {
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
--- Toggle harper_ls
-_G.harper_ls_enabled = true
-
-local function toggle_harper_ls()
-  _G.harper_ls_enabled = not _G.harper_ls_enabled
-  if _G.harper_ls_enabled then
-    vim.lsp.enable({ "harper_ls" })
-    print("Harper LSP enabled")
-  else
-    for _, client in ipairs(vim.lsp.get_clients({ name = "harper_ls" })) do
-      vim.lsp.stop_client(client.id)
-    end
-    print("Harper LSP disabled")
+-- Stop harper_ls
+local function stop_harper_ls()
+  for _, client in ipairs(vim.lsp.get_clients({ name = "harper_ls" })) do
+    client:stop()
   end
 end
-
-vim.api.nvim_create_user_command('ToggleHarperLs', toggle_harper_ls, { desc = 'Toggle Harper LSP server' })
-vim.keymap.set('n', '<leader>th', toggle_harper_ls, { desc = '[T]oggle [H]arper LSP' })
+vim.api.nvim_create_user_command('StopHarperLs', stop_harper_ls, { desc = 'Stop Harper LSP server' })
+vim.keymap.set('n', '<leader>sh', stop_harper_ls, { desc = '[S]top [H]arper LSP' })
 
 -- Enable inlay hints globally
 vim.lsp.inlay_hint.enable(true)

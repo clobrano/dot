@@ -73,9 +73,17 @@ defaults:
         hidden: true
   refetchIntervalMinutes: 30
 keybindings:
-  universal: []
+  universal:
+  - key: J
+    builtin: pageDown
+  - key: K
+    builtin: pageUp
   issues: []
   prs:
+  - key: H
+    builtin: prevSidebarTab
+  - key: L
+    builtin: nextSidebarTab
   - key: d
     name: sticky diff
     command: >
@@ -96,6 +104,21 @@ theme:
     table:
       showSeparator: true
       compact: false
+  colors: # catppuccin-frappe-yellow
+    text:
+      primary: "#c6d0f5"
+      secondary: "#e5c890"
+      inverted: "#232634"
+      faint: "#b5bfe2"
+      warning: "#e5c890"
+      success: "#a6d189"
+      error: "#e78284"
+    background:
+      selected: "#414559"
+    border:
+      primary: "#e5c890"
+      secondary: "#51576d"
+      faint: "#414559"
 pager:
   diff: "delta --side-by-side"
 confirmQuit: false

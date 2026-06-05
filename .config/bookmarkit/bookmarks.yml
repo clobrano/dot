@@ -427,3 +427,7 @@ bookmarks:
       link: https://redhat.atlassian.net/issues/?filter=110744
     - key: Konflux_console_web_login
       link: oc login --web --server=https://api.stone-prod-p02.hjvn.p1.openshiftapps.com:6443
+    - key: JIRA_for_you
+      link: https://redhat.atlassian.net/jira/for-you
+    - key: Sbr-upstream
+      link: https://github.com/medik8s/storage-based-remediation

@@ -53,11 +53,11 @@ end
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
   local save_cursor = vim.fn.getpos('.')
   vim.cmd([[
-        :%s/\v^(\s*\n)*(### .*\n)(\s*\n)*/\r\r\2/e
+        :%s/\v^(\s*\n)*(### .*\n)(\s*\n)*/\r\2/e
         :nohlsearch
       ]])
   vim.cmd([[
-        :%s/\v^(\s*\n)*(## .*\n)(\s*\n)*/\r\r\r\2/e
+        :%s/\v^(\s*\n)*(## .*\n)(\s*\n)*/\r\r\2/e
         :nohlsearch
       ]])
   vim.fn.setpos('.', save_cursor)

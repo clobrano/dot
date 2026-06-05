@@ -11,14 +11,14 @@ keybindings:
     logs: L
     delete: D
     edit: e
-    exec: x
+    terminal: T
     port_forward: p
     scale: s
-    rollout_restart: R
     yaml_view: "Y"
     json_view: J
     switch_namespace: "n"
     switch_context: c
+    copy_data: c
     multi_select: ' '
     enter: enter
     escape: esc
@@ -29,17 +29,17 @@ keybindings:
     delete_tab: '-'
 tabs:
     - name: Pods
-      command: pods -A
+      command: pods -n A
     - name: Deployments
       command: deployments -A
     - name: Services
       command: services -A
     - name: RHWA
       command: pods -n openshift-workload-availability
-    - name: SBR
-      command: pods -n sbr-operator-system
     - name: Subs
-      command: subs -A
+      command: subs -n openshift-workload-availability
     - name: Jobs
       command: jobs -A
+    - name: op -n openshift-workload-availability
+      command: og -n openshift-workload-availability
 custom_commands: []

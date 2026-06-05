@@ -108,9 +108,9 @@ scripts:
     description: "My Bookmarks"
     interactive: true
     command: |
-      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action find"
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action SEARCH"
   - name: BookMarkIt ADD
     description: "My Bookmarks"
     interactive: false
     command: |
-      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action add"
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action ADD"

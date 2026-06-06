@@ -52,17 +52,20 @@ end
 
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
   local save_cursor = vim.fn.getpos('.')
+-- Pass 1 enforces 1 empty line after headers
+-- Pass 2 enforces 2 empty lines BEFORE headers
+-- When headers are consecutive, pass 2 overrides pass 1 because proper spacing
+-- before important content (headers) takes precedence over spacing after previous content
   vim.cmd([[
-        :%s/\v^(\s*\n)*(### .*\n)(\s*\n)*/\r\2/e
+        :%s/\v^(#{1,3} .*)\n+/\1\r\r/e
         :nohlsearch
       ]])
   vim.cmd([[
-        :%s/\v^(\s*\n)*(## .*\n)(\s*\n)*/\r\r\2/e
+        :%s/\v(.*\S.*)(\n)(\s*\n)*(#{1,3} .*)/\1\r\r\r\4/e
         :nohlsearch
       ]])
   vim.fn.setpos('.', save_cursor)
 end, {})
-
 
 
 -- Function to set the number of '#' at the beginning of a line.

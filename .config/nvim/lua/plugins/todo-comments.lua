@@ -4,6 +4,9 @@ return {
     opts = {},
     config = function()
         require('todo-comments').setup {
+          vim.cmd [[
+              cnoreabbrev <expr> td getcmdtype() == ":" && getcmdline() == 'td' ? 'TodoTelescope keywords=TODO,DOING' : 'td'
+            ]],
             keywords = {
                 FIX = {
                     icon = "x", -- icon used for the sign, and in search results
@@ -11,9 +14,11 @@ return {
                     alt = { "FIXME", "BUG", "FIXIT" }, -- a set of other keywords that all map to this FIX keywords
                     -- signs = false, -- configure signs for some keywords individually
                 },
-                DONE = { icon = "- ", color = "comment" },
+                TODO = { icon = " ", color = "info" },
+                DOING = { icon = " ", color = "success" },
+                DONE = { icon = "󰗠 ", color = "comment" },
+                POST = { icon = " ", color = "warning", alt = { "POSTPONED" } },
                 HINT = { icon = " ", color = "hint" },
-                TODO = { icon = " ", color = "info" },
                 HACK = { icon = " ", color = "warning", alt = { "KEY" } },
                 WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
                 PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },

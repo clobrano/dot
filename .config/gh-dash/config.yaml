@@ -2,6 +2,9 @@ prSections:
 - title: Medik8s
   filters: is:open org:medik8s
   type: null
+- title: Openshift/Release
+  filters: is:open repo:openshift/release
+  type: null
 - title: Involved
   filters: is:open involves:@me -author:@me
   type: null

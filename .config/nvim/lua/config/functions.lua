@@ -6,7 +6,8 @@ vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count =
 vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>I', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>cp', ":lua CopyCodeAndPermalink()<CR>", { desc = 'Format selected code with its permalink', noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cpu', ":lua CopyCodeAndPermalink('upstream')<CR>", { desc = 'Copy code with upstream permalink', noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cpo', ":lua CopyCodeAndPermalink('origin')<CR>", { desc = 'Copy code with origin permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
@@ -313,7 +314,7 @@ end
 
 
 
-function CopyCodeAndPermalink()
+function CopyCodeAndPermalink(remote_name)
   -- Get the current filetype
   local filetype = vim.bo.filetype
   print('Current filetype: ' .. filetype)
@@ -322,44 +323,24 @@ function CopyCodeAndPermalink()
   vim.cmd('normal! `<v`>"ay')
   local saved_selection = vim.fn.getreg('a')
 
-  -- Get Remote link of the selection
-  local link = ""
-  local original_clipboard_content = vim.fn.getreg('+')
-
-  -- Try to get the link from @upstream first
-  local upstream_success, upstream_link = pcall(function()
-    vim.cmd("'<,'>GBrowse! @upstream")
-    return vim.fn.getreg('+')
-  end)
-
-  if upstream_success and upstream_link ~= "" and upstream_link ~= original_clipboard_content then
-    link = upstream_link
-    print("Got permalink from upstream.")
-    if not upstream_success then
-      print("Upstream permalink failed: " .. upstream_link)
-    else
-      print("Upstream permalink not found or failed, trying origin.")
-    end
+  if not remote_name or remote_name == "" then
+    vim.notify("Remote name not specified.", vim.log.levels.ERROR)
+    return
   end
 
-  -- If upstream failed or didn't change the clipboard, try @origin
-  -- Restore original clipboard content before trying origin, to accurately check for changes
-  vim.fn.setreg('+', original_clipboard_content)
-  local origin_success, origin_link = pcall(function()
-    vim.cmd("'<,'>GBrowse! @origin")
-    return vim.fn.getreg('+')
+  -- Get permalink from the specified remote
+  local success = pcall(function()
+    vim.cmd("'<,'>GBrowse! @" .. remote_name)
   end)
+  vim.fn.system("sleep 0.1") -- Wait for GBrowse to complete
+  local link = vim.fn.getreg('+')
 
-  if origin_success and origin_link ~= "" and origin_link ~= original_clipboard_content then
-    link = origin_link
-    print("Got permalink from origin.")
-  else
-    if not origin_success then
-      print("Failed to get permalink from origin: " .. origin_link)
-    else
-      print("Failed to get permalink from origin as well.")
-    end
+  if not success or link == "" then
+    vim.notify("Failed to get permalink from " .. remote_name, vim.log.levels.ERROR)
+    return
   end
+
+  print("Got permalink from " .. remote_name .. ": " .. link)
 
   local filetype_to_comment_map = {
     ["c"] = "// ",
@@ -382,6 +363,7 @@ function CopyCodeAndPermalink()
   output = output .. saved_selection .. "\n"
   output = output .. "```"
   vim.fn.setreg('+', output)
+  vim.notify("Code and permalink copied to clipboard.", vim.log.levels.INFO)
 end
 
 

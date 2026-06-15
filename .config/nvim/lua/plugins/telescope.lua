@@ -51,7 +51,7 @@ local telescope_opts = {
       no_ignore = true,
       no_ignore_parent = true,
       git_files = false, -- Explicitly tell Telescope to not use git for file listing
-      hidden = true, -- Include hidden files (like .gitignore itself, or .config directories)
+      hidden = true,     -- Include hidden files (like .gitignore itself, or .config directories)
     },
     colorscheme = {
       enable_preview = true
@@ -95,9 +95,12 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-live-grep-args.nvim',
-    'crispgm/telescope-heading.nvim',  -- no dependency, markdown header picker
+    'crispgm/telescope-heading.nvim', -- no dependency, markdown header picker
   },
   config = function()
+    vim.cmd [[
+      cnoreabbrev <expr> tt getcmdtype() == ":" && getcmdline() == 'tt' ? 'Telescope ' : 'tt'
+    ]]
     -- Display entry text after two tabs as comment.
     -- Used to display file paths as filename followed by greyed-out path.
     -- https://github.com/nvim-telescope/telescope.nvim/issues/2014#issuecomment-1873229658
@@ -130,7 +133,7 @@ return {
     vim.api.nvim_create_autocmd("VimEnter", {
       callback = function()
         -- load pickers
-        pcall(require('telescope').load_extension, 'fzf') -- Enable telescope fzf native, if installed
+        pcall(require('telescope').load_extension, 'fzf')         -- Enable telescope fzf native, if installed
         pcall(require('telescope').load_extension, 'media_files') -- Enable media-file preview in telescope
         pcall(require('telescope').load_extension, 'heading')
         --require('telescope').load_extension('noice')
@@ -144,20 +147,20 @@ return {
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         -- configure get_dropdown to expand previewer to full width of screen
         require("telescope.builtin").current_buffer_fuzzy_find({
-        -- function from
-        -- https://github.com/nvim-telescope/telescope.nvim/pull/1401#issuecomment-957234973
-        tiebreak = function(entry1, entry2, prompt)
-          local start_pos1, _ = entry1.ordinal:find(prompt)
-          if start_pos1 then
-            local start_pos2, _ = entry2.ordinal:find(prompt)
-            if start_pos2 then
-              return start_pos1 < start_pos2
+          -- function from
+          -- https://github.com/nvim-telescope/telescope.nvim/pull/1401#issuecomment-957234973
+          tiebreak = function(entry1, entry2, prompt)
+            local start_pos1, _ = entry1.ordinal:find(prompt)
+            if start_pos1 then
+              local start_pos2, _ = entry2.ordinal:find(prompt)
+              if start_pos2 then
+                return start_pos1 < start_pos2
+              end
             end
-          end
-          return false
-        end,
-        additional_args = { "--ignore-case", "--pcre2" },
-      })
+            return false
+          end,
+          additional_args = { "--ignore-case", "--pcre2" },
+        })
       end,
       { desc = '[F]uzzily [/] search in current buffer' }
     )

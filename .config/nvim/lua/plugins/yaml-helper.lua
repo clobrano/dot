@@ -7,6 +7,6 @@ return {
     "ibhagwan/fzf-lua"               -- optional
   },
   config = function()
-    vim.keymap.set('n', '<leader>sy', ':YAMLView<cr>', { desc = 'Show current YAML path' })
+    vim.keymap.set('n', '<leader>sy', ':YAMLView<cr>', { desc = '[S]how current [Y]AML path' })
   end
 }

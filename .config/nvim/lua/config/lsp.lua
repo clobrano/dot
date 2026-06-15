@@ -69,6 +69,7 @@ local servers = {
         userDictPath = "~/.config/nvim/spell/en.utf-8.add",
         diagnosticSeverity = "hint",
         linters = {
+          ExpandMemoryShorthands = false,
           LongSentences = false,
           NumericRangeEnDash = false,
           OxfordComma = false,
@@ -76,6 +77,7 @@ local servers = {
           SpellCheck = true,
           SplitWords = false,
           ToDoHyphen = false,
+          UnclosedQuotes = false,
           UseEllipsisCharacter = false,
           UseTitleCase = false,
         },

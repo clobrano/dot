@@ -25,6 +25,9 @@ return {
       ui = {
         use_signcolumn = true, -- show "modified" marks on the sign column
       },
+      reviews = {
+        show_virtual_text = false, -- show virtual text with comment count and date on review diff
+      },
       issues = {
         order_by = {            -- criteria to sort results of `Octo issue list`
           field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
@@ -41,8 +44,8 @@ return {
         always_select_remote_on_create = false -- always give prompt to select base remote repo when creating PRs
       },
       file_panel = {
-        size = 10,    -- changed files panel rows
-        icons = true  -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
+        size = 10,   -- changed files panel rows
+        icons = true -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
       },
       mappings = {
         issue = {
@@ -158,16 +161,16 @@ return {
         }
       },
     })
-    vim.keymap.set("n",  "<leader>oo", ":Octo ")
+    vim.keymap.set("n", "<leader>oo", ":Octo ")
 
     --[[vim.api.nvim_create_autocmd("BufWinEnter", {]]
-      --[[group = vim.api.nvim_create_augroup("OctoTheme", { clear = true }),]]
-      --[[callback = function(event)]]
-        --[[-- Check if the current buffer is an Octo buffer (replace with actual check)]]
-        --[[if string.find(vim.fn.bufname(event.buf), "octo") then]]
-          --[[vim.cmd.colorscheme "catppuccin" -- Replace "default" with the desired colorscheme]]
-        --[[end]]
-      --[[end,]]
+    --[[group = vim.api.nvim_create_augroup("OctoTheme", { clear = true }),]]
+    --[[callback = function(event)]]
+    --[[-- Check if the current buffer is an Octo buffer (replace with actual check)]]
+    --[[if string.find(vim.fn.bufname(event.buf), "octo") then]]
+    --[[vim.cmd.colorscheme "catppuccin" -- Replace "default" with the desired colorscheme]]
+    --[[end]]
+    --[[end,]]
     --[[})]]
   end
 }

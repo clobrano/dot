@@ -12,6 +12,9 @@ command = "if git config user.email | grep redhat >/dev/null; then echo \" \"
 style = "bold yellow"
 ignore_timeout = true
 
+[git_status]
+stashed = "S"
+
 [git_branch]
 symbol = ' '
 format = 'on [$symbol$branch]($style) '

@@ -41,7 +41,7 @@ vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr
 vim.api.nvim_set_keymap('n', '<leader>noa', '<cmd>lua AppendOutlineReference()<CR>', { desc = '[N]ote [O]utline [A]ppend reference', noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>rd', '<cmd>lua ToggleTodoDone()<CR>',
-  { desc = 'Toggle TODO/DONE', noremap = true, silent = true })
+  { desc = 'Toggle TODO/DOING/DONE', noremap = true, silent = true })
 
 ------------------------------------------------------------------------------
 -- FUNCTIONS
@@ -945,7 +945,9 @@ function ToggleTodoDone()
   local new_line = line
 
   if line:match("TODO:") then
-    new_line = line:gsub("TODO:", "DONE:")
+    new_line = line:gsub("TODO:", "DOING:")
+  elseif line:match("DOING:") then
+    new_line = line:gsub("DOING:", "DONE:")
   elseif line:match("DONE:") then
     new_line = line:gsub("DONE:", "TODO:")
   end

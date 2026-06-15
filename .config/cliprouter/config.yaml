@@ -1,6 +1,16 @@
 # Clipboard Router Configuration
 
 scripts:
+  - name: BookMarkIt search
+    description: "My Bookmarks"
+    interactive: true
+    command: |
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action find"
+  - name: BookMarkIt add
+    description: "My Bookmarks"
+    interactive: false
+    command: |
+      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action add"
   - name: Claude Code Review
     description: "Local code review with Claude"
     notify_before: "preparing for code review"
@@ -50,14 +60,6 @@ scripts:
       # Write the computed value to CLIPROUTER_ENV_FILE
       echo "PR_REV_FILE=$PR_REV_FILE" >> "$CLIPROUTER_ENV_FILE"
 
-      set -x
-      if [ $(task "/code review.*$PR_PROJ PR$PR_NUM/" export | jq 'length') -eq 0 ]; then
-          # create a new task to track this code review
-          task add "codereview [$PR_ORG/$PR_PROJ PR$PR_NUM] $PR_AUTHOR" project:M8s +codereview +doing
-          task +LATEST annotate "NOTE: \"$PR_REV_FILE\""
-      fi
-      set +x
-
       claude "/review $PR_NUM" > "$PR_REV_FILE"
   - name: Content Editor
     description: Improve content format and clarity
@@ -104,13 +106,3 @@ scripts:
   - name: QuickNote
     interactive: true
     command: bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"
-  - name: BookMarkIt OPEN
-    description: "My Bookmarks"
-    interactive: true
-    command: |
-      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action SEARCH"
-  - name: BookMarkIt ADD
-    description: "My Bookmarks"
-    interactive: false
-    command: |
-      konsole -e "$HOME/workspace/golang/bin/BookmarkIt -action ADD"

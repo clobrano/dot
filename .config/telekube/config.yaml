@@ -40,6 +40,4 @@ tabs:
       command: subs -n openshift-workload-availability
     - name: Jobs
       command: jobs -A
-    - name: op -n openshift-workload-availability
-      command: og -n openshift-workload-availability
 custom_commands: []

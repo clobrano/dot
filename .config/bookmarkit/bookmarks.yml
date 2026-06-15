@@ -151,7 +151,7 @@ bookmarks:
       link: https://home.cards.citidirect.com/CommercialCard/ch/home
     - key: wallpapers
       link: https://github.com/dharmx/walls/tree/main
-    - key: RedHat_using_ai
+    - key: Red_Hat_using_ai
       link: https://source.redhat.com/groups/public/ai
     - key: OCP_release_status
       link: https://amd64.ocp.releases.ci.openshift.org/
@@ -171,7 +171,7 @@ bookmarks:
       link: https://source.redhat.com/departments/legal/legal_compliance_ethics/compliance_wiki/global_policy_prohibiting_discrimination_harassment_bullying_favoritism_and_retaliation
     - key: Red_Hat_OpenShift_Container_Platform_Life_Cycle_Policy
       link: https://access.redhat.com/support/policy/updates/openshift
-    - key: RedHat_Ecosystem_Catalog
+    - key: Red_Hat_Ecosystem_Catalog
       link: https://catalog.redhat.com/
     - key: Focus1
       link: https://www.youtube.com/watch?v=UwullClrOuw&list=PLEDgWdDDi0OX0MITbnAFk4HSzwjghjyyL
@@ -197,7 +197,7 @@ bookmarks:
       link: https://clusterlabs.org/projects/pacemaker/doc/2.1/Pacemaker_Administration/html/alerts.html
     - key: Mermaidjs_state_diagram
       link: https://mermaid.js.org/syntax/stateDiagram.html
-    - key: RedHat_culture_at_a_glance
+    - key: Red_Hat_culture_at_a_glance
       link: https://docs.google.com/presentation/d/1Di8SJwndgt5YBnxWz4WhAdtLb4UftfowkjR1xsmpPZA/edit#slide=id.g32d4fd5f068_0_0
     - key: white_noise_concentration
       link: https://mc2method.org/white-noise/
@@ -311,8 +311,6 @@ bookmarks:
       link: https://notebooklm.google.com/notebook/365fc323-cd78-493b-a9c1-5156ae569603
     - key: TNF_main_NotebookLM
       link: https://notebooklm.google.com/notebook/5d55952e-458a-46b2-8c05-f1779bbb968c
-    - key: RedHat_official_product_list_OPL
-      link: https://opl-ui.apps.int.gpc.ocp-hub.prod.psi.redhat.com/
     - key: epomaker_webapp
       link: https://caniusevia.com/
     - key: epomaker_manual
@@ -341,7 +339,7 @@ bookmarks:
       link: git branch -m <old-name> <new-name>
     - key: GIT_worktree_rename_directory
       link: git worktree move <old-path> <new-path>
-    - key: RedHat_developer_sandbox
+    - key: Red_Hat_developer_sandbox
       link: https://sandbox.redhat.com/?sc_cid=RHCTG0250000463315&mkt_tok=NDI3LVRCQy00NzQAAAGdOv2l3lpGBo8nDGYGDQzZ9RISOXgQGsbdNb70D3ji5t5Vot-_45Gwd0Cmf_4IlDQgtT5hM2m939HLBYBVpx4zK3P3yovRYh4pGZ-66tW7W3Jk3C4
     - key: Red_Hat_GitLab_clobrano
       link: https://gitlab.cee.redhat.com/clobrano
@@ -363,9 +361,9 @@ bookmarks:
       link: git fetch origin pull/ID/head:LOCAL_BRANCH_NAME && git checkout LOCAL_BRANCH_NAME
     - key: Pacemaker_documentation_v3.0
       link: https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Explained/singlehtml/index.html
-    - key: RedHat_Travel
+    - key: Red_Hat_Travel
       link: https://source.redhat.com/departments/finance_busops/travel
-    - key: RedHat_JIRA_filter_podman-etcd_created_by_me
+    - key: Red_Hat_JIRA_filter_podman-etcd_created_by_me
       link: project = RHEL AND issuetype = Bug AND text ~ "podman-etcd" AND creator=currentUser() ORDER BY summary ASC
     - key: Red_Hat_AWS_Console
       link: https://auth.redhat.com/auth/realms/EmployeeIDP/protocol/saml/clients/itaws
@@ -431,3 +429,23 @@ bookmarks:
       link: https://redhat.atlassian.net/jira/for-you
     - key: Sbr-upstream
       link: https://github.com/medik8s/storage-based-remediation
+    - key: Konflux_NotebookLM
+      link: https://notebooklm.google.com/notebook/6916b269-d239-48af-870e-01c90da5345d?authuser=1&pageId=none
+    - key: Red_Hat_Acronyms
+      link: https://source.redhat.com/projects_and_programs/red_hat_dictionary_or_lexicon
+    - key: Kubernetes_Docs
+      link: https://kubernetes.io/docs
+    - key: Kubernetes_Docs_Concepts
+      link: https://kubernetes.io/docs/concepts
+    - key: Kubernetes_Docs_Tasks
+      link: https://kubernetes.io/docs/tasks
+    - key: Kubernetes_Docs_References
+      link: https://kubernetes.io/docs/reference
+    - key: Kubernetes_Docs_kubectl_cheatsheet
+      link: https://kubernetes.io/docs/reference/kubectl/cheatsheet
+    - key: Kubernetes_Blog
+      link: https://kubernetes.io/blog
+    - key: Konflux_RHWA_Applications_UI
+      link: https://konflux-ui.apps.stone-prod-p02.hjvn.p1.openshiftapps.com/ns/rhwa-tenant/applications
+    - key: Red_Hat_Udemy
+      link: https://redhat.udemy.com/

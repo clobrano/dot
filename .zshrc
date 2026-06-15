@@ -202,6 +202,12 @@ if command -v fuzzy-cd >/dev/null; then
     eval "$(fuzzy-cd init --depth 6 zsh)"
 fi
 
+# kubectl completion
+[ command -v kubectl 2>/dev/null ] && source <(kubectl completion zsh)
+
+# oc completion
+[ command -v oc 2>/dev/null ] && source <(oc completion zsh)
+
 # bun completions
 [ -s "/home/clobrano/.bun/_bun" ] && source "/home/clobrano/.bun/_bun"
 

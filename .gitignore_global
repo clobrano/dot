@@ -24,3 +24,4 @@ prds/*
 prd/*
 CLAUDE.md
 ^.work/
+__pycache__/

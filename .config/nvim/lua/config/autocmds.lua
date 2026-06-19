@@ -59,6 +59,18 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Markdown settings: 2-space indentation
+vim.api.nvim_create_augroup("markdown_settings", { clear = true })
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.md",
+  group = "markdown_settings",
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.tabstop = 2
+  end,
+})
+
 
 local big_file_group = vim.api.nvim_create_augroup("BigFileSettings", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPre" }, {

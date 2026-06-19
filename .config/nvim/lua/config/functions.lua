@@ -803,7 +803,7 @@ function CreateNoteFromFileName()
   vim.fn.append(0, '# ' .. title)
   vim.fn.append(1, '')
   vim.fn.append(2, '#research')
-  vim.api.nvim_buf_set_lines(0, -1, -1, false, { '<!-- references -->' })
+  vim.api.nvim_buf_set_lines(0, -1, -1, false, { '## references' })
 end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })

@@ -2,6 +2,7 @@ return {
   'lewis6991/gitsigns.nvim',
   config = function()
     require('gitsigns').setup {
+      sign_priority = 10, -- Higher priority so git signs appear first
       on_attach = function(bufnr)
         -- Setup keymaps
         vim.api.nvim_buf_set_keymap(bufnr, 'n', ']c', '<cmd>lua require"gitsigns".next_hunk()<CR>', {})

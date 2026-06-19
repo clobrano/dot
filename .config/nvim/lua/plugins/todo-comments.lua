@@ -7,6 +7,8 @@ return {
           vim.cmd [[
               cnoreabbrev <expr> td getcmdtype() == ":" && getcmdline() == 'td' ? 'TodoTelescope keywords=TODO,DOING' : 'td'
             ]],
+            signs = true,
+            sign_priority = 4, -- Lower than both gitsigns (6) and markdown headers (5)
             keywords = {
                 FIX = {
                     icon = "x", -- icon used for the sign, and in search results
@@ -17,7 +19,8 @@ return {
                 TODO = { icon = " ", color = "info" },
                 DOING = { icon = " ", color = "success" },
                 DONE = { icon = "󰗠 ", color = "comment" },
-                POST = { icon = " ", color = "warning", alt = { "POSTPONED" } },
+                SKIP = { icon = " ", color = "comment", alt = { "WONTDO" } },
+                POST = { icon = " ", color = "warning", alt = { "HOLD" } },
                 HINT = { icon = " ", color = "hint" },
                 HACK = { icon = " ", color = "warning", alt = { "KEY" } },
                 WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },

@@ -108,6 +108,7 @@ GetPodName
 Ginko
 GitHub
 Gprof
+HCP
 HV
 HW
 Hacktoberfest
@@ -119,6 +120,7 @@ IFIS
 IIUC
 IMG
 IOP
+IPAM
 IPI
 IPMI
 IPv6
@@ -163,6 +165,7 @@ ME910C1
 MHC
 MLflow
 MMIO
+MOC
 MOL
 MON
 MR
@@ -173,6 +176,8 @@ MachineConfig
 MachineDeletionRemediation
 MachineSetController
 Magneti
+Makefile
+Makefiles
 MapReduce
 Marelli
 Mediobanca
@@ -191,6 +196,7 @@ OKD
 OOP
 OPL
 OpenImage
+OpenShift
 OpenSuse
 OutOfService
 PDB
@@ -198,6 +204,7 @@ PPA
 PPT
 PR's
 PR55
+PRD
 PRs
 PVCs
 PXE
@@ -269,6 +276,7 @@ StorageBasedRemediation
 StorageClass
 T5
 TBD
+TDR
 TELCODOCS
 TFI
 THU
@@ -277,6 +285,7 @@ TNO
 TODO
 TODOs
 TP
+TRD
 TTYs
 TUE
 Tekton
@@ -470,6 +479,7 @@ gitlab
 gitops
 gobi
 gobject
+goimport
 goimports
 golang
 goodnotes
@@ -580,6 +590,8 @@ nextcloud
 nginx
 nhc
 nmap
+non
+non-functional
 nosql
 nowrap
 ocp
@@ -587,7 +599,6 @@ ofc
 ollama
 olm
 onboarding
-openshift
 opensource
 openssl
 opm
@@ -813,6 +824,6 @@ zathura
 zazen
 zettelkasten
 zlp
-Makefiles
-goimport
-Makefile
+PRDs
+Kanban
+KanBan

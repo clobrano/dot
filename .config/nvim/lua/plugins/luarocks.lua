@@ -1,5 +1,11 @@
 return {
   "vhyrro/luarocks.nvim",
-  priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
-  config = true,
+  priority = 1000,
+  config = function()
+    require("luarocks-nvim").setup({
+      rocks = "auto",
+      nvim_dir = vim.fn.stdpath("config"),
+      skip_update = true,
+    })
+  end,
 }

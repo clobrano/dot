@@ -1,5 +1,5 @@
 bookmarks:
-    - key: my-notes-on-gitlab
+    - key: GitLab_Notes
       link: https://gitlab.cee.redhat.com/clobrano/notes/-/blob/main/README.md?ref_type=heads
     - key: weekly-review-google-doc
       link: https://docs.google.com/document/d/1LywwtptV1yJpGBNwrjnF9SqypxyiWNnuVeSIJVlzY04/edit#heading=h.wbad599jczrx
@@ -23,23 +23,23 @@ bookmarks:
       link: https://github.com/medik8s/docs
     - key: Mdr-upstream
       link: https://github.com/medik8s/machine-deletion-remediation
-    - key: mdr-midstream
+    - key: GitLab_MDR
       link: https://gitlab.cee.redhat.com/dragonfly/machine-deletion-remediation
     - key: Nhc-upstream
       link: https://github.com/medik8s/node-healthcheck-operator
-    - key: nhc-midstream
+    - key: GitLab_NHC
       link: https://gitlab.cee.redhat.com/dragonfly/node-healthcheck-operator
     - key: Snr-upstream
       link: https://github.com/medik8s/self-node-remediation
-    - key: snr-midstream
+    - key: GitLab_SNR
       link: https://gitlab.cee.redhat.com/dragonfly/self-node-remediation
     - key: Nmo-upstream
       link: https://github.com/medik8s/node-maintenance-operator
-    - key: nmo-midstream
+    - key: GitLab_NMO
       link: https://gitlab.cee.redhat.com/dragonfly/node-maintenance-operator
     - key: Far-upstream
       link: https://github.com/medik8s/fence-agents-remediation
-    - key: far-midstream
+    - key: GitLab_FAR
       link: https://gitlab.cee.redhat.com/dragonfly/fence-agents-remediation
     - key: beakerjobs
       link: https://beaker.engineering.redhat.com/jobs
@@ -57,7 +57,7 @@ bookmarks:
       link: https://redhat.atlassian.net
     - key: rhwa-jira
       link: https://redhat.atlassian.net/jira/software/c/projects/RHWA/issues?jql=project%20%3D%20RHWA%20ORDER%20BY%20created%20DESC
-    - key: rhwa-gitlab
+    - key: GitLab_CPaas_RHWA
       link: https://gitlab.cee.redhat.com/cpaas-products/rh-wa
     - key: subman
       link: https://access.redhat.com/management/systems/
@@ -73,12 +73,8 @@ bookmarks:
       link: https://pkg.go.dev/github.com/openshift/api/machine
     - key: gmedik8s
       link: https://github.com/medik8s
-    - key: rh-wa
-      link: https://gitlab.cee.redhat.com/cpaas-products/rh-wa
     - key: ci-dashboard
       link: https://grafana-route-ci-grafana.apps.ci.l2s4.p1.openshiftapps.com/d/628a36ebd9ef30d67e28576a5d5201fd/boskos-dashboard?orgId=1&from=now-3h&to=now
-    - key: Notes
-      link: /home/clobrano/Documents/RedHatVault/index.md
     - key: TheSource
       link: https://source.redhat.com/
     - key: kni-devel-ggroup
@@ -115,7 +111,7 @@ bookmarks:
       link: https://errata.devel.redhat.com/package/show/node-healthcheck-operator-bundle-container
     - key: nmo-errata-bundle
       link: https://errata.devel.redhat.com/package/show/node-maintenance-operator-bundle-container
-    - key: dragonfly-gitlab
+    - key: GitLab_dragonfly
       link: https://gitlab.cee.redhat.com/dragonfly
     - key: SDL-weakness-security-labels
       link: https://source.redhat.com/departments/products_and_global_engineering/product_security/ops/product_security_wiki/prodsec_vulnerability_and_weakness_solution_faq
@@ -129,7 +125,7 @@ bookmarks:
       link: https://hcm.it.adp.com/portal-main/portal/#/home
     - key: assisted-installer-dashboard
       link: https://console.redhat.com/openshift/assisted-installer/clusters
-    - key: 2no-lab
+    - key: GitLab_2no-lab
       link: https://gitlab.cee.redhat.com/clobrano/2no-lab
     - key: Linode
       link: https://cloud.linode.com/linodes
@@ -189,7 +185,7 @@ bookmarks:
       link: https://pdf.plantuml.net/1.2020.22/PlantUML_Language_Reference_Guide_en.pdf
     - key: Pacemaker_clone_notifications
       link: https://clusterlabs.org/projects/pacemaker/doc/2.1/Pacemaker_Administration/html/agents.html#clone-notifications
-    - key: TNF_tno-operator
+    - key: GitLab_TNF_tno-operator
       link: https://gitlab.cee.redhat.com/msluiter/tno-operator
     - key: Pacemaker_fence_agent_configuration
       link: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters#ref_general-fence-device-properties-configuring-fencing
@@ -315,7 +311,7 @@ bookmarks:
       link: https://caniusevia.com/
     - key: epomaker_manual
       link: https://epomaker.com/cdn/shop/files/Epomaker_Split_65_manual_80912c43-ccc4-477d-a773-94d8cb4c7d46.pdf?v=1245150292969430353
-    - key: RHWA_FBC_gitlab_repo
+    - key: GitLab_RHWA_FBC
       link: https://gitlab.cee.redhat.com/dragonfly/rhwa-fbc
     - key: Linux_show_all_iptables_rules
       link: iptables -L
@@ -449,3 +445,9 @@ bookmarks:
       link: https://konflux-ui.apps.stone-prod-p02.hjvn.p1.openshiftapps.com/ns/rhwa-tenant/applications
     - key: Red_Hat_Udemy
       link: https://redhat.udemy.com/
+    - key: Red_Hat_Google_Cloud_Console
+      link: https://console.cloud.google.com/welcome?project=calcurse-479307
+    - key: HackerNews_Kubernetes
+      link: site:https://news.ycombinator.com/ kubernetes
+    - key: HackerNews_Agentic_SDLC
+      link: site:https://news.ycombinator.com/  Agentic SDLC

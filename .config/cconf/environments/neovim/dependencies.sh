@@ -83,7 +83,8 @@ fi
 
 if command -v cargo &> /dev/null; then
     if ! command -v tree-sitter &> /dev/null; then
-        cargo install tree-sitter-cli
+        #cargo install tree-sitter-cli      # during VM testing this stuck the VM twice
+        sudo dnf install -y tree-sitter-cli
         print_success "tree-sitter CLI installed!"
     else
         print_success "tree-sitter CLI already installed!"

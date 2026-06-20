@@ -1,5 +1,5 @@
 #font-family=Source Code Pro Medium
-#font-family=Bitstream Vera Sans Mono
+font-family=Fira Code
 font-size=10
 
 theme=catppuccin-frappe.conf

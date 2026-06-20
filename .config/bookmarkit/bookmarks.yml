@@ -451,3 +451,5 @@ bookmarks:
       link: site:https://news.ycombinator.com/ kubernetes
     - key: HackerNews_Agentic_SDLC
       link: site:https://news.ycombinator.com/  Agentic SDLC
+    - key: Yazi_Shortcuts_Keybindings
+      link: https://yazi-rs.github.io/docs/quick-start#keybindings

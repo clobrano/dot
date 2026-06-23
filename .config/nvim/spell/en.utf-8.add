@@ -2,6 +2,7 @@
 #nkown
 10GB
 3gpp2
+AAP
 APIs
 APN
 Adjustability
@@ -137,7 +138,7 @@ Jumpbox
 Jupyter
 KWh
 Kaggle
-Kanban
+KanBan
 Karlsruhe
 Kasanova
 Kerberos
@@ -205,6 +206,7 @@ PPT
 PR's
 PR55
 PRD
+PRDs
 PRs
 PVCs
 PXE
@@ -269,6 +271,7 @@ SetupWithManager
 ShaiLevi
 Shitrit
 Skansen
+Slurm
 Snapd
 Storage
 Storage/!
@@ -314,6 +317,7 @@ WDYT
 XFP
 XSS
 a.
+aaS
 abbanoa
 abdal
 accessor
@@ -591,6 +595,7 @@ nginx
 nhc
 nmap
 non
+non-exclusive
 non-functional
 nosql
 nowrap
@@ -824,6 +829,6 @@ zathura
 zazen
 zettelkasten
 zlp
-PRDs
-Kanban
-KanBan
+Keueu
+Slinky
+e2e

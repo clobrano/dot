@@ -74,10 +74,10 @@ return {
         position = 'inline',
         unchecked = {
             --icon = '*    ',
-            icon = '* [ ]',
+            icon = '- [ ]',
             highlight = 'RenderMarkdownUnchecked',
         },         checked = {
-            icon = '* [✓]',
+            icon = '- [✓]',
             highlight = 'RenderMarkdownChecked',
         },
         custom = {

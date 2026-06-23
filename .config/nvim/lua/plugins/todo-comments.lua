@@ -16,7 +16,7 @@ return {
                     alt = { "FIXME", "BUG", "FIXIT" }, -- a set of other keywords that all map to this FIX keywords
                     -- signs = false, -- configure signs for some keywords individually
                 },
-                TODO = { icon = " ", color = "info" },
+                TODO = { icon = " ", color = "info" },
                 DOING = { icon = "󰐌 ", color = "success" },
                 DONE = { icon = "󰗠 ", color = "comment" },
                 SKIP = { icon = "󰅙 ", color = "comment", alt = { "WONTDO" } },

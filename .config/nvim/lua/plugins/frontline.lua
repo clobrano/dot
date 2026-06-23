@@ -17,6 +17,7 @@ return {
     default_workspace = "work",  -- Used when no @workspace specified
     enable_reverse_dependencies = true,  -- Show anchor icon for tasks blocking others (default: true)
     require_todo_annotations_done = true,
+    copy_task_format = "{{description}} `{{short_uuid}}`",
     })
   end
 }

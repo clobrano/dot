@@ -7,6 +7,7 @@ set -x
 alias dev="tmux-attach-or-create 0-devel"
 alias notes="tmux-attach-or-create 1-note"
 
-alias tls="tmux list-sessions"
 alias tas="tmux attach-session -t"
 alias tks="tmux kill-session -t"
+alias tls="tmux list-sessions"
+alias trs="tmux rename-session"

@@ -72,21 +72,17 @@ return {
       checkbox = {
         enabled = true,
         position = 'inline',
+        -- TODO and DONE highlights choosen to be visibly different, but less than the ACTIVE one, which shall stand out.
         unchecked = {
-            --icon = '*    ',
-            icon = '- [ ]',
-            highlight = 'RenderMarkdownUnchecked',
+            icon = 'TODO:',
+            highlight = 'RenderMarkdownQuote',
         },         checked = {
-            icon = '- [✓]',
-            highlight = 'RenderMarkdownChecked',
+            icon = 'DONE:',
+            highlight = 'RenderMarkdownHtmlComment',
         },
         custom = {
             waiting = { raw = '[W]', rendered = '*  w ', highlight = 'RenderMarkdownTodo' },
-            active = { raw = '[S]', rendered = '* [▶]', highlight = 'RenderMarkdownTodo' },
-            deleted = { raw = '[-]', rendered = '*  ✗ ', highlight = 'RenderMarkdownTodo' },
-            prog25 = { raw = '[.]', rendered = '*  . ', highlight = 'RenderMarkdownTodo' },
-            prog50 = { raw = '[o]', rendered = '* [o]', highlight = 'RenderMarkdownTodo' },
-            prog75 = { raw = '[O]', rendered = '* [O]', highlight = 'RenderMarkdownTodo' },
+            active = { raw = '[S]', rendered = 'ACTIVE', highlight = 'RenderMarkdownHint' },
         },
     },
     quote = {
@@ -98,6 +94,7 @@ return {
         repeat_linebreak = false,
         -- Highlight for the quote icon
         highlight = 'RenderMarkdownQuote',
+
     },
     code = {
         -- Turn on / off code block & inline code rendering

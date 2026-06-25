@@ -10,6 +10,14 @@ Name=Clip Router
 Exec=/usr/bin/konsole -e BookmarkIt -action find
 Name=BookMarkIt Find
 
+[Custom Commands][net.local.bash-6.desktop]
+Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh browser"
+Name=Shortcut browser
+
+[Custom Commands][net.local.flatpak.desktop]
+Exec=flatpak run org.wezfurlong.wezterm
+Name=Clip Router
+
 [Custom Commands][net.local.kde-shortcut.sh\n.desktop]
 Exec=/home/clobrano/workspace/script-fu/kde-shortcut.sh note
 Name=Note
@@ -27,8 +35,8 @@ Exec=/home/clobrano/workspace/script-fu/kde-shortcut.sh slack
 Name=Slack
 
 [Custom Commands][net.local.kde-shortcut.sh-5.desktop]
-Exec=/home/clobrano/workspace/script-fu/kde-shortcut.sh terminal
-Name=Terminal
+Exec=/home/clobrano/workspace/script-fu/kde-shortcut.sh note
+Name=Note
 
 [Custom Commands][net.local.kde-shortcut.sh-6.desktop]
 Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh browser"
@@ -39,12 +47,12 @@ Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh chrome"
 Name=Chrome
 
 [Custom Commands][net.local.kde-shortcut.sh.desktop]
-Exec=bash -c "$HOME/workspace/script-fu/kde-shortcut.sh terminal"
+Exec=/home/clobrano/workspace/script-fu/kde-shortcut.sh terminal
 Name=Terminal
 
 [Custom Commands][net.local.key.sh.desktop]
-Exec=/home/clobrano/workspace/script-fu/key.sh /home/clobrano/Documents/yubikey.gpg OATH463975B7
-Name=YubiKey
+Exec=/home/clobrano/workspace/script-fu/key.sh
+Name=Yubikey
 
 [Custom Commands][net.local.neovim-quick-note.sh.desktop]
 Exec=bash -c "$HOME/workspace/script-fu/neovim-quick-note.sh"
@@ -71,6 +79,12 @@ _launch=Meta+I
 [net.local.alacritty.desktop][Global Shortcuts]
 _launch=Alt+Shift+F
 
+[net.local.bash-6.desktop][Global Shortcuts]
+_launch=Meta+M
+
+[net.local.flatpak.desktop][Global Shortcuts]
+_launch=Meta+I
+
 [net.local.kde-shortcut.sh\n.desktop][Global Shortcuts]
 _launch=Meta+N
 
@@ -84,7 +98,7 @@ _launch=Meta+M
 _launch=Meta+S
 
 [net.local.kde-shortcut.sh-5.desktop][Global Shortcuts]
-_launch=Meta+J
+_launch=Meta+N
 
 [net.local.kde-shortcut.sh-6.desktop][Global Shortcuts]
 _launch=Meta+B
@@ -93,7 +107,7 @@ _launch=Meta+B
 _launch=Meta+C
 
 [net.local.kde-shortcut.sh.desktop][Global Shortcuts]
-_launch=
+_launch=Meta+J
 
 [net.local.key.sh.desktop][Global Shortcuts]
 _launch=Alt+Shift+Y

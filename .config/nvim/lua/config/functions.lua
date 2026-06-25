@@ -53,12 +53,12 @@ end
 
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
   local save_cursor = vim.fn.getpos('.')
--- Pass 1 enforces 1 empty line after headers
+-- Pass 1 enforces 0 empty line after headers
 -- Pass 2 enforces 2 empty lines BEFORE headers
 -- When headers are consecutive, pass 2 overrides pass 1 because proper spacing
 -- before important content (headers) takes precedence over spacing after previous content
   vim.cmd([[
-        :%s/\v^(#{1,3} .*)\n+/\1\r\r/e
+        :%s/\v^(#{1,3} .*)\n+/\1\r/e
         :nohlsearch
       ]])
   vim.cmd([[

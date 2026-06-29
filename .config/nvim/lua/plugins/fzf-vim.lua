@@ -44,6 +44,16 @@ return {
       winopts = {
         width = 0.95,
         height = 0.9,
+      },
+      buffers = {
+        winopts = {
+          width = 0.95,
+          height = 0.9,
+          preview = {
+            layout = "horizontal",
+            horizontal = "down:40%"
+          }
+        }
       }
     })
 

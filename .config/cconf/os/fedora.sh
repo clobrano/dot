@@ -79,7 +79,7 @@ main() {
     print_info "Detected: $OS_NAME (Variant: $OS_VARIANT)"
 
     # Step 1: Configure DNF
-    configure_dnf
+    #configure_dnf
 
     # Step 2: Install base packages
     install_base_packages

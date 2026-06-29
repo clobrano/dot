@@ -7,6 +7,10 @@ return {
   --dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },    -- if you prefer nvim-web-devicons
   config = function()
     require('render-markdown').setup({
+      anti_conceal = {
+        enabled = false,
+      },
+      render_modes = { 'n', 'c' },
       completions = { coq = { enabled = true } },
       dash = {
         -- Disable dash rendering to prevent frontmatter delimiters from being rendered as horizontal rules
@@ -73,15 +77,9 @@ return {
         enabled = true,
         position = 'inline',
         -- TODO and DONE highlights choosen to be visibly different, but less than the ACTIVE one, which shall stand out.
-        unchecked = {
-            icon = 'TODO:',
-            highlight = 'RenderMarkdownQuote',
-        },         checked = {
-            icon = 'DONE:',
-            highlight = 'RenderMarkdownHtmlComment',
-        },
+        unchecked = { icon = 'TODO:', highlight = 'RenderMarkdownQuote', },
+        checked = { icon = 'DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            waiting = { raw = '[W]', rendered = '*  w ', highlight = 'RenderMarkdownTodo' },
             active = { raw = '[S]', rendered = 'ACTIVE', highlight = 'RenderMarkdownHint' },
         },
     },

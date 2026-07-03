@@ -729,7 +729,10 @@ function Get_Smart_Weblink()
   local org_project = tokens[1] -- Lua lists are 1-based
   local number = ""
   local base_url = ""
+
+  -- Support both "PR123" and "PR 123" formats (2 or 3 tokens)
   if #(tokens) == 2 then
+    -- Old format: "org/project PR123"
     if string.match(tokens[2], "PR") then
       number = tokens[2]:gsub("PR", "")
       base_url = "https://github.com/" .. org_project .. "/pull/" .. number
@@ -738,6 +741,18 @@ function Get_Smart_Weblink()
       base_url = "https://github.com/" .. org_project .. "/issues/" .. number
     elseif string.match(tokens[2], "MR") then
       number = tokens[2]:gsub("MR", "")
+      base_url = "https://gitlab.cee.redhat.com/" .. org_project .. "/-/merge_requests/" .. number
+    end
+  elseif #(tokens) == 3 then
+    -- New format: "org/project PR 123"
+    if tokens[2] == "PR" then
+      number = tokens[3]
+      base_url = "https://github.com/" .. org_project .. "/pull/" .. number
+    elseif tokens[2] == "I" then
+      number = tokens[3]
+      base_url = "https://github.com/" .. org_project .. "/issues/" .. number
+    elseif tokens[2] == "MR" then
+      number = tokens[3]
       base_url = "https://gitlab.cee.redhat.com/" .. org_project .. "/-/merge_requests/" .. number
     end
   end
@@ -769,41 +784,61 @@ end
 
 
 function CreateNoteFromFileName()
-  -- if filename starts with a date, then the title is the same date with the format "Mon 12 Jan 2021 Week02"
-  -- otherwise, the title is the filename without the extension
   local filename = vim.fn.expand("%:t:r")
+  local filepath = vim.fn.expand("%:p")
   local title = filename
-  -- template for weekly notes
-  if string.match(filename, "^%d%d%d%d%-%d%d%-%d%d") then
-    -- Only for Work notes
-    if vim.fn.isdirectory('Resources') ~= 0 then
-      local year = string.sub(filename, 1, 4)
-      local month = string.sub(filename, 6, 7)
-      local day = string.sub(filename, 9, 10)
-      -- change Locale to English only for the following command
-      os.setlocale("C")
-      -- re-format the date as in "Mon 12 Jan 2021 Week02"
-      title = tostring(os.date("Week %V", os.time({ year = year, month = month, day = day })))
-      -- read the rest of the template from the journaling template
-      local template = vim.fn.readfile("./Templates/weekly-template.md")
 
-      -- write the template in current buffer
-      vim.fn.append(1, template)
+  -- Detect vault
+  local is_work_vault = filepath:find("RedHatNotes") ~= nil
+
+  -- Build frontmatter (all notes get this)
+  local frontmatter = {
+    "---",
+    'created: "' .. os.date("%Y-%m-%d") .. '"',
+    'modified: "' .. os.date("%Y-%m-%d") .. '"',
+    "---",
+    "",
+  }
+
+  local template = nil
+  local has_template_content = false
+
+  -- Weekly notes (work vault only, YYYY-MM-DD.md format)
+  if is_work_vault and filename:match("^%d%d%d%d%-%d%d%-%d%d") and vim.fn.isdirectory('Resources') ~= 0 then
+    local year = string.sub(filename, 1, 4)
+    local month = string.sub(filename, 6, 7)
+    local day = string.sub(filename, 9, 10)
+    os.setlocale("C")
+    title = tostring(os.date("Week %V", os.time({ year = year, month = month, day = day })))
+    template = vim.fn.readfile("./Templates/weekly-template.md")
+    has_template_content = true
+
+  -- Task notes (any vault)
+  elseif filepath:find("Tasks") then
+    local template_path = is_work_vault and
+      vim.fn.expand("~/Documents/RedHatNotes/Templates/task-template.md") or
+      nil
+    if template_path and vim.fn.filereadable(template_path) == 1 then
+      template = vim.fn.readfile(template_path)
+      has_template_content = true
     end
   end
-  -- template for files in Task folder
-  if string.match(vim.fn.expand("%:p:h"), "Tasks") then
-    -- read the template from the task template
-    local template = vim.fn.readfile("./Templates/task-template.md")
-    -- write the template in current buffer
-    vim.fn.append(1, template)
+
+  -- Insert frontmatter
+  vim.fn.append(0, frontmatter)
+
+  -- Insert title
+  vim.fn.append(#frontmatter, "# " .. title)
+
+  -- Insert template body (if exists)
+  if template then
+    vim.fn.append(#frontmatter + 1, template)
   end
 
-  -- write the title and reference in current buffer
-  vim.fn.append(0, '# ' .. title)
-  vim.fn.append(1, '')
-  vim.fn.append(2, '#research')
-  vim.api.nvim_buf_set_lines(0, -1, -1, false, { '## references' })
+  -- Insert default tags and references (only if no template)
+  if not has_template_content then
+    vim.fn.append(-1, {"", "#research", "## references"})
+  end
 end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })

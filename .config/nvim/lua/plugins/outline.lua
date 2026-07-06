@@ -7,6 +7,8 @@ return  {
     { "<leader>toc", "<cmd>Outline<CR>", desc = "Toggle outline" },
   },
   opts = {
-    -- Your setup opts here
+    outline_window = {
+      focus_on_open = true,
+    },
   },
 }

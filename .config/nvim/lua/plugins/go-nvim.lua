@@ -8,7 +8,7 @@ return {
     lsp_codelens = true,
     -- Disable treesitter features to avoid "plugin not loaded" warnings
     -- as we are using Neovim 0.12 built-in treesitter
-    build_tags = "", 
+    build_tags = "",
     icons = false,
     textobjects = false,
   },
@@ -22,13 +22,16 @@ return {
       end,
       group = format_sync_grp,
     })
-    vim.keymap.set("n", "<leader>goa", ":GoAlt<cr>", { desc="[GO] [A]lternate file", noremap=true, silent=true })
-    vim.keymap.set("n", "<leader>gob", ":GoBuild<cr>", { desc="[GO] [B]uild", noremap=true, silent=true })
-    vim.keymap.set("n", "<leader>goi", ":GoInstall<cr>", { desc="[GO] [I]nstall", noremap=true, silent=true })
-    vim.keymap.set("n", "<leader>gotf", ":GoTest<cr>", { desc="[GO] [T]est", noremap=true, silent=true })
-    vim.keymap.set("n", "<leader>gotf", ":GoTestFile<cr>", { desc="[GO] [T]est this [F]ile", noremap=true, silent=true })
-    vim.keymap.set("n", "<leader>gop", ":GoTestPackage<cr>", { desc="[GO] [T]est [P]ackage", noremap=true, silent=true })
-    vim.keymap.set("n", "<M-]>", function() vim.cmd('vsplit') vim.lsp.buf.definition() end, { desc = "[GO] Jump to definition (vsplit)" })
+    vim.keymap.set("n", "<leader>goa", ":GoAlt<cr>", { desc = "[GO] [A]lternate file", noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>gob", ":GoBuild<cr>", { desc = "[GO] [B]uild", noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>goi", ":GoInstall<cr>", { desc = "[GO] [I]nstall", noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>gotf", ":GoTest<cr>", { desc = "[GO] [T]est", noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>gotf", ":GoTestFile<cr>", { desc = "[GO] [T]est this [F]ile", noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>gop", ":GoTestPackage<cr>", { desc = "[GO] [T]est [P]ackage", noremap = true, silent = true })
+    vim.keymap.set("n", "<M-]>", function()
+      vim.cmd('vsplit')
+      vim.lsp.buf.definition()
+    end, { desc = "[GO] Jump to definition (vsplit)" })
 
     -- Generate Tags with gotags
     vim.api.nvim_create_user_command("GoTags",
@@ -42,7 +45,6 @@ return {
         print("Exit code: " .. tostring(exit_code))
       end,
       {})
-
   end,
   event = { "CmdlineEnter" },
   ft = { "go", 'gomod' },

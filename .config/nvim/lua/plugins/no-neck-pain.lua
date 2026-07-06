@@ -15,5 +15,10 @@ return {
     })
     vim.keymap.set('n', '<leader>nn', ':NoNeckPain<cr>', { noremap = true, desc = "Toggle NoNeckPain" })
 
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        require("no-neck-pain").enable()
+      end,
+    })
   end
 }

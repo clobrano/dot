@@ -11,6 +11,20 @@ return {
         scratchPad = {
           enabled = false,
         },
+        bo = {
+          filetype = "no-neck-pain",
+        },
+      },
+      autocmds = {
+        enableOnVimEnter = false,
+        reloadOnColorSchemeChange = false,
+        skipEnteringNoNeckPainBuffer = true,
+      },
+      integrations = {
+        outline = {
+          position = "right",
+          reopen = true,
+        },
       },
     })
     vim.keymap.set('n', '<leader>nn', ':NoNeckPain<cr>', { noremap = true, desc = "Toggle NoNeckPain" })

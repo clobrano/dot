@@ -121,9 +121,8 @@ local on_attach = function(client, bufnr)
   nmap('<leader>fi', vim.lsp.buf.implementation, '[F]ind [I]mplementation')
   nmap('<leader>fD', vim.lsp.buf.type_definition, 'Find Type [D]efinition')
 
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- K mapping is now handled by hover.nvim plugin
+  --nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[F]ind [D]eclaration')
@@ -134,14 +133,11 @@ local on_attach = function(client, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
--- Configure LSP hover and signature help handlers to have borders
-local hover_opts = { border = "rounded", max_width = 80, max_height = 20 }
-vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-  vim.lsp.handlers.hover(err, result, ctx, vim.tbl_extend("force", config or {}, hover_opts))
-end
-vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
-  vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_extend("force", config or {}, hover_opts))
-end
+-- Signature help handler (hover is now handled by hover.nvim plugin)
+--local sig_help_opts = { border = "rounded", max_width = 80, max_height = 20 }
+--vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+  --vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_extend("force", config or {}, sig_help_opts))
+--end
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()

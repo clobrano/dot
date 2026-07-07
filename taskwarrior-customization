@@ -12,36 +12,13 @@ uda.url.label=URL
 urgency.inherit=on
 
 # taskwarrior customization
-report.next.columns=id,project,tags.count,description,due.countdown,scheduled
-report.next.labels=ID,Project,Tag,desc,due,sched
-report.next.filter=status:pending -WAITING
-
-report.list_full.columns=id,start.age,entry.age,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due,until.remaining,description.count,urgency
-report.list_full.context=1
-report.list_full.description=Most details of tasks
-report.list_full.filter=status:pending -WAITING
-report.list_full.labels=ID,Active,Age,D,P,Project,Tags,R,Sch,Due,Until,Description,Urg
-report.list_full.sort=start-,due+,project+,urgency-
-
-# List wide
-report.list.columns=id,start.active,description.count,project,tags,priority,recur.indicator,scheduled,scheduled.countdown,due.countdown,due,until.remaining
-report.list.context=1
-report.list.description=Most details of tasks
-report.list.filter=status:pending -WAITING
-report.list.labels=ID,A,Description,Pro,Tags,Pri,R,Sch,Sch,Due,Due,Until
-report.list.sort=due+,start-,urgency-,project+
-
-# List short
-report.sl.columns=id,priority,due.remaining,scheduled.remaining,start.active,description.count
-report.sl.context=1
-report.sl.description=Most details of tasks
-report.sl.filter=status:pending -WAITING
-report.sl.labels=ID,!,Due,Sch,A,Description
-report.sl.sort=due+,start-,urgency-,project+
+report.next.columns=id,tags,description.count,due.countdown
+report.next.labels=ID,Tag,Desc,Due
+report.next.filter=status:pending -WAITING ( due:today or scheduled:today or +doing)
 
 # Custom report to show tasks todo in the current week grouped by project
 report.weekly_goals.description=This week (Due & Completed)
-report.weekly_goals.columns=end,project,description.count,due,scheduled
+report.weekly_goals.columns=description.count,due,end
 report.weekly_goals.filter=tag.not:meeting ((due.after:sow and due.before:eow) or (end.after:sow and end.before:eow) or (scheduled.after:sow and scheduled.before:eow))
 report.weekly_goals.sort=project
 report.weekly_goals.column.width=5000

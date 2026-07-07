@@ -7,6 +7,7 @@ return { -- Autocompletion
       'hrsh7th/cmp-cmdline',  -- Source for vim's cmdline
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
+      { 'Gelio/cmp-natdat', config = true }, -- Natural date/time completion (provides "date" command)
       'rafamadriz/friendly-snippets', -- Adds a number of user-friendly snippets
     }
 }

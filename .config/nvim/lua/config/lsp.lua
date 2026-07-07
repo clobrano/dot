@@ -268,11 +268,16 @@ cmp.setup {
   },
 }
 
--- Autocommand to disable buffer completion specifically for Markdown
+-- Autocommand for Markdown-specific completion (enable natdat, disable buffer/LSP noise)
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
-    cmp.setup.buffer({})
+    cmp.setup.buffer({
+      sources = {
+        { name = 'natdat' },  -- Natural date completion with @ trigger
+        { name = 'path' },    -- File path completion
+      }
+    })
   end,
 })
 

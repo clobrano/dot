@@ -1,103 +1,22 @@
--- File: lua/plugins/markdown_refs.lua
+-- File: lua/config/markdown_bookmarks.lua
 -- Support for Bookmarks in Neovim.
--- AddBookmark: adds a bookmark to Bookmarks.md as Markdown refrence links
+-- AddBookmark: adds a bookmark to Bookmarks.md as Markdown reference links
 -- FindBookmarks: fuzzy find the bookmarks, and either open the link or copy the URL
--- In a Markdown document, type the trigger `!` to let autocompletion suggests the references
 -- Use function Open_markdown_reference_url to open the link under the cursor, or use FindBookmarks
 
-return {
-  "hrsh7th/nvim-cmp",
-  dependencies = {
-    "hrsh7th/cmp-buffer",
-    "epwalsh/obsidian.nvim",
-    "ibhagwan/fzf-lua",
-  },
-  config = function(_, opts)
-    local cmp = require("cmp")
-    if opts and next(opts) ~= nil then
-      cmp.setup(opts)
-    end
+local M = {}
 
-    local markdown_refs_source = {}
-
-    function markdown_refs_source:get_trigger_characters()
-      return { "!" }
-    end
-
-    function markdown_refs_source:get_keyword_pattern()
-      return [=[\![^\]]*]=]
-    end
-
-    function markdown_refs_source:is_available()
-      return vim.bo.filetype == "markdown"
-    end
-
-    function markdown_refs_source:complete(request, callback)
-      local items = {}
-
-      local has_obsidian, obsidian = pcall(require, "obsidian")
-      if not has_obsidian then return callback({ items = items }) end
-
-      local client = obsidian.get_client()
-      if not client or not client.dir then return callback({ items = items }) end
-
-      local vault_root = tostring(client.dir)
-      local refs_file = vault_root .. "/Bookmarks.md"
-
-      if vim.fn.filereadable(refs_file) == 1 then
-        for line in io.lines(refs_file) do
-          local ref_name = string.match(line, "^%[(.-)%]:")
-
-          if ref_name then
-            table.insert(items, {
-              label = "[" .. ref_name .. "]",
-              filterText = "!" .. ref_name,
-              -- Insert the full [ref] and replace the ! trigger
-              insertText = "[" .. ref_name .. "]",
-              kind = cmp.lsp.CompletionItemKind.Reference,
-              detail = "Vault Reference Link",
-              score = 100000,
-            })
-          end
-        end
-      end
-
-      callback({ items = items })
-    end
-
-    cmp.register_source("markdown_refs", markdown_refs_source)
-
-    -- Force override the default matching behavior for markdown files
-    cmp.setup.filetype("markdown", {
-      sorting = {
-        priority_weight = 2,
-        comparators = {
-          cmp.config.compare.score, -- Ensure our custom item score (100000) takes absolute priority
-          cmp.config.compare.offset,
-          cmp.config.compare.exact,
-          cmp.config.compare.kind,
-          cmp.config.compare.sort_text,
-          cmp.config.compare.length,
-          cmp.config.compare.order,
-        },
-      },
-      sources = cmp.config.sources({
-        { name = "markdown_refs", priority = 1000 },  -- ! trigger for Bookmarks.md
-        { name = "obsidian", priority = 900 },        -- [[ for wiki links, [ for markdown links
-        { name = "obsidian_new", priority = 900 },    -- New note creation
-        { name = "obsidian_tags", priority = 900 },   -- # for tag completion
-      }, {
-        { name = "buffer", keyword_length = 4 },
-      })
-    })
+function M.setup()
+  -- Note: markdown_refs cmp source is now registered in obsidian.lua
 
     -- Helper function to get bookmarks file path
     local function get_bookmarks_file()
       local has_obsidian, obsidian = pcall(require, "obsidian")
       if not has_obsidian then return nil end
 
-      local client = obsidian.get_client()
-      if not client or not client.dir then return nil end
+      -- Safely get the client, handling cases where it's not initialized yet
+      local ok, client = pcall(obsidian.get_client)
+      if not ok or not client or not client.dir then return nil end
 
       return tostring(client.dir) .. "/Bookmarks.md"
     end
@@ -304,5 +223,6 @@ return {
     end, {
       desc = "Fuzzy find and open bookmarks",
     })
-  end,
-}
+end
+
+return M

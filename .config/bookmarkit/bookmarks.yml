@@ -443,7 +443,7 @@ bookmarks:
       link: https://kubernetes.io/blog
     - key: Konflux_RHWA_Applications_UI
       link: https://konflux-ui.apps.stone-prod-p02.hjvn.p1.openshiftapps.com/ns/rhwa-tenant/applications
-    - key: Red_Hat_Udemy
+    - key: Red_Hat_Learning_Udemy
       link: https://redhat.udemy.com/
     - key: Red_Hat_Google_Cloud_Console
       link: https://console.cloud.google.com/welcome?project=calcurse-479307
@@ -453,3 +453,5 @@ bookmarks:
       link: site:https://news.ycombinator.com/  Agentic SDLC
     - key: Yazi_Shortcuts_Keybindings
       link: https://yazi-rs.github.io/docs/quick-start#keybindings
+    - key: Ansible_documentation
+      link: https://docs.ansible.com/

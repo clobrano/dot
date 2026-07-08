@@ -71,7 +71,7 @@ scripts:
       mkdir -p "$DEST"
       EDITED_CONTENT=$HOME/workspace/ContentEditor/$(date +%F-%H%M).md
 
-      $HOME/workspace/toolbelt/gm "You are professional English content editor. Grade the message after the triple dashes (---), accept the message tone as intended by the author, point out specific errors one by one, and provide 2 new versions using the same tone and improving English form and clarity. Also copy your review in $EDITED_CONTENT file --- ${CLIP}"
+      $HOME/workspace/toolbelt/cl "You are professional English content editor. Grade the message after the triple dashes (---), accept the message tone as intended by the author, point out specific errors one by one, and provide 2 new versions using the same tone and improving English form and clarity. Also copy your review in $EDITED_CONTENT file --- ${CLIP}"
   - name: Prow Test Review
     notify_on_error: "Could not complete prow review: ${STDOUT}"
     interactive: true

@@ -4,6 +4,9 @@ set -x
         tmux new -s "$1"
     fi
 }
+
+alias t=task
+
 alias dev="tmux-attach-or-create 0-devel"
 alias notes="tmux-attach-or-create 1-note"
 

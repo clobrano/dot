@@ -33,7 +33,7 @@ vim.keymap.set('i', '<A-d>', '<C-d>', { desc='De-indent the line from the start'
 vim.keymap.set('n', '<leader>ap', 'gq}', { desc = "[A]lign [P]aragraph (alias for 'gq')" })
 
 -- buffer: find
-vim.keymap.set('n', '<leader>bb', ':b', { desc = "[F]ind [B]uffer (among opened)" })
+--vim.keymap.set('n', '<leader>bb', ':b', { desc = "[F]ind [B]uffer (among opened)" })
 -- buffer: move to last visited buffer
 vim.keymap.set('n', '<leader>bl', ':b#<cr>', { desc = "[F]ind [L]ast buffer" })
 

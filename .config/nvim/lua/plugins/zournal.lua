@@ -22,7 +22,7 @@ return {
           monthly_template = "",
           inbox_template = "",
 
-          --virtual_text_enabled = true,
+          virtual_text_enabled = true,
         },
         personal = {
           root_dir = "~/Me/Notes/",
@@ -34,9 +34,6 @@ return {
           daily_format = "%Y-%m-%d.md",
           weekly_format = "review_week_%Y_%W.md",
           week_numbering_system = "gregorian",
-
-          -- Template file paths (leave empty for basic defaults)
-          daily_template = "~/Me/Notes/3-Resources/templates/notes-day.md",
         },
       },
       -- Mappings

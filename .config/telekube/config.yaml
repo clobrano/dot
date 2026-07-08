@@ -29,15 +29,15 @@ keybindings:
     delete_tab: '-'
 tabs:
     - name: Pods
-      command: pods -n A
+      command: pods -A
     - name: Deployments
       command: deployments -A
     - name: Services
       command: services -A
-    - name: RHWA
-      command: pods -n openshift-workload-availability
     - name: Subs
       command: subs -n openshift-workload-availability
     - name: Jobs
       command: jobs -A
+    - name: OSAC
+      command: pods -n vmaas-dev-clobrano
 custom_commands: []

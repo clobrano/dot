@@ -8,7 +8,7 @@ return {
   config = function()
     require('render-markdown').setup({
       anti_conceal = {
-        enabled = false,
+        enabled = true,
       },
       render_modes = { 'n', 'c' },
       completions = { coq = { enabled = true } },
@@ -80,7 +80,8 @@ return {
         unchecked = { icon = 'TODO:', highlight = 'RenderMarkdownQuote', },
         checked = { icon = 'DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            active = { raw = '[S]', rendered = 'ACTIVE', highlight = 'RenderMarkdownHint' },
+            active = { raw = '[S]', rendered = 'ACTV:', highlight = 'RenderMarkdownHint' },
+            deleted = { raw = '[-]', rendered = 'DLTD:', highlight = 'RenderMarkdownHtmlComment' },
         },
     },
     quote = {

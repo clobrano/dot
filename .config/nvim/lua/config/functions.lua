@@ -24,7 +24,8 @@ vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<C
 vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
 
 vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>lua ReplaceSpacesWithHypens()<CR>', { noremap = true, silent = true, desc = 'Replace space with Hyphens in the clipboard text' })
-vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>mn', "<cmd>lua CreateNoteFromFileName()<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>mn', ":ObsidianTemplate<cr>", { noremap = true, silent = true })
 
 
 vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',

@@ -138,6 +138,7 @@ Javascript
 JeremyPoulin's
 Jumpbox
 Jupyter
+KFLUXSPRT
 KWh
 Kaggle
 KanBan
@@ -190,17 +191,19 @@ MintMaker
 ModemManager
 Morgen
 NHC's
+NMO
 NMS
 NOTE/!
 NetworkPolicies
 NetworkPolicy
 NodeHealthCheck
 NodeJS
-OK
 OKD
 OOP
 OPL
+OS
 OSAC
+Ok
 OpenImage
 OpenShift
 OpenSuse
@@ -249,6 +252,7 @@ Rocher
 RoleBinding
 RoleBindings
 Romboni
+SBD
 SDE
 SDElement
 SDL
@@ -308,9 +312,11 @@ Tzif
 UI
 UWP
 Ungraceful
+Unmarshals
 Urpinu
 VCS
 VMWare
+VMaaS
 VZW
 Venaria
 Vignesh
@@ -336,12 +342,14 @@ alm
 aosp
 api
 apigroup
+apimachinery
 apiserver
 app
 apps
 architected
 architecting
 argparse
+assemini
 assets
 assimil
 async
@@ -355,6 +363,8 @@ autogenerato
 automake
 autorecovery
 aws
+awsElasticBlockStore
+azureDisk
 b.
 backend
 baremetal
@@ -378,6 +388,7 @@ carlolobrano
 catched
 cavetteria
 cd
+chai
 checkboxes
 chemio
 chroot
@@ -483,6 +494,7 @@ func
 fw
 fwup
 gInspector
+gcePersistentDisk
 gdb
 gh
 gitarella
@@ -494,6 +506,7 @@ gobject
 goimport
 goimports
 golang
+gomod
 goodnotes
 google
 goroutine
@@ -519,6 +532,7 @@ hyperconverged
 hyperloop
 hypervisor
 hyprland
+iSCSI
 ignoreinweeklyreview
 init
 inline
@@ -641,9 +655,12 @@ powercycling
 ppp
 pr
 pranamat
+pre-installed
+prefetch
 presubmits
 printk
 prio
+project/!
 prometheus
 puml
 pv
@@ -682,6 +699,7 @@ reprovision
 reprovisioning
 requeue
 requeuing
+resolve
 reusability
 reversionary
 revisioned
@@ -715,6 +733,7 @@ shellcheck
 sherdana
 shortname
 sig
+significative
 sim's
 skipRange
 skopeo
@@ -729,6 +748,7 @@ splitted
 sql
 sqlite
 src
+sshuttle
 startDate
 state
 stderr
@@ -838,4 +858,3 @@ zathura
 zazen
 zettelkasten
 zlp
-assemini

@@ -192,11 +192,6 @@ if command -v starship 2>&1 >/dev/null; then
     eval "$(starship init zsh)"
 fi
 
-# use zshz in place of "cd", but only if installed
-if command -v zshz >/dev/null; then
-    eval "$(zoxide init zsh --cmd cd)"
-fi
-
 # enable fuzzy-cd
 if command -v fuzzy-cd >/dev/null; then
     eval "$(fuzzy-cd init --depth 6 zsh)"

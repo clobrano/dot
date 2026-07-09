@@ -8,6 +8,10 @@ urgency.uda.priority.H.coefficient=3
 uda.url.type=string
 uda.url.label=URL
 
+# UDA dur, for calendar events duration
+uda.dur.type=string
+uda.dur.label=DUR
+
 # use ancestral urgency if higher than own
 urgency.inherit=on
 

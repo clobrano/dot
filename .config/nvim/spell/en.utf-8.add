@@ -21,6 +21,7 @@ Baremetald
 BeMove
 Bitbucket
 Bobo
+CEL
 CEST
 CHANGELOG
 CIB
@@ -164,6 +165,7 @@ ListenAndServe's
 M8s
 MAO's
 MBIM
+MCE
 MCO
 MCP
 ME910C1
@@ -242,6 +244,7 @@ QMAP
 QmiTestPro
 QuAS
 RAs
+RFEs
 RHSA
 Readme
 References/!
@@ -664,6 +667,7 @@ project/!
 prometheus
 puml
 pv
+pwd
 python3
 qemu
 qmcli
@@ -791,6 +795,7 @@ tools/!
 tosal
 tqcm
 tracciabilità
+triaging
 ttyUSB3
 txt
 typename

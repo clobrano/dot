@@ -1,5 +1,6 @@
 return {
   'dkarter/bullets.vim',
+  enabled = true,
   ft = { 'markdown', 'text' },
   config = function()
     vim.g.bullets_enabled_filetypes = { 'markdown', 'text' }

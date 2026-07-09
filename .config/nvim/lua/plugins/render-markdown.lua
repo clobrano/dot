@@ -77,11 +77,13 @@ return {
         enabled = true,
         position = 'inline',
         -- TODO and DONE highlights choosen to be visibly different, but less than the ACTIVE one, which shall stand out.
-        unchecked = { icon = 'TODO:', highlight = 'RenderMarkdownQuote', },
-        checked = { icon = 'DONE:', highlight = 'RenderMarkdownHtmlComment', },
+        unchecked = { icon = '- TODO:', highlight = 'RenderMarkdownQuote', },
+        checked = { icon = '- DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            active = { raw = '[S]', rendered = 'ACTV:', highlight = 'RenderMarkdownHint' },
-            deleted = { raw = '[-]', rendered = 'DLTD:', highlight = 'RenderMarkdownHtmlComment' },
+            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownHint' },
+            deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownHtmlComment' },
+            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHint' },
+            skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownHtmlComment' },
         },
     },
     quote = {

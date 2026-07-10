@@ -22,6 +22,9 @@ return {
     -- First setup obsidian with the provided opts
     require("obsidian").setup(opts)
 
+    -- Obsidian keymaps
+    vim.keymap.set('n', '<leader>on', ':ObsidianNew<cr>', { silent = true, noremap = true })
+
     -- Now setup the markdown_refs completion source
     local cmp = require("cmp")
     local markdown_refs_source = {}

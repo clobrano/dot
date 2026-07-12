@@ -52,7 +52,7 @@ return {
       if not ok or not client or not client.dir then return callback({ items = items }) end
 
       local vault_root = tostring(client.dir)
-      local refs_file = vault_root .. "/Bookmarks.md"
+      local refs_file = vault_root .. "/Bookmarks.txt"
 
       if vim.fn.filereadable(refs_file) == 1 then
         for line in io.lines(refs_file) do

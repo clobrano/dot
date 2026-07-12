@@ -1,0 +1,70 @@
+<style>
+body {
+  font-family: "Source Code Pro", "Fira Code", "JetBrains Mono", monospace;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  line-height: 1.6;
+  color: #4c4f69;
+  background: #eff1f5;
+}
+
+h1, h2, h3, h4 { color: #4c4f69; }
+h1 { border-bottom: 1px solid #ccd0da; padding-bottom: 0.4em; }
+h2 { border-bottom: 1px solid #dce0e8; padding-bottom: 0.3em; }
+
+a { color: #1e66f5; }
+a:visited { color: #7287fd; }
+a:hover { color: #209fb5; }
+
+code {
+  background: #e6e9ef;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: #dce0e8;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; }
+
+blockquote {
+  border-left: 3px solid #1e66f5;
+  margin-left: 0;
+  padding-left: 1em;
+  color: #6c6f85;
+}
+
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ccd0da; padding: 0.5em 0.8em; }
+th { background: #e6e9ef; }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var tagColors = {
+    "forum":   "#d20f39",
+    "meeting": "#40a02b",
+    "bug":     "#fe640b",
+    "rfe":     "#04a5e5",
+    "jira":    "#8839ef",
+  };
+  var defaultTagColor = "#df8e1d";
+
+  document.querySelectorAll("p, li, td, th").forEach(function(el) {
+    el.innerHTML = el.innerHTML.replace(/(#[A-Za-z0-9_-]+)/g, function(match) {
+      var lower = match.toLowerCase();
+      var color = defaultTagColor;
+      for (var key in tagColors) {
+        if (lower.indexOf(key) !== -1) { color = tagColors[key]; break; }
+      }
+      return '<span style="background:' + color + '22;color:' + color +
+        ';padding:0.1em 0.4em;border-radius:3px;font-weight:600;">' + match + '</span>';
+    });
+  });
+});
+</script>

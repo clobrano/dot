@@ -1,228 +1,315 @@
 -- File: lua/config/markdown_bookmarks.lua
--- Support for Bookmarks in Neovim.
--- AddBookmark: adds a bookmark to Bookmarks.md as Markdown reference links
--- FindBookmarks: fuzzy find the bookmarks, and either open the link or copy the URL
--- Use function Open_markdown_reference_url to open the link under the cursor, or use FindBookmarks
+-- Support for Bookmarks and Cheatsheets in Neovim.
+-- Bookmarks.txt: reference links opened with xdg-open
+-- Cheatsheet.txt: CLI commands copied to system clipboard
 
 local M = {}
+
+-- Resolve a file inside the Obsidian vault
+local function get_vault_file(filename)
+  local has_obsidian, obsidian = pcall(require, "obsidian")
+  if not has_obsidian then return nil end
+
+  local ok, client = pcall(obsidian.get_client)
+  if not ok or not client or not client.dir then return nil end
+
+  return tostring(client.dir) .. "/" .. filename
+end
+
+-- Copy text to system clipboard
+local function copy_to_clipboard(text)
+  if vim.fn.executable("wl-copy") == 1 then
+    vim.fn.system({"wl-copy"}, text)
+  elseif vim.fn.executable("xclip") == 1 then
+    vim.fn.system({"xclip", "-selection", "clipboard"}, text)
+  elseif vim.fn.executable("xsel") == 1 then
+    vim.fn.system({"xsel", "-b"}, text)
+  else
+    vim.fn.setreg("+", text)
+  end
+end
+
+-- Parse [name]: value lines from a file
+local function parse_references(filepath)
+  if not filepath or vim.fn.filereadable(filepath) ~= 1 then
+    return {}
+  end
+
+  local entries = {}
+  for line in io.lines(filepath) do
+    local ref_name, value = string.match(line, "^%[(.-)%]:%s*(.+)$")
+    if ref_name and value then
+      table.insert(entries, {
+        name = ref_name,
+        value = vim.trim(value),
+        display = string.format("%-30s  %s", ref_name, value),
+      })
+    end
+  end
+  return entries
+end
+
+-- Find entry by display line
+local function find_entry(entries, line)
+  local ref_name = vim.trim(line:match("^(.-)%s%s+"))
+  if not ref_name then
+    ref_name = vim.trim(line)
+  end
+  for _, entry in ipairs(entries) do
+    if entry.name == ref_name then
+      return entry
+    end
+  end
+  return nil
+end
 
 function M.setup()
   -- Note: markdown_refs cmp source is now registered in obsidian.lua
 
-    -- Helper function to get bookmarks file path
-    local function get_bookmarks_file()
-      local has_obsidian, obsidian = pcall(require, "obsidian")
-      if not has_obsidian then return nil end
-
-      -- Safely get the client, handling cases where it's not initialized yet
-      local ok, client = pcall(obsidian.get_client)
-      if not ok or not client or not client.dir then return nil end
-
-      return tostring(client.dir) .. "/Bookmarks.md"
-    end
-
-    -- Command to add a new bookmark
-    vim.api.nvim_create_user_command("AddBookmark", function(opts)
-      local bookmarks_file = get_bookmarks_file()
-      if not bookmarks_file then
+  -- ── Add command (shared logic, different file) ──────────────
+  local function create_add_command(cmd_name, filename, label)
+    vim.api.nvim_create_user_command(cmd_name, function(opts)
+      local filepath = get_vault_file(filename)
+      if not filepath then
         vim.notify("Could not locate Obsidian vault", vim.log.levels.ERROR)
         return
       end
 
-      -- Get reference name (first argument or prompt)
       local ref_name = opts.fargs[1]
       if not ref_name then
         ref_name = vim.fn.input("Reference name: ")
         if ref_name == "" then return end
       end
 
-      -- Get URL (second argument or prompt)
-      local url = opts.fargs[2]
-      if not url then
-        url = vim.fn.input("URL: ")
-        if url == "" then return end
+      local value = opts.fargs[2]
+      if not value then
+        value = vim.fn.input(label .. ": ")
+        if value == "" then return end
       end
 
-      -- Format the bookmark entry
-      local bookmark_entry = string.format("[%s]: %s", ref_name, url)
-
-      -- Append to file
-      local file = io.open(bookmarks_file, "a")
+      local entry = string.format("[%s]: %s", ref_name, value)
+      local file = io.open(filepath, "a")
       if file then
-        file:write(bookmark_entry .. "\n")
+        file:write(entry .. "\n")
         file:close()
-        vim.notify(string.format("Added bookmark: [%s]", ref_name), vim.log.levels.INFO)
+        vim.notify(string.format("Added: [%s]", ref_name), vim.log.levels.INFO)
       else
-        vim.notify("Could not write to Bookmarks.md", vim.log.levels.ERROR)
+        vim.notify("Could not write to " .. filename, vim.log.levels.ERROR)
       end
     end, {
       nargs = "*",
-      desc = "Add a new bookmark to Bookmarks.md",
+      desc = "Add entry to " .. filename,
     })
+  end
 
-    -- Command to open Bookmarks.md
-    vim.api.nvim_create_user_command("OpenBookmarks", function()
-      local bookmarks_file = get_bookmarks_file()
-      if not bookmarks_file then
+  -- ── Open command (shared logic, different file) ─────────────
+  local function create_open_command(cmd_name, filename)
+    vim.api.nvim_create_user_command(cmd_name, function()
+      local filepath = get_vault_file(filename)
+      if not filepath then
         vim.notify("Could not locate Obsidian vault", vim.log.levels.ERROR)
         return
       end
 
-      if vim.fn.filereadable(bookmarks_file) == 1 then
-        vim.cmd("edit " .. vim.fn.fnameescape(bookmarks_file))
+      if vim.fn.filereadable(filepath) == 1 then
+        vim.cmd("edit " .. vim.fn.fnameescape(filepath))
       else
-        vim.notify("Bookmarks.md not found", vim.log.levels.ERROR)
+        vim.notify(filename .. " not found", vim.log.levels.ERROR)
       end
     end, {
-      desc = "Open Bookmarks.md file",
+      desc = "Open " .. filename,
     })
+  end
 
-    -- Helper function to parse bookmarks
-    local function parse_bookmarks()
-      local bookmarks_file = get_bookmarks_file()
-      if not bookmarks_file or vim.fn.filereadable(bookmarks_file) ~= 1 then
-        return {}
-      end
+  -- ── Bookmarks ──────────────────────────────────────────────
 
-      local bookmarks = {}
-      for line in io.lines(bookmarks_file) do
-        local ref_name, url = string.match(line, "^%[(.-)%]:%s*(.+)$")
-        if ref_name and url then
-          table.insert(bookmarks, {
-            name = ref_name,
-            url = vim.trim(url),
-            display = string.format("%-30s  %s", ref_name, url),
-          })
-        end
-      end
-      return bookmarks
+  create_add_command("AddBookmark", "Bookmarks.txt", "URL")
+  create_open_command("OpenBookmarks", "Bookmarks.txt")
+
+  vim.api.nvim_set_keymap('n', '<leader>bf', ':FindBookmarks<cr>', { desc='[B]ookmarks [F]ind', noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>ba', ':AddBookmark<cr>', { desc='[B]ookmarks [A]dd', noremap = true, silent = true })
+
+  vim.api.nvim_create_user_command("FindBookmarks", function()
+    local has_fzf, fzf = pcall(require, "fzf-lua")
+    if not has_fzf then
+      vim.notify("fzf-lua is not installed", vim.log.levels.ERROR)
+      return
     end
 
-    -- Command to fuzzy find bookmarks
-    vim.api.nvim_set_keymap('n', '<leader>bf', ':FindBookmarks<cr>', { desc='[B]ookmarks [F]ind', noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<leader>ba', ':AddBookmark<cr>', { desc='[B]ookmarks [A]dd', noremap = true, silent = true })
-    vim.api.nvim_create_user_command("FindBookmarks", function()
-      vim.notify("FindBookmarks called", vim.log.levels.DEBUG)
+    local bookmarks = parse_references(get_vault_file("Bookmarks.txt"))
+    if #bookmarks == 0 then
+      vim.notify("No bookmarks found in Bookmarks.txt", vim.log.levels.WARN)
+      return
+    end
 
-      local has_fzf, fzf = pcall(require, "fzf-lua")
-      if not has_fzf then
-        vim.notify("fzf-lua is not installed", vim.log.levels.ERROR)
-        return
-      end
+    local entries = {}
+    for _, b in ipairs(bookmarks) do
+      table.insert(entries, b.display)
+    end
 
-      local bookmarks = parse_bookmarks()
-      vim.notify(string.format("Found %d bookmarks", #bookmarks), vim.log.levels.DEBUG)
-
-      if #bookmarks == 0 then
-        vim.notify("No bookmarks found in Bookmarks.md", vim.log.levels.WARN)
-        return
-      end
-
-      -- Helper to copy to system clipboard
-      local function copy_to_clipboard(text)
-        -- Use OSC 52 for remote sessions, or system clipboard tools
-        if vim.fn.executable("wl-copy") == 1 then
-          vim.fn.system({"wl-copy"}, text)
-        elseif vim.fn.executable("xclip") == 1 then
-          vim.fn.system({"xclip", "-selection", "clipboard"}, text)
-        elseif vim.fn.executable("xsel") == 1 then
-          vim.fn.system({"xsel", "-b"}, text)
-        else
-          vim.fn.setreg("+", text)
-        end
-      end
-
-      -- Helper to find bookmark by display line
-      local function find_bookmark(line)
-        -- Extract everything before the double space separator (%-30s in display format)
-        local ref_name = vim.trim(line:match("^(.-)%s%s+"))
-        if not ref_name then
-          ref_name = vim.trim(line)
-        end
-        vim.notify(string.format("Looking for ref_name: '%s' from line: '%s'", ref_name, line), vim.log.levels.DEBUG)
-        for _, bookmark in ipairs(bookmarks) do
-          vim.notify(string.format("Comparing with bookmark.name: '%s'", bookmark.name), vim.log.levels.DEBUG)
-          if bookmark.name == ref_name then
-            return bookmark
-          end
-        end
-        vim.notify("No match found", vim.log.levels.DEBUG)
-        return nil
-      end
-
-      -- Prepare entries for fzf
-      local entries = {}
-      for _, bookmark in ipairs(bookmarks) do
-        table.insert(entries, bookmark.display)
-      end
-
-      fzf.fzf_exec(entries, {
-        prompt = "Bookmarks> ",
-        winopts = {
-          preview = {
-            layout = "horizontal",
-            horizontal = "down:30%",
-          },
+    fzf.fzf_exec(entries, {
+      prompt = "Bookmarks> ",
+      winopts = {
+        preview = {
+          layout = "horizontal",
+          horizontal = "down:30%",
         },
-        preview = function(items)
-          if not items or #items == 0 then return "" end
-          local bookmark = find_bookmark(items[1])
-          if bookmark then
-            return string.format("Name: %s\nURL:  %s\n\nMarkdown link: [%s](%s)",
-              bookmark.name, bookmark.url, bookmark.name, bookmark.url)
+      },
+      preview = function(items)
+        if not items or #items == 0 then return "" end
+        local b = find_entry(bookmarks, items[1])
+        if b then
+          return string.format("Name: %s\nURL:  %s\n\nMarkdown link: [%s](%s)",
+            b.name, b.value, b.name, b.value)
+        end
+        return ""
+      end,
+      actions = {
+        ["default"] = function(selected)
+          if not selected or #selected == 0 then return end
+          local b = find_entry(bookmarks, selected[1])
+          if b then
+            vim.fn.jobstart({"xdg-open", b.value}, {
+              detach = true,
+              on_exit = function(_, exit_code)
+                vim.schedule(function()
+                  vim.notify(string.format("xdg-open exit code: %d for %s", exit_code, b.value), vim.log.levels.INFO)
+                end)
+              end
+            })
           end
-          return ""
         end,
-        actions = {
-          ["default"] = function(selected, opts)
-            vim.notify(string.format("Default action called with: %s", vim.inspect(selected)), vim.log.levels.DEBUG)
-            if not selected or #selected == 0 then
-              vim.notify("No selection", vim.log.levels.WARN)
-              return
-            end
-            local bookmark = find_bookmark(selected[1])
-            if bookmark then
-              vim.notify(string.format("Found bookmark: %s -> %s", bookmark.name, bookmark.url), vim.log.levels.DEBUG)
-              -- Open URL in background
-              vim.fn.jobstart({"xdg-open", bookmark.url}, {
-                detach = true,
-                on_exit = function(_, exit_code)
-                  vim.schedule(function()
-                    vim.notify(string.format("xdg-open exit code: %d for %s", exit_code, bookmark.url), vim.log.levels.INFO)
-                  end)
-                end
-              })
-            else
-              vim.notify("Bookmark not found", vim.log.levels.WARN)
-            end
-          end,
-          ["ctrl-y"] = function(selected, opts)
-            vim.notify(string.format("Ctrl-y action called with: %s", vim.inspect(selected)), vim.log.levels.DEBUG)
-            if not selected or #selected == 0 then return end
-            local bookmark = find_bookmark(selected[1])
-            if bookmark then
-              copy_to_clipboard(bookmark.url)
-              vim.notify(string.format("Yanked URL: %s", bookmark.url), vim.log.levels.INFO)
-            end
-          end,
-          ["alt-y"] = function(selected, opts)
-            vim.notify(string.format("Alt-y action called with: %s", vim.inspect(selected)), vim.log.levels.DEBUG)
-            if not selected or #selected == 0 then return end
-            local bookmark = find_bookmark(selected[1])
-            if bookmark then
-              local md_link = string.format("[%s](%s)", bookmark.name, bookmark.url)
-              copy_to_clipboard(md_link)
-              vim.notify(string.format("Yanked markdown: %s", md_link), vim.log.levels.INFO)
-            end
-          end,
-        },
-        fzf_opts = {
-          ["--header"] = "Enter: open | Ctrl-y: yank URL | Alt-y: yank markdown",
-        },
-      })
-    end, {
-      desc = "Fuzzy find and open bookmarks",
+        ["ctrl-y"] = function(selected)
+          if not selected or #selected == 0 then return end
+          local b = find_entry(bookmarks, selected[1])
+          if b then
+            copy_to_clipboard(b.value)
+            vim.notify(string.format("Yanked URL: %s", b.value), vim.log.levels.INFO)
+          end
+        end,
+        ["alt-y"] = function(selected)
+          if not selected or #selected == 0 then return end
+          local b = find_entry(bookmarks, selected[1])
+          if b then
+            local md_link = string.format("[%s](%s)", b.name, b.value)
+            copy_to_clipboard(md_link)
+            vim.notify(string.format("Yanked markdown: %s", md_link), vim.log.levels.INFO)
+          end
+        end,
+      },
+      fzf_opts = {
+        ["--header"] = "Enter: open | Ctrl-y: yank URL | Alt-y: yank markdown",
+      },
     })
+  end, {
+    desc = "Fuzzy find and open bookmarks",
+  })
+
+  -- ── Preview markdown with Bookmarks.txt references ──────────
+  vim.api.nvim_set_keymap('n', '<leader>mp', ':PreviewMarkdown<cr>', { desc='[M]arkdown [P]review with bookmarks', noremap = true, silent = true })
+
+  vim.api.nvim_create_user_command("PreviewMarkdown", function()
+    if vim.fn.executable("pandoc") ~= 1 then
+      vim.notify("pandoc is not installed (sudo dnf install pandoc)", vim.log.levels.ERROR)
+      return
+    end
+
+    local buffile = vim.api.nvim_buf_get_name(0)
+    if buffile == "" then
+      vim.notify("Buffer has no file", vim.log.levels.ERROR)
+      return
+    end
+
+    local bookmarks = get_vault_file("Bookmarks.txt")
+    local output = "/tmp/nvim-preview.html"
+
+    local style = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h") .. "/markdown-preview.html"
+    local cmd = { "pandoc", "-s", "-f", "markdown+hard_line_breaks", "--metadata", "title=Preview", "--include-in-header", style, buffile }
+    if bookmarks and vim.fn.filereadable(bookmarks) == 1 then
+      table.insert(cmd, bookmarks)
+    end
+    table.insert(cmd, "-o")
+    table.insert(cmd, output)
+
+    vim.fn.system(cmd)
+    if vim.v.shell_error ~= 0 then
+      vim.notify("pandoc failed", vim.log.levels.ERROR)
+      return
+    end
+
+    vim.fn.jobstart({"xdg-open", output}, { detach = true })
+  end, {
+    desc = "Preview current markdown file with Bookmarks.txt references",
+  })
+
+  -- ── Cheatsheet ─────────────────────────────────────────────
+
+  create_add_command("AddCheatsheet", "Cheatsheet.txt", "Command")
+  create_open_command("OpenCheatsheet", "Cheatsheet.txt")
+
+  vim.api.nvim_set_keymap('n', '<leader>cf', ':FindCheatsheet<cr>', { desc='[C]heatsheet [F]ind', noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<leader>ca', ':AddCheatsheet<cr>', { desc='[C]heatsheet [A]dd', noremap = true, silent = true })
+
+  vim.api.nvim_create_user_command("FindCheatsheet", function()
+    local has_fzf, fzf = pcall(require, "fzf-lua")
+    if not has_fzf then
+      vim.notify("fzf-lua is not installed", vim.log.levels.ERROR)
+      return
+    end
+
+    local cheats = parse_references(get_vault_file("Cheatsheet.txt"))
+    if #cheats == 0 then
+      vim.notify("No entries found in Cheatsheet.txt", vim.log.levels.WARN)
+      return
+    end
+
+    local entries = {}
+    for _, c in ipairs(cheats) do
+      table.insert(entries, c.display)
+    end
+
+    fzf.fzf_exec(entries, {
+      prompt = "Cheatsheet> ",
+      winopts = {
+        preview = {
+          layout = "horizontal",
+          horizontal = "down:30%",
+        },
+      },
+      preview = function(items)
+        if not items or #items == 0 then return "" end
+        local c = find_entry(cheats, items[1])
+        if c then
+          return string.format("Name:    %s\nCommand: %s", c.name, c.value)
+        end
+        return ""
+      end,
+      actions = {
+        ["default"] = function(selected)
+          if not selected or #selected == 0 then return end
+          local c = find_entry(cheats, selected[1])
+          if c then
+            copy_to_clipboard(c.value)
+            vim.notify(string.format("Copied: %s", c.value), vim.log.levels.INFO)
+          end
+        end,
+        ["ctrl-y"] = function(selected)
+          if not selected or #selected == 0 then return end
+          local c = find_entry(cheats, selected[1])
+          if c then
+            local full = string.format("%s: %s", c.name, c.value)
+            copy_to_clipboard(full)
+            vim.notify(string.format("Copied with name: %s", full), vim.log.levels.INFO)
+          end
+        end,
+      },
+      fzf_opts = {
+        ["--header"] = "Enter: copy command | Ctrl-y: copy with name",
+      },
+    })
+  end, {
+    desc = "Fuzzy find cheatsheet and copy command to clipboard",
+  })
 end
 
 return M

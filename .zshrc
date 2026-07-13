@@ -113,8 +113,9 @@ setopt interactivecomments
 cdpath=($HOME $HOME/workspace)
 
 fpath=($HOME/.config/cconf/zsh/completions $fpath)
+# NOTE compinit is called at the end of this file; stub compdef so plugins can register completions before then
 autoload -U compinit
-compinit -u
+compdef() {}
 
 # highlight current selected completion item on tab
 zstyle ':completion:*' menu select
@@ -215,5 +216,11 @@ if command -v direnv 2>&1 >/dev/null; then
 fi
 export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+if command -v zoxide >/dev/null 2>&1; then
+    # before compinit to enable autocompletion
+    # --cmd cd: zoxide replaces "cd" command
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 autoload -U compinit; compinit

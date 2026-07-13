@@ -81,9 +81,9 @@ return {
         checked = { icon = '- DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
             active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownHint' },
-            deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownHtmlComment' },
+            deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownQuote' },
             doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHint' },
-            skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownHtmlComment' },
+            skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownWarn' },
         },
     },
     quote = {

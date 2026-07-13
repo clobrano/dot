@@ -113,17 +113,10 @@ return {
     follow_url_func = function(url)
       vim.ui.open(url)
     end,
-    -- Place new notes based on frontmatter 'folder' field
     note_path_func = function(spec)
       local client = require("obsidian").get_client()
       local vault = client.dir
 
-      -- Check if frontmatter specifies a target folder
-      if spec.dir then
-        return vault / spec.dir / tostring(spec.id)
-      end
-
-      -- Default behavior
       if tostring(vault):find("RedHatNotes") then
         return vault / "Resources" / tostring(spec.id)
       else

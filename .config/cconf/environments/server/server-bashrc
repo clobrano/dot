@@ -1,0 +1,42 @@
+# ~/.bashrc for servers — light version
+# This file is intended to be sourced in the original bashrc
+# to avoid breaking the entire shell
+
+export EDITOR="nvim"
+export GOPATH=$HOME/workspace/golang
+export GOBIN=${GOPATH}/bin
+
+# PATH
+PATH=~/.local/bin:$PATH
+PATH=$PATH:/usr/local/go/bin
+[[ -d "${GOBIN}" ]] && PATH=$PATH:${GOBIN}
+export PATH
+
+# Aliases
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -l'
+alias la='ls -alF'
+alias grep='grep --color=auto'
+
+# tmux
+tmux-attach-or-create() {
+    if ! tmux attach-session -t "$1" 2>&1 >/dev/null; then
+        tmux new -s "$1"
+    fi
+}
+
+alias dev="tmux-attach-or-create 0-devel"
+alias notes="tmux-attach-or-create 1-note"
+alias tas="tmux attach-session -t"
+alias tks="tmux kill-session -t"
+alias tls="tmux list-sessions"
+alias trs="tmux rename-session"
+
+# Fuzzy finder
+if command -v fzf &>/dev/null; then
+    source <(fzf --bash)
+    export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g "" -U'
+fi
+
+# Local overrides
+[[ -f "$HOME/.local_bashrc" ]] && source "$HOME/.local_bashrc"

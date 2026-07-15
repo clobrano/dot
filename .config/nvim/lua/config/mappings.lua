@@ -84,7 +84,14 @@ nmap('x7', ':m7<cr>:6bn<cr>:bd')
 nmap('x8', ':m8<cr>:7bn<cr>:bd')
 nmap('x9', ':m9<cr>:8bn<cr>:bd')
 -- buffer: close all buffers except the current one
-nmap('<leader>bx', ':%bd<CR><C-O>:bd#<CR>')
+vim.keymap.set('n', '<leader>bx', function()
+    local cur = vim.api.nvim_get_current_buf()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if buf ~= cur and vim.fn.buflisted(buf) == 1 and not vim.bo[buf].modified then
+            vim.api.nvim_buf_delete(buf, { force = false })
+        end
+    end
+end, { noremap = true })
 -- end buffer: close
 
 -- buffer: save

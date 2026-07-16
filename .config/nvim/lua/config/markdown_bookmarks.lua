@@ -224,16 +224,23 @@ function M.setup()
     local output = "/tmp/nvim-preview.html"
 
     local style = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h") .. "/markdown-preview.html"
-    local cmd = { "pandoc", "-s", "-f", "markdown+hard_line_breaks", "--metadata", "title=Preview", "--include-in-header", style, buffile }
-    if bookmarks and vim.fn.filereadable(bookmarks) == 1 then
-      table.insert(cmd, bookmarks)
-    end
-    table.insert(cmd, "-o")
-    table.insert(cmd, output)
 
-    vim.fn.system(cmd)
+    -- Sanitize YAML frontmatter (backtick values) and render wikilinks as styled spans
+    local shell_cmd = string.format(
+      "sed -e '/^---$/,/^---$/{ /^---$/!{ s/`\\([^`]*\\)`/\"\\1\"/g } }' -e 's/\\[\\[\\([^]|]*\\)|\\([^]]*\\)\\]\\]/<span class=\"wikilink\">\\2<\\/span>/g' -e 's/\\[\\[\\([^]]*\\)\\]\\]/<span class=\"wikilink\">\\1<\\/span>/g' %s",
+      vim.fn.shellescape(buffile)
+    )
+    if bookmarks and vim.fn.filereadable(bookmarks) == 1 then
+      shell_cmd = string.format("%s; cat %s", shell_cmd, vim.fn.shellescape(bookmarks))
+    end
+    shell_cmd = string.format(
+      "{ %s; } | pandoc -s -f markdown+hard_line_breaks --metadata title=Preview --include-in-header %s -o %s 2>&1",
+      shell_cmd, vim.fn.shellescape(style), vim.fn.shellescape(output)
+    )
+
+    local result = vim.fn.system(shell_cmd)
     if vim.v.shell_error ~= 0 then
-      vim.notify("pandoc failed", vim.log.levels.ERROR)
+      vim.notify("pandoc failed: " .. vim.trim(result), vim.log.levels.ERROR)
       return
     end
 

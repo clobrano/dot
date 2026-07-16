@@ -208,7 +208,7 @@ function M.setup()
   -- ── Preview markdown with Bookmarks.txt references ──────────
   vim.api.nvim_set_keymap('n', '<leader>mp', ':PreviewMarkdown<cr>', { desc='[M]arkdown [P]review with bookmarks', noremap = true, silent = true })
 
-  vim.api.nvim_create_user_command("PreviewMarkdown", function()
+  vim.api.nvim_create_user_command("PreviewMarkdown", function(opts)
     if vim.fn.executable("pandoc") ~= 1 then
       vim.notify("pandoc is not installed (sudo dnf install pandoc)", vim.log.levels.ERROR)
       return
@@ -222,6 +222,15 @@ function M.setup()
 
     local bookmarks = get_vault_file("Bookmarks.txt")
     local output = "/tmp/nvim-preview.html"
+    if opts.args ~= "" then
+      output = opts.args
+      if not output:match("^/") then
+        output = "/tmp/" .. output
+      end
+      if not output:match("%.html$") then
+        output = output .. ".html"
+      end
+    end
 
     local style = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h") .. "/markdown-preview.html"
 
@@ -231,7 +240,7 @@ function M.setup()
       vim.fn.shellescape(buffile)
     )
     if bookmarks and vim.fn.filereadable(bookmarks) == 1 then
-      shell_cmd = string.format("%s; cat %s", shell_cmd, vim.fn.shellescape(bookmarks))
+      shell_cmd = string.format("%s; echo; cat %s", shell_cmd, vim.fn.shellescape(bookmarks))
     end
     shell_cmd = string.format(
       "{ %s; } | pandoc -s -f markdown+hard_line_breaks --metadata title=Preview --include-in-header %s -o %s 2>&1",
@@ -246,6 +255,7 @@ function M.setup()
 
     vim.fn.jobstart({"xdg-open", output}, { detach = true })
   end, {
+    nargs = "?",
     desc = "Preview current markdown file with Bookmarks.txt references",
   })
 

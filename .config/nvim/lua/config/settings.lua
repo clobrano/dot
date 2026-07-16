@@ -57,7 +57,7 @@ vim.opt.lazyredraw = false -- no screen refresh during macro replay
 vim.opt.laststatus = 3 -- always show status
 vim.opt.linebreak = true -- wrap long lines at characters in 'breakat'
 
-vim.wo.signcolumn = 'yes:2' -- Keep signcolumn on by default
+vim.wo.signcolumn = 'yes'
 vim.o.updatetime = 500 -- Balanced update time (reduces LSP request frequency)
 vim.o.timeoutlen = 500 -- This is also the timeout for which-key
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience

@@ -415,6 +415,16 @@ vmap('<leader>ml', ':<C-u>lua CreateFileAndWikiLink()<CR>')
 vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
 -- inline code
 vmap('<leader>i', 'c`<C-r>"`<esc>')
+-- reference link: wrap selection in [] and append [text]: <clipboard> at end of file
+vim.keymap.set('v', '<leader>rl', function()
+  vim.cmd('normal! "ay')
+  local text = vim.fn.getreg('a')
+  local url = vim.fn.getreg('+')
+  vim.cmd('normal! gv')
+  vim.cmd('normal! c[' .. text .. ']')
+  local last_line = vim.api.nvim_buf_line_count(0)
+  vim.api.nvim_buf_set_lines(0, last_line, last_line, false, { '', '[' .. text .. ']: ' .. url })
+end, { desc = "Markdown [R]eference [L]ink from clipboard URL" })
 
 -- Some plugins things
 -- TODO: move it to zenmode

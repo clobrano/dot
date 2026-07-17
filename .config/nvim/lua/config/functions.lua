@@ -18,7 +18,8 @@ vim.api.nvim_set_keymap('n', '<leader>tw', ':TaskWarriorTask ', { noremap = true
 vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { noremap = true, silent = true, desc = '[I]nsert [D]ate [H]eader' })
 
 vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
-vim.api.nvim_set_keymap('n', '<leader>2', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [G]o (open in browser)' })
+vim.api.nvim_set_keymap('n', '<leader>sc', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [C]opy to clipboard' })
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
@@ -722,10 +723,8 @@ end
 
 function Get_Smart_Weblink()
   local target_text = get_text_inside_brackets()
-  print(target_text)
 
   local tokens = vim.split(target_text, " ")
-  print(vim.inspect(tokens))    -- Use vim.inspect for better output
 
   local org_project = tokens[1] -- Lua lists are 1-based
   local number = ""
@@ -763,6 +762,7 @@ function Get_Smart_Weblink()
     base_url = "https://issues.redhat.com/browse/" .. target_text
   end
   vim.fn.system('echo "' .. base_url .. '" | wl-copy')
+  print(target_text .. " -> " .. base_url .. " -> to clipboard")
   return base_url
 end
 

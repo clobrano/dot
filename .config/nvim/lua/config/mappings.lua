@@ -373,8 +373,7 @@ nmap('<leader>V',  ':source $MYVIMRC<CR>:PlugInstall<CR>')
 -- scrollbind
 nmap('<leader>sb', ':call ToggleScrollBind()<cr>')
 
--- session
-nmap('<leader>sc', ':SClose<cr>')
+-- session (leader-sc reassigned to smart link copy in functions.lua)
 
 -- tag open in split
 nmap('D', '<C-w>}')
@@ -436,12 +435,6 @@ nmap('<leader>gs', ':Neogit<cr>')
 -- add space below cursor (_p_ush)
 nmap('<leader>k', ":call append(line('.'), '')<CR>")
 
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>scp',
-  [[:execute '!scp % helios:/root/2no-lab/' . expand('%:h:t') . '/' . expand('%:t')<CR>]],
-  { noremap = true, silent = true }
-)
 
 -- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {

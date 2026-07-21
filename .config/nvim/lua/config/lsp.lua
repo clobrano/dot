@@ -280,6 +280,7 @@ vim.api.nvim_create_autocmd('FileType', {
         { name = 'obsidian', priority = 900 },        -- [[ for wiki links, [ for markdown links
         { name = 'obsidian_new', priority = 900 },    -- New note creation
         { name = 'obsidian_tags', priority = 900 },   -- # for tag completion
+        { name = 'luasnip' },
         { name = 'natdat' },                          -- Natural date completion with @ trigger
         { name = 'path' },                            -- File path completion
       }

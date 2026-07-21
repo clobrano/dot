@@ -29,7 +29,7 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.ERROR] = '●', -- Default: E
       [vim.diagnostic.severity.WARN] = '●', -- Default: W
       [vim.diagnostic.severity.INFO] = '●', -- Default: I
-      [vim.diagnostic.severity.HINT] = '●', -- Default: H
+      [vim.diagnostic.severity.HINT] = '·', -- Default: H
     },
   },
   severity_sort = true,

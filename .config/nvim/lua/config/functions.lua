@@ -18,7 +18,7 @@ vim.api.nvim_set_keymap('n', '<leader>tw', ':TaskWarriorTask ', { noremap = true
 vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { noremap = true, silent = true, desc = '[I]nsert [D]ate [H]eader' })
 
 vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
-vim.api.nvim_set_keymap('n', '<leader>sg', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [G]o (open in browser)' })
+vim.api.nvim_set_keymap('n', '<leader>so', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [O]pen browser' })
 vim.api.nvim_set_keymap('n', '<leader>sc', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [C]opy to clipboard' })
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
@@ -761,7 +761,7 @@ function Get_Smart_Weblink()
     -- No PR, nor MR, maybe a Jira ticket?
     base_url = "https://issues.redhat.com/browse/" .. target_text
   end
-  vim.fn.system('echo "' .. base_url .. '" | wl-copy')
+  vim.fn.system('echo -n "' .. base_url .. '" | wl-copy')
   print(target_text .. " -> " .. base_url .. " -> to clipboard")
   return base_url
 end

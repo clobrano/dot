@@ -232,7 +232,21 @@ function M.setup()
       end
     end
 
-    local style = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h") .. "/markdown-preview.html"
+    local config_dir = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
+    local style = config_dir .. "/markdown-preview.html"
+
+    -- Generate a temp header that loads the local mermaid.min.js
+    local mermaid_js = config_dir .. "/mermaid.min.js"
+    local mermaid_header = ""
+    if vim.fn.filereadable(mermaid_js) == 1 then
+      local tmp = "/tmp/nvim-mermaid-header.html"
+      local f = io.open(tmp, "w")
+      if f then
+        f:write('<script src="file://' .. mermaid_js .. '"></script>\n')
+        f:close()
+        mermaid_header = " --include-in-header " .. vim.fn.shellescape(tmp)
+      end
+    end
 
     -- Sanitize YAML frontmatter (backtick values) and render wikilinks as styled spans
     local shell_cmd = string.format(
@@ -243,8 +257,8 @@ function M.setup()
       shell_cmd = string.format("%s; echo; cat %s", shell_cmd, vim.fn.shellescape(bookmarks))
     end
     shell_cmd = string.format(
-      "{ %s; } | pandoc -s -f markdown+hard_line_breaks --metadata title=Preview --include-in-header %s -o %s 2>&1",
-      shell_cmd, vim.fn.shellescape(style), vim.fn.shellescape(output)
+      "{ %s; } | pandoc -s -f markdown+hard_line_breaks --metadata title=Preview%s --include-in-header %s -o %s 2>&1",
+      shell_cmd, mermaid_header, vim.fn.shellescape(style), vim.fn.shellescape(output)
     )
 
     local result = vim.fn.system(shell_cmd)

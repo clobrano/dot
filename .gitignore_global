@@ -25,3 +25,4 @@ prd/*
 CLAUDE.md
 ^.work/
 __pycache__/
+mermaid.min.js

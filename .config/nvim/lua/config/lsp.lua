@@ -71,6 +71,7 @@ local servers = {
         linters = {
           CommaFixes = false,
           ExpandMemoryShorthands = false,
+          OrthographicConsistency = false,
           LongSentences = false,
           NumericRangeEnDash = false,
           OxfordComma = false,

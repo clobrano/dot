@@ -1,0 +1,9 @@
+[Unit]
+Description=Local browser start page
+
+[Service]
+ExecStart=/usr/bin/python3 -m http.server 8420 --bind 127.0.0.1 --directory %h/.local/share/browser-start-page
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

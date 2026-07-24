@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<!--
+  Start page. Single file, no build step, no backend.
+  Everything is stored in localStorage as plain JSON (see "Export config" in
+  settings if you want it as a portable file instead).
+
+  Network calls this page makes, and only these:
+    - api.open-meteo.com               current weather (no key required)
+    - geocoding-api.open-meteo.com     city name -> coordinates, for manual location
+    - api.bigdatacloud.net             coordinates -> city name, for auto location
+    - api.allorigins.win / corsproxy.io   fallback readers for RSS feeds that
+      don't set CORS headers themselves (tried only if a direct fetch fails)
+    - www.google.com/s2/favicons       per-bookmark favicons (one request per
+      shortcut, by domain only — not by full URL)
+
+  Theme: Catppuccin (Latte in light mode, Mocha in dark mode), switching
+  automatically with prefers-color-scheme.
+
+  Set as your browser's home page / new tab target with a file:// or http://
+  URL once saved locally, e.g. file:///home/you/start/index.html
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start</title>
+<style>
+  :root{
+    /* Catppuccin Latte (light mode default) */
+    --base:#eff1f5; --mantle:#e6e9ef; --crust:#dce0e8;
+    --surface0:#ccd0da; --surface1:#bcc0cc; --surface2:#acb0be;
+    --overlay0:#9ca0b0; --overlay1:#8c8fa1; --overlay2:#7c7f93;
+    --subtext0:#6c6f85; --subtext1:#5c5f77; --text:#4c4f69;
+    --mauve:#8839ef; --blue:#1e66f5; --red:#d20f39; --green:#40a02b;
+    --radius:6px;
+    --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  /* auto mode: follow OS preference */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme]), :root[data-theme="auto"]{
+      --base:#1e1e2e; --mantle:#181825; --crust:#11111b;
+      --surface0:#313244; --surface1:#45475a; --surface2:#585b70;
+      --overlay0:#6c7086; --overlay1:#7f849c; --overlay2:#9399b2;
+      --subtext0:#a6adc8; --subtext1:#bac2de; --text:#cdd6f4;
+      --mauve:#cba6f7; --blue:#89b4fa; --red:#f38ba8; --green:#a6e3a1;
+    }
+  }
+  /* explicit override: forces the palette regardless of OS setting */
+  :root[data-theme="dark"]{
+    --base:#1e1e2e; --mantle:#181825; --crust:#11111b;
+    --surface0:#313244; --surface1:#45475a; --surface2:#585b70;
+    --overlay0:#6c7086; --overlay1:#7f849c; --overlay2:#9399b2;
+    --subtext0:#a6adc8; --subtext1:#bac2de; --text:#cdd6f4;
+    --mauve:#cba6f7; --blue:#89b4fa; --red:#f38ba8; --green:#a6e3a1;
+  }
+  :root[data-theme="light"]{
+    /* Catppuccin Latte, explicitly forced */
+    --base:#eff1f5; --mantle:#e6e9ef; --crust:#dce0e8;
+    --surface0:#ccd0da; --surface1:#bcc0cc; --surface2:#acb0be;
+    --overlay0:#9ca0b0; --overlay1:#8c8fa1; --overlay2:#7c7f93;
+    --subtext0:#6c6f85; --subtext1:#5c5f77; --text:#4c4f69;
+    --mauve:#8839ef; --blue:#1e66f5; --red:#d20f39; --green:#40a02b;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;min-height:100vh;}
+  body{
+    font-family:var(--sans);
+    color:var(--text);
+    background:var(--base);
+  }
+  #bg-layer{
+    position:fixed; inset:0; z-index:-2;
+    background-color:var(--base);
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+  }
+  #page{
+    position:relative; z-index:1;
+    max-width:1100px; margin:0 auto;
+    padding:64px 24px 80px;
+    min-height:100vh;
+  }
+  #content-panel{
+    background:color-mix(in srgb, var(--mantle) 88%, transparent);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--surface0);
+    border-radius:var(--radius);
+    padding:40px 48px;
+  }
+  #statusbar{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:36px;
+    font-family:var(--mono); font-size:13px; letter-spacing:.02em;
+    color:var(--subtext0);
+    gap:16px; flex-wrap:wrap;
+  }
+  #weather-readout{min-height:1.2em;}
+  #weather-readout .w-err{font-style:italic;}
+  #settings-btn{
+    background:transparent; border:1px solid var(--surface1); border-radius:var(--radius);
+    padding:6px 10px; cursor:pointer; color:var(--subtext0); font:inherit; font-family:var(--mono);
+    white-space:nowrap;
+  }
+  #settings-btn:hover, #settings-btn:focus-visible{border-color:var(--mauve); color:var(--mauve);}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--overlay0); margin:0 0 16px;
+  }
+
+  /* shortcuts: grid of tiles, each "<favicon> name" */
+  #shortcuts-list{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:10px;
+  }
+  .bm-row{
+    display:flex; align-items:center; gap:9px;
+    padding:12px 12px; border-radius:var(--radius);
+    border:1px solid var(--surface0);
+    cursor:grab; position:relative;
+    background:color-mix(in srgb, var(--surface0) 35%, transparent);
+  }
+  .bm-row:hover, .bm-row:focus-within{background:var(--surface0); border-color:var(--surface1);}
+  .bm-row.dragging{opacity:.4;}
+  .bm-row.drag-over{border-color:var(--mauve); box-shadow:inset 0 0 0 1px var(--mauve);}
+  .bm-handle{
+    color:var(--overlay0); font-size:13px; line-height:1; flex-shrink:0;
+    cursor:grab; padding:0; user-select:none;
+  }
+  .bm-icon{
+    width:20px; height:20px; flex-shrink:0; border-radius:4px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:10px; color:var(--subtext0);
+    background:transparent;
+  }
+  .bm-icon.bm-icon-fallback{background:var(--surface1);}
+  .bm-icon img{width:20px; height:20px; display:block;}
+  .bm-link{
+    flex:1; min-width:0; color:var(--text); text-decoration:none;
+    font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .bm-link:hover, .bm-link:focus-visible{color:var(--mauve); text-decoration:underline;}
+  .bm-edit, .bm-delete{
+    position:absolute; top:6px; opacity:0; transition:opacity .15s;
+    background:transparent; border:none; color:var(--overlay0); cursor:pointer;
+    font-family:var(--mono); font-size:13px; line-height:1; padding:2px; flex-shrink:0;
+  }
+  .bm-delete{right:6px;}
+  .bm-edit{right:24px;}
+  .bm-row:hover .bm-edit, .bm-row:hover .bm-delete,
+  .bm-edit:focus-visible, .bm-delete:focus-visible{opacity:1;}
+  .bm-delete:hover{color:var(--red);}
+  .bm-edit:hover{color:var(--mauve);}
+
+  .bm-add{
+    display:flex; align-items:center; justify-content:center; gap:8px; padding:12px;
+    border:1px dashed var(--surface1); border-radius:var(--radius);
+    color:var(--overlay0); cursor:pointer; background:transparent;
+    font:inherit; font-size:14px; width:100%; text-align:center;
+  }
+  .bm-add:hover, .bm-add:focus-visible{border-color:var(--mauve); color:var(--mauve);}
+
+  .bm-form{display:flex; flex-direction:column; align-items:stretch; gap:6px; padding:10px;}
+  .bm-form input{
+    font:inherit; font-size:12px; padding:6px 8px; border:1px solid var(--surface1);
+    border-radius:4px; background:var(--base); color:var(--text); min-width:0; width:100%;
+  }
+  .bm-form .bm-form-row{display:flex; gap:6px;}
+  .bm-form button{
+    flex:1; font-family:var(--mono); font-size:11px; padding:5px 8px; border-radius:4px;
+    border:1px solid var(--surface1); background:transparent; cursor:pointer; color:var(--subtext0);
+  }
+  .bm-form button.primary{border-color:var(--mauve); color:var(--mauve);}
+  .bm-form button:hover{background:var(--surface0);}
+
+  /* rss */
+  #rss-section{margin-top:48px; border-top:1px solid var(--surface0); padding-top:28px;}
+  .rss-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px;}
+  .rss-feed h3{
+    font-size:13px; font-family:var(--mono); margin:0 0 12px; color:var(--text);
+    border-bottom:1px solid var(--surface0); padding-bottom:8px; word-break:break-word;
+  }
+  .rss-feed ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .rss-feed a{color:var(--subtext1); text-decoration:none; font-size:13px; line-height:1.4;}
+  .rss-feed a:hover{color:var(--mauve); text-decoration:underline;}
+  .rss-error, .rss-loading{font-size:12px; color:var(--overlay0); font-style:italic;}
+
+  .empty-hint{font-size:12px; color:var(--overlay0); font-family:var(--mono);}
+
+  /* settings panel */
+  #settings-overlay{
+    position:fixed; inset:0; background:rgba(17,17,27,.45); z-index:10;
+    opacity:0; pointer-events:none; transition:opacity .2s ease;
+  }
+  #settings-overlay.open{opacity:1; pointer-events:auto;}
+  #settings-panel{
+    position:fixed; top:0; right:0; height:100vh; width:380px; max-width:92vw;
+    background:var(--mantle); border-left:1px solid var(--surface0); z-index:11;
+    overflow-y:auto; padding:28px; transform:translateX(100%);
+    transition:transform .22s ease; color:var(--text);
+  }
+  #settings-panel.open{transform:translateX(0);}
+  .settings-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;}
+  .settings-head h2{font-size:14px; font-family:var(--mono); letter-spacing:.05em; margin:0; text-transform:uppercase; color:var(--text);}
+  .settings-close{background:transparent; border:none; font-size:18px; cursor:pointer; color:var(--overlay0); line-height:1;}
+  .settings-close:hover{color:var(--mauve);}
+  .settings-section{margin-bottom:32px;}
+  .settings-section h3{font-size:12px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.05em; color:var(--overlay0); margin:0 0 12px;}
+  .field{margin-bottom:12px;}
+  .field label{display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer; margin-bottom:6px; color:var(--text);}
+  .field input[type="text"], .field input[type="url"], .field input[type="color"]{
+    width:100%; font:inherit; font-size:13px; padding:7px 8px; border:1px solid var(--surface1);
+    border-radius:4px; background:var(--base); color:var(--text);
+  }
+  .field input[type="file"]{font-size:12px; width:100%; color:var(--subtext0);}
+  .indent{padding-left:24px; margin-top:8px;}
+  .btn{
+    font-family:var(--mono); font-size:12px; padding:7px 12px; border-radius:4px;
+    border:1px solid var(--surface1); background:transparent; cursor:pointer; color:var(--text);
+  }
+  .btn:hover{border-color:var(--mauve); color:var(--mauve);}
+  .btn.danger:hover{border-color:var(--red); color:var(--red);}
+  .btn-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
+  .feed-row{display:flex; gap:6px; margin-bottom:8px;}
+  .feed-row input{flex:1;}
+  .feed-row button{flex-shrink:0;}
+  .geo-results{margin-top:8px; display:flex; flex-direction:column; gap:4px;}
+  .geo-result{
+    text-align:left; font-size:12px; font-family:var(--sans); padding:6px 8px;
+    border:1px solid var(--surface1); border-radius:4px; background:transparent; cursor:pointer; color:var(--text);
+  }
+  .geo-result:hover{border-color:var(--mauve); color:var(--mauve);}
+  .current-loc{font-size:12px; color:var(--overlay0); margin-top:6px;}
+  .settings-foot{border-top:1px solid var(--surface0); padding-top:20px; margin-top:8px;}
+
+  :focus-visible{outline:2px solid var(--mauve); outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="bg-layer"></div>
+
+<div id="page">
+  <div id="content-panel">
+    <header id="statusbar">
+      <div id="weather-readout" class="mono"></div>
+      <button id="settings-btn" type="button">⚙ settings</button>
+    </header>
+
+    <main>
+      <section aria-label="Shortcuts">
+        <div id="shortcuts-list"></div>
+      </section>
+
+      <section id="rss-section" aria-label="RSS feeds" hidden>
+        <p class="eyebrow">Feeds</p>
+        <div id="rss-grid" class="rss-grid"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div id="settings-overlay"></div>
+<aside id="settings-panel" aria-label="Settings">
+  <div class="settings-head">
+    <h2>Settings</h2>
+    <button class="settings-close" id="settings-close-btn" type="button" aria-label="Close settings">×</button>
+  </div>
+
+  <div class="settings-section">
+    <h3>Theme</h3>
+    <div class="field"><label><input type="radio" name="theme-mode" value="auto"> Follow system (Latte / Mocha)</label></div>
+    <div class="field"><label><input type="radio" name="theme-mode" value="light"> Always Latte (light)</label></div>
+    <div class="field"><label><input type="radio" name="theme-mode" value="dark"> Always Mocha (dark)</label></div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Wallpaper</h3>
+    <div class="field"><label><input type="radio" name="wp-type" value="none"> White background</label></div>
+    <div class="field">
+      <label><input type="radio" name="wp-type" value="color"> Solid color</label>
+      <div class="indent"><input type="color" id="wp-color-input" value="#ffffff"></div>
+    </div>
+    <div class="field">
+      <label><input type="radio" name="wp-type" value="image"> Image</label>
+      <div class="indent">
+        <div class="field"><label style="font-family:var(--mono); font-size:11px; color:var(--overlay0);">From a URL</label>
+          <input type="url" id="wp-url-input" placeholder="https://example.com/photo.jpg"></div>
+        <div class="field"><label style="font-family:var(--mono); font-size:11px; color:var(--overlay0);">Or upload a file</label>
+          <input type="file" id="wp-file-input" accept="image/*"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Local weather</h3>
+    <div class="field"><label><input type="checkbox" id="weather-enabled"> Show weather</label></div>
+    <div id="weather-options">
+      <div class="field"><label><input type="radio" name="weather-mode" value="auto"> Use this device's location</label></div>
+      <div class="field"><label><input type="radio" name="weather-mode" value="manual"> Set a location</label></div>
+      <div class="indent" id="weather-manual-block">
+        <div class="feed-row">
+          <input type="text" id="city-search-input" placeholder="Search for a city">
+          <button class="btn" id="city-search-btn" type="button">Search</button>
+        </div>
+        <div class="geo-results" id="city-results"></div>
+      </div>
+      <p class="current-loc" id="current-loc-label"></p>
+      <div class="field" style="margin-top:12px;">
+        <label style="font-family:var(--mono); font-size:11px; color:var(--overlay0);">Units</label>
+        <div style="display:flex; gap:16px; margin-top:4px;">
+          <label><input type="radio" name="weather-unit" value="C"> °C</label>
+          <label><input type="radio" name="weather-unit" value="F"> °F</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>RSS feeds</h3>
+    <div id="feed-rows"></div>
+    <button class="btn" id="feed-add-btn" type="button">+ Add feed</button>
+  </div>
+
+  <div class="settings-foot">
+    <h3>Data</h3>
+    <p class="empty-hint" style="margin:0 0 8px;">Everything here is stored in this browser only, as plain JSON.</p>
+    <div class="btn-row">
+      <button class="btn" id="export-btn" type="button">Export config</button>
+      <button class="btn" id="import-btn" type="button">Import config</button>
+      <input type="file" id="import-file-input" accept="application/json" hidden>
+      <button class="btn danger" id="reset-btn" type="button">Reset everything</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+
+  var STORAGE_KEY = "startpage.settings.v1";
+
+  function defaultState(){
+    return {
+      theme: "auto",
+      shortcuts: [],
+      wallpaper: { type: "none", color: "#ffffff", imageMode: "url", imageUrl: "", imageData: "" },
+      weather: { enabled: true, mode: "auto", unit: "C", lat: null, lon: null, label: "", cache: null },
+      feeds: []
+    };
+  }
+
+  function loadState(){
+    var s = defaultState();
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        var parsed = JSON.parse(raw);
+        s = deepMerge(s, parsed);
+      }
+    }catch(e){ /* ignore corrupt storage, fall back to defaults */ }
+    return s;
+  }
+
+  function deepMerge(base, override){
+    if(typeof override !== "object" || override === null) return base;
+    var out = Array.isArray(base) ? base.slice() : Object.assign({}, base);
+    for(var key in base){
+      if(override.hasOwnProperty(key)){
+        if(typeof base[key] === "object" && base[key] !== null && !Array.isArray(base[key])
+           && typeof override[key] === "object" && override[key] !== null){
+          out[key] = deepMerge(base[key], override[key]);
+        } else {
+          out[key] = override[key];
+        }
+      }
+    }
+    return out;
+  }
+
+  function saveState(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      return true;
+    }catch(e){
+      alert("Couldn't save settings: " + (e && e.message ? e.message : "storage is full.") +
+            "\nIf you just added a wallpaper image, try a smaller file or use an image URL instead.");
+      return false;
+    }
+  }
+
+  function genId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function normalizeUrl(url){
+    url = (url || "").trim();
+    if(!url) return "";
+    if(!/^https?:\/\//i.test(url)) url = "https://" + url;
+    return url;
+  }
+
+  function hostFromUrl(url){
+    try{ return new URL(url).host; }catch(e){ return url; }
+  }
+
+  function escapeHtml(str){
+    return String(str == null ? "" : str).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  var state = loadState();
+
+  /* ---------------- theme ---------------- */
+
+  function applyTheme(){
+    if(state.theme === "light" || state.theme === "dark"){
+      document.documentElement.setAttribute("data-theme", state.theme);
+    } else {
+      document.documentElement.setAttribute("data-theme", "auto");
+    }
+  }
+
+  /* ---------------- wallpaper ---------------- */
+
+  function applyWallpaper(){
+    var bg = document.getElementById("bg-layer");
+    var w = state.wallpaper;
+    if(w.type === "color"){
+      bg.style.backgroundImage = "none";
+      bg.style.backgroundColor = w.color || "#ffffff";
+    } else if(w.type === "image"){
+      var src = w.imageMode === "upload" ? w.imageData : w.imageUrl;
+      if(src){
+        bg.style.backgroundColor = "#ffffff";
+        bg.style.backgroundImage = 'url("' + src.replace(/"/g, "%22") + '")';
+      } else {
+        bg.style.backgroundImage = "none";
+        bg.style.backgroundColor = "";
+      }
+    } else {
+      bg.style.backgroundImage = "none";
+      bg.style.backgroundColor = "";
+    }
+  }
+
+  /* ---------------- shortcuts (inline list, drag-to-reorder) ---------------- */
+
+  var list = document.getElementById("shortcuts-list");
+  var dragSourceId = null;
+
+  function faviconUrl(pageUrl){
+    var host = hostFromUrl(pageUrl);
+    return "https://www.google.com/s2/favicons?sz=32&domain=" + encodeURIComponent(host);
+  }
+
+  function renderShortcuts(){
+    list.innerHTML = "";
+    state.shortcuts.forEach(function(sc){
+      list.appendChild(buildRow(sc));
+    });
+    list.appendChild(buildAddRow());
+  }
+
+  function buildRow(sc){
+    var row = document.createElement("div");
+    row.className = "bm-row";
+    row.dataset.id = sc.id;
+    row.draggable = true;
+
+    var handle = document.createElement("span");
+    handle.className = "bm-handle";
+    handle.textContent = "⠿";
+    handle.setAttribute("aria-hidden", "true");
+
+    var iconWrap = document.createElement("span");
+    iconWrap.className = "bm-icon";
+    var img = document.createElement("img");
+    img.src = faviconUrl(sc.url);
+    img.alt = "";
+    img.loading = "lazy";
+    img.addEventListener("error", function(){
+      iconWrap.innerHTML = "";
+      iconWrap.classList.add("bm-icon-fallback");
+      iconWrap.textContent = (sc.name || "?").trim().slice(0, 1).toUpperCase();
+    });
+    iconWrap.appendChild(img);
+
+    var a = document.createElement("a");
+    a.className = "bm-link";
+    a.href = sc.url;
+    a.textContent = sc.name;
+
+    var editBtn = document.createElement("button");
+    editBtn.type = "button"; editBtn.className = "bm-edit"; editBtn.title = "Edit"; editBtn.textContent = "✎";
+    editBtn.addEventListener("click", function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      row.replaceWith(buildForm(sc));
+    });
+
+    var delBtn = document.createElement("button");
+    delBtn.type = "button"; delBtn.className = "bm-delete"; delBtn.title = "Remove"; delBtn.textContent = "×";
+    delBtn.addEventListener("click", function(ev){
+      ev.preventDefault(); ev.stopPropagation();
+      state.shortcuts = state.shortcuts.filter(function(x){ return x.id !== sc.id; });
+      saveState(); renderShortcuts();
+    });
+
+    row.appendChild(handle); row.appendChild(iconWrap); row.appendChild(a);
+    row.appendChild(editBtn); row.appendChild(delBtn);
+
+    row.addEventListener("dragstart", function(ev){
+      dragSourceId = sc.id;
+      row.classList.add("dragging");
+      ev.dataTransfer.effectAllowed = "move";
+      try{ ev.dataTransfer.setData("text/plain", sc.id); }catch(e){}
+    });
+    row.addEventListener("dragend", function(){
+      row.classList.remove("dragging");
+      Array.prototype.forEach.call(list.querySelectorAll(".bm-row"), function(r){
+        r.classList.remove("drag-over");
+      });
+      dragSourceId = null;
+    });
+    row.addEventListener("dragover", function(ev){
+      if(dragSourceId === null || dragSourceId === sc.id) return;
+      ev.preventDefault();
+      ev.dataTransfer.dropEffect = "move";
+      row.classList.add("drag-over");
+    });
+    row.addEventListener("dragleave", function(){
+      row.classList.remove("drag-over");
+    });
+    row.addEventListener("drop", function(ev){
+      ev.preventDefault();
+      row.classList.remove("drag-over");
+      if(dragSourceId === null || dragSourceId === sc.id) return;
+      reorderShortcuts(dragSourceId, sc.id);
+    });
+
+    return row;
+  }
+
+  function reorderShortcuts(draggedId, targetId){
+    var fromIdx = state.shortcuts.findIndex(function(s){ return s.id === draggedId; });
+    var toIdx = state.shortcuts.findIndex(function(s){ return s.id === targetId; });
+    if(fromIdx === -1 || toIdx === -1) return;
+    var moved = state.shortcuts.splice(fromIdx, 1)[0];
+    state.shortcuts.splice(toIdx, 0, moved);
+    saveState(); renderShortcuts();
+  }
+
+  function buildForm(existing){
+    var wrap = document.createElement("div");
+    wrap.className = "bm-row bm-form";
+
+    var nameInput = document.createElement("input");
+    nameInput.type = "text"; nameInput.className = "name-input";
+    nameInput.placeholder = "Name"; nameInput.value = existing ? existing.name : "";
+
+    var urlInput = document.createElement("input");
+    urlInput.type = "text"; urlInput.className = "url-input";
+    urlInput.placeholder = "Address"; urlInput.value = existing ? existing.url : "";
+
+    var btnRow = document.createElement("div");
+    btnRow.className = "bm-form-row";
+
+    var saveBtn = document.createElement("button");
+    saveBtn.type = "button"; saveBtn.className = "primary"; saveBtn.textContent = "Save";
+
+    var cancelBtn = document.createElement("button");
+    cancelBtn.type = "button"; cancelBtn.textContent = "Cancel";
+
+    saveBtn.addEventListener("click", function(){
+      var name = nameInput.value.trim();
+      var url = normalizeUrl(urlInput.value);
+      if(!name || !url) return;
+      if(existing){
+        existing.name = name; existing.url = url;
+      } else {
+        state.shortcuts.push({ id: genId(), name: name, url: url });
+      }
+      saveState(); renderShortcuts();
+    });
+    cancelBtn.addEventListener("click", function(){ renderShortcuts(); });
+
+    nameInput.addEventListener("keydown", function(ev){ if(ev.key === "Enter") saveBtn.click(); });
+    urlInput.addEventListener("keydown", function(ev){ if(ev.key === "Enter") saveBtn.click(); });
+
+    btnRow.appendChild(saveBtn); btnRow.appendChild(cancelBtn);
+    wrap.appendChild(nameInput); wrap.appendChild(urlInput); wrap.appendChild(btnRow);
+
+    setTimeout(function(){ nameInput.focus(); }, 0);
+    return wrap;
+  }
+
+  function buildAddRow(){
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "bm-add";
+    btn.textContent = "+ add shortcut";
+    btn.addEventListener("click", function(){ btn.replaceWith(buildForm(null)); });
+    return btn;
+  }
+
+  /* ---------------- weather ---------------- */
+
+  var WMO = {
+    0:["Clear sky","☀"],1:["Mainly clear","🌤"],2:["Partly cloudy","⛅"],3:["Overcast","☁"],
+    45:["Fog","🌫"],48:["Freezing fog","🌫"],
+    51:["Light drizzle","🌦"],53:["Drizzle","🌦"],55:["Dense drizzle","🌦"],
+    56:["Freezing drizzle","🌦"],57:["Freezing drizzle","🌦"],
+    61:["Light rain","🌧"],63:["Rain","🌧"],65:["Heavy rain","🌧"],
+    66:["Freezing rain","🌧"],67:["Freezing rain","🌧"],
+    71:["Light snow","❄"],73:["Snow","❄"],75:["Heavy snow","❄"],77:["Snow grains","❄"],
+    80:["Rain showers","🌦"],81:["Rain showers","🌦"],82:["Violent showers","🌧"],
+    85:["Snow showers","🌨"],86:["Snow showers","🌨"],
+    95:["Thunderstorm","⛈"],96:["Thunderstorm, hail","⛈"],99:["Thunderstorm, hail","⛈"]
+  };
+
+  var weatherEl = document.getElementById("weather-readout");
+
+  function setWeatherText(html){ weatherEl.innerHTML = html; }
+
+  function renderWeatherFromCache(){
+    var w = state.weather;
+    if(!w.enabled){ setWeatherText(""); return; }
+    if(w.cache){
+      paintWeather(w.cache.temp, w.cache.code, w.label);
+    } else {
+      setWeatherText('<span class="w-err">loading weather…</span>');
+    }
+  }
+
+  function paintWeather(tempC, code, label){
+    var w = state.weather;
+    var desc = WMO[code] || ["—","—"];
+    var temp = w.unit === "F" ? Math.round(tempC * 9 / 5 + 32) : Math.round(tempC);
+    var unitSym = w.unit === "F" ? "°F" : "°C";
+    var prefix = label ? escapeHtml(label) + " · " : "";
+    setWeatherText(prefix + temp + unitSym + " " + desc[1] + " " + escapeHtml(desc[0]));
+  }
+
+  function fetchWeather(lat, lon){
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon +
+               "&current=temperature_2m,weather_code&timezone=auto";
+    return fetch(url).then(function(res){
+      if(!res.ok) throw new Error("weather request failed");
+      return res.json();
+    }).then(function(data){ return data.current; });
+  }
+
+  function reverseGeocode(lat, lon){
+    var url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat +
+               "&longitude=" + lon + "&localityLanguage=en";
+    return fetch(url).then(function(res){
+      if(!res.ok) throw new Error("reverse geocode failed");
+      return res.json();
+    }).then(function(data){
+      return data.city || data.locality || data.principalSubdivision || "";
+    }).catch(function(){ return ""; });
+  }
+
+  function geocodeCity(name){
+    var url = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(name) +
+               "&count=5&language=en&format=json";
+    return fetch(url).then(function(res){
+      if(!res.ok) throw new Error("geocoding failed");
+      return res.json();
+    }).then(function(data){ return data.results || []; });
+  }
+
+  function refreshWeather(){
+    var w = state.weather;
+    if(!w.enabled){ setWeatherText(""); return; }
+
+    function fetchAndPaint(lat, lon, label){
+      fetchWeather(lat, lon).then(function(current){
+        w.cache = { temp: current.temperature_2m, code: current.weather_code, ts: Date.now() };
+        saveState();
+        paintWeather(current.temperature_2m, current.weather_code, label != null ? label : w.label);
+      }).catch(function(){
+        if(!w.cache) setWeatherText('<span class="w-err">weather unavailable right now</span>');
+      });
+    }
+
+    if(w.mode === "manual"){
+      if(w.lat == null){
+        setWeatherText('<span class="w-err">set a location in settings</span>');
+        return;
+      }
+      renderWeatherFromCache();
+      fetchAndPaint(w.lat, w.lon, w.label);
+      return;
+    }
+
+    // auto mode
+    renderWeatherFromCache();
+    if(!navigator.geolocation){
+      if(!w.cache) setWeatherText('<span class="w-err">location isn\'t available in this browser</span>');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(function(pos){
+      var lat = pos.coords.latitude, lon = pos.coords.longitude;
+      w.lat = lat; w.lon = lon;
+      reverseGeocode(lat, lon).then(function(label){
+        w.label = label;
+        saveState();
+        fetchAndPaint(lat, lon, label);
+      });
+    }, function(){
+      if(!w.cache){
+        setWeatherText('<span class="w-err">turn on location access, or set one in settings</span>');
+      }
+    }, { timeout: 8000 });
+  }
+
+  /* ---------------- rss ---------------- */
+
+  var rssSection = document.getElementById("rss-section");
+  var rssGrid = document.getElementById("rss-grid");
+
+  var CORS_PROXIES = [
+    function(u){ return u; },
+    function(u){ return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
+    function(u){ return "https://corsproxy.io/?" + encodeURIComponent(u); }
+  ];
+
+  function fetchWithFallback(url){
+    var i = 0;
+    function tryNext(){
+      if(i >= CORS_PROXIES.length) return Promise.reject(new Error("all sources failed"));
+      var target = CORS_PROXIES[i++](url);
+      var controller = new AbortController();
+      var timer = setTimeout(function(){ controller.abort(); }, 10000);
+      return fetch(target, { signal: controller.signal }).then(function(res){
+        clearTimeout(timer);
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      }).catch(function(err){
+        clearTimeout(timer);
+        return tryNext();
+      });
+    }
+    return tryNext();
+  }
+
+  function parseFeed(xmlText){
+    var doc = new DOMParser().parseFromString(xmlText, "application/xml");
+    if(doc.querySelector("parsererror")) throw new Error("could not parse feed");
+    var isAtom = !!doc.querySelector("feed") && !doc.querySelector("rss");
+    var title, items;
+    if(isAtom){
+      var ft = doc.querySelector("feed > title");
+      title = ft ? ft.textContent.trim() : null;
+      items = Array.prototype.slice.call(doc.querySelectorAll("feed > entry"), 0, 3).map(function(entry){
+        var linkEl = entry.querySelector("link[href]");
+        var dEl = entry.querySelector("updated") || entry.querySelector("published");
+        var tEl = entry.querySelector("title");
+        return {
+          title: tEl ? tEl.textContent.trim() : "(untitled)",
+          link: linkEl ? linkEl.getAttribute("href") : "#",
+          date: dEl ? dEl.textContent.trim() : ""
+        };
+      });
+    } else {
+      var ct = doc.querySelector("channel > title");
+      title = ct ? ct.textContent.trim() : null;
+      items = Array.prototype.slice.call(doc.querySelectorAll("item"), 0, 3).map(function(item){
+        var tEl = item.querySelector("title");
+        var lEl = item.querySelector("link");
+        var dEl = item.querySelector("pubDate");
+        return {
+          title: tEl ? tEl.textContent.trim() : "(untitled)",
+          link: lEl ? lEl.textContent.trim() : "#",
+          date: dEl ? dEl.textContent.trim() : ""
+        };
+      });
+    }
+    return { title: title, items: items };
+  }
+
+  function renderFeeds(){
+    rssGrid.innerHTML = "";
+    if(!state.feeds.length){ rssSection.hidden = true; return; }
+    rssSection.hidden = false;
+
+    state.feeds.forEach(function(url){
+      var col = document.createElement("div");
+      col.className = "rss-feed";
+      var h3 = document.createElement("h3");
+      h3.textContent = hostFromUrl(url);
+      var body = document.createElement("div");
+      body.className = "rss-loading";
+      body.textContent = "loading…";
+      col.appendChild(h3); col.appendChild(body);
+      rssGrid.appendChild(col);
+
+      fetchWithFallback(url).then(function(xml){
+        var parsed = parseFeed(xml);
+        h3.textContent = parsed.title || hostFromUrl(url);
+        body.className = "";
+        if(!parsed.items.length){
+          body.innerHTML = '<span class="rss-error">no items found</span>';
+          return;
+        }
+        var ul = document.createElement("ul");
+        parsed.items.forEach(function(it){
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.href = it.link; a.target = "_blank"; a.rel = "noopener noreferrer";
+          a.textContent = it.title;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        body.innerHTML = "";
+        body.appendChild(ul);
+      }).catch(function(){
+        body.className = "rss-error";
+        body.textContent = "couldn't load this feed.";
+      });
+    });
+  }
+
+  /* ---------------- settings panel ---------------- */
+
+  var overlay = document.getElementById("settings-overlay");
+  var panel = document.getElementById("settings-panel");
+
+  function openSettings(){
+    populateSettingsForm();
+    overlay.classList.add("open");
+    panel.classList.add("open");
+  }
+  function closeSettings(){
+    overlay.classList.remove("open");
+    panel.classList.remove("open");
+  }
+
+  document.getElementById("settings-btn").addEventListener("click", openSettings);
+  document.getElementById("settings-close-btn").addEventListener("click", closeSettings);
+  overlay.addEventListener("click", closeSettings);
+  document.addEventListener("keydown", function(ev){
+    if(ev.key === "Escape" && panel.classList.contains("open")) closeSettings();
+  });
+
+  function populateSettingsForm(){
+    document.querySelectorAll('input[name="theme-mode"]').forEach(function(r){ r.checked = (r.value === state.theme); });
+
+    var w = state.wallpaper;
+    document.querySelectorAll('input[name="wp-type"]').forEach(function(r){ r.checked = (r.value === w.type); });
+    document.getElementById("wp-color-input").value = w.color || "#ffffff";
+    document.getElementById("wp-url-input").value = w.imageMode === "url" ? (w.imageUrl || "") : "";
+
+    var wx = state.weather;
+    document.getElementById("weather-enabled").checked = !!wx.enabled;
+    document.querySelectorAll('input[name="weather-mode"]').forEach(function(r){ r.checked = (r.value === wx.mode); });
+    document.querySelectorAll('input[name="weather-unit"]').forEach(function(r){ r.checked = (r.value === wx.unit); });
+    document.getElementById("current-loc-label").textContent = wx.label
+      ? "Current location: " + wx.label
+      : (wx.lat != null ? "Current location: " + wx.lat.toFixed(2) + ", " + wx.lon.toFixed(2) : "No location set yet.");
+    updateWeatherOptionVisibility();
+
+    renderFeedRows();
+  }
+
+  function updateWeatherOptionVisibility(){
+    var enabled = document.getElementById("weather-enabled").checked;
+    document.getElementById("weather-options").style.display = enabled ? "" : "none";
+    var manual = document.querySelector('input[name="weather-mode"][value="manual"]').checked;
+    document.getElementById("weather-manual-block").style.display = manual ? "" : "none";
+  }
+
+  document.getElementById("weather-enabled").addEventListener("change", function(){
+    state.weather.enabled = this.checked;
+    saveState(); updateWeatherOptionVisibility(); refreshWeather();
+  });
+  document.querySelectorAll('input[name="weather-mode"]').forEach(function(r){
+    r.addEventListener("change", function(){
+      state.weather.mode = this.value;
+      saveState(); updateWeatherOptionVisibility(); refreshWeather();
+    });
+  });
+  document.querySelectorAll('input[name="weather-unit"]').forEach(function(r){
+    r.addEventListener("change", function(){
+      state.weather.unit = this.value;
+      saveState(); renderWeatherFromCache(); refreshWeather();
+    });
+  });
+
+  document.querySelectorAll('input[name="theme-mode"]').forEach(function(r){
+    r.addEventListener("change", function(){
+      state.theme = this.value;
+      saveState(); applyTheme();
+    });
+  });
+
+  document.getElementById("city-search-btn").addEventListener("click", function(){
+    var q = document.getElementById("city-search-input").value.trim();
+    var resultsEl = document.getElementById("city-results");
+    resultsEl.innerHTML = "";
+    if(!q) return;
+    resultsEl.innerHTML = '<span class="empty-hint">searching…</span>';
+    geocodeCity(q).then(function(results){
+      resultsEl.innerHTML = "";
+      if(!results.length){
+        resultsEl.innerHTML = '<span class="empty-hint">no matches found</span>';
+        return;
+      }
+      results.forEach(function(r){
+        var btn = document.createElement("button");
+        btn.type = "button"; btn.className = "geo-result";
+        var label = [r.name, r.admin1, r.country].filter(Boolean).join(", ");
+        btn.textContent = label;
+        btn.addEventListener("click", function(){
+          state.weather.lat = r.latitude; state.weather.lon = r.longitude;
+          state.weather.label = [r.name, r.country].filter(Boolean).join(", ");
+          state.weather.cache = null;
+          saveState();
+          document.getElementById("current-loc-label").textContent = "Current location: " + state.weather.label;
+          resultsEl.innerHTML = "";
+          document.getElementById("city-search-input").value = "";
+          refreshWeather();
+        });
+        resultsEl.appendChild(btn);
+      });
+    }).catch(function(){
+      resultsEl.innerHTML = '<span class="empty-hint">search failed, try again</span>';
+    });
+  });
+
+  document.querySelectorAll('input[name="wp-type"]').forEach(function(r){
+    r.addEventListener("change", function(){
+      state.wallpaper.type = this.value;
+      saveState(); applyWallpaper();
+    });
+  });
+  document.getElementById("wp-color-input").addEventListener("input", function(){
+    state.wallpaper.color = this.value;
+    if(state.wallpaper.type === "color"){ saveState(); applyWallpaper(); }
+  });
+  document.getElementById("wp-url-input").addEventListener("change", function(){
+    state.wallpaper.imageUrl = this.value.trim();
+    state.wallpaper.imageMode = "url";
+    saveState();
+    if(state.wallpaper.type === "image") applyWallpaper();
+  });
+  document.getElementById("wp-file-input").addEventListener("change", function(ev){
+    var file = ev.target.files && ev.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      state.wallpaper.imageData = reader.result;
+      state.wallpaper.imageMode = "upload";
+      var ok = saveState();
+      if(ok && state.wallpaper.type === "image") applyWallpaper();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function renderFeedRows(){
+    var wrap = document.getElementById("feed-rows");
+    wrap.innerHTML = "";
+    state.feeds.forEach(function(url, idx){
+      var row = document.createElement("div");
+      row.className = "feed-row";
+      var input = document.createElement("input");
+      input.type = "text"; input.value = url;
+      input.addEventListener("change", function(){
+        state.feeds[idx] = normalizeUrl(input.value);
+        saveState(); renderFeeds();
+      });
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "btn"; del.textContent = "×";
+      del.addEventListener("click", function(){
+        state.feeds.splice(idx, 1);
+        saveState(); renderFeedRows(); renderFeeds();
+      });
+      row.appendChild(input); row.appendChild(del);
+      wrap.appendChild(row);
+    });
+  }
+
+  document.getElementById("feed-add-btn").addEventListener("click", function(){
+    state.feeds.push("");
+    saveState(); renderFeedRows();
+    var inputs = document.querySelectorAll("#feed-rows input");
+    if(inputs.length) inputs[inputs.length - 1].focus();
+  });
+
+  document.getElementById("export-btn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "startpage-config.json";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  document.getElementById("import-btn").addEventListener("click", function(){
+    document.getElementById("import-file-input").click();
+  });
+  document.getElementById("import-file-input").addEventListener("change", function(ev){
+    var file = ev.target.files && ev.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var imported = JSON.parse(reader.result);
+        state = deepMerge(defaultState(), imported);
+        saveState();
+        applyTheme(); applyWallpaper(); renderShortcuts(); renderFeeds(); refreshWeather();
+        populateSettingsForm();
+      }catch(e){
+        alert("That file doesn't look like a valid config export.");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("reset-btn").addEventListener("click", function(){
+    if(!confirm("Reset all shortcuts, wallpaper, weather and feed settings? This can't be undone.")) return;
+    state = defaultState();
+    saveState();
+    applyTheme(); applyWallpaper(); renderShortcuts(); renderFeeds(); refreshWeather();
+    populateSettingsForm();
+  });
+
+  /* ---------------- init ---------------- */
+
+  applyTheme();
+  applyWallpaper();
+  renderShortcuts();
+  renderFeeds();
+  refreshWeather();
+
+})();</script>
+</body>
+</html>

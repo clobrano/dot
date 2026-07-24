@@ -39,5 +39,5 @@ tabs:
     - name: Jobs
       command: jobs -A
     - name: OSAC
-      command: pods -n vmaas-dev-clobrano
+      command: pods -n osac-e2e-ci
 custom_commands: []

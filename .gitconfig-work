@@ -1,0 +1,8 @@
+[user]
+	signingkey = ~/.ssh/id_sign_key.pub
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers

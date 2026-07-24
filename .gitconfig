@@ -41,7 +41,10 @@
 [user]
 	email = you@example.com
 	name = Your Name
-	signingkey = /home/clobrano/.ssh/id_sign_key.pub
+[commit]
+	gpgsign = false
+[includeIf "gitdir:~/workspace/"]
+	path = ~/.gitconfig-work
 [interactive]
 	diffFilter = delta --color-only
 [delta]
@@ -68,12 +71,6 @@
 [merge]
 	conflictStyle = zdiff3
 	tool = nvim
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	allowedSignersFile = ~/.ssh/allowed_signers
-[commit]
-	gpgsign = true
 [mergetool "nvim"]
 	cmd = nvim -f -c \"DiffviewOpen\" \"$MERGED\"
 [mergetool]

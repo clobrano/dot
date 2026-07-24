@@ -1,6 +1,6 @@
 return {
   "wallpants/github-preview.nvim",
-  enable = true,
+  enable = false,
   -- It needs typescript dependencies to install via bun https://bun.sh/docs/installation
   -- bun install bunvim
   -- bun install pantsdown

@@ -77,14 +77,17 @@ return {
         enabled = true,
         position = 'inline',
         -- TODO and DONE highlights choosen to be visibly different, but less than the ACTIVE one, which shall stand out.
-        unchecked = { icon = '- TODO:', highlight = 'RenderMarkdownQuote', },
+        unchecked = { icon = '- TODO:', highlight = 'RenderMarkdownInfo', },
         checked = { icon = '- DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownHint' },
+            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownHintBold' },
             deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownQuote' },
-            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHint' },
+            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHintBold' },
             skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownWarn' },
         },
+    },
+    bullet = {
+        enabled = false,
     },
     quote = {
         -- Turn on / off block quote & callout rendering
@@ -150,5 +153,8 @@ return {
         highlight_inline = 'RenderMarkdownCodeInline',
     },
     })
+
+    local hint = vim.api.nvim_get_hl(0, { name = 'RenderMarkdownHint', link = false })
+    vim.api.nvim_set_hl(0, 'RenderMarkdownHintBold', { fg = hint.fg, bold = true })
   end
 }

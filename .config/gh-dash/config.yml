@@ -2,8 +2,8 @@ prSections:
 - title: Medik8s
   filters: is:open org:medik8s
   type: null
-- title: Openshift/Release
-  filters: is:open repo:openshift/release
+- title: OSAC
+  filters: is:open org:osac-project
   type: null
 - title: Involved
   filters: is:open involves:@me -author:@me
@@ -13,9 +13,6 @@ prSections:
   type: null
 - title: My Pull Requests
   filters: is:open author:@me
-  type: null
-- title: Dependabot
-  filters: is:open org:medik8s dependabot
   type: null
 issuesSections:
 - title: My Issues
@@ -32,6 +29,7 @@ repoPaths:
   medik8s/*: ~/workspace/codeReviews/medik8s/*
   clobrano/*: ~/workspace/codeReviews/clobrano/*
   ClusterLabs/*: ~/workspace/codeReviews/ClusterLabs/*
+  osac-project/*: ~/workspace/codeReviews/osac-project/*
 defaults:
   sectionsWidth: 50
   preview:

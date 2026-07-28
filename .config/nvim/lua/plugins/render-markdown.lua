@@ -80,9 +80,9 @@ return {
         unchecked = { icon = '- TODO:', highlight = 'RenderMarkdownInfo', },
         checked = { icon = '- DONE:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownHintBold' },
+            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownSuccessBold' },
             deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownQuote' },
-            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHintBold' },
+            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHint' },
             skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownWarn' },
         },
     },
@@ -154,7 +154,7 @@ return {
     },
     })
 
-    local hint = vim.api.nvim_get_hl(0, { name = 'RenderMarkdownHint', link = false })
-    vim.api.nvim_set_hl(0, 'RenderMarkdownHintBold', { fg = hint.fg, bold = true })
+    local hint = vim.api.nvim_get_hl(0, { name = 'RenderMarkdownSuccess', link = false })
+    vim.api.nvim_set_hl(0, 'RenderMarkdownSuccessBold', { fg = hint.fg, bold = true })
   end
 }

@@ -12,6 +12,10 @@ uda.url.label=URL
 uda.dur.type=string
 uda.dur.label=DUR
 
+# UDA allDay, for calendar events
+uda.allDay.type=string
+uda.allDay.label=All Day
+
 # use ancestral urgency if higher than own
 urgency.inherit=on
 # disable task history

@@ -6,6 +6,8 @@ vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count =
 vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>I', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>q', ":lua Wrap_with_quote()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>Q', ":lua Wrap_with_quote_header()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpu', ":lua CopyCodeAndPermalink('upstream')<CR>", { desc = 'Copy code with upstream permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpo', ":lua CopyCodeAndPermalink('origin')<CR>", { desc = 'Copy code with origin permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
@@ -312,6 +314,30 @@ function Wrap_with_triple_backticks()
     vim.api.nvim_buf_set_lines(0, end_line, end_line, false, { '```' })
     vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, { opening_backticks })
   end)
+end
+
+function Wrap_with_quote()
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line = vim.fn.getpos("'>")[2]
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  local new_lines = {}
+  for _, line in ipairs(lines) do
+    table.insert(new_lines, '> ' .. line)
+  end
+  vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
+end
+
+function Wrap_with_quote_header()
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line = vim.fn.getpos("'>")[2]
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  local new_lines = { '> ' }
+  for _, line in ipairs(lines) do
+    table.insert(new_lines, '> ' .. line)
+  end
+  vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
+  vim.api.nvim_win_set_cursor(0, { start_line, 2 })
+  vim.cmd('startinsert')
 end
 
 

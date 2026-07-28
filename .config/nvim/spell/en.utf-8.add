@@ -47,6 +47,7 @@ CamelCase
 CareerWeek
 Chainguard
 CloudNativeCorner
+ClusterIssuer
 ClusterLabs
 ClusterRole
 ClusterRoleBinding
@@ -200,6 +201,7 @@ OK
 OKD
 OOP
 OPL
+OS
 OSAC
 OpenImage
 OpenShift
@@ -616,6 +618,7 @@ opensource
 openssl
 opm
 org
+osac
 ostree
 otherwise
 ownerReference
@@ -839,4 +842,8 @@ zazen
 zettelkasten
 zlp
 assemini
+CertificateRequest
 Garmin
+ComputeInstance
+ProvisioningFailed
+WaitingForVM

@@ -39,6 +39,7 @@ vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = tr
 vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
 
 
+vim.api.nvim_set_keymap('v', '<leader>rl', '<cmd>lua Wrap_with_reference_link()<CR>', { desc = '[R]eference [L]ink from selection + clipboard URL', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>gt', '<cmd>lua Get_title_from_url()<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>lt', '<cmd>lua Markdown_link_from_url()<cr>', { noremap = true, silent = true })
 
@@ -51,16 +52,19 @@ vim.api.nvim_set_keymap('n', '<leader>rd', '<cmd>lua ToggleTodoDone()<CR>',
 ------------------------------------------------------------------------------
 -- FUNCTIONS
 ------------------------------------------------------------------------------
+--- Return the contents of the system clipboard ('+' register).
 local function get_clipboard()
   return vim.fn.getreg('+')
 end
 
+--- Normalize blank-line spacing around Markdown headers.
+--- Pass 1: collapse trailing blank lines after h1–h3.
+--- Pass 2: enforce 2 blank lines before h2–h3 (skips h1 to avoid
+--- breaking comments inside code blocks). When headers are consecutive,
+--- pass 2 wins—proper spacing before a header is more important than
+--- spacing after the previous one.
 vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
   local save_cursor = vim.fn.getpos('.')
--- Pass 1 enforces 0 empty line after level 1, 2 and 3, headers
--- Pass 2 enforces 2 empty lines BEFORE level 2 and 3 headers (not on level 1 headers as it would break comments in code blocks)
--- When headers are consecutive, pass 2 overrides pass 1 because proper spacing
--- before important content (headers) takes precedence over spacing after previous content
   vim.cmd([[
         :%s/\v^(#{1,3} .*)\n+/\1\r/e
         :nohlsearch
@@ -73,8 +77,9 @@ vim.api.nvim_create_user_command("MarkdownFormatHeaderSpaces", function()
 end, {})
 
 
--- Function to set the number of '#' at the beginning of a line.
--- If level is 0, all '#' are removed.
+--- Set the Markdown header level of the current line.
+--- Replaces any existing leading '#' characters with exactly `level` of them.
+--- @param level number Header depth (1–6). 0 removes the header entirely.
 function SetMarkdownHeader(level)
   level = tonumber(level) -- Ensure level is a number
   if level == nil then level = 0 end -- Default to 0 if input is not a number
@@ -102,8 +107,9 @@ function SetMarkdownHeader(level)
   vim.api.nvim_win_set_cursor(0, { row, math.max(0, col + cursor_offset) })
 end
 
--- Type <N> before triggering the command. E.g. type "3" before <leader>ha to create a Markdown header level 3
-
+--- Remove `v:count` '#' characters from the current line's header.
+--- With no count (0), strips the header entirely.
+--- E.g. type "2<leader>hr" on an h4 to reduce it to h2.
 function RemoveMarkdownHeaderWithCount()
   local line = vim.api.nvim_get_current_line()
   local current_hashes = line:match("^(#+)%s*")
@@ -122,11 +128,17 @@ end
 
 
 
+--- Escape Lua pattern magic characters so `s` can be used as a literal in gsub/match.
+--- @param s string
+--- @return string
 local function escape_lua_pattern(s)
-  -- Escape characters that are magic in Lua patterns
   return s:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1")
 end
 
+--- SCP the current buffer's file to a remote server, preserving its path
+--- relative to the local git root under `remote_root_path`.
+--- @param server_name string SSH host alias or address
+--- @param remote_root_path string Absolute path on the remote to mirror into
 function SendFileToRemote(server_name, remote_root_path)
   local local_file_abs_path = vim.fn.expand('%:p')
 
@@ -171,12 +183,10 @@ vim.api.nvim_create_user_command(
 
 
 
+--- Convert a GitHub PR URL from the clipboard into a Markdown reference link.
+--- Inserts `[org/project PR<N>]` at the cursor and appends the full
+--- reference definition at the end of the buffer.
 function FromGithubLinkToMarkdownPRRef()
-  -- e.g. https://github.com/<org>/<project>/pull/<number>
-  -- will be converted to [<org/<project> PR<number>]
-  -- and a Markdown reference link will be created at
-  -- the end of the buffer like below:
-  -- [<org/<project> PR<number>]: https://github.com/<org>/<project>/pull/<number>
 
   local github_link = vim.fn.getreg('+') -- Get content from the system clipboard
   if not github_link or github_link == '' then
@@ -209,6 +219,9 @@ function FromGithubLinkToMarkdownPRRef()
   vim.notify("GitHub PR link converted and reference added.", vim.log.levels.INFO, { title = "GitHub Link" })
 end
 
+--- Return the text between the nearest matching bracket pair surrounding the cursor.
+--- Supports (), [], and {}. Returns nil if no matching pair is found.
+--- @return string|nil
 local function get_text_inside_brackets()
   local line = vim.fn.getline(".") -- Get the current line
   local col = vim.fn.col(".")      -- Get the current column position
@@ -252,9 +265,9 @@ local function get_text_inside_brackets()
   return nil -- Return nil if no matching brackets are found
 end
 
--- Move the cursor inside a rounded brackets with the task uuid "some task (12345)"
--- the function will get the uuid and jump to the file(s) where the corresponding
--- Taskwarrior task object is defined
+--- Jump to the file containing a Taskwarrior task matching the word under cursor.
+--- Searches with ripgrep for lines like `[.] … <uuid>`. If multiple files match,
+--- presents a selection prompt.
 function Task_find_from_uuid()
   --local uuid = get_clipboard()
   local uuid = vim.fn.expand('<cword>')
@@ -281,7 +294,7 @@ function Task_find_from_uuid()
 end
 
 
--- Add one hashtag '#' at the beginning of the current line
+--- Prepend a single '#' to the current line (increase header depth by 1).
 function AddMarkdownHeader()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
   local line = vim.api.nvim_get_current_line()            -- Get current line content
@@ -289,7 +302,7 @@ function AddMarkdownHeader()
   vim.api.nvim_win_set_cursor(0, { row, col + 1 })        -- Adjust cursor position
 end
 
--- Remove one hashtag '#' from the beginning of the current line
+--- Remove the first leading '#' from the current line (decrease header depth by 1).
 function RemoveMarkdownHeader()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0)) -- Get cursor position
   local line = vim.api.nvim_get_current_line()            -- Get current line content
@@ -301,7 +314,8 @@ function RemoveMarkdownHeader()
   end
 end
 
--- Wrap the selected text in tryple backtics with the option to add the quote type (e.g. go, bash, ...)
+--- Wrap the visual selection in triple-backtick fences, prompting for an
+--- optional language identifier (e.g. "go", "bash").
 function Wrap_with_triple_backticks()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
@@ -316,6 +330,7 @@ function Wrap_with_triple_backticks()
   end)
 end
 
+--- Prefix each line of the visual selection with '> ' (Markdown blockquote).
 function Wrap_with_quote()
   local start_line = vim.fn.getpos("'<")[2]
   local end_line = vim.fn.getpos("'>")[2]
@@ -327,6 +342,48 @@ function Wrap_with_quote()
   vim.api.nvim_buf_set_lines(0, start_line - 1, end_line, false, new_lines)
 end
 
+--- Wrap the visual selection in [] and append a Markdown reference-link
+--- definition at the end of the buffer using the URL from the clipboard.
+--- e.g. selecting "some text" with `https://example.com` in the clipboard
+--- produces `[some text]` inline and `[some text]: https://example.com` at EOF.
+function Wrap_with_reference_link()
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+  local start_line, start_col = start_pos[2], start_pos[3]
+  local end_line, end_col = end_pos[2], end_pos[3]
+
+  if start_line ~= end_line then
+    vim.notify("Reference link only works on single-line selections.", vim.log.levels.WARN)
+    return
+  end
+
+  local line = vim.fn.getline(start_line)
+  local selected = line:sub(start_col, end_col)
+  local url = vim.fn.getreg('+'):gsub('%s+$', '')
+
+  if url == '' then
+    vim.notify("Clipboard is empty.", vim.log.levels.WARN)
+    return
+  end
+
+  if not url:match('^https?://') then
+    vim.notify("Clipboard does not contain a URL: " .. url, vim.log.levels.WARN)
+    return
+  end
+
+  local new_line = line:sub(1, start_col - 1) .. '[' .. selected .. ']' .. line:sub(end_col + 1)
+  vim.fn.setline(start_line, new_line)
+
+  local ref = string.format("[%s]: %s", selected, url)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local last_line = vim.api.nvim_buf_line_count(bufnr)
+  vim.api.nvim_buf_set_lines(bufnr, last_line, last_line, false, { ref })
+
+  vim.notify("Reference link added for [" .. selected .. "]", vim.log.levels.INFO)
+end
+
+--- Like Wrap_with_quote but inserts an empty '> ' line above the selection
+--- and enters insert mode there, so you can type a quote attribution or title.
 function Wrap_with_quote_header()
   local start_line = vim.fn.getpos("'<")[2]
   local end_line = vim.fn.getpos("'>")[2]
@@ -342,6 +399,9 @@ end
 
 
 
+--- Copy the visual selection wrapped in a fenced code block, with a permalink
+--- comment linking to the code on GitHub/GitLab via :GBrowse.
+--- @param remote_name string Git remote to resolve the permalink from ("upstream", "origin", …)
 function CopyCodeAndPermalink(remote_name)
   -- Get the current filetype
   local filetype = vim.bo.filetype
@@ -396,8 +456,8 @@ end
 
 
 
+--- Yank the Markdown fenced code block surrounding the cursor (inclusive of the ``` delimiters).
 function Yank_code_block()
-  -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
 
@@ -434,8 +494,8 @@ function Yank_code_block()
 end
 
 
+--- Visually select the Markdown fenced code block surrounding the cursor.
 function Select_code_block()
-  -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
 
@@ -470,6 +530,10 @@ function Select_code_block()
   end
 end
 
+--- Extract the fenced code block of a given type surrounding the cursor and
+--- write its content (including fences) to `filepath`.
+--- @param block_type string Language identifier to match (e.g. "plantuml", "mermaid")
+--- @param filepath string Output file path
 local function copy_code_block_to_file(block_type, filepath)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -509,6 +573,8 @@ local function copy_code_block_to_file(block_type, filepath)
   end
 end
 
+--- Render the PlantUML block under the cursor to ASCII art and copy it
+--- to the Wayland clipboard.
 vim.api.nvim_create_user_command(
   "PlantUMLCreateASCII",
   function()
@@ -524,7 +590,8 @@ vim.api.nvim_create_user_command(
   {}
 )
 
--- Move the cursor in a Mermaid section, the function will create the picture according to the output extension
+--- Render the Mermaid code block under the cursor to an image file.
+--- Prompts for the output path; the extension determines the format.
 vim.api.nvim_create_user_command("MermaidCreateImage", function(opts)
   -- Get the current cursor position
   local current_pos = vim.api.nvim_win_get_cursor(0)
@@ -578,7 +645,8 @@ vim.api.nvim_create_user_command("MermaidCreateImage", function(opts)
 end, {})
 
 
--- Closes a list of buffers. Separate the buffers name by a comma
+--- Close one or more buffers by name. Separate names with ", ".
+--- Usage: `:Bdelete foo.lua, bar.lua`
 vim.api.nvim_create_user_command("Bdelete", function(opts)
   local buffers = vim.split(opts.args, ", ")      -- Split buffer list
   for _, buf in ipairs(buffers) do
@@ -589,6 +657,7 @@ end, { nargs = "+", complete = "buffer" })
 
 
 
+--- Toggle diagnostic virtual text on/off and print the new state.
 function ToggleVirtualText()
   local current_vt_config = vim.diagnostic.config().virtual_text
   vim.diagnostic.config({
@@ -603,6 +672,9 @@ end
 
 
 
+--- Create a Markdown reference link for the bracketed text under the cursor.
+--- Resolves the URL via Get_Smart_Weblink and appends `[text]: <url>` at
+--- the end of the buffer.
 function Add_reference_link()
   local target_text = get_text_inside_brackets()
   if not target_text then
@@ -629,11 +701,16 @@ function Add_reference_link()
 end
 
 
+--- Insert a `[ ]` checkbox after the list marker on a Markdown list line.
+--- @param line string e.g. "- Buy milk" → "- [ ] Buy milk"
+--- @return string
 local function add_square_brackets(line)
   return line:gsub("^%s*([*-])%s*(.*)$", "%1 [ ] %2")
 end
 
--- Create a taskwarrior task from the current line content
+--- Turn the current line into a Taskwarrior-style task entry.
+--- Adds a `[ ]` checkbox and appends `-- pro:<project> #W:`.
+--- @param project string Taskwarrior project name
 local function taskwarrior_task(project)
   -- Get the current line number and the line content
   local line_number = vim.fn.line('.')
@@ -650,6 +727,8 @@ vim.api.nvim_create_user_command('TaskWarriorTask', function(opts)
 end, { nargs = 1 })
 
 
+--- Archive DONE items from Orgmode files (ReadItLater.org and Orgmode.org)
+--- into their respective *_archive.org counterparts, then reload the buffer.
 local function refile_done()
   local ME = os.getenv("ME")
   local src = string.format("%s/Orgmode/ReadItLater.org", ME)
@@ -676,6 +755,7 @@ end
 vim.api.nvim_create_user_command('RefileDone', refile_done, {})
 
 
+--- Insert a Markdown date header at the cursor: `- _Wednesday 29 July_:`
 local function insert_date_header()
   local formatted_date = os.date("- _%A %d %B_:")
 
@@ -687,22 +767,25 @@ end
 vim.api.nvim_create_user_command('InsertDateHeader', insert_date_header, {})
 
 
+--- Yank the text inside the nearest [] brackets (equivalent to `vi]y`).
 function Yank_inbracket()
   vim.api.nvim_feedkeys('vi]y', 'n', true)
 end
 
+--- Visually select the text inside the nearest [] brackets (`vi]`).
 function Select_inbracket()
   vim.api.nvim_feedkeys('vi]', 'n', true)
 end
 
+--- Visually select the text including the nearest [] brackets (`va]`).
 function Select_outbracket()
   vim.api.nvim_feedkeys('va]', 'n', true)
 end
 
 
--- Open_url_from_selected_text searches for lines matching the format:
--- [<selected text>]: <url>
--- If it can find it, it opens the link in the browser
+--- Find the Markdown reference definition for the bracketed text under the cursor
+--- (i.e. a line `[text]: https://…`) and open the URL in the browser.
+--- Searches the current directory with ripgrep; offers a picker when multiple matches exist.
 function Open_markdown_reference_url()
   -- Step 1: Capture the text inside square brackets
   local selected_text = get_text_inside_brackets()
@@ -747,6 +830,12 @@ end
 
 
 
+--- Parse the bracketed text under the cursor as a short reference to a
+--- GitHub PR/Issue, GitLab MR, or Jira ticket and copy the resolved URL
+--- to the Wayland clipboard.
+--- Supported formats: `[org/repo PR123]`, `[org/repo I 42]`, `[org/repo MR5]`,
+--- or a plain Jira key like `[PROJ-123]`.
+--- @return string The resolved URL
 function Get_Smart_Weblink()
   local target_text = get_text_inside_brackets()
 
@@ -792,6 +881,7 @@ function Get_Smart_Weblink()
   return base_url
 end
 
+--- Like Get_Smart_Weblink, but also opens the resolved URL in the default browser.
 function Goto_Weblink()
   local base_url = Get_Smart_Weblink()
   local command = "xdg-open " .. base_url
@@ -800,6 +890,8 @@ function Goto_Weblink()
   vim.fn.system(command)
 end
 
+--- Replace spaces with hyphens in the clipboard text and paste the result
+--- onto the current line.
 function ReplaceSpacesWithHypens()
   local clipboard = get_clipboard()
   local replaced_text = string.gsub(clipboard, " ", "-")
@@ -810,6 +902,10 @@ end
 
 
 
+--- Scaffold a new Obsidian-style note from the current file name.
+--- Adds YAML frontmatter (created/modified dates), a title heading, and
+--- vault-specific template content (weekly report for date-named files in
+--- RedHatNotes, task template for files under Tasks/).
 function CreateNoteFromFileName()
   local filename = vim.fn.expand("%:t:r")
   local filepath = vim.fn.expand("%:p")
@@ -870,6 +966,7 @@ end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })
 
+--- Start a `lets do` time-tracking session for the task description in the clipboard.
 function Letsdo_goto()
   local task_description = get_clipboard()
   local command = 'letsdo-taskwarrior-task.sh "' .. task_description .. '"'
@@ -877,6 +974,8 @@ function Letsdo_goto()
   print(vim.inspect(vim.fn.system(command)))
 end
 
+--- Fetch the HTML `<title>` of the visually-selected URL and insert it
+--- on the line below.
 function Get_title_from_url()
   -- Get the URL from the selection
   local url = vim.fn.getreg(vim.fn.visualmode())
@@ -899,6 +998,8 @@ function Get_title_from_url()
 end
 
 
+--- Replace the visually-selected URL with a Markdown link `[<page title>](<url>)`,
+--- fetching the title from the page's HTML.
 function Markdown_link_from_url()
   -- Get the URL from the selection
   local url = vim.fn.getreg(vim.fn.visualmode())
@@ -924,7 +1025,9 @@ function Markdown_link_from_url()
 end
 
 
--- SurroundWithMarkdownLink add [[]] around the selected text AND creates the file if it doesn't exist
+--- Wrap the visual selection in `[[…]]` wiki-link syntax and create the
+--- corresponding .md file under Resources/ (or 3-Resources/) if it doesn't
+--- already exist.
 function CreateFileAndWikiLink()
   -- Get the visual selection
   local line1, col1 = unpack(vim.fn.getpos("'<"), 2, 3)
@@ -970,6 +1073,8 @@ function CreateFileAndWikiLink()
   end
 end
 
+--- Append a unique outline-reference tag (`#nor-<uuid>`) inside a wiki-link
+--- at the end of the current line. Used for cross-referencing note outlines.
 function AppendOutlineReference()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
@@ -984,6 +1089,7 @@ function AppendOutlineReference()
 end
 
 
+--- Cycle the keyword on the current line: TODO → DOING → DONE → TODO.
 function ToggleTodoDone()
   local line = vim.api.nvim_get_current_line()
   local new_line = line

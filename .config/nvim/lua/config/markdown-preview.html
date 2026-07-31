@@ -202,14 +202,32 @@ document.addEventListener("DOMContentLoaded", function() {
   var defaultTagColor = "#df8e1d";
 
   document.querySelectorAll("p, li, td, th").forEach(function(el) {
-    el.innerHTML = el.innerHTML.replace(/(#[A-Za-z0-9_-]+)/g, function(match) {
-      var lower = match.toLowerCase();
-      var color = defaultTagColor;
-      for (var key in tagColors) {
-        if (lower.indexOf(key) !== -1) { color = tagColors[key]; break; }
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(node) {
+        var p = node.parentNode;
+        while (p && p !== el) {
+          if (p.tagName === 'PRE' || p.tagName === 'CODE') return NodeFilter.FILTER_REJECT;
+          p = p.parentNode;
+        }
+        return NodeFilter.FILTER_ACCEPT;
       }
-      return '<span style="background:' + color + '22;color:' + color +
-        ';padding:0.1em 0.4em;border-radius:3px;font-weight:600;">' + match + '</span>';
+    });
+    var textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(function(tn) {
+      if (!/(#[A-Za-z0-9_-]+)/.test(tn.textContent)) return;
+      var wrapper = document.createElement('span');
+      wrapper.innerHTML = tn.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/(#[A-Za-z0-9_-]+)/g, function(match) {
+          var lower = match.toLowerCase();
+          var color = defaultTagColor;
+          for (var key in tagColors) {
+            if (lower.indexOf(key) !== -1) { color = tagColors[key]; break; }
+          }
+          return '<span style="background:' + color + '22;color:' + color +
+            ';padding:0.1em 0.4em;border-radius:3px;font-weight:600;">' + match + '</span>';
+        });
+      tn.parentNode.replaceChild(wrapper, tn);
     });
   });
 });

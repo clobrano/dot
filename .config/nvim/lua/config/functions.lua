@@ -832,6 +832,21 @@ end
 
 --- Parse the bracketed text under the cursor as a short reference to a
 --- GitHub PR/Issue, GitLab MR, or Jira ticket and copy the resolved URL
+local function lookup_bookmark(label)
+  local bookmarks_path = vim.fn.expand("~/Documents/RedHatNotes/Bookmarks.txt")
+  if vim.fn.filereadable(bookmarks_path) ~= 1 then
+    return ""
+  end
+  local pattern = "^%[" .. label:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1") .. "%]:%s*(.+)$"
+  for _, line in ipairs(vim.fn.readfile(bookmarks_path)) do
+    local url = line:match(pattern)
+    if url then
+      return vim.trim(url)
+    end
+  end
+  return ""
+end
+
 --- to the Wayland clipboard.
 --- Supported formats: `[org/repo PR123]`, `[org/repo I 42]`, `[org/repo MR5]`,
 --- or a plain Jira key like `[PROJ-123]`.
@@ -873,7 +888,10 @@ function Get_Smart_Weblink()
   end
 
   if base_url == "" then
-    -- No PR, nor MR, maybe a Jira ticket?
+    base_url = lookup_bookmark(target_text)
+  end
+
+  if base_url == "" then
     base_url = "https://issues.redhat.com/browse/" .. target_text
   end
   vim.fn.system('echo -n "' .. base_url .. '" | wl-copy')
@@ -884,7 +902,7 @@ end
 --- Like Get_Smart_Weblink, but also opens the resolved URL in the default browser.
 function Goto_Weblink()
   local base_url = Get_Smart_Weblink()
-  local command = "xdg-open " .. base_url
+  local command = "xdg-open '" .. base_url .. "'"
 
   print(command)
   vim.fn.system(command)

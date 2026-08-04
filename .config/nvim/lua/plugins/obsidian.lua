@@ -107,6 +107,7 @@ return {
       date_format = "%Y-%m-%d",
       time_format = "%H:%M",
     },
+    wiki_link_func = "use_alias_only",
     -- let render-markdown ONLY manage UI for the following objects
     ui = {
       enable = true,                   -- Lascia attiva la UI per i link e il resto

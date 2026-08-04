@@ -1,6 +1,7 @@
 -- If using lazy.nvim:
 return {
   "ludovicchabant/vim-gutentags",
+  lazy = false,
   init = function()
     -- Tell gutentags how to find the root of your Go project
     vim.g.gutentags_project_root = { ".git", "go.mod", "go.work" }
@@ -20,9 +21,5 @@ return {
       "node_modules",
     }
 
-    -- Ensure the cache directory exists
-    if vim.fn.isdirectory(vim.g.gutentags_cache_dir) == 0 then
-      vim.fn.mkdir(vim.g.gutentags_cache_dir, "p")
-    end
   end,
 }

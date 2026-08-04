@@ -33,18 +33,6 @@ return {
       vim.lsp.buf.definition()
     end, { desc = "[GO] Jump to definition (vsplit)" })
 
-    -- Generate Tags with gotags
-    vim.api.nvim_create_user_command("GoTags",
-      function()
-        local command = "gotags `find . -name '*.go' | grep -v './vendor'` > tags"
-        print("Executing: " .. command)
-        local handle = io.popen(command)
-        local output = handle:read("*a")
-        local exit_code = handle:close()
-        print("Output: " .. output)
-        print("Exit code: " .. tostring(exit_code))
-      end,
-      {})
   end,
   event = { "CmdlineEnter" },
   ft = { "go", 'gomod' },

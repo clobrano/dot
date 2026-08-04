@@ -58,7 +58,11 @@ return {
     })
 
     vim.keymap.set('n', '<leader>fb', ':FzfLua buffers<cr>', { desc = '[F]ind [B]uffers' })
-    vim.keymap.set('n', '<leader>ft', ':FzfLua tags<cr>', { desc = '[F]ind [T]ags' })
+    vim.keymap.set('n', '<leader>ft', function()
+      local tagfile = vim.fn.findfile("tags", vim.fn.expand("%:p:h") .. ";")
+      if tagfile ~= "" then tagfile = vim.fn.fnamemodify(tagfile, ":p") end
+      require('fzf-lua').tags({ ctags_file = tagfile ~= "" and tagfile or "tags" })
+    end, { desc = '[F]ind [T]ags' })
     vim.keymap.set('n', '<leader>ff', function()
       require('fzf-lua').files({ fd_opts = get_fd_opts() })
     end, { desc = '[F]ind [F]iles' })

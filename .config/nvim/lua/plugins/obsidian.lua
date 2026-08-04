@@ -22,6 +22,21 @@ return {
     -- First setup obsidian with the provided opts
     require("obsidian").setup(opts)
 
+    -- Override <CR> to cycle checkboxes: [ ] -> [/] -> [x] -> [ ]
+    vim.api.nvim_create_autocmd("BufEnter", {
+      pattern = "*.md",
+      callback = function()
+        vim.keymap.set("n", "<cr>", function()
+          local util = require("obsidian.util")
+          if util.cursor_on_markdown_link(nil, nil, true) then
+            vim.cmd("ObsidianFollowLink")
+            return
+          end
+          util.toggle_checkbox({ " ", "/", "x" })
+        end, { buffer = true })
+      end,
+    })
+
     -- Obsidian keymaps
     vim.keymap.set('n', '<leader>on', ':ObsidianNew<cr>', { silent = true, noremap = true })
 

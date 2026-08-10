@@ -20,9 +20,8 @@ export KUBE_MAP=~/.kube/dsal-host-config-map.json
 
 # PATH
 PATH=~/.local/bin:$PATH
-if [[ -d $HOME/.cargo ]]; then
-    PATH=$HOME/.cargo/bin:$PATH
-fi
+[[ -d $HOME/.cargo ]] && PATH=$HOME/.cargo/bin:$PATH
+[[ -d $HOME/.npm-global ]] && PATH=$HOME/.npm-global:$PATH
 
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu

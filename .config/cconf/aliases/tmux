@@ -7,7 +7,7 @@ set -x
 
 alias t=task
 
-alias dev="tmux-attach-or-create 0-devel"
+alias dev="tmux-attach-or-create OSAC"
 alias notes="tmux-attach-or-create 1-note"
 
 alias tas="tmux attach-session -t"

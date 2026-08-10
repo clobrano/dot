@@ -20,7 +20,7 @@ return {
                 DOING = { icon = "󰐌 ", color = "success" },
                 DONE = { icon = "󰗠 ", color = "comment" },
                 SKIP = { icon = "󰅙 ", color = "comment", alt = { "WONTDO" } },
-                HOLD = { icon = " ", color = "warning", alt = { "STOP" } },
+                HOLD = { icon = "󰏥 ", color = "warning", alt = { "STOP", "WAIT" } },
                 OPEN = { icon = " ", color = "warning", alt = { "MOVED_NEXT_WEEK" } },
                 QUEST = { icon = " ", color = "warning", alt = { "Q" } },
                 ANSWER = { icon = "", color = "success", alt = { "A" } },

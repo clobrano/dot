@@ -4,7 +4,7 @@ calendar_sync:
     enabled: true
     auto_sync_on_quit: true
     calendar_name: "To-do"           # Name of your Google Calendar (required)
-    task_filter: "+calendar modified.after:-8h"    # Taskwarrior filter (required)
+    task_filter: "+calendar modified.after:-32h"    # Taskwarrior filter (required)
     credentials_path: /home/clobrano/Documents/taskwarriorRH/calendarsync/credentials.json
     token_path: /home/clobrano/Documents/taskwarriorRH/calendarsync/token.json
 tui:

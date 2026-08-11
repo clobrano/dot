@@ -22,6 +22,7 @@ vim.api.nvim_set_keymap('n', '<leader>idh', '<cmd>InsertDateHeader<cr>', { norem
 vim.api.nvim_set_keymap('n', '<leader>1', '<cmd>lua Open_markdown_reference_url()<CR>', { noremap = true, silent = true, desc = 'find Markdown reference link for the text in clipboard' })
 vim.api.nvim_set_keymap('n', '<leader>so', '<cmd>lua Goto_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [O]pen browser' })
 vim.api.nvim_set_keymap('n', '<leader>sc', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart link [C]opy to clipboard' })
+vim.api.nvim_set_keymap('n', '<leader>sl', '<cmd>lua Append_Smart_Weblink()<CR>', { noremap = true, silent = false, desc = '[S]mart [L]ink append as Markdown link' })
 vim.api.nvim_set_keymap('n', '<leader>3', '<cmd>lua Select_outbracket()<CR>', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader><leader>3', '<cmd>lua Select_inbracket()<CR>', { noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>4', '<cmd>lua Get_Smart_Weblink()<CR>', { noremap = true, silent = false })
@@ -906,6 +907,27 @@ function Goto_Weblink()
 
   print(command)
   vim.fn.system(command)
+end
+
+function Append_Smart_Weblink()
+  local base_url = Get_Smart_Weblink()
+  local line = vim.fn.getline(".")
+  local col = vim.fn.col(".")
+
+  local right_bracket_pos = nil
+  for i = col, #line do
+    local char = line:sub(i, i)
+    if char == "]" or char == ")" or char == "}" then
+      right_bracket_pos = i
+      break
+    end
+  end
+
+  if right_bracket_pos then
+    local new_line = line:sub(1, right_bracket_pos) .. "(" .. base_url .. ")" .. line:sub(right_bracket_pos + 1)
+    vim.fn.setline(".", new_line)
+    print("Markdown link appended")
+  end
 end
 
 --- Replace spaces with hyphens in the clipboard text and paste the result

@@ -10,6 +10,7 @@ vim.api.nvim_set_keymap('v', '<leader>q', ":lua Wrap_with_quote()<CR>", { norema
 vim.api.nvim_set_keymap('v', '<leader>Q', ":lua Wrap_with_quote_header()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpu', ":lua CopyCodeAndPermalink('upstream')<CR>", { desc = 'Copy code with upstream permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpo', ":lua CopyCodeAndPermalink('origin')<CR>", { desc = 'Copy code with origin permalink', noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cpl', ":lua CopyCodeLocal()<CR>", { desc = 'Copy code with local path', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
@@ -453,6 +454,45 @@ function CopyCodeAndPermalink(remote_name)
   output = output .. "```"
   vim.fn.setreg('+', output)
   vim.notify("Code and permalink copied to clipboard.", vim.log.levels.INFO)
+end
+
+--- Copy the visual selection as a fenced code block with filename and line numbers.
+--- No GitHub URL lookup—just the local file path and line range.
+function CopyCodeLocal()
+  local filetype = vim.bo.filetype
+  local filepath = vim.fn.expand('%:.')  -- relative path from cwd
+
+  -- Get selection line numbers
+  local start_line = vim.fn.getpos("'<")[2]
+  local end_line = vim.fn.getpos("'>")[2]
+
+  -- Yank current selection
+  vim.cmd('normal! `<v`>"ay')
+  local saved_selection = vim.fn.getreg('a')
+
+  local filetype_to_comment_map = {
+    ["c"] = "// ",
+    ["cpp"] = "// ",
+    ["go"] = "// ",
+    ["lua"] = "-- ",
+    ["python"] = "# ",
+    ["sh"] = "# ",
+  }
+
+  local output = ""
+  local comment_prefix = filetype_to_comment_map[filetype] or "// "
+
+  output = output .. "```" .. (filetype ~= "" and filetype or "") .. "\n"
+  output = output .. comment_prefix .. filepath .. ":" .. start_line
+  if start_line ~= end_line then
+    output = output .. "-" .. end_line
+  end
+  output = output .. "\n"
+  output = output .. saved_selection .. "\n"
+  output = output .. "```"
+
+  vim.fn.setreg('+', output)
+  vim.notify("Code with local path copied to clipboard.", vim.log.levels.INFO)
 end
 
 

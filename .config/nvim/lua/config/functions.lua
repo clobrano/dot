@@ -11,6 +11,7 @@ vim.api.nvim_set_keymap('v', '<leader>Q', ":lua Wrap_with_quote_header()<CR>", {
 vim.api.nvim_set_keymap('v', '<leader>cpu', ":lua CopyCodeAndPermalink('upstream')<CR>", { desc = 'Copy code with upstream permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpo', ":lua CopyCodeAndPermalink('origin')<CR>", { desc = 'Copy code with origin permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpl', ":lua CopyCodeLocal()<CR>", { desc = 'Copy code with local path', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>.', ':lua ToggleScratchpad()<CR>', { desc = 'Toggle scratchpad', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
@@ -1185,6 +1186,37 @@ function ToggleTodoDone()
   vim.api.nvim_set_current_line(new_line)
 end
 
+--- Toggle a persistent scratchpad buffer backed by /tmp/nvim-scratch.md.
+--- Opens in a horizontal split if not visible; closes if already visible.
+function ToggleScratchpad()
+  local scratch_file = '/tmp/nvim-scratch.md'
+  local scratch_bufnr = nil
+
+  -- Find existing scratch buffer
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_name(buf) == scratch_file then
+      scratch_bufnr = buf
+      break
+    end
+  end
+
+  -- If buffer exists and is visible, close the window
+  if scratch_bufnr then
+    local wins = vim.fn.win_findbuf(scratch_bufnr)
+    if #wins > 0 then
+      vim.api.nvim_win_close(wins[1], false)
+      return
+    end
+  end
+
+  -- Open or create the scratch buffer
+  vim.cmd('split ' .. vim.fn.fnameescape(scratch_file))
+
+  -- Set buffer options
+  local buf = vim.api.nvim_get_current_buf()
+  vim.bo[buf].bufhidden = 'hide'
+  vim.bo[buf].filetype = 'markdown'
+end
 
 
 return M

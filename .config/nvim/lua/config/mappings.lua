@@ -215,6 +215,10 @@ nmap(']e', ':lnext<cr>')
 nmap('[b', ':cprev<cr>')
 nmap(']b', ':cnext<cr>')
 
+-- move to next/prev quickfix item
+nmap('<leader>qj', ':cnext<cr>')
+nmap('<leader>qk', ':cprev<cr>')
+
 
 -- move: always move line by line, regardless wrap
 nmap('k', 'gk')

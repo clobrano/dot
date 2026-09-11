@@ -362,8 +362,8 @@ nmap('<leader>th', '<C-w>t<C-w>K')
 --nmap('wl', '<C-w>l')
 
 -- move selected lines up and down
-vmap('<A-Down>', ":m '>+1<CR>gv=gv")
-vmap('<A-Up>', ":m '<-2<CR>gv=gv")
+vmap('<A-Down>', ":m '>+1<CR>gv")
+vmap('<A-Up>', ":m '<-2<CR>gv")
 
 -- quickfix (and local) window mapping to open at the full bottom (even with splits)
 nmap('<leader>co', ':Copen<cr>')

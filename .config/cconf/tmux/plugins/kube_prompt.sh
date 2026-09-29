@@ -9,6 +9,7 @@ function zsh_kube_prompt() {
     if [[ "$server" =~ "aws" ]]; then
         server="aws"
     fi
-    [ -n "$cluster_name" ] && [ -n "$server" ] && printf "󱃾  %s/%s" "$cluster_name" "$server"
+    [ -n "$cluster_name" ] && [ -n "$server" ] && KUBESERVER=$(printf "%s/%s" "$cluster_name" "$server")
+    echo "󱃾 ${KUBESERVER:-"No kube"}"
 }
 zsh_kube_prompt

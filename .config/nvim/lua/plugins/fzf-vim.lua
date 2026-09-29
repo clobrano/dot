@@ -11,7 +11,8 @@ return {
     local respect_gitignore = true
 
     local function get_fd_opts()
-      local base = "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude venv --exclude .venv"
+      local base =
+      "--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude venv --exclude .venv"
       if ignore_vendor then
         base = base .. " --exclude vendor"
       end
@@ -40,10 +41,14 @@ return {
     end, { desc = 'Toggle gitignored files in FzfLua search' })
 
     require('fzf-lua').setup({
+      no_hide = true,
       defaults = { cwd_prompt = false },
       winopts = {
         width = 0.95,
         height = 0.9,
+      },
+      files = {
+        line_query = true, -- Enables parsing of '<filename>:<lineno>'
       },
       buffers = {
         winopts = {

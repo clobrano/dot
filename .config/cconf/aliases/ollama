@@ -1,0 +1,4 @@
+
+alias ollamapodrun='podman run --detach -e OLLAMA_ORIGINS="*" --volume ollama_storage:/root/.ollama --publish 11434:11434 --name ollama ollama/ollama'
+alias ollama='podman exec --interactive --tty ollama ollama'
+

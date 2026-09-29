@@ -5,14 +5,15 @@ vim.api.nvim_set_keymap('n', '<leader>mf', ":MarkdownFormatHeaderSpaces<cr>", { 
 vim.api.nvim_set_keymap("n", "<leader>ha", ":lua SetMarkdownHeader(vim.v.count == 0 and 1 or vim.v.count)<CR>", { noremap = true, silent = true, desc = "Set Markdown Header Level (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>hr", ":lua RemoveMarkdownHeaderWithCount()<CR>", { noremap = true, silent = true, desc = "Remove Markdown Header (using count)" })
 vim.api.nvim_set_keymap("n", "<leader>tf", ":lua Task_find_from_uuid()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>I', ":lua Wrap_with_triple_backticks()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>I', ":lua Wrap_with_code_block()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>q', ":lua Wrap_with_quote()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>Q', ":lua Wrap_with_quote_header()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpu', ":lua CopyCodeAndPermalink('upstream')<CR>", { desc = 'Copy code with upstream permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpo', ":lua CopyCodeAndPermalink('origin')<CR>", { desc = 'Copy code with origin permalink', noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cpl', ":lua CopyCodeLocal()<CR>", { desc = 'Copy code with local path', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>.', ':lua ToggleScratchpad()<CR>', { desc = 'Toggle scratchpad', noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>y`', '<cmd> lua Yank_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>yC', '<cmd> lua Yank_code_block(0)<cr>', { desc = '[Y]ank [C]ode block with fence', noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>yc', '<cmd> lua Yank_code_block(1)<cr>', { desc = '[Y]ank [C]ode block without fence', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>v`', '<cmd> lua Select_code_block()<cr>', { desc = 'Yank code block', noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>pc', ":PlantUMLCreateASCII<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>bdl', 'Bdelete ', { noremap = true, silent = true })
@@ -317,16 +318,19 @@ function RemoveMarkdownHeader()
   end
 end
 
---- Wrap the visual selection in triple-backtick fences, prompting for an
+--- Wrap the visual selection in a code block (triple-backtick), prompting for an
 --- optional language identifier (e.g. "go", "bash").
-function Wrap_with_triple_backticks()
+function Wrap_with_code_block()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
 
   local start_line = start_pos[2]
   local end_line = end_pos[2]
 
-  vim.ui.input({ prompt = "Enter code language: " }, function(lang)
+  vim.ui.input({ prompt = "Enter code language (default: sh):" }, function(lang)
+    if lang == "" then
+      lang = "sh"
+    end
     local opening_backticks = lang and lang ~= "" and "```" .. lang or "```"
     vim.api.nvim_buf_set_lines(0, end_line, end_line, false, { '```' })
     vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, { opening_backticks })
@@ -497,9 +501,9 @@ function CopyCodeLocal()
 end
 
 
-
 --- Yank the Markdown fenced code block surrounding the cursor (inclusive of the ``` delimiters).
-function Yank_code_block()
+--- @param exclude_fence int 0 to copy the block backtics included, 1 otherwise
+function Yank_code_block(exclude_fence)
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local line_num = current_pos[1]
 
@@ -507,10 +511,15 @@ function Yank_code_block()
   local start_line, end_line = nil, nil
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
 
+  local offset = 0
+  if exclude_fence == 1 then
+    offset = 1
+  end
+
   -- Find start of the code block
   for i = line_num, 1, -1 do
     if lines[i]:match("```") then
-      start_line = i
+      start_line = i+offset
       break
     end
   end
@@ -518,7 +527,7 @@ function Yank_code_block()
   -- Find end of the code block
   for i = line_num, #lines do
     if lines[i]:match("```") then
-      end_line = i
+      end_line = i-offset
       break
     end
   end
@@ -1178,7 +1187,9 @@ function ToggleTodoDone()
   if line:match("TODO:") then
     new_line = line:gsub("TODO:", "DOING:")
   elseif line:match("DOING:") then
-    new_line = line:gsub("DOING:", "DONE:")
+    new_line = line:gsub("DOING:", "WAIT:")
+  elseif line:match("WAIT:") then
+    new_line = line:gsub("WAIT:", "DONE:")
   elseif line:match("DONE:") then
     new_line = line:gsub("DONE:", "TODO:")
   end

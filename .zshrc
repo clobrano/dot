@@ -21,7 +21,7 @@ export KUBE_MAP=~/.kube/dsal-host-config-map.json
 # PATH
 PATH=~/.local/bin:$PATH
 [[ -d $HOME/.cargo ]] && PATH=$HOME/.cargo/bin:$PATH
-[[ -d $HOME/.npm-global ]] && PATH=$HOME/.npm-global:$PATH
+[[ -d $HOME/.npm-global ]] && PATH=$HOME/.npm-global/bin:$PATH
 
 PATH=$PATH:$HOME/toolkit
 PATH=$PATH:$HOME/workspace/script-fu
@@ -189,7 +189,9 @@ add-zsh-hook preexec () {
 # init starship if installed
 if command -v starship 2>&1 >/dev/null; then
     export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
-    eval "$(starship init zsh)"
+    if [[ ${TERM:-dumb} != dumb ]]; then
+        eval "$(starship init zsh)"
+    fi
 fi
 
 # enable fuzzy-cd
@@ -198,10 +200,21 @@ if command -v fuzzy-cd >/dev/null; then
 fi
 
 # kubectl completion
-[ command -v kubectl 2>/dev/null ] && source <(kubectl completion zsh)
+if command -v kubectl >/dev/null 2>&1; then
+    source <(kubectl completion zsh)
+    alias k=kubectl
+    compdef k=kubectl
+fi
 
 # oc completion
-[ command -v oc 2>/dev/null ] && source <(oc completion zsh)
+if command -v oc >/dev/null 2>&1; then
+    source <(oc completion zsh)
+fi
+
+# osac completion
+if command -v osac >/dev/null 2>&1; then
+    source <(osac completion zsh)
+fi
 
 # bun completions
 [ -s "/home/clobrano/.bun/_bun" ] && source "/home/clobrano/.bun/_bun"
@@ -210,9 +223,25 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+
+# krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+
 if command -v direnv 2>&1 >/dev/null; then
     eval "$(direnv hook zsh)"
 fi
+
+nwm() {
+    local target
+    target=$(which "$1")
+    if [ -n "$target" ]; then
+        nvim "$target"
+    else
+        echo "Command not found: $1"
+    fi
+}
+
 export ANDROID_HOME="$HOME/Android/Sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
@@ -223,3 +252,4 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 autoload -U compinit; compinit
+[ -f "/home/clobrano/.config/claude-code-vertex/env.sh" ] && . "/home/clobrano/.config/claude-code-vertex/env.sh"

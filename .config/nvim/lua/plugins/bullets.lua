@@ -7,7 +7,8 @@ return {
     vim.g.bullets_outline_levels = {
       'num', -- Level 1: 1.
       'abc', -- Level 2: a.
-      'std-', -- Level 3: -
+      'std*', -- Level 3: -
+      'std-', -- Level 4: -
     }
   end
 }

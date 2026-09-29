@@ -39,8 +39,8 @@
 [http "https://gitlab.cee.redhat.com/"]
 	sslVerify = false
 [user]
-	email = you@example.com
-	name = Your Name
+	email = c.lobrano@gmail.com
+	name = Carlo Lobrano
 [commit]
 	gpgsign = false
 [includeIf "gitdir:~/workspace/"]

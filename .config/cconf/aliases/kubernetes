@@ -1,0 +1,10 @@
+alias k=kubectl
+alias kd='kubectl describe'
+alias kc='kubectl create'
+alias kdry='--dry-run=client --output=yaml'
+alias cdkube="cd ~/.kube"
+alias d=docker
+
+alias virtctl='kubectl virt'
+
+

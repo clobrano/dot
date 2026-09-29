@@ -16,4 +16,4 @@ print_cpu_temp() {
 
 cpu="$(print_cpu_temp)"
 mem="$(print_mem_state)"
-echo "$mem $cpu"
+#echo "$mem $cpu"

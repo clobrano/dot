@@ -1,12 +1,12 @@
 function run_smart_automation() {
     # If the directory hasn't changed, do nothing
     [[ "$PWD" == "$_LAST_WORKING_DIR" ]] && return
-    
+
     # Otherwise, run your logic
     #now_timestamp_=$(date +%H:%M:%S)
     go_version_load_from_go_mod
     auto_venv
-    
+
     # Update the "state" variable
     _LAST_WORKING_DIR="$PWD"
 }

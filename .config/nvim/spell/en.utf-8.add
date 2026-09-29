@@ -13,10 +13,13 @@ Anki
 Ansible
 ArgoCD
 Authn
+Autofix
 BCP
 BMH
 BSS
 Baldessarri
+BareMetalInstance
+BareMetalInstanceSpec
 Baremetald
 BeMove
 Bitbucket
@@ -39,21 +42,25 @@ CRD
 CRs
 CSR
 CTS
+CUDN
 CVE
 CVEs
 CVSS
 Cagliari
 CamelCase
 CareerWeek
+CertificateRequest
 Chainguard
+Chuzhoy
 CloudNativeCorner
 ClusterIssuer
 ClusterLabs
 ClusterRole
 ClusterRoleBinding
 ClusterServiceVersion
-CodeRabbit
 ComSoc
+ComputeInstance
+ComputeInstanceSpec
 ConfigMap
 Conforma
 ConsolePlugin
@@ -80,7 +87,9 @@ Dockerfile
 DualReplica
 DualReplicaTopology
 DualReplicaTopologyMode
+EC2
 ECOPROJECT
+EIP
 ENEL
 EUS
 Enablement
@@ -100,10 +109,12 @@ Ferrero
 FileNotFound
 Freiburg
 GA
+GCP
 GL
 GOPATH
 GOPROXY
 GPS
+Garmin
 GetDeploymentNamespace
 GetPodName
 Ginko
@@ -202,8 +213,8 @@ OKD
 OOP
 OPL
 OS
-OSAC
 OpenImage
+OpenSSH
 OpenShift
 OpenSuse
 OutOfService
@@ -215,6 +226,7 @@ PR55
 PRD
 PRDs
 PRs
+PSE
 PVCs
 PXE
 PackageManifest
@@ -231,6 +243,7 @@ ProdSec
 ProjectDevelopmentStream
 ProjectDevelopmentStreamTemplate
 ProviderID
+ProvisioningFailed
 Q1
 Q2
 Q3
@@ -271,6 +284,7 @@ STL
 Sanfilippo
 Sant'Ambrogio
 Screencast
+SecretLocalReference
 SelfNodeRemediationTemplate
 ServiceAccount
 ServiceMonitor
@@ -285,6 +299,7 @@ Storage
 Storage/!
 StorageBasedRemediation
 StorageClass
+StorageTier
 T5
 TBD
 TDR
@@ -309,6 +324,8 @@ TwoNoteOCP
 Tzif
 UI
 UWP
+Udi
+Udi's
 Ungraceful
 Urpinu
 VCS
@@ -323,6 +340,7 @@ Vyas
 WAL
 WD
 WDYT
+WaitingForVM
 XFP
 XSS
 a.
@@ -344,6 +362,7 @@ apps
 architected
 architecting
 argparse
+assemini
 assets
 assimil
 async
@@ -393,6 +412,7 @@ clientCAController
 clobrano
 cluster
 cluster/!
+coderabbit
 codereview
 coldshowers
 colocation
@@ -443,6 +463,7 @@ dty
 e2e
 ecocardiogramma
 edenred
+egress
 endDate
 endian
 endiannes
@@ -516,6 +537,7 @@ hikey
 hooks
 hostname
 hotplug
+httpd
 https
 hyperconverged
 hyperloop
@@ -648,6 +670,7 @@ presubmits
 printk
 prio
 prometheus
+proto
 puml
 pv
 python3
@@ -655,6 +678,7 @@ qemu
 qmcli
 qmi
 qualcomm
+quartergoal
 radiobuttons
 raffaello
 rbac
@@ -767,6 +791,7 @@ testplatform
 textwidth
 timestamp
 timout/!
+tldr
 tnf
 toolchain
 tools
@@ -817,6 +842,7 @@ vimwiki
 virtualize
 virtualized
 vm
+vmaas
 wMaxPacketSize
 watsonx
 wayland
@@ -830,6 +856,7 @@ wikipedia
 wireshark
 wontdo
 workflow
+worktree
 wwan
 xmllint
 xyz
@@ -841,17 +868,3 @@ zathura
 zazen
 zettelkasten
 zlp
-assemini
-CertificateRequest
-Garmin
-ComputeInstance
-ProvisioningFailed
-WaitingForVM
-tldr
-StorageTier
-egress
-CUDN
-Chuzhoy
-Udi
-Udi's
-Autofix

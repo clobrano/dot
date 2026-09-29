@@ -19,17 +19,24 @@ uda.allDay.label=All Day
 # use ancestral urgency if higher than own
 urgency.inherit=on
 # disable task history
-journal.info=off
+journal.info=on
 
-# taskwarrior customization
+
+# custom urgency tweaks
+urgency.user.tag.review.coefficient = -3.0
+urgency.user.tag.hold.coefficient = -10.0
+urgency.user.tag.handedoff.coefficient = -30.0
+urgency.user.tag.wontdo.coefficient = -30.0
+
+# custom views
 report.next.columns=id,tags,description.count,due.countdown
 report.next.labels=ID,Tag,Desc,Due
 report.next.filter=status:pending -WAITING ( due:today or scheduled:today or +doing)
 
 # Weekly scheduled tasks
 report.weekly_goals.description=This week (Due & Completed)
-report.weekly_goals.columns=id,description.count,due,scheduled,end
-report.weekly_goals.filter=status.not:deleted status.not:recurring ((due.after:sow and due.before:eow) or (end.after:sow and end.before:eow) or (scheduled.after:sow and scheduled.before:eow))
+report.weekly_goals.columns=id,due,scheduled,end,description.count
+report.weekly_goals.filter=status.not:deleted status.not:recurring ((due.after:sow and due.before:eow) or (scheduled.after:sow and scheduled.before:eow)) (status:pending or status:completed)
 report.weekly_goals.sort=due
 report.weekly_goals.column.width=5000
 

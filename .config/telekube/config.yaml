@@ -32,12 +32,8 @@ tabs:
       command: pods -A
     - name: Deployments
       command: deployments -A
-    - name: Services
-      command: services -A
-    - name: Subs
-      command: subs -n openshift-workload-availability
-    - name: Jobs
-      command: jobs -A
     - name: OSAC
-      command: pods -n osac-e2e-ci
+      command: pods -n osac
+    - name: OSAC deploy
+      command: deployments -n osac
 custom_commands: []

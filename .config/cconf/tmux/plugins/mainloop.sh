@@ -12,62 +12,50 @@
 
 
 ## ccusage stats view
-interval_time_min=10
-current_time_min=$((10#$(date +%M)))
 ccusage_bin="$HOME/.npm-global/bin/ccusage"
-if [ $((current_time_min % interval_time_min)) -eq 0 ]; then
-    MONTHLY_VIEW=$("$ccusage_bin" monthly --last 1 --json | jq '(.totals.totalCost | . * 100 | round / 100)')
-    DAILY_VIEW=$("$ccusage_bin" daily --last 1 --json | jq '(.totals.totalCost | . * 100 | round / 100)')
-    MONTHLY_BUDGET=300
-    MONTHLY_VIEW_INT=$(echo "${MONTHLY_VIEW}" | cut -d "." -f1)
-    PERC=$((MONTHLY_VIEW_INT*100 / MONTHLY_BUDGET))
-    echo "\$${DAILY_VIEW} \$${MONTHLY_VIEW} %${PERC}" > "$HOME/.ccusage.txt"
+ccusage_slot_file="$HOME/.ccusage-last-slot"
+ccusage_lock_file="$HOME/.ccusage.lock"
+# The tmux status line invokes this script every 10 seconds.
+current_slot=$(($(date +%s) / 600))
+
+update_ccusage() {
+    local monthly_json daily_json monthly_view daily_view monthly_view_int monthly_budget percentage tmpfile
+
+    if ! monthly_json=$("$ccusage_bin" monthly --last 1 --json) ||
+       ! daily_json=$("$ccusage_bin" daily --last 1 --json) ||
+       ! monthly_view=$(jq -er '(.totals.totalCost | . * 100 | round / 100)' <<< "$monthly_json") ||
+       ! daily_view=$(jq -er '(.totals.totalCost | . * 100 | round / 100)' <<< "$daily_json"); then
+        return 1
+    fi
+
+    monthly_view_int=${monthly_view%%.*}
+    monthly_budget=300
+    percentage=$((monthly_view_int * 100 / monthly_budget))
+    tmpfile=$(mktemp "$HOME/.ccusage.txt.XXXXXX") || return 1
+    if printf '$%s $%s %%%s\n' "$daily_view" "$monthly_view" "$percentage" > "$tmpfile" &&
+       mv -f -- "$tmpfile" "$HOME/.ccusage.txt"; then
+        return 0
+    fi
+    rm -f -- "$tmpfile"
+    return 1
+}
+
+last_slot=
+if [[ -r "$ccusage_slot_file" ]]; then
+    read -r last_slot < "$ccusage_slot_file"
 fi
 
-## Taskwarrior stats view
-interval_time_min=10
-current_time_min=$((10#$(date +%M)))
-if [ $((current_time_min % interval_time_min)) -eq 0 ]; then
-    "$HOME/workspace/script-fu/taskwarrior-update-stats.sh"
-fi
-# sometimes updating taskwarrior stats fails. Avoid presenting
-# partial information on tmux output
-if ! grep "?" "$HOME"/.taskwarrior-stats >/dev/null; then
-    cat "$HOME"/.taskwarrior-stats
-fi
-
-## Taskwarrior reminder
-reminder_interval_time_min=10
-current_reminder_lock="$HOME/.taskwarrior-reminder-$current_time_min"
-if [ $((current_time_min % reminder_interval_time_min)) -eq 0 ]; then
-    if [ ! -f "$current_reminder_lock" ]; then
-        touch "$current_reminder_lock"
-        "$HOME/workspace/script-fu/taskwarrior-reminder.sh"
+if [[ "$current_slot" != "$last_slot" ]]; then
+    exec 9>"$ccusage_lock_file"
+    if flock -n 9; then
+        last_slot=
+        if [[ -r "$ccusage_slot_file" ]]; then
+            read -r last_slot < "$ccusage_slot_file"
+        fi
+        if [[ "$current_slot" != "$last_slot" ]]; then
+            update_ccusage
+            # Record attempts too, so failures do not retry on every redraw.
+            printf '%s\n' "$current_slot" > "$ccusage_slot_file"
+        fi
     fi
 fi
-
-# TODO: replace with find -exec
-for oldreminders_lock in $(find "$HOME" -maxdepth 1 -name ".taskwarrior-reminder-*"); do
-    if [ "$oldreminders_lock" != "$current_reminder_lock" ]; then
-        rm "$oldreminders_lock"
-    fi
-done
-
-
-## Calcurse agenda reminder - there is no such thing anymore
-#reminder_interval_time_min=10
-#current_reminder_lock="$HOME/.calcurse-reminder-$current_time_min"
-#if [ $((current_time_min % reminder_interval_time_min)) -eq 0 ]; then
-    #if [ ! -f "$current_reminder_lock" ]; then
-        #touch "$current_reminder_lock"
-        #"/home/clobrano/Apps/Quick/calcurse-reminder.sh"
-    #fi
-#fi
-
-# TODO: replace with find -exec
-for oldreminders_lock in $(find "$HOME" -maxdepth 1 -name ".calcurse-reminder-*"); do
-    if [ "$oldreminders_lock" != "$current_reminder_lock" ]; then
-        rm "$oldreminders_lock"
-    fi
-done
-

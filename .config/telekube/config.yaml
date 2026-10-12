@@ -36,4 +36,6 @@ tabs:
       command: pods -n osac
     - name: OSAC deploy
       command: deployments -n osac
+    - name: VMs
+      command: virtualmachines -A
 custom_commands: []

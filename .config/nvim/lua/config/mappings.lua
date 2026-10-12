@@ -65,7 +65,7 @@ nmap('<leader>e', ':e!<cr>')
 nmap('ct', ':checktime<cr>')
 
 -- buffer select ALL
-nmap('C', 'ggvG$')
+nmap('C', 'ggVG')
 
 -- buffer: show full path
 nmap('<leader>g', ":echo expand('%')<cr>")

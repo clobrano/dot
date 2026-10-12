@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=catppuccin-frappe
-Font=SauceCodePro Nerd Font,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+Font=SauceCodePro Nerd Font,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 
 [General]
 Name=Personal

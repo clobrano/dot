@@ -883,19 +883,36 @@ end
 
 --- Parse the bracketed text under the cursor as a short reference to a
 --- GitHub PR/Issue, GitLab MR, or Jira ticket and copy the resolved URL
-local function lookup_bookmark(label)
-  local bookmarks_path = vim.fn.expand("~/Documents/RedHatNotes/Bookmarks.txt")
-  if vim.fn.filereadable(bookmarks_path) ~= 1 then
-    return ""
-  end
+local function lookup_reference_in_files(label, paths)
   local pattern = "^%[" .. label:gsub("([%(%)%.%%%+%-%*%?%[%]%^%$])", "%%%1") .. "%]:%s*(.+)$"
-  for _, line in ipairs(vim.fn.readfile(bookmarks_path)) do
-    local url = line:match(pattern)
-    if url then
-      return vim.trim(url)
+  for _, path in ipairs(paths) do
+    if vim.fn.filereadable(path) == 1 then
+      local ok, lines = pcall(vim.fn.readfile, path)
+      if ok then
+        for _, line in ipairs(lines) do
+          local url = line:match(pattern)
+          if url then
+            return vim.trim(url)
+          end
+        end
+      end
     end
   end
   return ""
+end
+
+local function lookup_bookmark(label)
+  local bookmarks_path = vim.fn.expand("~/Documents/RedHatNotes/Bookmarks.txt")
+  return lookup_reference_in_files(label, { bookmarks_path })
+end
+
+local function lookup_reference_in_notes(label)
+  local notes_path = vim.fn.expand("~/Documents/RedHatNotes")
+  if vim.fn.isdirectory(notes_path) ~= 1 then
+    return ""
+  end
+  local paths = vim.fn.globpath(notes_path, "**/*", false, true)
+  return lookup_reference_in_files(label, paths)
 end
 
 --- to the Wayland clipboard.
@@ -940,6 +957,10 @@ function Get_Smart_Weblink()
 
   if base_url == "" then
     base_url = lookup_bookmark(target_text)
+  end
+
+  if base_url == "" then
+    base_url = lookup_reference_in_notes(target_text)
   end
 
   if base_url == "" then

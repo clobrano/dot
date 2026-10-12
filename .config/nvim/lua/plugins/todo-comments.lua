@@ -32,7 +32,7 @@ return {
                 TEST = { icon = "⏲ ", color = "test", alt = { "TESTING" } },
                 WIP = { icon = " ", color = "test", alt = { "WORKINPROGRESS" } },
                 PASS = { icon = " ", color = "success", alt = { "PASSED" } },
-                FAIL = { icon = " ", color = "error", alt = { "ISSUE", "FAILED" } },
+                FAIL = { icon = " ", color = "error", alt = { "FAILED" } },
                 OK = { icon = " ", color =   "success", alt = { "OK", "SOLVED" } },
                 NOK = { icon = " ", color = "error", alt = { "NOK" } },
             },

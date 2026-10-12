@@ -19,7 +19,7 @@ export KUBE=~/.kube
 export KUBE_MAP=~/.kube/dsal-host-config-map.json
 
 # PATH
-PATH=~/.local/bin:$PATH
+PATH=$HOME/.local/bin:$PATH
 [[ -d $HOME/.cargo ]] && PATH=$HOME/.cargo/bin:$PATH
 [[ -d $HOME/.npm-global ]] && PATH=$HOME/.npm-global/bin:$PATH
 
@@ -186,17 +186,20 @@ add-zsh-hook preexec () {
     cmd_start="$SECONDS"
 }
 
+# enable fuzzy-cd
+if command -v fuzzy-cd >/dev/null 2>&1; then
+    eval "$(fuzzy-cd init --depth 6 zsh)"
+fi
+
+# keep compinit before the other completion scripts
+compinit
+
 # init starship if installed
 if command -v starship 2>&1 >/dev/null; then
     export STARSHIP_CONFIG=$HOME/.dot/.config/starship.toml
     if [[ ${TERM:-dumb} != dumb ]]; then
         eval "$(starship init zsh)"
     fi
-fi
-
-# enable fuzzy-cd
-if command -v fuzzy-cd >/dev/null; then
-    eval "$(fuzzy-cd init --depth 6 zsh)"
 fi
 
 # kubectl completion
@@ -251,5 +254,21 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init --cmd cd zsh)"
 fi
 
-autoload -U compinit; compinit
-[ -f "/home/clobrano/.config/claude-code-vertex/env.sh" ] && . "/home/clobrano/.config/claude-code-vertex/env.sh"
+#[ -f "/home/clobrano/.config/claude-code-vertex/env.sh" ] && . "/home/clobrano/.config/claude-code-vertex/env.sh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+

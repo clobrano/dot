@@ -1,6 +1,9 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = '$time$character'
+right_format = '$all'
+
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"

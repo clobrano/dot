@@ -28,5 +28,8 @@ return  {
     outline_window = {
       focus_on_open = false,
     },
+    symbol_folding = {
+      autofold_depth = false,
+    },
   },
 }

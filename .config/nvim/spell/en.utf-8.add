@@ -24,6 +24,7 @@ Baremetald
 BeMove
 Bitbucket
 Bobo
+CDI
 CEST
 CHANGELOG
 CIB
@@ -49,6 +50,7 @@ CVSS
 Cagliari
 CamelCase
 CareerWeek
+CatalogItem
 CertificateRequest
 Chainguard
 Chuzhoy
@@ -74,6 +76,7 @@ DAST
 DMA
 DaemonSet
 DaemonSets
+DataVolume
 DayOfLearning
 DeVizia
 Debianization
@@ -438,6 +441,7 @@ css
 ctlplan
 ctlplane
 ctor
+ctrl
 dbus
 deadlift
 debian
@@ -725,6 +729,7 @@ roadmap
 roadmaps
 rollout
 routable
+runStrategy
 runc
 rw
 sbr
@@ -848,6 +853,7 @@ watsonx
 wayland
 webhook
 webkit
+weblink
 webserver
 wezterm
 when
@@ -868,3 +874,8 @@ zathura
 zazen
 zettelkasten
 zlp
+VirtualNetworks
+SecurityGroups
+#ed/!
+Red/!
+OSAC/!

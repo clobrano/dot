@@ -10,12 +10,95 @@ return {
     { "<leader>rr", "<cmd>Review<cr>",         desc = "Review working tree" },
     { "<leader>rc", "<cmd>Review commits<cr>", desc = "Review commits" },
     { "<leader>rb", "<cmd>Review branch<cr>",  desc = "Review branch" },
-    { "<leader>rn", ":Review note<cr>",        mode = { "n", "v" },            desc = "Review: note here" },
+    { "<leader>rv", ":Review note<cr>",        mode = { "n", "v" },          desc = "[R]e[v]iew: ask a question" },
     { "<leader>re", "<cmd>Review edit<cr>",    desc = "Review: edit comment" },
     { "<leader>rd", "<cmd>Review delete<cr>",  desc = "Review: delete comment" },
-    { "<leader>rx", "<cmd>Review export<cr>",  desc = "Review: export" },
+    { "<leader>rx", "<cmd>ReviewExportCustom<cr>", desc = "Review: export custom format" },
   },
   config = function()
+    local function excerpt(c)
+      local ok, lines = pcall(vim.fn.readfile, c.file)
+      if not ok or c.line == 0 then return {} end
+      local first = math.max(c.line, 1)
+      local last = math.max(first, c.line_end or first)
+      local fence_length = 3
+      for i = first, last do
+        for run in (lines[i] or ""):gmatch("~+") do
+          fence_length = math.max(fence_length, #run + 1)
+        end
+      end
+      local fence = string.rep("~", fence_length)
+      local filetype = vim.filetype.match({ filename = c.file }) or "text"
+      local out = { fence .. filetype }
+      for i = first, last do table.insert(out, lines[i] or "") end
+      table.insert(out, fence)
+      return out
+    end
+
+    local function location(c)
+      local path = c.file
+      local root = require("review.utils").git_root()
+      if root and not path:match("^/") then
+        path = root .. "/" .. path
+      end
+      path = vim.fn.fnamemodify(path, ":p")
+      if c.line and c.line > 0 then
+        path = path .. ":" .. c.line
+        if c.line_end and c.line_end > c.line then
+          path = path .. "-" .. c.line_end
+        end
+      end
+      return path
+    end
+
+    local function format_comments(comments)
+      local md = {
+        "Feedback on your previous output. Review each comment with its quoted context.",
+        "Reply to QUESTION comments without changing code. Make changes for ACTION or ISSUE comments. Treat PRAISE as positive feedback.",
+        "",
+      }
+      local type_labels = { note = "QUESTION", suggestion = "ACTION" }
+      for i, c in ipairs(comments) do
+        local type_name = type_labels[c.type] or c.type:upper()
+        table.insert(md, ("%d. **[%s]** %s\n   Source file: `%s`"):format(i, type_name, c.text, location(c)))
+        vim.list_extend(md, excerpt(c))
+      end
+      return table.concat(md, "\n")
+    end
+
+    require("review").setup({
+      comment_types = {
+        note = { key = "q", name = "Question", icon = "🙋", hl = "ReviewQuestion" },
+        suggestion = { key = "a", name = "Action", icon = "💡", hl = "ReviewAction" },
+        issue = { key = "i", name = "Issue", icon = "⚠️", hl = "ReviewIssue" },
+        praise = { key = "p", name = "Praise", icon = "✨", hl = "ReviewPraise" },
+      },
+    })
+
+    vim.api.nvim_create_user_command("ReviewExportCustom", function()
+      local review_export = require("review.export")
+      local original_generate_markdown = review_export.generate_markdown
+      review_export.generate_markdown = function()
+        return format_comments(require("review.store").get_all())
+      end
+      local ok, err = pcall(review_export.to_clipboard)
+      review_export.generate_markdown = original_generate_markdown
+      if not ok then
+        vim.notify("Custom review export failed: " .. tostring(err), vim.log.levels.ERROR)
+      end
+    end, {})
+
+    vim.api.nvim_set_hl(0, "ReviewQuestion", { link = "DiagnosticInfo", default = true })
+
+    vim.keymap.set("n", "]c", function()
+      require("codediff").next_hunk()
+    end, { desc = "Next diff change (hunk)" })
+
+    vim.keymap.set("n", "[c", function()
+      require("codediff").prev_hunk()
+    end, { desc = "Previous diff change (hunk)" })
+
+
     -- Review a PR (Review commits <first commit in PR>...HEAD)
     vim.api.nvim_create_user_command("ReviewPR", function(opts)
       local pr_arg = opts.args ~= "" and opts.args or ""

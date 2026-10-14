@@ -7,11 +7,19 @@ set -euo pipefail
 SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 
 open_file() {              # $1 = pane id, $2 = file path
-  local pane="$1" file="$2" pane_path panes win editor cmd
+  local pane="$1" file="$2" line="" pane_path panes win editor cmd
+  if [[ "$file" =~ :([0-9]+)$ ]]; then
+    line="${BASH_REMATCH[1]}"
+    file="${file%:*}"
+  fi
   pane_path="$(tmux display-message -p -t "$pane" '#{pane_current_path}')"
   editor="${EDITOR:-nvim}"
   quote() { local s=$1; printf "'%s'" "${s//\'/\'\\\'\'}"; }
-  cmd="$editor -- $(quote "$file")"
+  if [ -n "$line" ]; then
+    cmd="$editor +$line -- $(quote "$file")"
+  else
+    cmd="$editor -- $(quote "$file")"
+  fi
   panes="$(tmux display-message -p -t "$pane" '#{window_panes}')"
   win="$(tmux display-message -p -t "$pane" '#{window_id}')"
   if [ "$panes" -eq 1 ]; then
@@ -25,7 +33,7 @@ open_file() {              # $1 = pane id, $2 = file path
 if [ "${1:-}" = "--fzf" ]; then
   listfile="$2"; pane="$3"
   file="$(fzf --reverse --prompt='open> ' \
-              --preview='(bat --color=always --style=numbers -- {} 2>/dev/null || cat -- {}) 2>/dev/null' \
+              --preview='file={}; file=${file%:*}; (bat --color=always --style=numbers -- "$file" 2>/dev/null || cat -- "$file") 2>/dev/null' \
               --preview-window='down,50%,border-top,wrap' \
               < "$listfile" || true)"
   rm -f "$listfile"
@@ -56,9 +64,9 @@ content="$(tmux capture-pane -p -t "$pane" | awk -v w="$pane_width" '
 VERIFY="$(tmux show-option -gqv '@hint-open-verify')"; VERIFY="${VERIFY:-on}"
 
 if [ "$VERIFY" = off ]; then
-  pattern='(~|\.{1,2})?/([[:alnum:]._-]+/?)+|([[:alnum:]._-]+/)+[[:alnum:]._-]+'
+  pattern='((~|\.{1,2})?/([[:alnum:]._-]+/?)+|([[:alnum:]._-]+/)+[[:alnum:]._-]+)(:[0-9]+)?'
 else
-  pattern='(~|\.{1,2})?/?([[:alnum:]._-]+/)*[[:alnum:]._-]+'
+  pattern='((~|\.{1,2})?/?([[:alnum:]._-]+/)*[[:alnum:]._-]+)(:[0-9]+)?'
 fi
 
 # Bare/relative tokens are tried against these bases in order: the pane's cwd,
@@ -76,6 +84,11 @@ declare -A seen
 paths=()
 if [ "${#raw[@]}" -gt 0 ]; then
   for tok in "${raw[@]}"; do
+    line_suffix=""
+    if [[ "$tok" =~ :([0-9]+)$ ]]; then
+      line_suffix=":${BASH_REMATCH[1]}"
+      tok="${tok%"$line_suffix"}"
+    fi
     case "$tok" in
       /*)    cands=("$tok") ;;
       "~/"*) cands=("$HOME/${tok#\~/}") ;;
@@ -88,6 +101,7 @@ if [ "${#raw[@]}" -gt 0 ]; then
     done
     [ -n "$f" ] || continue
     [ "$VERIFY" = off ] || f="$(realpath "$f" 2>/dev/null)" || continue
+    f+="$line_suffix"
     [ -n "${seen[$f]:-}" ] && continue                 # dedupe, keep first order
     seen[$f]=1
     paths+=("$f")

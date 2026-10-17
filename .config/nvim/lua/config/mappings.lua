@@ -405,8 +405,8 @@ nmap('<leader>gm', ":lua require'functions'.makeGmailSearchLink()<cr>")
 nmap('Y', 'yg_')
 
 -- wrap/unwrap toggle
-nmap('<leader>w', ':set wrap!<cr>')
-nmap('<leader>wa', ':windo set wrap!<cr>')
+nmap('<leader>w', ':set wrap<cr>')
+nmap('<leader>wu', ':set nowrap<cr>')
 
 -- markdown section
 -- bold

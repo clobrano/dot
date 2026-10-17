@@ -38,7 +38,8 @@ return {
     })
 
     -- Obsidian keymaps
-    vim.keymap.set('n', '<leader>on', ':ObsidianNew<cr>', { silent = true, noremap = true })
+    vim.keymap.set('n', '<leader>on', ':ObsidianNew<cr>', { desc="ObsidianNew", silent = true, noremap = true })
+    vim.keymap.set('n', '<leader>ob', ':ObsidianBacklinks<cr>', { desc="ObsidianBacklink", silent = true, noremap = true })
 
     -- Now setup the markdown_refs completion source
     local cmp = require("cmp")

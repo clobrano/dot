@@ -75,6 +75,8 @@ return {
       },
     })
 
+    require("tmux_review").configure_tmux_review()
+
     vim.api.nvim_create_user_command("ReviewExportCustom", function()
       local review_export = require("review.export")
       local original_generate_markdown = review_export.generate_markdown

@@ -4,27 +4,29 @@ A single-file browser start page. No build step, no external dependencies — ev
 
 ## Files
 
-| Path | Purpose |
+| File | Purpose |
 |------|---------|
-| `~/.local/share/browser-start-page/index.html` | The page itself |
-| `~/.config/cconf/environments/browser-start-page/start-page-server.py` | Local HTTP server (feed proxy + static files) |
-| `~/.config/cconf/environments/browser-start-page/browser-start-page.service` | systemd user service |
+| `index.html` | The page itself |
+| `start-page-server.py` | Local HTTP server (feed proxy + static files) |
+| `browser-start-page.service` | systemd user service |
+| `Makefile` | Setup and teardown automation |
 
 ## Setup
 
 ### Serve via the local server (recommended)
 
-The server lets feeds load without CORS issues and keeps everything on localhost.
-
 ```bash
-# install and start the systemd user service
-cp ~/.config/cconf/environments/browser-start-page/browser-start-page.service \
-   ~/.config/systemd/user/
-systemctl --user daemon-reload
-systemctl --user enable --now browser-start-page
+make install          # symlink service, enable and start it
+make firewall         # open port 8420 in firewalld (default zone: home)
+make firewall ZONE=trusted  # or a different zone
 ```
 
-The page is then at `http://localhost:8420`. Point your browser's new-tab or home page there.
+The page is then at `http://localhost:8420`. For LAN access from other devices, use `http://<host-ip>:8420`. Point your browser's new-tab or home page to either.
+
+```bash
+make status           # check service health
+make uninstall        # stop, disable, remove service symlink and firewall rule
+```
 
 ### Open as a local file
 

@@ -332,6 +332,19 @@
   </div>
 
   <div class="settings-section">
+    <h3>Layout</h3>
+    <div class="field">
+      <label style="font-family:var(--mono); font-size:11px; color:var(--overlay0); display:block; margin-bottom:6px;">Feed columns</label>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <label><input type="radio" name="feed-cols" value="4"> 4</label>
+        <label><input type="radio" name="feed-cols" value="5"> 5</label>
+        <label><input type="radio" name="feed-cols" value="6"> 6</label>
+        <label><input type="radio" name="feed-cols" value="7"> 7</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
     <h3>Feeds</h3>
     <div id="feed-rows"></div>
     <button class="btn" id="feed-add-btn" type="button">+ Add feed</button>
@@ -362,7 +375,8 @@
       shortcuts: [],
       wallpaper: { type: "none", color: "#ffffff", imageMode: "url", imageUrl: "", imageData: "" },
       weather: { enabled: true, mode: "auto", unit: "C", lat: null, lon: null, label: "", cache: null },
-      feeds: []
+      feeds: [],
+      layout: { feedColumns: 5 }
     };
   }
 
@@ -951,6 +965,9 @@
       : (wx.lat != null ? "Current location: " + wx.lat.toFixed(2) + ", " + wx.lon.toFixed(2) : "No location set yet.");
     updateWeatherOptionVisibility();
 
+    var cols = (state.layout && state.layout.feedColumns) || 5;
+    document.querySelectorAll('input[name="feed-cols"]').forEach(function(r){ r.checked = (parseInt(r.value) === cols); });
+
     renderFeedRows();
   }
 
@@ -1101,7 +1118,7 @@
         var imported = JSON.parse(reader.result);
         state = deepMerge(defaultState(), imported);
         saveState();
-        applyTheme(); applyWallpaper(); renderShortcuts(); renderFeeds(); refreshWeather();
+        applyTheme(); applyWallpaper(); applyLayout(); renderShortcuts(); renderFeeds(); refreshWeather();
         populateSettingsForm();
       }catch(e){
         alert("That file doesn't look like a valid config export.");
@@ -1114,14 +1131,31 @@
     if(!confirm("Reset all shortcuts, wallpaper, weather and feed settings? This can't be undone.")) return;
     state = defaultState();
     saveState();
-    applyTheme(); applyWallpaper(); renderShortcuts(); renderFeeds(); refreshWeather();
+    applyTheme(); applyWallpaper(); applyLayout(); renderShortcuts(); renderFeeds(); refreshWeather();
     populateSettingsForm();
+  });
+
+  /* ---------------- layout ---------------- */
+
+  function applyLayout(){
+    var cols = (state.layout && state.layout.feedColumns) || 5;
+    document.getElementById("page").style.maxWidth = (cols * 260 + 100) + "px";
+    rssGrid.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+  }
+
+  document.querySelectorAll('input[name="feed-cols"]').forEach(function(r){
+    r.addEventListener("change", function(){
+      if(!state.layout) state.layout = {};
+      state.layout.feedColumns = parseInt(this.value);
+      saveState(); applyLayout();
+    });
   });
 
   /* ---------------- init ---------------- */
 
   applyTheme();
   applyWallpaper();
+  applyLayout();
   renderShortcuts();
   renderFeeds();
   refreshWeather();

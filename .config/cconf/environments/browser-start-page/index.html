@@ -856,7 +856,7 @@
     rssSection.hidden = false;
 
     nonEmpty.forEach(function(feed){
-      var url = feed.url;
+      var url = normalizeYouTubeUrl(feed.url);
       var col = document.createElement("div");
       col.className = "rss-feed";
       var h3 = document.createElement("h3");

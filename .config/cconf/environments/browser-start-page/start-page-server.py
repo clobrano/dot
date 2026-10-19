@@ -46,8 +46,20 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
 
-class V6Server(ThreadingHTTPServer):
+class _SilentBrokenPipe:
+    def handle_error(self, request, client_address):
+        import sys
+        if isinstance(sys.exc_info()[1], BrokenPipeError):
+            return
+        super().handle_error(request, client_address)
+
+
+class V6Server(_SilentBrokenPipe, ThreadingHTTPServer):
     address_family = socket.AF_INET6
+
+
+class IPv4Server(_SilentBrokenPipe, ThreadingHTTPServer):
+    pass
 
 
 def main():
@@ -61,7 +73,7 @@ def main():
     handler = functools.partial(Handler, directory=a.directory)
     servers = []
     for addr in a.bind or ["127.0.0.1", "::1"]:
-        cls = V6Server if ":" in addr else ThreadingHTTPServer
+        cls = V6Server if ":" in addr else IPv4Server
         servers.append(cls((addr, a.port), handler))
 
     for s in servers[1:]:

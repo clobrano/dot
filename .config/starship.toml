@@ -10,7 +10,7 @@ error_symbol = "[➜](bold red)"
 
 [directory]
 truncation_length = 3
-truncate_to_repo = false
+truncate_to_repo = true
 
 [custom.git_user]
 when = "git rev-parse --is-inside-work-tree"
@@ -30,11 +30,11 @@ format = 'on [$symbol$branch]($style) '
 tag_disabled = false
 
 [golang]
-symbol = "GO "
+#symbol = "GO "
 format = '$symbol[($version )]($style)'
 
 [python]
-symbol = "PY "
+#symbol = "PY "
 format = '$symbol[($version )]($style)'
 
 [hostname]
@@ -49,6 +49,9 @@ disabled = false
 style = 'bold green dimmed'
 format = '[$symbol]($style) '
 disabled = false
+
+[package]
+disabled = true
 
 [gcloud]
 disabled = true

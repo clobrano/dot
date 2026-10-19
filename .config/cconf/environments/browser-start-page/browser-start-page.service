@@ -2,7 +2,7 @@
 Description=Local browser start page
 
 [Service]
-ExecStart=/usr/bin/python3 %h/.config/cconf/environments/browser-start-page/start-page-server.py --port 8420 --directory %h/.local/share/browser-start-page
+ExecStart=/usr/bin/python3 %h/.config/cconf/environments/browser-start-page/start-page-server.py --port 8420 --directory %h/.config/cconf/environments/browser-start-page
 Restart=on-failure
 
 [Install]

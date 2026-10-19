@@ -185,6 +185,17 @@
   .rss-feed a:hover{color:var(--mauve); text-decoration:underline;}
   .rss-error, .rss-loading{font-size:12px; color:var(--overlay0); font-style:italic;}
 
+  /* youtube feed */
+  .rss-feed.feed-youtube ul{gap:10px;}
+  .rss-feed.feed-youtube li{display:flex; gap:8px; align-items:flex-start;}
+  .yt-thumb{width:72px; height:40px; object-fit:cover; border-radius:3px; flex-shrink:0; background:var(--surface0);}
+  .rss-feed.feed-youtube a{font-size:12px; line-height:1.35;}
+
+  /* podcast feed */
+  .rss-feed.feed-podcast li{display:flex; gap:5px; align-items:baseline;}
+  .pod-play{color:var(--mauve); font-size:10px; flex-shrink:0; line-height:1.5; user-select:none;}
+  .feed-artwork{width:18px; height:18px; border-radius:3px; object-fit:cover; vertical-align:middle; margin-right:5px;}
+
   .empty-hint{font-size:12px; color:var(--overlay0); font-family:var(--mono);}
 
   /* settings panel */
@@ -321,9 +332,10 @@
   </div>
 
   <div class="settings-section">
-    <h3>RSS feeds</h3>
+    <h3>Feeds</h3>
     <div id="feed-rows"></div>
     <button class="btn" id="feed-add-btn" type="button">+ Add feed</button>
+    <p class="empty-hint" style="margin:8px 0 0;">RSS/Atom, podcast, or YouTube channel/playlist URL. YouTube: paste a <code>youtube.com/channel/UC…</code> or <code>?list=PL…</code> URL and it will be converted automatically.</p>
   </div>
 
   <div class="settings-foot">
@@ -360,6 +372,11 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if(raw){
         var parsed = JSON.parse(raw);
+        if(Array.isArray(parsed.feeds)){
+          parsed.feeds = parsed.feeds.map(function(f){
+            return typeof f === "string" ? { id: genId(), url: f } : f;
+          });
+        }
         s = deepMerge(s, parsed);
       }
     }catch(e){ /* ignore corrupt storage, fall back to defaults */ }
@@ -399,6 +416,22 @@
     url = (url || "").trim();
     if(!url) return "";
     if(!/^https?:\/\//i.test(url)) url = "https://" + url;
+    return url;
+  }
+
+  function normalizeYouTubeUrl(url){
+    if(!url) return url;
+    try{
+      var u = new URL(url);
+      if(!/(?:^|\.)youtube\.com$/i.test(u.hostname)) return url;
+      if(u.pathname === "/feeds/videos.xml") return url;
+      var listId = u.searchParams.get("list");
+      if(listId) return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + listId;
+      var chanMatch = u.pathname.match(/\/channel\/(UC[\w-]+)/i);
+      if(chanMatch) return "https://www.youtube.com/feeds/videos.xml?channel_id=" + chanMatch[1];
+      var userMatch = u.pathname.match(/\/user\/([\w-]+)/i);
+      if(userMatch) return "https://www.youtube.com/feeds/videos.xml?user=" + userMatch[1];
+    }catch(e){}
     return url;
   }
 
@@ -723,6 +756,7 @@
   var rssGrid = document.getElementById("rss-grid");
 
   var CORS_PROXIES = [
+    function(u){ return "/feed?url=" + encodeURIComponent(u); },
     function(u){ return u; },
     function(u){ return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
     function(u){ return "https://corsproxy.io/?" + encodeURIComponent(u); }
@@ -751,43 +785,78 @@
     var doc = new DOMParser().parseFromString(xmlText, "application/xml");
     if(doc.querySelector("parsererror")) throw new Error("could not parse feed");
     var isAtom = !!doc.querySelector("feed") && !doc.querySelector("rss");
-    var title, items;
+    var title, items, artworkUrl = null;
+
+    var isYouTube = doc.getElementsByTagName("yt:videoId").length > 0;
+    var type = isYouTube ? "youtube" : "rss";
+
     if(isAtom){
       var ft = doc.querySelector("feed > title");
       title = ft ? ft.textContent.trim() : null;
-      items = Array.prototype.slice.call(doc.querySelectorAll("feed > entry"), 0, 3).map(function(entry){
+      var limit = isYouTube ? 5 : 3;
+      items = Array.prototype.slice.call(doc.querySelectorAll("feed > entry"), 0, limit).map(function(entry){
         var linkEl = entry.querySelector("link[href]");
         var dEl = entry.querySelector("updated") || entry.querySelector("published");
         var tEl = entry.querySelector("title");
-        return {
+        var item = {
           title: tEl ? tEl.textContent.trim() : "(untitled)",
           link: linkEl ? linkEl.getAttribute("href") : "#",
           date: dEl ? dEl.textContent.trim() : ""
         };
+        if(isYouTube){
+          var thumbEls = entry.getElementsByTagName("media:thumbnail");
+          if(thumbEls.length){
+            item.thumbnailUrl = thumbEls[0].getAttribute("url");
+          } else {
+            var vidEls = entry.getElementsByTagName("yt:videoId");
+            if(vidEls.length){
+              item.thumbnailUrl = "https://i.ytimg.com/vi/" + vidEls[0].textContent.trim() + "/mqdefault.jpg";
+            }
+          }
+        }
+        return item;
       });
     } else {
       var ct = doc.querySelector("channel > title");
       title = ct ? ct.textContent.trim() : null;
-      items = Array.prototype.slice.call(doc.querySelectorAll("item"), 0, 3).map(function(item){
+      var firstEnc = doc.querySelector("enclosure[type]");
+      if(firstEnc && /^audio\//i.test(firstEnc.getAttribute("type") || "")) type = "podcast";
+      if(type === "podcast"){
+        var itunesImgs = doc.getElementsByTagName("itunes:image");
+        if(itunesImgs.length) artworkUrl = itunesImgs[0].getAttribute("href") || null;
+        if(!artworkUrl){
+          var chanImg = doc.querySelector("channel > image > url");
+          artworkUrl = chanImg ? chanImg.textContent.trim() : null;
+        }
+      }
+      var itemLimit = type === "podcast" ? 5 : 3;
+      items = Array.prototype.slice.call(doc.querySelectorAll("item"), 0, itemLimit).map(function(item){
         var tEl = item.querySelector("title");
         var lEl = item.querySelector("link");
         var dEl = item.querySelector("pubDate");
-        return {
+        var result = {
           title: tEl ? tEl.textContent.trim() : "(untitled)",
           link: lEl ? lEl.textContent.trim() : "#",
           date: dEl ? dEl.textContent.trim() : ""
         };
+        if(type === "podcast"){
+          var encEls = item.getElementsByTagName("enclosure");
+          if(encEls.length) result.audioUrl = encEls[0].getAttribute("url") || null;
+        }
+        return result;
       });
     }
-    return { title: title, items: items };
+    return { title: title, type: type, items: items, artworkUrl: artworkUrl };
   }
 
   function renderFeeds(){
     rssGrid.innerHTML = "";
-    if(!state.feeds.length){ rssSection.hidden = true; return; }
+    var nonEmpty = state.feeds.filter(function(f){ return f.url; });
+    if(!nonEmpty.length){ rssSection.hidden = true; return; }
     rssSection.hidden = false;
 
-    state.feeds.forEach(function(url){
+    nonEmpty.forEach(function(feed){
+      var url = feed.url;
       var col = document.createElement("div");
       col.className = "rss-feed";
       var h3 = document.createElement("h3");
@@ -801,17 +870,36 @@
       fetchWithFallback(url).then(function(xml){
         var parsed = parseFeed(xml);
         h3.textContent = parsed.title || hostFromUrl(url);
+        col.classList.add("feed-" + parsed.type);
         body.className = "";
         if(!parsed.items.length){
           body.innerHTML = '<span class="rss-error">no items found</span>';
           return;
         }
+        if(parsed.type === "podcast" && parsed.artworkUrl){
+          var artwork = document.createElement("img");
+          artwork.src = parsed.artworkUrl; artwork.alt = "";
+          artwork.className = "feed-artwork"; artwork.loading = "lazy";
+          h3.insertBefore(artwork, h3.firstChild);
+        }
         var ul = document.createElement("ul");
         parsed.items.forEach(function(it){
           var li = document.createElement("li");
+          if(parsed.type === "youtube" && it.thumbnailUrl){
+            var thumb = document.createElement("img");
+            thumb.src = it.thumbnailUrl; thumb.alt = "";
+            thumb.className = "yt-thumb"; thumb.loading = "lazy";
+            li.appendChild(thumb);
+          } else if(parsed.type === "podcast"){
+            var icon = document.createElement("span");
+            icon.className = "pod-play"; icon.textContent = "▶";
+            icon.setAttribute("aria-hidden", "true");
+            li.appendChild(icon);
+          }
           var a = document.createElement("a");
-          a.href = it.link; a.target = "_blank"; a.rel = "noopener noreferrer";
+          a.target = "_blank"; a.rel = "noopener noreferrer";
           a.textContent = it.title;
+          a.href = (parsed.type === "podcast" && it.audioUrl && it.link === "#") ? it.audioUrl : it.link;
           li.appendChild(a);
           ul.appendChild(li);
         });
@@ -963,13 +1051,16 @@
   function renderFeedRows(){
     var wrap = document.getElementById("feed-rows");
     wrap.innerHTML = "";
-    state.feeds.forEach(function(url, idx){
+    state.feeds.forEach(function(feed, idx){
       var row = document.createElement("div");
       row.className = "feed-row";
       var input = document.createElement("input");
-      input.type = "text"; input.value = url;
+      input.type = "text"; input.value = feed.url || "";
+      input.placeholder = "Feed, podcast, or YouTube URL";
       input.addEventListener("change", function(){
-        state.feeds[idx] = normalizeUrl(input.value);
+        var url = normalizeYouTubeUrl(normalizeUrl(input.value));
+        input.value = url;
+        state.feeds[idx].url = url;
         saveState(); renderFeeds();
       });
       var del = document.createElement("button");
@@ -984,7 +1075,7 @@
   }
 
   document.getElementById("feed-add-btn").addEventListener("click", function(){
-    state.feeds.push("");
+    state.feeds.push({ id: genId(), url: "" });
     saveState(); renderFeedRows();
     var inputs = document.querySelectorAll("#feed-rows input");
     if(inputs.length) inputs[inputs.length - 1].focus();

@@ -240,11 +240,12 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
       spaced_count = 0
       while (match(rest, spaced_pat)) {
         token = substr(rest, RSTART, RLENGTH)
+        sub(/[.,;!?]+$/, "", token)
         token_start = offset + RSTART - 1
         spaced_count++
         spaced_start[spaced_count] = token_start
-        spaced_end[spaced_count] = token_start + RLENGTH
-        printf "%d\t%s\n", token_start, token
+        spaced_end[spaced_count] = token_start + length(token)
+        if (length(token)) printf "%d\t%s\n", token_start, token
         consumed = RSTART + RLENGTH - 1
         offset += consumed
         rest = substr(rest, consumed + 1)

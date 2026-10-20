@@ -10,15 +10,33 @@ return {
     { "<leader>rr", "<cmd>Review<cr>",         desc = "Review working tree" },
     { "<leader>rc", "<cmd>Review commits<cr>", desc = "Review commits" },
     { "<leader>rb", "<cmd>Review branch<cr>",  desc = "Review branch" },
-    { "<leader>rv", ":Review note<cr>",        mode = { "n", "v" },          desc = "[R]e[v]iew: ask a question" },
+    { "<leader>rv", ":ReviewQuestion<cr>", mode = { "n", "v" }, desc = "[R]e[v]iew: ask a question" },
     { "<leader>re", "<cmd>Review edit<cr>",    desc = "Review: edit comment" },
     { "<leader>rd", "<cmd>Review delete<cr>",  desc = "Review: delete comment" },
     { "<leader>rx", "<cmd>ReviewExportCustom<cr>", desc = "Review: export custom format" },
   },
   config = function()
+    local function comment_path(c)
+      local path = c.file
+      local root = require("review.utils").git_root()
+      if root and not path:match("^/") then
+        path = root .. "/" .. path
+      end
+      return vim.fn.fnamemodify(path, ":p")
+    end
+
     local function excerpt(c)
-      local ok, lines = pcall(vim.fn.readfile, c.file)
-      if not ok or c.line == 0 then return {} end
+      if c.line == 0 then return {} end
+      local path = comment_path(c)
+      local bufnr = vim.fn.bufnr(path)
+      local lines
+      if bufnr ~= -1 and vim.api.nvim_buf_is_loaded(bufnr) then
+        lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+      else
+        local ok, file_lines = pcall(vim.fn.readfile, path)
+        if not ok then return {} end
+        lines = file_lines
+      end
       local first = math.max(c.line, 1)
       local last = math.max(first, c.line_end or first)
       local fence_length = 3
@@ -36,12 +54,7 @@ return {
     end
 
     local function location(c)
-      local path = c.file
-      local root = require("review.utils").git_root()
-      if root and not path:match("^/") then
-        path = root .. "/" .. path
-      end
-      path = vim.fn.fnamemodify(path, ":p")
+      local path = comment_path(c)
       if c.line and c.line > 0 then
         path = path .. ":" .. c.line
         if c.line_end and c.line_end > c.line then
@@ -54,10 +67,14 @@ return {
     local function format_comments(comments)
       local md = {
         "Feedback on your previous output. Review each comment with its quoted context.",
-        "Reply to QUESTION comments without changing code. Make changes for ACTION or ISSUE comments. Treat PRAISE as positive feedback.",
+        "Reply to QUESTION comments without changing code. Make changes for ACTION / SUGGESTION or ISSUE comments. Treat NOTE comments as context.",
         "",
       }
-      local type_labels = { note = "QUESTION", suggestion = "ACTION" }
+      local type_labels = {
+        note = "NOTE",
+        suggestion = "ACTION / SUGGESTION",
+        praise = "QUESTION",
+      }
       for i, c in ipairs(comments) do
         local type_name = type_labels[c.type] or c.type:upper()
         table.insert(md, ("%d. **[%s]** %s\n   Source file: `%s`"):format(i, type_name, c.text, location(c)))
@@ -68,27 +85,65 @@ return {
 
     require("review").setup({
       comment_types = {
-        note = { key = "q", name = "Question", icon = "🙋", hl = "ReviewQuestion" },
+        note = { key = "n", name = "Note", icon = "📝", hl = "ReviewNote" },
         suggestion = { key = "a", name = "Action", icon = "💡", hl = "ReviewAction" },
         issue = { key = "i", name = "Issue", icon = "⚠️", hl = "ReviewIssue" },
-        praise = { key = "p", name = "Praise", icon = "✨", hl = "ReviewPraise" },
+        praise = { key = "q", name = "Question", icon = "🙋", hl = "ReviewQuestion", line_hl = "ReviewNoteLine" },
+      },
+      keymaps = {
+        add_praise = false,
       },
     })
 
     require("tmux_review").configure_tmux_review()
 
-    vim.api.nvim_create_user_command("ReviewExportCustom", function()
+    vim.api.nvim_create_user_command("ReviewExportCustom", function(opts)
+      local store = require("review.store")
+      local comments
+      if opts.args == "current" then
+        local file = require("review.hooks").get_cursor_position()
+        if not file then
+          vim.notify("Could not determine current file for export", vim.log.levels.WARN)
+          return
+        end
+        comments = store.get_for_file(file)
+      elseif opts.args == "" then
+        comments = store.get_all()
+      else
+        vim.notify("Usage: ReviewExportCustom [current]", vim.log.levels.ERROR)
+        return
+      end
+
+      if #comments == 0 then
+        local message = opts.args == "current" and "No comments for current file" or "No comments to export"
+        vim.notify(message, vim.log.levels.WARN)
+        return
+      end
+
       local review_export = require("review.export")
       local original_generate_markdown = review_export.generate_markdown
+      local original_get_all, original_count = store.get_all, store.count
       review_export.generate_markdown = function()
-        return format_comments(require("review.store").get_all())
+        return format_comments(comments)
       end
+      store.get_all = function() return comments end
+      store.count = function() return #comments end
       local ok, err = pcall(review_export.to_clipboard)
+      store.get_all, store.count = original_get_all, original_count
       review_export.generate_markdown = original_generate_markdown
       if not ok then
         vim.notify("Custom review export failed: " .. tostring(err), vim.log.levels.ERROR)
       end
-    end, {})
+    end, { nargs = "?" })
+
+    vim.api.nvim_create_user_command("ReviewQuestion", function(opts)
+      local comments = require("review.comments")
+      if opts.range > 0 then
+        comments.add_for_range("praise", opts.line1, opts.line2)
+      else
+        comments.add_at_cursor("praise")
+      end
+    end, { range = true, desc = "Add a question comment" })
 
     vim.api.nvim_set_hl(0, "ReviewQuestion", { link = "DiagnosticInfo", default = true })
 

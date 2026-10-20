@@ -255,6 +255,7 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
       offset = 0
       while (match(rest, pat)) {
         token = substr(rest, RSTART, RLENGTH)
+        sub(/[.,;!?]+$/, "", token)
         token_start = offset + RSTART - 1
         covered = 0
         for (i = 1; i <= spaced_count; i++) {

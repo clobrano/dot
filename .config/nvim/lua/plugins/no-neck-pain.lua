@@ -1,7 +1,7 @@
 return {
   "shortcuts/no-neck-pain.nvim",
   version = "*",
-  enabled = false,
+  enabled = true,
   config = function()
     require("no-neck-pain").setup({
       width = 140,
@@ -30,10 +30,10 @@ return {
     })
     vim.keymap.set('n', '<leader>nn', ':NoNeckPain<cr>', { noremap = true, desc = "Toggle NoNeckPain" })
 
-    vim.api.nvim_create_autocmd("VimEnter", {
-      callback = function()
-        require("no-neck-pain").enable()
-      end,
-    })
+    --vim.api.nvim_create_autocmd("VimEnter", {
+      --callback = function()
+        --require("no-neck-pain").enable()
+      --end,
+    --})
   end
 }

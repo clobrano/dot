@@ -3,6 +3,7 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
     'nvim-tree/nvim-web-devicons' },
 
+  enabled = false,
   config = function()
     require "octo".setup({
       use_local_fs = true, -- use local files on right side of reviews
@@ -161,6 +162,18 @@ return {
         }
       },
     })
+
+    -- Use a side-by-side layout for `Octo pr list` only.
+    local octo_picker = require "octo.picker"
+    local list_pull_requests = octo_picker.prs
+    octo_picker.prs = function(opts)
+      opts = opts or {}
+      if not opts.cb then
+        opts.layout_strategy = "horizontal"
+      end
+      return list_pull_requests(opts)
+    end
+
     vim.keymap.set("n", "<leader>oo", ":Octo ")
 
     --[[vim.api.nvim_create_autocmd("BufWinEnter", {]]

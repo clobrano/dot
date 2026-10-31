@@ -22,7 +22,7 @@ open_file() {              # $1 = pane id, $2 = file path
   panes="$(tmux display-message -p -t "$pane" '#{window_panes}')"
   win="$(tmux display-message -p -t "$pane" '#{window_id}')"
   if [ "$panes" -eq 1 ]; then
-    tmux split-window -h -t "$pane" -c "$pane_path" "$cmd"
+    tmux split-window -h -l40% -t "$pane" -c "$pane_path" "$cmd"
   else
     tmux new-window -a -t "$win" -c "$pane_path" "$cmd"
   fi

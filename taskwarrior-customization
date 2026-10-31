@@ -46,3 +46,7 @@ report.quarter.columns=description.count,due.relative,end
 report.quarter.filter=status.not:deleted +quartergoal
 report.quarter.sort=project
 report.quarter.column.width=5000
+
+# Due date colors
+color.overdue=bold red
+color.due.today=yellow

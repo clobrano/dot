@@ -1,3 +1,5 @@
 alias n='nvim'
 alias ngv='nvim -c "autocmd VimEnter * GV"'
 alias ntmp='nvim /tmp/nvim-tmp-buffer.md'
+alias npr='nvim -c "Octo pr"'
+alias nprlist='nvim -c "Octo pr"'

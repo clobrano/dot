@@ -49,15 +49,6 @@ nmap('X', 'vg_x')
 nmap('H',         '<Esc>:bprevious<CR>')
 nmap('L',         '<Esc>:bnext<CR>')
 nmap('<c-b>',    '<esc>:b<space>')
-nmap('m1',       ':bfirst<cr>')
-nmap('m2',       ':bfirst<cr>:bn<cr>')
-nmap('m3',       ':bfirst<cr>:2bn<cr>')
-nmap('m4',       ':bfirst<cr>:3bn<cr>')
-nmap('m5',       ':bfirst<cr>:4bn<cr>')
-nmap('m6',       ':bfirst<cr>:5bn<cr>')
-nmap('m7',       ':bfirst<cr>:6bn<cr>')
-nmap('m8',       ':bfirst<cr>:7bn<cr>')
-nmap('m9',       ':bfirst<cr>:8bn<cr>')
 
 
 -- buffer: reload

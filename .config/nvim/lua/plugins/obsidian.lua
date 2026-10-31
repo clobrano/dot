@@ -22,6 +22,60 @@ return {
     -- First setup obsidian with the provided opts
     require("obsidian").setup(opts)
 
+    local function follow_link_with_template()
+      local client = require("obsidian").get_client()
+      local util = require("obsidian.util")
+      local ref_types = require("obsidian.search").RefTypes
+
+      client:resolve_link_async(nil, function(...)
+        local results = { ... }
+        vim.schedule(function()
+          local res = results[1]
+          if
+            #results ~= 1
+            or not res
+            or res.note
+            or res.url
+            or (res.link_type ~= ref_types.Wiki and res.link_type ~= ref_types.WikiWithAlias)
+          then
+            vim.cmd("ObsidianFollowLink")
+            return
+          end
+
+          local templates_dir = client:templates_dir()
+          local picker_ok, picker = pcall(function() return client:picker() end)
+          if not templates_dir or not picker_ok or not picker then
+            vim.cmd("ObsidianFollowLink")
+            return
+          end
+
+          if not util.confirm("Create new note '" .. res.location .. "'?") then
+            require("obsidian.log").warn "Aborted"
+            return
+          end
+
+          local id, aliases
+          if res.name == res.location then
+            aliases = {}
+          else
+            aliases = { res.name }
+            id = res.location
+          end
+
+          local note = client:create_note { title = res.name, id = id, aliases = aliases, no_write = true }
+          client:open_note(note, {
+            callback = function(bufnr)
+              picker:find_templates {
+                callback = function(template)
+                  client:write_note_to_buffer(note, { bufnr = bufnr, template = template })
+                end,
+              }
+            end,
+          })
+        end)
+      end)
+    end
+
     -- Override <CR> to cycle checkboxes: [ ] -> [/] -> [x] -> [ ]
     vim.api.nvim_create_autocmd("BufEnter", {
       pattern = "*.md",
@@ -29,7 +83,7 @@ return {
         vim.keymap.set("n", "<cr>", function()
           local util = require("obsidian.util")
           if util.cursor_on_markdown_link(nil, nil, true) then
-            vim.cmd("ObsidianFollowLink")
+            follow_link_with_template()
             return
           end
           util.toggle_checkbox({ " ", "/", "x" })

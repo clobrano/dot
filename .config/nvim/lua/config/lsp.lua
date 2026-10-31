@@ -62,37 +62,6 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-  harper_ls = {
-    filetypes = { "markdown" },
-    settings = {
-      ["harper-ls"] = {
-        userDictPath = "~/.config/nvim/spell/en.utf-8.add",
-        diagnosticSeverity = "hint",
-        linters = {
-          CommaFixes = false,
-          ExpandMemoryShorthands = false,
-          OrthographicConsistency = false,
-          LongSentences = false,
-          NumericRangeEnDash = false,
-          OxfordComma = false,
-          PhrasalVerbAsCompoundNoun = false, -- false positive for "callback"
-          SentenceCapitalization = false,
-          SpellCheck = true,
-          SplitWords = false,
-          ToDoHyphen = false,
-          UnclosedQuotes = false,
-          UseEllipsisCharacter = false,
-          UseTitleCase = false,
-        },
-        isolateEnglish = true,
-        markdown = {
-          -- [ignores this part]()
-          -- [[ also ignore wiki links ]]
-          IgnoreLinkTitle = true,
-        }
-      },
-    },
-  },
 }
 
 -- Ensure servers are installed
@@ -196,15 +165,6 @@ end
 
 -- Enable all configured servers
 vim.lsp.enable(vim.tbl_keys(servers))
-
--- Stop harper_ls
-local function stop_harper_ls()
-  for _, client in ipairs(vim.lsp.get_clients({ name = "harper_ls" })) do
-    client:stop()
-  end
-end
-vim.api.nvim_create_user_command('StopHarperLs', stop_harper_ls, { desc = 'Stop Harper LSP server' })
-vim.keymap.set('n', '<leader>sh', stop_harper_ls, { desc = '[S]top [H]arper LSP' })
 
 -- Enable inlay hints globally
 vim.lsp.inlay_hint.enable(true)

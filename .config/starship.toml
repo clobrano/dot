@@ -1,8 +1,8 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = '$time$character'
-right_format = '$all'
+format = '$all'
+#right_format = '$all'
 
 [character]
 success_symbol = "[➜](bold green)"
@@ -30,10 +30,12 @@ format = 'on [$symbol$branch]($style) '
 tag_disabled = false
 
 [golang]
+disabled = true
 #symbol = "GO "
 format = '$symbol[($version )]($style)'
 
 [python]
+disabled = true
 #symbol = "PY "
 format = '$symbol[($version )]($style)'
 

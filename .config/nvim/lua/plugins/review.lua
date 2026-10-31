@@ -67,12 +67,12 @@ return {
     local function format_comments(comments)
       local md = {
         "Feedback on your previous output. Review each comment with its quoted context.",
-        "Reply to QUESTION comments without changing code. Make changes for ACTION / SUGGESTION or ISSUE comments. Treat NOTE comments as context.",
+        "Reply to QUESTION comments without changing code. Plan changes for ACTION or ISSUE comments. Treat NOTE comments as context.",
         "",
       }
       local type_labels = {
         note = "NOTE",
-        suggestion = "ACTION / SUGGESTION",
+        suggestion = "ACTION",
         praise = "QUESTION",
       }
       for i, c in ipairs(comments) do

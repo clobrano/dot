@@ -2,5 +2,5 @@
 news.version=3.4.1
 data.location=~/Documents/taskwarriorRH/
 
+include /usr/share/task/no-color.theme
 include ~/.dot/taskwarrior-customization
-

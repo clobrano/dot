@@ -84,10 +84,11 @@ if [ "${1:-}" = "--hints" ]; then
       printf '\033[%d;%dH\033[1;30;103m%s\033[0m' "$((row + 1))" "$((col + 1))" "$label"
     fi
   done < "$manifest"
-  tmux display-message -d 5000 'Press a hint key to open; Escape cancels'
+  tmux display-message -d 5000 'a-z opens; A-Z copies; prefixed hints open; Escape cancels'
 
   IFS= read -r -s -n 1 first_key || exit 0
   [[ "$first_key" == $'\e' ]] && exit 0
+  copy_path=0
   case "$first_key" in
     ';')
       IFS= read -r -s -n 1 -t 5 second_key || exit 0
@@ -98,12 +99,22 @@ if [ "${1:-}" = "--hints" ]; then
       IFS= read -r -s -n 1 -t 5 third_key || exit 0
       selected=",$second_key$third_key"
       ;;
+    [A-Z])
+      selected="${first_key,,}"
+      copy_path=1
+      ;;
     *) selected="$first_key" ;;
   esac
 
   while IFS=$'\t' read -r label row col file status; do
     if [[ "$status" == open && "$label" == "$selected" ]]; then
-      open_file "$pane" "$file"
+      if [ "$copy_path" -eq 1 ]; then
+        [[ "$file" =~ :[0-9]+$ ]] && file="${file%:*}"
+        tmux set-buffer -w -- "$file"
+        tmux display-message -d 5000 'File path copied to clipboard'
+      else
+        open_file "$pane" "$file"
+      fi
       exit 0
     fi
   done < "$manifest"
@@ -164,7 +175,6 @@ if [ -n "$buffer" ]; then
   logical_starts+=("$buffer_start")
 fi
 
-declare -A seen=()
 paths=()
 hit_lines=()
 hit_offsets=()
@@ -221,9 +231,6 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
       file="$(realpath "$file" 2>/dev/null)" || continue
     fi
     file+="$line_suffix"
-    seen_key="$file|$is_openable"
-    [ -n "${seen[$seen_key]:-}" ] && continue
-    seen[$seen_key]=1
     paths+=("$file")
     hit_lines+=("$logical_row")
     hit_offsets+=("$offset")
@@ -274,12 +281,21 @@ if [ "${#paths[@]}" -eq 0 ]; then
   exit 0
 fi
 
+single_alphabet='abcdefghijklmnopqrstuvwxyz'
 alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-single_count=${#alphabet}
-max_hints=$((single_count + single_count + single_count * single_count))
+single_count=${#single_alphabet}
+multi_count=${#alphabet}
+max_hints=$((single_count + multi_count + multi_count * multi_count))
+declare -A open_targets=()
 open_count=0
-for is_openable in "${openable[@]}"; do
-  if [ "$is_openable" -eq 1 ]; then open_count=$((open_count + 1)); fi
+for ((i = 0; i < ${#paths[@]}; i++)); do
+  if [ "${openable[$i]}" -eq 1 ]; then
+    target="${paths[$i]}"
+    if [ -z "${open_targets[$target]:-}" ]; then
+      open_targets[$target]=1
+      open_count=$((open_count + 1))
+    fi
+  fi
 done
 if (( open_count > max_hints )); then
   tmux display-message "tmux-hint-open: too many file paths to hint ($open_count)"
@@ -287,23 +303,28 @@ if (( open_count > max_hints )); then
 fi
 
 : > "$manifest"
-declare -A occupied=()
+declare -A occupied=() target_labels=()
 hint_index=0
 for ((i = 0; i < ${#paths[@]}; i++)); do
   if [ "${openable[$i]}" -eq 1 ]; then
-    if (( hint_index < single_count )); then
-      label="${alphabet:hint_index:1}"
-    elif (( hint_index < single_count * 2 )); then
-      label=";${alphabet:hint_index-single_count:1}"
-    else
-      pair_index=$((hint_index - single_count * 2))
-      pair_first=$((pair_index / single_count))
-      pair_second=$((pair_index % single_count))
-      label=",${alphabet:pair_first:1}${alphabet:pair_second:1}"
+    target="${paths[$i]}"
+    label="${target_labels[$target]:-}"
+    if [ -z "$label" ]; then
+      if (( hint_index < single_count )); then
+        label="${single_alphabet:hint_index:1}"
+      elif (( hint_index < single_count + multi_count )); then
+        label=";${alphabet:hint_index-single_count:1}"
+      else
+        pair_index=$((hint_index - single_count - multi_count))
+        pair_first=$((pair_index / multi_count))
+        pair_second=$((pair_index % multi_count))
+        label=",${alphabet:pair_first:1}${alphabet:pair_second:1}"
+      fi
+      target_labels[$target]="$label"
+      hint_index=$((hint_index + 1))
     fi
     marker="$label"
     status=open
-    hint_index=$((hint_index + 1))
   else
     label=-
     marker=✗

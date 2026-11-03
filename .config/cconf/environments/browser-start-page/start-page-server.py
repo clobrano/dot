@@ -57,6 +57,10 @@ class _SilentBrokenPipe:
 class V6Server(_SilentBrokenPipe, ThreadingHTTPServer):
     address_family = socket.AF_INET6
 
+    def server_bind(self):
+        self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 1)
+        super().server_bind()
+
 
 class IPv4Server(_SilentBrokenPipe, ThreadingHTTPServer):
     pass

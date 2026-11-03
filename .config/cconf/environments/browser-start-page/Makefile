@@ -1,6 +1,8 @@
 SERVICE      = browser-start-page
 SERVICE_FILE = $(SERVICE).service
+INDEX_FILE   = index.html
 SYSTEMD_DIR  = $(HOME)/.config/systemd/user
+SHARE_DIR  = $(HOME)/.local/share/${SERVICE}
 PORT         = 8420
 ZONE        ?= home
 
@@ -8,7 +10,9 @@ ZONE        ?= home
 
 install:
 	mkdir -p $(SYSTEMD_DIR)
+	mkdir -p $(SHARE_DIR)
 	ln -sf $(CURDIR)/$(SERVICE_FILE) $(SYSTEMD_DIR)/$(SERVICE_FILE)
+	ln -sf $(CURDIR)/$(INDEX_FILE) $(SHARE_DIR)/$(INDEX_FILE)
 	systemctl --user daemon-reload
 	systemctl --user enable --now $(SERVICE)
 

@@ -77,12 +77,8 @@ if [ "${1:-}" = "--hints" ]; then
     printf '\033[%d;1H%s' "$((display_row + 1))" "$screen_line"
     display_row=$((display_row + 1))
   done < "$styled_file"
-  while IFS=$'\t' read -r label row col file status; do
-    if [ "$status" = missing ]; then
-      printf '\033[%d;%dH\033[1;37;41m✗\033[0m' "$((row + 1))" "$((col + 1))"
-    else
-      printf '\033[%d;%dH\033[1;30;103m%s\033[0m' "$((row + 1))" "$((col + 1))" "$label"
-    fi
+  while IFS=$'\t' read -r label row col file; do
+    printf '\033[%d;%dH\033[1;30;103m%s\033[0m' "$((row + 1))" "$((col + 1))" "$label"
   done < "$manifest"
   tmux display-message -d 5000 'a-z opens; A-Z copies; prefixed hints open; Escape cancels'
 
@@ -106,8 +102,8 @@ if [ "${1:-}" = "--hints" ]; then
     *) selected="$first_key" ;;
   esac
 
-  while IFS=$'\t' read -r label row col file status; do
-    if [[ "$status" == open && "$label" == "$selected" ]]; then
+  while IFS=$'\t' read -r label row col file; do
+    if [[ "$label" == "$selected" ]]; then
       if [ "$copy_path" -eq 1 ]; then
         [[ "$file" =~ :[0-9]+$ ]] && file="${file%:*}"
         tmux set-buffer -w -- "$file"
@@ -128,8 +124,8 @@ pane_path="$(tmux display-message -p -t "$pane" '#{pane_current_path}')"
 pane_width="$(tmux display-message -p -t "$pane" '#{pane_width}')"
 pane_height="$(tmux display-message -p -t "$pane" '#{pane_height}')"
 
-# Prefer files confirmed by the filesystem. Show missing slash paths with an
-# extension using a cross. Set @hint-open-verify 'off' to include all slash paths.
+# Prefer files confirmed by the filesystem. Also recognize missing slash paths
+# with an extension. Set @hint-open-verify 'off' to include all slash paths.
 VERIFY="$(tmux show-option -gqv '@hint-open-verify')"; VERIFY="${VERIFY:-on}"
 
 if [ "$VERIFY" = off ]; then
@@ -151,7 +147,8 @@ styled_file="$tmpdir/styled"
 plain_file="$tmpdir/plain"
 manifest="$tmpdir/hints"
 tmux capture-pane -e -p -t "$pane" > "$styled_file"
-sed -E $'s/\033\\[[0-9;:]*m//g' "$styled_file" > "$plain_file"
+# OSC 8 links are invisible on screen but would skew the hint coordinates.
+sed -E $'s/\033\\[[0-9;:]*m//g; s/\033\\]8;[^\033\a]*(\a|\033\\\\)//g' "$styled_file" > "$plain_file"
 mapfile -t screen_rows < "$plain_file"
 
 # Join rows that fill the pane width so wrapped paths stay detectable. This
@@ -179,7 +176,6 @@ paths=()
 hit_lines=()
 hit_offsets=()
 hit_lengths=()
-openable=()
 for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
   logical_line="${logical_lines[$logical_row]}"
   [ -n "$logical_line" ] || continue
@@ -235,8 +231,12 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
     hit_lines+=("$logical_row")
     hit_offsets+=("$offset")
     hit_lengths+=("$token_length")
-    openable+=("$is_openable")
   done < <(printf '%s\n' "$logical_line" | HINT_OPEN_PATTERN="$pattern" HINT_OPEN_SPACED_PATTERN="$spaced_pattern" awk '
+    function valid_start(pos, previous) {
+      if (pos == 0) return 1
+      previous = substr($0, pos, 1)
+      return previous !~ /[[:alnum:]_.@\/-]/
+    }
     BEGIN {
       pat = ENVIRON["HINT_OPEN_PATTERN"]
       spaced_pat = ENVIRON["HINT_OPEN_SPACED_PATTERN"]
@@ -249,10 +249,12 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
         token = substr(rest, RSTART, RLENGTH)
         sub(/[.,;!?]+$/, "", token)
         token_start = offset + RSTART - 1
-        spaced_count++
-        spaced_start[spaced_count] = token_start
-        spaced_end[spaced_count] = token_start + length(token)
-        if (length(token)) printf "%d\t%s\n", token_start, token
+        if (length(token) && valid_start(token_start)) {
+          spaced_count++
+          spaced_start[spaced_count] = token_start
+          spaced_end[spaced_count] = token_start + length(token)
+          printf "%d\t%s\n", token_start, token
+        }
         consumed = RSTART + RLENGTH - 1
         offset += consumed
         rest = substr(rest, consumed + 1)
@@ -268,7 +270,7 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
         for (i = 1; i <= spaced_count; i++) {
           if (token_start >= spaced_start[i] && token_start < spaced_end[i]) covered = 1
         }
-        if (!covered) printf "%d\t%s\n", token_start, token
+        if (!covered && valid_start(token_start)) printf "%d\t%s\n", token_start, token
         consumed = RSTART + RLENGTH - 1
         offset += consumed
         rest = substr(rest, consumed + 1)
@@ -288,13 +290,10 @@ multi_count=${#alphabet}
 max_hints=$((single_count + multi_count + multi_count * multi_count))
 declare -A open_targets=()
 open_count=0
-for ((i = 0; i < ${#paths[@]}; i++)); do
-  if [ "${openable[$i]}" -eq 1 ]; then
-    target="${paths[$i]}"
-    if [ -z "${open_targets[$target]:-}" ]; then
-      open_targets[$target]=1
-      open_count=$((open_count + 1))
-    fi
+for target in "${paths[@]}"; do
+  if [ -z "${open_targets[$target]:-}" ]; then
+    open_targets[$target]=1
+    open_count=$((open_count + 1))
   fi
 done
 if (( open_count > max_hints )); then
@@ -306,30 +305,23 @@ fi
 declare -A occupied=() target_labels=()
 hint_index=0
 for ((i = 0; i < ${#paths[@]}; i++)); do
-  if [ "${openable[$i]}" -eq 1 ]; then
-    target="${paths[$i]}"
-    label="${target_labels[$target]:-}"
-    if [ -z "$label" ]; then
-      if (( hint_index < single_count )); then
-        label="${single_alphabet:hint_index:1}"
-      elif (( hint_index < single_count + multi_count )); then
-        label=";${alphabet:hint_index-single_count:1}"
-      else
-        pair_index=$((hint_index - single_count - multi_count))
-        pair_first=$((pair_index / multi_count))
-        pair_second=$((pair_index % multi_count))
-        label=",${alphabet:pair_first:1}${alphabet:pair_second:1}"
-      fi
-      target_labels[$target]="$label"
-      hint_index=$((hint_index + 1))
+  target="${paths[$i]}"
+  label="${target_labels[$target]:-}"
+  if [ -z "$label" ]; then
+    if (( hint_index < single_count )); then
+      label="${single_alphabet:hint_index:1}"
+    elif (( hint_index < single_count + multi_count )); then
+      label=";${alphabet:hint_index-single_count:1}"
+    else
+      pair_index=$((hint_index - single_count - multi_count))
+      pair_first=$((pair_index / multi_count))
+      pair_second=$((pair_index % multi_count))
+      label=",${alphabet:pair_first:1}${alphabet:pair_second:1}"
     fi
-    marker="$label"
-    status=open
-  else
-    label=-
-    marker=✗
-    status=missing
+    target_labels[$target]="$label"
+    hint_index=$((hint_index + 1))
   fi
+  marker="$label"
 
   logical_row="${hit_lines[$i]}"
   offset="${hit_offsets[$i]}"
@@ -364,7 +356,7 @@ for ((i = 0; i < ${#paths[@]}; i++)); do
   for ((cell = 0; cell < marker_length; cell++)); do
     occupied["$marker_row:$((marker_col + cell))"]=1
   done
-  printf '%s\t%s\t%s\t%s\t%s\n' "$label" "$marker_row" "$marker_col" "${paths[$i]}" "$status" >> "$manifest"
+  printf '%s\t%s\t%s\t%s\n' "$label" "$marker_row" "$marker_col" "${paths[$i]}" >> "$manifest"
 done
 
 if [ ! -s "$manifest" ]; then

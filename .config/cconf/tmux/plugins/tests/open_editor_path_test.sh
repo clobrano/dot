@@ -74,6 +74,40 @@ fi
 
 printf 'PASS: path detection excludes trailing sentence punctuation\n'
 
+linked_file="$tmpdir/hyperlinked.md"
+printf 'guide\n' > "$linked_file"
+osc8_start=$'\033]8;;mailto:test@example.com\033\\'
+osc8_end=$'\033]8;;\033\\'
+printf 'Read: %s%s%s; again %s%s%s\n' \
+  "$osc8_start" "$linked_file" "$osc8_end" \
+  "$osc8_start" "$linked_file" "$osc8_end" > "$tmpdir/hyperlink-pane.txt"
+popup_output="$tmpdir/hyperlink-popup"
+rm -f "$tmpdir/tmux-calls" "$popup_output"
+
+if PATH="$tmpdir/bin:$PATH" \
+  TMUX_PANE='%1' \
+  TEST_PANE_PATH="$tmpdir" \
+  TEST_PANE_CAPTURE="$tmpdir/hyperlink-pane.txt" \
+  TEST_TMUX_CALLS="$tmpdir/tmux-calls" \
+  TEST_HINT_KEY=a \
+  TEST_POPUP_OUTPUT="$popup_output" \
+  "$script"; then
+  :
+fi
+
+second_marker_col=$((6 + ${#linked_file} + 8))
+if ! grep -Fq -- $'\033[1;6H\033[1;30;103ma\033[0m' "$popup_output" ||
+  ! grep -Fq -- $'\033[1;'"$second_marker_col"$'H\033[1;30;103ma\033[0m' "$popup_output"; then
+  printf 'FAIL: hyperlink escape codes shifted repeated filepath hints\n' >&2
+  exit 1
+fi
+if [[ ! -f "$tmpdir/tmux-calls" ]] || ! grep -Fq -- "$linked_file" "$tmpdir/tmux-calls"; then
+  printf 'FAIL: did not open filepath inside terminal hyperlink: %s\n' "$linked_file" >&2
+  exit 1
+fi
+
+printf 'PASS: hyperlink escape codes do not shift file hints\n'
+
 repo="$tmpdir/repo"
 relative_file="$repo/fulfillment-service/internal/servers/private_secrets_server.go"
 mkdir -p "$repo/subdir" "$(dirname -- "$relative_file")"
@@ -132,6 +166,34 @@ if [[ ! -f "$tmpdir/tmux-calls" ]] || ! grep -Fq -- "$duplicate_file" "$tmpdir/t
 fi
 
 printf 'PASS: repeated targets share hints; line targets remain distinct\n'
+
+missing_file="$tmpdir/not-yet-created.md"
+printf 'Missing: %s; again %s.\n' "$missing_file" "$missing_file" > "$tmpdir/missing-pane.txt"
+rm -f "$tmpdir/tmux-calls" "$popup_output"
+
+if PATH="$tmpdir/bin:$PATH" \
+  TMUX_PANE='%1' \
+  TEST_PANE_PATH="$tmpdir" \
+  TEST_PANE_CAPTURE="$tmpdir/missing-pane.txt" \
+  TEST_TMUX_CALLS="$tmpdir/tmux-calls" \
+  TEST_HINT_KEY=a \
+  TEST_POPUP_OUTPUT="$popup_output" \
+  "$script"; then
+  :
+fi
+
+missing_hint_count="$(grep -Fo "$hint_a" "$popup_output" | wc -l || true)"
+if [[ "$missing_hint_count" -ne 2 ]]; then
+  printf 'FAIL: expected missing path occurrences to share visible hints; found %s\n' \
+    "$missing_hint_count" >&2
+  exit 1
+fi
+if [[ ! -f "$tmpdir/tmux-calls" ]] || ! grep -Fq -- "$missing_file" "$tmpdir/tmux-calls"; then
+  printf 'FAIL: selecting the missing path hint did not attempt to open it\n' >&2
+  exit 1
+fi
+
+printf 'PASS: repeated missing paths share an actionable hint\n'
 
 copy_file="$tmpdir/copy-target.go"
 printf 'package main\n' > "$copy_file"

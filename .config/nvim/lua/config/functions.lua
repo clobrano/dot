@@ -959,9 +959,10 @@ function Get_Smart_Weblink()
     base_url = lookup_bookmark(target_text)
   end
 
-  if base_url == "" then
-    base_url = lookup_reference_in_notes(target_text)
-  end
+  -- this is very slow, deprecating for testing
+  --if base_url == "" then
+    --base_url = lookup_reference_in_notes(target_text)
+  --end
 
   if base_url == "" then
     base_url = "https://issues.redhat.com/browse/" .. target_text

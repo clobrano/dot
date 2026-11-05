@@ -1,0 +1,10 @@
+## codex based
+#alias luna='codex --provider enmaas --model gpt-5.6-luna'
+#alias sol='codex --provider enmaas --model gpt-5.6-sol'
+#alias terra='codex --provider enmaas --model gpt-5.6-terra'
+
+# pi based
+alias luna='pi --provider enmaas --model gpt-6-luna'
+alias sol='pi --provider enmaas --model gpt-6.1-sol'
+alias astra='pi --provider enmaas --model gpt-6.1-astra'
+alias glm='pi --provider enmaas --model rits/zai-org/glm-5-3'

@@ -77,17 +77,17 @@ return {
         enabled = true,
         position = 'inline',
         -- TODO and DONE highlights choosen to be visibly different, but less than the ACTIVE one, which shall stand out.
-        unchecked = { icon = '- TODO:', highlight = 'RenderMarkdownInfo', },
-        checked = { icon = '- DONE:', highlight = 'RenderMarkdownHtmlComment', },
+        unchecked = { icon = '- [ ]:', highlight = 'RenderMarkdownInfo', },
+        checked = { icon = '- [x]:', highlight = 'RenderMarkdownHtmlComment', },
         custom = {
-            active = { raw = '[S]', rendered = '- ACTV:', highlight = 'RenderMarkdownSuccessBold' },
-            deleted = { raw = '[-]', rendered = '- DLTD:', highlight = 'RenderMarkdownQuote' },
-            doing = { raw = '[/]', rendered = '- DOING:', highlight = 'RenderMarkdownHint' },
-            skip = { raw = '[~]', rendered = '- SKIP:', highlight = 'RenderMarkdownWarn' },
+            active = { raw = '[S]', rendered = '- [S]:', highlight = 'RenderMarkdownSuccessBold' },
+            deleted = { raw = '[-]', rendered = '- [D]:', highlight = 'RenderMarkdownQuote' },
+            doing = { raw = '[/]', rendered = '- [/]:', highlight = 'RenderMarkdownHint' },
+            skip = { raw = '[~]', rendered = '- [~]:', highlight = 'RenderMarkdownWarn' },
         },
     },
     bullet = {
-        enabled = false,
+        enabled = true,
     },
     quote = {
         -- Turn on / off block quote & callout rendering

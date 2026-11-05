@@ -104,7 +104,7 @@ return {
     end
 
     function markdown_refs_source:get_keyword_pattern()
-      return [=[\![^\]]*]=]
+      return [=[\![^!\]]*]=]
     end
 
     function markdown_refs_source:is_available()

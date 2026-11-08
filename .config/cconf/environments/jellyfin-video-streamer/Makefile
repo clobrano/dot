@@ -60,6 +60,7 @@ stop:
 
 status:
 	systemctl --user status $(NAME)
+	@echo "Jellyfin local port: $(PORT)"
 	@test -n "$(TAILSCALE_DOMAIN)" && echo "Jellyfin HTTPS: https://$(TAILSCALE_DOMAIN)" || true
 
 logs:

@@ -12,6 +12,7 @@ QUADLET_DIR ?= $(HOME)/.config/containers/systemd
 UNIT_FILE    = $(QUADLET_DIR)/$(NAME).container
 
 TAILSCALE_DOMAIN ?= $(shell tailscale status --json 2>/dev/null | jq -r '.Self.DNSName' | sed 's/$$//')
+YTDLP_PATH      ?= $(HOME)/.local/bin/yt-dlp-standalone
 
 define UNIT_CONTENT
 [Unit]
@@ -23,7 +24,8 @@ ContainerName=$(NAME)
 PublishPort=$(PORT):8096
 Volume=$(CONFIG_DIR):/config:Z
 Volume=$(CACHE_DIR):/cache:Z
-Volume=$(MEDIA_DIR):/media:ro,z
+Volume=$(MEDIA_DIR):/media:z
+Volume=$(YTDLP_PATH):/usr/local/bin/yt-dlp:ro,z
 
 [Service]
 Restart=on-failure

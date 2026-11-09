@@ -5,11 +5,15 @@ plugin_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 script="$plugin_dir/open_editor.sh"
 tmpdir="$(mktemp -d)"
 trap 'rm -rf "$tmpdir"' EXIT
+export TMPDIR="$tmpdir"
 
 file="$tmpdir/tenant-scoped-ssh-key-manual-test.md"
 printf 'guide\n' > "$file"
 printf 'Saved the guide to %s.\n' "$file" > "$tmpdir/pane.txt"
 mkdir "$tmpdir/bin"
+TEST_PENDING_DIR="$tmpdir/pending"
+mkdir -p "$TEST_PENDING_DIR"
+export TEST_PENDING_DIR TEST_SCRIPT="$script"
 
 cat > "$tmpdir/bin/tmux" <<'MOCK_TMUX'
 #!/usr/bin/env bash
@@ -25,11 +29,43 @@ case "$1" in
         '#{pane_height}') printf '30\n'; exit 0 ;;
         '#{window_panes}') printf '1\n'; exit 0 ;;
         '#{window_id}') printf '%s\n' '@1'; exit 0 ;;
+        '#{session_id}') printf '%s\n' '$1'; exit 0 ;;
       esac
     done
     ;;
   show-option)
+    for arg in "$@"; do
+      case "$arg" in
+        '@open_editor_pending_'*) [[ -f "$TEST_PENDING_DIR/$arg" ]] && cat "$TEST_PENDING_DIR/$arg"; exit 0 ;;
+        '@open_editor_'*) exit 0 ;;
+      esac
+    done
     printf 'on\n'
+    ;;
+  set-option)
+    shift
+    option=""; value=""; unset_option=0
+    while (($#)); do
+      case "$1" in
+        -u|-uq|-qu) unset_option=1; shift ;;
+        -t) shift 2 ;;
+        -q) shift ;;
+        *) if [[ -z "$option" ]]; then option="$1"; else value="$1"; fi; shift ;;
+      esac
+    done
+    if [[ "$option" == @open_editor_pending_* ]]; then
+      if ((unset_option)); then rm -f "$TEST_PENDING_DIR/$option"; else printf '%s' "$value" > "$TEST_PENDING_DIR/$option"; fi
+    fi
+    ;;
+  display-menu)
+    choice="${TEST_EDITOR_CHOICE:-split}"
+    for arg in "$@"; do
+      if [[ "$arg" == *"--open-choice $choice "* ]]; then
+        command="${arg#run-shell -b }"
+        command="${command:1:${#command}-2}"
+        /bin/bash -c "$command"
+      fi
+    done
     ;;
   capture-pane)
     cat "$TEST_PANE_CAPTURE"

@@ -5,26 +5,103 @@ set -euo pipefail
 SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 
 quote() { local s=$1; printf "'%s'" "${s//\'/\'\\\'\'}"; }
+shell_quote() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  s="${s//\$/\\\$}"
+  s="${s//\`/\\\`}"
+  printf '"%s"' "$s"
+}
+vim_quote() { local s=$1; printf "'%s'" "${s//\'/\'\'}"; }
 
-open_file() {              # $1 = pane id, $2 = file path
-  local pane="$1" file="$2" line="" pane_path panes win editor cmd
+session_option() {
+  tmux show-option -qv -t "$1" "$2" 2>/dev/null || true
+}
+
+show_open_mode_menu() {
+  local pane="$1" file="$2" session command
+  session="$(tmux display-message -p -t "$pane" '#{session_id}')"
+  # shortcut: simultaneous menus in one session share pending data; add per-menu keys if needed.
+  tmux set-option -t "$session" @open_editor_pending_file "$file"
+  tmux set-option -t "$session" @open_editor_pending_editor "${EDITOR:-}"
+  tmux set-option -t "$session" @open_editor_pending_path "$PATH"
+  command="exec $(shell_quote "$SELF") --open-choice"
+  tmux display-menu -T 'Open file in' -t "$pane" \
+    'Split' 1 "run-shell -b '$command split $pane'" \
+    'Popup' 2 "run-shell -b '$command popup $pane'" \
+    'Window' 3 "run-shell -b '$command window $pane'"
+}
+
+open_file() {              # $1 = pane id, $2 = file path, $3 = mode
+  local pane="$1" file="$2" mode="$3" line="" pane_path pane_width pane_height win session editor editor_bin editor_name cmd
+  local is_nvim=0 socket socket_dir socket_option target_option target target_ok=1 expr
   if [[ "$file" =~ :([0-9]+)$ ]]; then
     line="${BASH_REMATCH[1]}"
     file="${file%:*}"
   fi
   pane_path="$(tmux display-message -p -t "$pane" '#{pane_current_path}')"
-  editor="${EDITOR:-nvim}"
-  if [ -n "$line" ]; then
-    cmd="$editor +$line -- $(quote "$file")"
-  else
-    cmd="$editor -- $(quote "$file")"
-  fi
-  panes="$(tmux display-message -p -t "$pane" '#{window_panes}')"
   win="$(tmux display-message -p -t "$pane" '#{window_id}')"
-  if [ "$panes" -eq 1 ]; then
-    tmux split-window -h -l40% -t "$pane" -c "$pane_path" "$cmd"
-  else
-    tmux new-window -a -t "$win" -c "$pane_path" "$cmd"
+  session="$(tmux display-message -p -t "$pane" '#{session_id}')"
+  editor="${EDITOR:-nvim}"
+  editor_bin="${editor%%[[:space:]]*}"
+  editor_name="${editor_bin##*/}"
+  [[ "$editor_name" == nvim ]] && is_nvim=1
+  cmd="$editor"
+
+  if ((is_nvim)); then
+    socket_option="@open_editor_${mode}_socket"
+    target_option="@open_editor_${mode}_target"
+    socket="$(session_option "$session" "$socket_option")"
+    target="$(session_option "$session" "$target_option")"
+    if [[ "$mode" == split || "$mode" == window ]]; then
+      if [[ -z "$target" ]]; then
+        target_ok=0
+      elif [[ "$mode" == split ]]; then
+        tmux display-message -p -t "$target" '#{pane_id}' >/dev/null 2>&1 || target_ok=0
+      else
+        tmux display-message -p -t "$target" '#{window_id}' >/dev/null 2>&1 || target_ok=0
+      fi
+    fi
+    if [[ -n "$socket" ]] && ((target_ok)) &&
+      "$editor_bin" --server "$socket" --remote-expr 'v:servername' >/dev/null 2>&1; then
+      case "$mode" in
+        split) tmux select-pane -t "$target" ;;
+        window) tmux select-window -t "$target" ;;
+      esac
+      expr="execute('edit ' . fnameescape($(vim_quote "$file"))"
+      if [[ -n "$line" ]]; then expr+=" . ' | call cursor($line, 1)'"; fi
+      expr+=")"
+      "$editor_bin" --server "$socket" --remote-expr "$expr"
+      return
+    fi
+    tmux set-option -uq -t "$session" "$socket_option" 2>/dev/null || true
+    tmux set-option -uq -t "$session" "$target_option" 2>/dev/null || true
+    # shortcut: force-killed editors can leave TMPDIR directories; add session-close cleanup if they accumulate.
+    socket_dir="$(mktemp -d "${TMPDIR:-/tmp}/open-editor.XXXXXX")"
+    socket="$socket_dir/nvim"
+    tmux set-option -t "$session" "$socket_option" "$socket"
+    cmd+=" --listen $(quote "$socket")"
+  fi
+  [[ -n "$line" ]] && cmd+=" +$line"
+  cmd+=" -- $(quote "$file")"
+  if ((is_nvim)); then cmd+="; rm -f -- $(quote "$socket") && rmdir -- $(quote "$socket_dir")"; fi
+
+  case "$mode" in
+    split)
+      target="$(tmux split-window -h -l40% -P -F '#{pane_id}' -t "$pane" -c "$pane_path" "$cmd")"
+      ;;
+    popup)
+      pane_width="$(tmux display-message -p -t "$pane" '#{pane_width}')"
+      pane_height="$(tmux display-message -p -t "$pane" '#{pane_height}')"
+      tmux display-popup -B -E -t "$pane" -x P -y P -w "$pane_width" -h "$pane_height" "$cmd"
+      ;;
+    window)
+      target="$(tmux new-window -a -P -F '#{window_id}' -t "$win" -c "$pane_path" "$cmd")"
+      ;;
+  esac
+  if ((is_nvim)) && [[ -n "$target" ]]; then
+    tmux set-option -t "$session" "$target_option" "$target"
   fi
 }
 
@@ -65,9 +142,25 @@ map_logical_offset() {
   return 1
 }
 
+if [ "${1:-}" = "--open-choice" ]; then
+  mode="$2"; pane="$3"
+  case "$mode" in split|popup|window) ;; *) exit 0 ;; esac
+  session="$(tmux display-message -p -t "$pane" '#{session_id}')"
+  selected_file="$(session_option "$session" @open_editor_pending_file)"
+  selected_editor="$(session_option "$session" @open_editor_pending_editor)"
+  selected_path="$(session_option "$session" @open_editor_pending_path)"
+  tmux set-option -uq -t "$session" @open_editor_pending_file 2>/dev/null || true
+  tmux set-option -uq -t "$session" @open_editor_pending_editor 2>/dev/null || true
+  tmux set-option -uq -t "$session" @open_editor_pending_path 2>/dev/null || true
+  if [[ -n "$selected_path" ]]; then PATH="$selected_path"; export PATH; fi
+  if [[ -n "$selected_editor" ]]; then EDITOR="$selected_editor"; export EDITOR; else unset EDITOR; fi
+  if [[ -n "$selected_file" ]]; then open_file "$pane" "$selected_file" "$mode"; fi
+  exit 0
+fi
+
 # ---- popup callback: redraws the captured pane with key hints --------------
 if [ "${1:-}" = "--hints" ]; then
-  styled_file="$2"; manifest="$3"; pane="$4"
+  styled_file="$2"; manifest="$3"; pane="$4"; selection_file="$5"
 
   restore_terminal() { printf '\033[0m\033[?25h'; }
   trap restore_terminal EXIT
@@ -109,7 +202,7 @@ if [ "${1:-}" = "--hints" ]; then
         tmux set-buffer -w -- "$file"
         tmux display-message -d 5000 'File path copied to clipboard'
       else
-        open_file "$pane" "$file"
+        printf '%s\n' "$file" > "$selection_file"
       fi
       exit 0
     fi
@@ -364,5 +457,10 @@ if [ ! -s "$manifest" ]; then
   exit 0
 fi
 
-popup_command="$(quote "$SELF") --hints $(quote "$styled_file") $(quote "$manifest") $(quote "$pane")"
+selection_file="$tmpdir/selection"
+popup_command="$(quote "$SELF") --hints $(quote "$styled_file") $(quote "$manifest") $(quote "$pane") $(quote "$selection_file")"
 tmux display-popup -B -E -t "$pane" -x P -y P -w "$pane_width" -h "$pane_height" "$popup_command"
+if [[ -s "$selection_file" ]]; then
+  IFS= read -r selected_file < "$selection_file"
+  show_open_mode_menu "$pane" "$selected_file"
+fi

@@ -121,7 +121,7 @@ if vim.fn.isdirectory(spell_dir) == 0 then
 end
 vim.opt.spellfile = spell_dir .. "/en.utf-8.add," .. spell_dir .. "/it.utf-8.add"
 vim.opt.spell = false
-vim.opt.spellcapcheck = "false"                      -- don't check for capital letters at start of sentence
+vim.opt.spellcapcheck = ""                      -- don't check for capital letters at start of sentence
 
 vim.opt.splitbelow = true                            -- Style open split below
 vim.opt.splitright = true                            -- Style open split on the right

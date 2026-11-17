@@ -95,6 +95,23 @@ return {
       },
     })
 
+    -- GHReviewInfo snapshots live outside the repo, so map their flagged buffers directly.
+    local hooks = require("review.hooks")
+    local get_cursor_position = hooks.get_cursor_position
+    local plain_buffer_file = hooks.plain_buffer_file
+    hooks.get_cursor_position = function()
+      local buf = vim.api.nvim_get_current_buf()
+      local path = vim.b[buf].gh_review_info_path
+      if path then
+        return path, vim.api.nvim_win_get_cursor(0)[1], "new"
+      end
+      return get_cursor_position()
+    end
+    hooks.plain_buffer_file = function(buf)
+      buf = buf or vim.api.nvim_get_current_buf()
+      return vim.b[buf].gh_review_info_path or plain_buffer_file(buf)
+    end
+
     require("tmux_review").configure_tmux_review()
 
     vim.api.nvim_create_user_command("ReviewExportCustom", function(opts)

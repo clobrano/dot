@@ -3,7 +3,7 @@ set expandtab
 set foldlevel=99
 set number
 set norelativenumber
-set shiftwidth=2
+set shiftwidth=4
 set signcolumn=yes:2
 set spell
 set softtabstop=4

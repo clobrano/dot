@@ -156,6 +156,44 @@ local function fetch(arg)
   return data
 end
 
+local function info_path(data)
+  local slug = data.url:match("^https?://[^/]+/(.-)/pull/%d+/?$")
+  local org, project
+  if slug then
+    org, project = slug:match("([^/]+)/([^/]+)$")
+  end
+  if not org or not project then
+    return nil
+  end
+  local function safe(part)
+    return (part:gsub("[^%w_.-]", "_"))
+  end
+  return ("/tmp/gh-review-info-%s-%s-PR-%s.md"):format(safe(org), safe(project), data.number)
+end
+
+local function save_info(path, lines)
+  local private_mode = tonumber("600", 8) -- PR content may be private
+  local temp = path .. "." .. vim.fn.fnamemodify(vim.fn.tempname(), ":t")
+  local fd, err = vim.uv.fs_open(temp, "wx", private_mode)
+  if not fd then
+    return nil, err
+  end
+
+  local content = table.concat(lines, "\n") .. "\n"
+  local written, write_err = vim.uv.fs_write(fd, content, 0)
+  local close_ok, close_err = vim.uv.fs_close(fd)
+  if written ~= #content or not close_ok then
+    vim.uv.fs_unlink(temp)
+    return nil, write_err or close_err or "incomplete write"
+  end
+  local renamed, rename_err = vim.uv.fs_rename(temp, path)
+  if not renamed then
+    vim.uv.fs_unlink(temp)
+    return nil, rename_err
+  end
+  return true
+end
+
 ---------------------------------------------------------------------------
 -- rendering
 ---------------------------------------------------------------------------
@@ -222,13 +260,24 @@ local function render(data, raw)
 end
 
 local function draw(buf, data)
-  local lines, entries = render(data, state[buf].raw)
+  local st = state[buf]
+  local lines, entries = render(data, st.raw)
   vim.bo[buf].modifiable = true
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.bo[buf].modifiable = false
+  local saved, err = save_info(st.path, lines)
+  if saved then
+    vim.bo[buf].modified = false
+  else
+    vim.notify("Could not save GHReviewInfo to " .. st.path .. ": " .. tostring(err), vim.log.levels.ERROR)
+  end
   state[buf].data = data
   state[buf].url = data.url
   state[buf].entries = entries
+  local marks_ok, marks = pcall(require, "review.marks")
+  if marks_ok then
+    marks.render_for_buffer(buf, "new", st.path)
+  end
 end
 
 local function refresh(buf)
@@ -334,9 +383,32 @@ local function open_info(opts)
     vim.notify(err or "gh pr view failed", vim.log.levels.ERROR)
     return
   end
+  local path = info_path(data)
+  if not path then
+    vim.notify("Could not derive org and project from the PR URL", vim.log.levels.ERROR)
+    return
+  end
 
-  vim.cmd("tabnew")
+  local tab = vim.api.nvim_get_current_tabpage()
+  local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local reused = #vim.api.nvim_tabpage_list_wins(tab) == 1
+    and vim.api.nvim_buf_get_name(buf) == ""
+    and vim.bo[buf].buftype == ""
+    and vim.bo[buf].modifiable
+    and not vim.bo[buf].modified
+    and #lines == 1 and lines[1] == ""
+  local original_win = reused and {
+    winbar = vim.wo[win].winbar,
+    wrap = vim.wo[win].wrap,
+    linebreak = vim.wo[win].linebreak,
+  } or nil
+
+  if not reused then
+    vim.cmd("tabnew")
+    buf = vim.api.nvim_get_current_buf()
+  end
   vim.bo[buf].buftype = "nofile"
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].filetype = "markdown"
@@ -345,7 +417,8 @@ local function open_info(opts)
   vim.wo.linebreak = true
 
   -- pin to the URL so refresh hits the same PR even if you switch branch
-  state[buf] = { arg = data.url, raw = false }
+  state[buf] = { arg = data.url, raw = false, path = path }
+  vim.b[buf].gh_review_info_path = path
   draw(buf, data)
 
   vim.api.nvim_create_autocmd("BufWipeout", {
@@ -394,8 +467,16 @@ local function open_info(opts)
   end, "Toggle raw/cleaned HTML")
 
   map("q", function()
-    -- closes the whole info tab (including an open compose split)
-    if #vim.api.nvim_list_tabpages() > 1 then
+    -- closes the info view (including an open compose split)
+    if reused then
+      if #vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage()) > 1 then
+        vim.cmd("only")
+      end
+      vim.cmd("enew")
+      vim.wo.winbar = original_win.winbar
+      vim.wo.wrap = original_win.wrap
+      vim.wo.linebreak = original_win.linebreak
+    elseif #vim.api.nvim_list_tabpages() > 1 then
       vim.cmd("tabclose")
     else
       vim.cmd("bwipeout")

@@ -35,11 +35,9 @@ vim.api.nvim_set_keymap('n', '<leader>rs', '<cmd>lua ReplaceSpacesWithHypens()<C
 vim.api.nvim_set_keymap('n', '<leader>mn', ":ObsidianTemplate<cr>", { noremap = true, silent = true })
 
 
-vim.api.nvim_set_keymap('n', '<leader>ldb', '<cmd>lua Letsdo_goto()<CR>',
-  { desc = "Lets do begin", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>lds', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ldc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ls', '<cmd>!lets stop<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>lb', '<cmd>lua Letsdo_goto()<CR>', { desc = "Lets do begin", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>ls', ':!lets stop<CR>', { desc = "Lets stop", noremap = true, silent = false })
+vim.api.nvim_set_keymap('n', '<leader>lc', ':!lets cancel<CR>', { desc = "Lets cancel", noremap = true, silent = false })
 vim.api.nvim_set_keymap('n', '<leader>lv', '<cmd>!lets see --ascii<cr>', { noremap = true, silent = true })
 
 
@@ -1078,11 +1076,18 @@ end
 
 vim.api.nvim_create_user_command('NoteFromFilename', function() CreateNoteFromFileName() end, { nargs = 0 })
 
---- Start a `lets do` time-tracking session for the task description in the clipboard.
+--- Start a time-tracking session from the current line, using its Taskwarrior UUID when present.
 function Letsdo_goto()
-  local task_description = get_clipboard()
-  local command = 'letsdo-taskwarrior-task.sh "' .. task_description .. '"'
+  local task_description = vim.api.nvim_get_current_line()
+  local task_uuid = task_description:match(
+    "%f[%x](%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x)%f[^%x]")
+    or task_description:match("%f[%x](%x%x%x%x%x%x%x%x)%f[^%x]")
 
+  if task_uuid then
+    task_description = "(" .. task_uuid:lower() .. ")"
+  end
+
+  local command = "letsdo-taskwarrior-task.sh " .. vim.fn.shellescape(task_description)
   print(vim.inspect(vim.fn.system(command)))
 end
 

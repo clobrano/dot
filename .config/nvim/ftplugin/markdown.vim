@@ -5,7 +5,7 @@ set number
 set norelativenumber
 set shiftwidth=2
 set signcolumn=yes:2
-set spell
+set nospell
 set softtabstop=4
 set tabstop=4
 set textwidth=0

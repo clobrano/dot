@@ -57,9 +57,9 @@ tui:
         - name: description
           label: "DESCRIPTION"
     custom_commands:
-        c:
+        y:
             name: "Format Task with JIRA and PR"
-            command: "bash -c \"echo '{{.description}} {{.uuid}}' | wl-copy\""
+            command: "bash -c \"echo '_{{.description}}_ `{{.uuid}}`' | wl-copy\""
             description: "Format the task with minimal information for my Notes"
     theme:
         name: dark

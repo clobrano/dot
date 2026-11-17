@@ -282,3 +282,27 @@ if grep -Fq -- $'\033[1;30;103mA\033[0m' "$popup_output"; then
 fi
 
 printf 'PASS: capital hint copies the path without opening it\n'
+
+prose_file="$tmpdir/osac-project-osac-pr2396.md"
+printf 'report\n' > "$prose_file"
+printf 'Review written to %s. It includes two findings, both matching current changes-requested review comments.\n' \
+  "$prose_file" > "$tmpdir/prose-pane.txt"
+rm -f "$tmpdir/tmux-calls" "$popup_output"
+
+if PATH="$tmpdir/bin:$PATH" \
+  TMUX_PANE='%1' \
+  TEST_PANE_PATH="$tmpdir" \
+  TEST_PANE_CAPTURE="$tmpdir/prose-pane.txt" \
+  TEST_TMUX_CALLS="$tmpdir/tmux-calls" \
+  TEST_HINT_KEY=a \
+  TEST_POPUP_OUTPUT="$popup_output" \
+  "$script"; then
+  :
+fi
+
+if [[ ! -f "$tmpdir/tmux-calls" ]] || ! grep -Fq -- "$prose_file" "$tmpdir/tmux-calls"; then
+  printf 'FAIL: prose after a path hid it from detection: %s\n' "$prose_file" >&2
+  exit 1
+fi
+
+printf 'PASS: prose after a path does not hide it from detection\n'

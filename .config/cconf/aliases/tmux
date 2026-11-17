@@ -7,8 +7,8 @@ set -x
 
 alias t=task
 
-alias dev="tmux-attach-or-create 0-devel"
-alias notes="tmux-attach-or-create 1-note"
+alias dev="tmux-attach-or-create tmux-devel"
+alias notes="tmux-attach-or-create tmux-note"
 
 alias tas="tmux attach-session -t"
 alias tks="tmux kill-session -t"

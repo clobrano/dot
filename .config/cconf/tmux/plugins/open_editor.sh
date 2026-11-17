@@ -346,6 +346,7 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
           spaced_count++
           spaced_start[spaced_count] = token_start
           spaced_end[spaced_count] = token_start + length(token)
+          spaced_token[spaced_count] = token
           printf "%d\t%s\n", token_start, token
         }
         consumed = RSTART + RLENGTH - 1
@@ -361,7 +362,12 @@ for ((logical_row = 0; logical_row < ${#logical_lines[@]}; logical_row++)); do
         token_start = offset + RSTART - 1
         covered = 0
         for (i = 1; i <= spaced_count; i++) {
-          if (token_start >= spaced_start[i] && token_start < spaced_end[i]) covered = 1
+          # A spaced token only covers a plain match when it starts before it
+          # (strictly inside) or is a space-free duplicate; otherwise the plain
+          # match is a shorter existing path (e.g. /tmp/x.md in prose) and must
+          # still be tried.
+          if (token_start >= spaced_start[i] && token_start < spaced_end[i] &&
+              (token_start > spaced_start[i] || index(spaced_token[i], " ") == 0)) covered = 1
         }
         if (!covered && valid_start(token_start)) printf "%d\t%s\n", token_start, token
         consumed = RSTART + RLENGTH - 1

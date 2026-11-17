@@ -1,37 +1,98 @@
 <style>
+/* Catppuccin Latte (light) and Mocha (dark) via CSS variables.
+   The theme is set on <html data-theme="..."> by the script below:
+   stored user choice first, else the system preference. */
+:root {
+  color-scheme: light;
+  --text: #4c4f69;
+  --bg: #eff1f5;
+  --h1-border: #ccd0da;
+  --h2-border: #dce0e8;
+  --link: #1e66f5;
+  --link-visited: #7287fd;
+  --link-hover: #209fb5;
+  --code-bg: #e6e9ef;
+  --pre-bg: #1e1e2e;
+  --pre-text: #cdd6f4;
+  --wikilink: #1e66f5;
+  --quote-text: #6c6f85;
+  --table-border: #ccd0da;
+  --th-bg: #e6e9ef;
+  --diagram-border: #ccd0da;
+  --diagram-bg: #ffffff;
+  --btn-bg: #eff1f5;
+  --btn-hover: #dce0e8;
+  --tag-forum: #d20f39;
+  --tag-meeting: #40a02b;
+  --tag-bug: #fe640b;
+  --tag-rfe: #04a5e5;
+  --tag-jira: #8839ef;
+  --tag-default: #df8e1d;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --text: #cdd6f4;
+  --bg: #1e1e2e;
+  --h1-border: #45475a;
+  --h2-border: #313244;
+  --link: #89b4fa;
+  --link-visited: #b4befe;
+  --link-hover: #89dceb;
+  --code-bg: #313244;
+  --pre-bg: #11111b;
+  --pre-text: #cdd6f4;
+  --wikilink: #89b4fa;
+  --quote-text: #a6adc8;
+  --table-border: #45475a;
+  --th-bg: #313244;
+  --diagram-border: #45475a;
+  --diagram-bg: #181825;
+  --btn-bg: #313244;
+  --btn-hover: #45475a;
+  --tag-forum: #f38ba8;
+  --tag-meeting: #a6e3a1;
+  --tag-bug: #fab387;
+  --tag-rfe: #89dceb;
+  --tag-jira: #cba6f7;
+  --tag-default: #f9e2af;
+}
+
+html { background: var(--bg); }
+
 body {
   font-family: "Source Code Pro", "Fira Code", "JetBrains Mono", monospace;
   max-width: 960px;
   margin: 2rem auto;
   padding: 0 2rem;
   line-height: 1.6;
-  color: #4c4f69;
-  background: #eff1f5;
+  color: var(--text);
+  background: var(--bg);
 }
 
-h1, h2, h3, h4 { color: #4c4f69; }
-h1 { border-bottom: 1px solid #ccd0da; padding-bottom: 0.4em; }
-h2 { border-bottom: 1px solid #dce0e8; padding-bottom: 0.3em; }
+h1, h2, h3, h4 { color: var(--text); }
+h1 { border-bottom: 1px solid var(--h1-border); padding-bottom: 0.4em; }
+h2 { border-bottom: 1px solid var(--h2-border); padding-bottom: 0.3em; }
 
-a { color: #1e66f5; }
-a:visited { color: #7287fd; }
-a:hover { color: #209fb5; }
+a { color: var(--link); }
+a:visited { color: var(--link-visited); }
+a:hover { color: var(--link-hover); }
 
 code {
-  background: #e6e9ef;
+  background: var(--code-bg);
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
 pre {
-  background: #1e1e2e !important;
-  color: #cdd6f4;
+  background: var(--pre-bg) !important;
+  color: var(--pre-text);
   padding: 1em;
   border-radius: 6px;
   overflow-x: auto;
 }
-pre code { background: none; padding: 0; color: #cdd6f4; }
+pre code { background: none; padding: 0; color: var(--pre-text); }
 
 /* Pandoc syntax highlighting — Catppuccin Mocha */
 pre code span.kw { color: #cba6f7; font-weight: bold; }
@@ -65,30 +126,42 @@ pre code span.wa { color: #f9e2af; font-weight: bold; }
 pre code span.ex { color: #89b4fa; }
 
 .wikilink {
-  background: #1e66f522;
-  color: #1e66f5;
+  background: color-mix(in srgb, var(--wikilink) 13%, transparent);
+  color: var(--wikilink);
   padding: 0.1em 0.4em;
   border-radius: 3px;
   font-weight: 600;
 }
 
+.tag {
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.tag-forum   { color: var(--tag-forum);   background: color-mix(in srgb, var(--tag-forum) 13%, transparent); }
+.tag-meeting { color: var(--tag-meeting); background: color-mix(in srgb, var(--tag-meeting) 13%, transparent); }
+.tag-bug     { color: var(--tag-bug);     background: color-mix(in srgb, var(--tag-bug) 13%, transparent); }
+.tag-rfe     { color: var(--tag-rfe);     background: color-mix(in srgb, var(--tag-rfe) 13%, transparent); }
+.tag-jira    { color: var(--tag-jira);    background: color-mix(in srgb, var(--tag-jira) 13%, transparent); }
+.tag-default { color: var(--tag-default); background: color-mix(in srgb, var(--tag-default) 13%, transparent); }
+
 blockquote {
-  border-left: 3px solid #1e66f5;
+  border-left: 3px solid var(--link);
   margin-left: 0;
   padding-left: 1em;
-  color: #6c6f85;
+  color: var(--quote-text);
 }
 
 table { border-collapse: collapse; width: 100%; }
-th, td { border: 1px solid #ccd0da; padding: 0.5em 0.8em; }
-th { background: #e6e9ef; }
+th, td { border: 1px solid var(--table-border); padding: 0.5em 0.8em; }
+th { background: var(--th-bg); }
 
 .diagram-container {
   position: relative;
   overflow: hidden;
-  border: 1px solid #ccd0da;
+  border: 1px solid var(--diagram-border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--diagram-bg);
   margin: 1em 0;
   cursor: grab;
   min-height: 400px;
@@ -113,30 +186,114 @@ th { background: #e6e9ef; }
 .diagram-controls button {
   width: 1.8em;
   height: 1.8em;
-  border: 1px solid #ccd0da;
+  border: 1px solid var(--diagram-border);
   border-radius: 4px;
-  background: #eff1f5;
-  color: #4c4f69;
+  background: var(--btn-bg);
+  color: var(--text);
   font-size: 0.9em;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.diagram-controls button:hover { background: #dce0e8; }
+.diagram-controls button:hover { background: var(--btn-hover); }
+
+.theme-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.2em;
+  height: 2.2em;
+  border: 1px solid var(--diagram-border);
+  border-radius: 6px;
+  background: var(--btn-bg);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.theme-toggle:hover { background: var(--btn-hover); }
 </style>
 
 <script>
+// Pick the theme before the page paints: stored choice first, else system.
+(function() {
+  var theme = null;
+  try { theme = localStorage.getItem("preview-theme"); } catch (e) {}
+  if (theme !== "light" && theme !== "dark") {
+    theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
+
+<script>
 document.addEventListener("DOMContentLoaded", function() {
-  // Convert pandoc mermaid code blocks into mermaid divs
+  function storedTheme() {
+    try { return localStorage.getItem("preview-theme"); } catch (e) { return null; }
+  }
+
+  function currentTheme() {
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  }
+
+  // ── Theme toggle ───────────────────────────────────────────
+  var toggle = document.createElement("button");
+  toggle.className = "theme-toggle";
+  document.body.appendChild(toggle);
+
+  function updateToggleIcon() {
+    toggle.textContent = currentTheme() === "dark" ? "\u2600\uFE0F" : "\uD83C\uDF19";
+    toggle.title = currentTheme() === "dark" ? "Switch to light theme" : "Switch to dark theme";
+  }
+
+  toggle.addEventListener("click", function() {
+    applyTheme(currentTheme() === "dark" ? "light" : "dark", true);
+  });
+
+  // Follow live system theme changes while the user has no stored choice
+  var media = window.matchMedia("(prefers-color-scheme: dark)");
+  media.addEventListener("change", function(e) {
+    if (!storedTheme()) applyTheme(e.matches ? "dark" : "light", false);
+  });
+
+  // ── Mermaid ────────────────────────────────────────────────
+  // Convert pandoc mermaid code blocks into mermaid divs,
+  // keeping the source so diagrams can be re-rendered on theme change.
   document.querySelectorAll('pre.mermaid').forEach(function(pre) {
     var code = pre.querySelector('code');
     var div = document.createElement('div');
     div.className = 'mermaid';
     div.textContent = code ? code.textContent : pre.textContent;
+    div.dataset.src = div.textContent;
     pre.replaceWith(div);
   });
-  mermaid.initialize({ startOnLoad: true, theme: 'default' });
+
+  function renderMermaid(theme) {
+    mermaid.initialize({ startOnLoad: false, theme: theme });
+    document.querySelectorAll('.mermaid').forEach(function(el) {
+      el.removeAttribute('data-processed');
+      el.textContent = el.dataset.src;
+    });
+    mermaid.run();
+  }
+
+  function applyTheme(theme, save) {
+    if (theme === currentTheme() && rendered) return;
+    document.documentElement.setAttribute("data-theme", theme);
+    if (save) {
+      try { localStorage.setItem("preview-theme", theme); } catch (e) {}
+    }
+    updateToggleIcon();
+    renderMermaid(theme);
+    rendered = true;
+  }
+
+  var rendered = false;
+  applyTheme(currentTheme(), false);
 
   // After mermaid renders, wrap each diagram in a zoom/pan container
   setTimeout(function() {
@@ -192,14 +349,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }, 500);
 
-  var tagColors = {
-    "forum":   "#d20f39",
-    "meeting": "#40a02b",
-    "bug":     "#fe640b",
-    "rfe":     "#04a5e5",
-    "jira":    "#8839ef",
+  // ── Tag badges (#forum, #bug, ...) ─────────────────────────
+  var tagClasses = {
+    "forum":   "tag-forum",
+    "meeting": "tag-meeting",
+    "bug":     "tag-bug",
+    "rfe":     "tag-rfe",
+    "jira":    "tag-jira",
   };
-  var defaultTagColor = "#df8e1d";
 
   document.querySelectorAll("p, li, td, th").forEach(function(el) {
     var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
@@ -220,12 +377,11 @@ document.addEventListener("DOMContentLoaded", function() {
       wrapper.innerHTML = tn.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/(#[A-Za-z0-9_-]+)/g, function(match) {
           var lower = match.toLowerCase();
-          var color = defaultTagColor;
-          for (var key in tagColors) {
-            if (lower.indexOf(key) !== -1) { color = tagColors[key]; break; }
+          var cls = "tag-default";
+          for (var key in tagClasses) {
+            if (lower.indexOf(key) !== -1) { cls = tagClasses[key]; break; }
           }
-          return '<span style="background:' + color + '22;color:' + color +
-            ';padding:0.1em 0.4em;border-radius:3px;font-weight:600;">' + match + '</span>';
+          return '<span class="tag ' + cls + '">' + match + '</span>';
         });
       tn.parentNode.replaceChild(wrapper, tn);
     });

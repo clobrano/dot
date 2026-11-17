@@ -10,7 +10,7 @@ error_symbol = "[➜](bold red)"
 
 [directory]
 truncation_length = 3
-truncate_to_repo = true
+truncate_to_repo = false
 
 [custom.git_user]
 when = "git rev-parse --is-inside-work-tree"

@@ -34,7 +34,7 @@ show_open_mode_menu() {
 }
 
 open_file() {              # $1 = pane id, $2 = file path, $3 = mode
-  local pane="$1" file="$2" mode="$3" line="" pane_path pane_width pane_height win session editor editor_bin editor_name cmd
+  local pane="$1" file="$2" mode="$3" line="" pane_path pane_width pane_height win session editor editor_bin editor_name cmd scroll_pos
   local is_nvim=0 socket socket_dir socket_option target_option target target_ok=1 expr
   if [[ "$file" =~ :([0-9]+)$ ]]; then
     line="${BASH_REMATCH[1]}"
@@ -89,7 +89,13 @@ open_file() {              # $1 = pane id, $2 = file path, $3 = mode
 
   case "$mode" in
     split)
+      # split-window resets a copy-mode pane's scroll position; restore the
+      # view the user was scrolled to.
+      scroll_pos="$(tmux display-message -p -t "$pane" '#{scroll_position}')"
       target="$(tmux split-window -h -l40% -P -F '#{pane_id}' -t "$pane" -c "$pane_path" "$cmd")"
+      if [ -n "$scroll_pos" ] && [ "$scroll_pos" != 0 ]; then
+        tmux send-keys -t "$pane" -X -N "$scroll_pos" scroll-up 2>/dev/null || true
+      fi
       ;;
     popup)
       pane_width="$(tmux display-message -p -t "$pane" '#{pane_width}')"
@@ -239,7 +245,18 @@ trap 'rm -rf "$tmpdir"' EXIT
 styled_file="$tmpdir/styled"
 plain_file="$tmpdir/plain"
 manifest="$tmpdir/hints"
-tmux capture-pane -e -p -t "$pane" > "$styled_file"
+# When the pane is in copy mode, capture the history window the user is
+# scrolled to instead of the live pane bottom, so paths that scrolled into
+# history still get hints. -M is not used because the mode screen is only
+# refreshed on client redraws and often lags behind the real view.
+capture_args=(-e -p)
+if [ "$(tmux display-message -p -t "$pane" '#{pane_in_mode}')" = "1" ]; then
+  scroll_pos="$(tmux display-message -p -t "$pane" '#{scroll_position}')"
+  if [ -n "$scroll_pos" ] && [ "$scroll_pos" -gt 0 ]; then
+    capture_args+=(-S "-$scroll_pos" -E "$((pane_height - 1 - scroll_pos))")
+  fi
+fi
+tmux capture-pane "${capture_args[@]}" -t "$pane" > "$styled_file"
 # OSC 8 links are invisible on screen but would skew the hint coordinates.
 sed -E $'s/\033\\[[0-9;:]*m//g; s/\033\\]8;[^\033\a]*(\a|\033\\\\)//g' "$styled_file" > "$plain_file"
 mapfile -t screen_rows < "$plain_file"

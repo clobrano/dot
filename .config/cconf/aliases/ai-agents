@@ -8,3 +8,5 @@ alias luna='pi --provider enmaas --model gpt-6-luna'
 alias sol='pi --provider enmaas --model gpt-6.1-sol'
 alias astra='pi --provider enmaas --model gpt-6.1-astra'
 alias glm='pi --provider enmaas --model rits/zai-org/glm-5-3'
+# pi session with current tmux's session name
+alias pix='pi --name "$(tmux display-message -p '#S')"'

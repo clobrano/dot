@@ -399,14 +399,13 @@ nmap('Y', 'yg_')
 nmap('<leader>w', ':set wrap<cr>')
 nmap('<leader>wu', ':set nowrap<cr>')
 
--- markdown section
+-- markdown shortcuts section
 -- bold
 vmap('<leader>bo', 'c**<C-r>"**<esc>')
 -- wikilink
---vmap('<leader>ml', '"adi[[<esc>"apa]]<esc>')
 vmap('<leader>ml', ':<C-u>lua CreateFileAndWikiLink()<CR>')
 -- strikethrough
-vmap('<leader>st', '"adi~~<esc>"apa~~<esc>')
+vmap('<leader>st', 'c~~<C-r>"~~<esc>')
 -- inline code
 vmap('<leader>i', 'c`<C-r>"`<esc>')
 -- reference link: wrap selection in [] and append [text]: <clipboard> at end of file

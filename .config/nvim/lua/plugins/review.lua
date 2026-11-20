@@ -1,5 +1,6 @@
 return {
   "georgeguimaraes/review.nvim",
+  enabled = false,
   version = "*",
   dependencies = {
     "esmuellert/codediff.nvim",

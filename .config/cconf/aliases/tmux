@@ -1,7 +1,16 @@
+# role (opt) marks the first notes
 tmux-attach-or-create() {
-set -x
-    if ! tmux attach-session -t "$1"  2>&1 >/dev/null; then
-        tmux new -s "$1"
+    local session="$1"
+    local role="$2"
+
+    if ! tmux attach-session -t "=$session" >/dev/null 2>&1; then
+        if [ -n "$role" ]; then
+            tmux new-session -d -s "$session"
+            tmux set-option -w -t "=$session:" @role "$role"
+            tmux attach-session -t "=$session"
+        else
+            tmux new-session -s "$session"
+        fi
     fi
 }
 
